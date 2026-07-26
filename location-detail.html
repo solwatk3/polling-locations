@@ -568,7 +568,10 @@
         </div>
       </div>
       <div class="fp-group">
-        <label>Districts</label>
+        <label style="display:flex;align-items:center;justify-content:space-between;">
+          Districts
+          <button type="button" id="ep-detect-districts" style="font-size:0.72rem;font-weight:600;color:var(--accent-light);background:none;border:1px solid var(--accent-light);border-radius:4px;padding:2px 8px;cursor:pointer;" title="Auto-detect districts from saved lat/lng coordinates">&#128204; Detect from Coords</button>
+        </label>
         <div class="fp-grid-3">
           <div class="fp-group"><label>House</label><input type="number" id="ep-house" placeholder="auto" min="1" max="99" /></div>
           <div class="fp-group"><label>Senate</label><input type="number" id="ep-senate" placeholder="auto" min="1" max="33" /></div>
@@ -1004,6 +1007,78 @@
     document.getElementById("ep-close").addEventListener("click", closeEditPanel);
     document.getElementById("ep-cancel").addEventListener("click", closeEditPanel);
     document.getElementById("panel-overlay").addEventListener("click", closeEditPanel);
+
+    // =========================================================================
+    // DISTRICT LOOKUP - fires three parallel ArcGIS point-in-polygon queries
+    // using the lat/lng currently in the ep-lat / ep-lng fields.
+    // Mirrors the lookupDistricts() function in locations.html.
+    // =========================================================================
+    document.getElementById("ep-detect-districts").addEventListener("click", function() {
+      var lat = parseFloat(document.getElementById("ep-lat").value);
+      var lng = parseFloat(document.getElementById("ep-lng").value);
+
+      if (isNaN(lat) || isNaN(lng)) {
+        epShowStatus("ep-dist-status", "Enter coordinates first - save the address or paste lat/lng above", "#f87171", "rgba(69,10,10,0.3)");
+        return;
+      }
+
+      epShowStatus("ep-dist-status", "Detecting districts...", "#60a5fa", "rgba(30,58,95,0.5)");
+      ["ep-house", "ep-senate", "ep-congress"].forEach(function(id) {
+        document.getElementById(id).disabled = true;
+      });
+
+      var geo = lng + "," + lat; // ArcGIS: x=lng, y=lat
+
+      var houseQ =
+        "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&where=STATE+%3D+%2747%27&outFields=SLDL&inSR=4326&returnGeometry=false&f=json";
+
+      var congressQ =
+        "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&outFields=DISTRICT&inSR=4326&returnGeometry=false&f=json";
+
+      var senateQ =
+        "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/8/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&outFields=NEWSENATEDISTRICT&inSR=4326&returnGeometry=false&f=json";
+
+      Promise.all([
+        fetch(houseQ).then(function(r)    { return r.json(); }),
+        fetch(congressQ).then(function(r) { return r.json(); }),
+        fetch(senateQ).then(function(r)   { return r.json(); })
+      ]).then(function(results) {
+        var houseFeats    = results[0].features || [];
+        var congressFeats = results[1].features || [];
+        var senateFeats   = results[2].features || [];
+
+        var houseNum    = houseFeats.length    ? parseInt(houseFeats[0].attributes.SLDL,               10) : null;
+        var congressNum = congressFeats.length  ? parseInt(congressFeats[0].attributes.DISTRICT,        10) : null;
+        var senateNum   = senateFeats.length    ? parseInt(senateFeats[0].attributes.NEWSENATEDISTRICT, 10) : null;
+
+        if (houseNum)    document.getElementById("ep-house").value    = houseNum;
+        if (congressNum) document.getElementById("ep-congress").value = congressNum;
+        if (senateNum)   document.getElementById("ep-senate").value   = senateNum;
+
+        var allFound = houseNum && congressNum && senateNum;
+        epShowStatus(
+          "ep-dist-status",
+          allFound ? "Districts detected - save to apply" : "Partial detection - verify blank fields manually",
+          allFound ? "#10b981" : "#f59e0b",
+          allFound ? "rgba(6,78,59,0.3)" : "rgba(120,53,15,0.3)"
+        );
+      }).catch(function() {
+        epShowStatus("ep-dist-status", "Lookup failed - check connection and try again", "#f87171", "rgba(69,10,10,0.3)");
+      }).finally(function() {
+        ["ep-house", "ep-senate", "ep-congress"].forEach(function(id) {
+          document.getElementById(id).disabled = false;
+        });
+      });
+    });
 
     // Auto-split Google Maps coords paste: "35.6949, -88.8563" -> fills both lat + lng fields
     ["ep-lat", "ep-lng"].forEach(function(id) {
