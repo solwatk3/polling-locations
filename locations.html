@@ -984,7 +984,7 @@
         // Update header styling
         document.querySelectorAll(".loc-table th").forEach(function(h) { h.classList.remove("sorted"); });
         this.classList.add("sorted");
-        this.querySelector(".sort-arrow").textContent = sortAsc ? " &#8593;" : " &#8595;";
+        this.querySelector(".sort-arrow").innerHTML = sortAsc ? " &#8593;" : " &#8595;";
         renderTable();
       });
     });
