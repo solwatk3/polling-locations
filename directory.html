@@ -231,6 +231,103 @@
       border-radius: 4px;
     }
 
+    /* Cards are clickable */
+    .loc-card { cursor: pointer; }
+
+    /* ===== DETAIL MODAL ===== */
+    .detail-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 600;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .detail-modal.visible { display: flex; }
+    .detail-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 480px;
+      max-width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .detail-box::-webkit-scrollbar { width: 4px; }
+    .detail-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 1;
+    }
+    .detail-header h2 { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .btn-close-detail {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .btn-close-detail:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    .detail-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+    .detail-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .detail-row .dr-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    .detail-row .dr-value {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .detail-row .dr-value.muted { color: var(--text-muted); font-style: italic; }
+
+    .detail-districts { display: flex; gap: 8px; flex-wrap: wrap; }
+    .detail-dist-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      min-width: 70px;
+    }
+    .detail-dist-chip .dc-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 3px; }
+    .detail-dist-chip .dc-num   { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+
+    .detail-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
     @media (max-width: 600px) {
       .card-grid { padding: 12px; gap: 10px; }
       .selector-row { padding: 12px; }
@@ -373,6 +470,51 @@
 
   </div><!-- end .page-body -->
 
+  <!-- ===== LOCATION DETAIL MODAL ===== -->
+  <div class="detail-modal" id="detail-modal">
+    <div class="detail-box">
+      <div class="detail-header">
+        <h2 id="dm-name"></h2>
+        <button class="btn-close-detail" id="btn-close-detail">&#10005;</button>
+      </div>
+      <div class="detail-body">
+        <div class="detail-row">
+          <div class="dr-label">Type</div>
+          <div class="dr-value" id="dm-type"></div>
+        </div>
+        <div class="detail-row" id="dm-address-row">
+          <div class="dr-label">Address</div>
+          <div class="dr-value" id="dm-address"></div>
+        </div>
+        <div class="detail-row" id="dm-county-row">
+          <div class="dr-label">County</div>
+          <div class="dr-value" id="dm-county"></div>
+        </div>
+        <div class="detail-row" id="dm-hours-row">
+          <div class="dr-label">Voting Hours</div>
+          <div class="dr-value" id="dm-hours"></div>
+        </div>
+        <div class="detail-row">
+          <div class="dr-label">Districts</div>
+          <div class="detail-districts" id="dm-districts"></div>
+        </div>
+        <div class="detail-row" id="dm-notes-row">
+          <div class="dr-label">Notes</div>
+          <div class="dr-value" id="dm-notes"></div>
+        </div>
+        <div class="detail-row" id="dm-coords-row">
+          <div class="dr-label">Coordinates</div>
+          <div class="dr-value" id="dm-coords"></div>
+        </div>
+      </div>
+      <div class="detail-footer">
+        <button class="btn-danger" id="btn-delete-detail" style="margin-right:auto;">&#128465; Delete</button>
+        <a id="dm-map-link" href="index.html" class="btn-secondary" style="text-decoration:none;padding:8px 16px;font-size:0.82rem;">&#128506; View on Map</a>
+        <button class="btn-primary" id="btn-close-detail-2">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script src="data/polling-locations.js"></script>
   <script>
     // =========================================================================
@@ -392,7 +534,14 @@
       ALL_LOCATIONS.length + " total locations";
 
     // =========================================================================
+    // LOCATION LOOKUP MAP (id -> loc object) for the detail modal
+    // =========================================================================
+    var LOC_MAP = {};
+    ALL_LOCATIONS.forEach(function(l) { LOC_MAP[l.id] = l; });
+
+    // =========================================================================
     // BUILD A LOCATION CARD (HTML string)
+    // Cards carry data-id so clicks can look up the full location object.
     // =========================================================================
     function buildCard(loc) {
       var isCustom   = customIds.indexOf(loc.id) !== -1;
@@ -407,7 +556,8 @@
         loc.congressional_district    ? '<span class="dist-badge">C' + loc.congressional_district + '</span>'    : ''
       ].filter(Boolean).join('');
 
-      return '<div class="loc-card ' + cardClass + '">' +
+      // data-id lets the click delegation handler look up the full location
+      return '<div class="loc-card ' + cardClass + '" data-id="' + escHtml(loc.id) + '">' +
         '<div class="card-type ' + typeClass + '">' + typeLabel + '</div>' +
         '<div class="card-name">' + escHtml(loc.name || "Unnamed Location") + '</div>' +
         (loc.address ? '<div class="card-address">&#128205; ' + escHtml(loc.address) + (loc.city ? ', ' + escHtml(loc.city) : '') + '</div>' : '') +
@@ -623,6 +773,143 @@
       fillPills("dash-congress-filled", congressWith,  true);
       fillPills("dash-congress-empty",  congressMissing, false);
     }
+
+    // =========================================================================
+    // DETAIL MODAL
+    // =========================================================================
+    var currentDetailId = null; // tracks which location the modal is showing
+
+    function showDetail(id) {
+      var loc = LOC_MAP[id];
+      if (!loc) return;
+
+      var isCustom  = customIds.indexOf(loc.id) !== -1;
+      var isEarly   = loc.type === "early";
+      var typeLabel = isCustom ? "Custom Location" : (isEarly ? "Early Voting" : "Election Day");
+
+      document.getElementById("dm-name").textContent = loc.name || "Unnamed Location";
+      document.getElementById("dm-type").textContent = typeLabel;
+
+      // Address
+      var addrEl = document.getElementById("dm-address");
+      var addrRow = document.getElementById("dm-address-row");
+      if (loc.address) {
+        addrEl.textContent = loc.address + (loc.city ? ", " + loc.city + ", TN" : "");
+        addrRow.style.display = "";
+      } else {
+        addrRow.style.display = "none";
+      }
+
+      // County
+      var countyEl  = document.getElementById("dm-county");
+      var countyRow = document.getElementById("dm-county-row");
+      if (loc.county) {
+        countyEl.textContent = loc.county + " County";
+        countyRow.style.display = "";
+      } else {
+        countyRow.style.display = "none";
+      }
+
+      // Hours
+      var hoursEl  = document.getElementById("dm-hours");
+      var hoursRow = document.getElementById("dm-hours-row");
+      if (loc.hours) {
+        hoursEl.textContent = loc.hours;
+        hoursRow.style.display = "";
+      } else {
+        hoursRow.style.display = "none";
+      }
+
+      // Districts - chips for each one that has a real value
+      var distContainer = document.getElementById("dm-districts");
+      var chips = [
+        { label: "State House", val: loc.state_district },
+        { label: "State Senate", val: loc.state_senate_district },
+        { label: "Congressional", val: loc.congressional_district }
+      ].filter(function(d) { return d.val && d.val !== "?"; })
+       .map(function(d) {
+         return '<div class="detail-dist-chip">' +
+           '<div class="dc-label">' + d.label + '</div>' +
+           '<div class="dc-num">D' + d.val + '</div>' +
+           '</div>';
+       });
+      distContainer.innerHTML = chips.length ? chips.join("") :
+        '<span style="font-size:0.8rem;color:var(--text-muted);">Districts not set</span>';
+
+      // Notes
+      var notesEl  = document.getElementById("dm-notes");
+      var notesRow = document.getElementById("dm-notes-row");
+      if (loc.notes) {
+        notesEl.textContent = loc.notes;
+        notesRow.style.display = "";
+      } else {
+        notesRow.style.display = "none";
+      }
+
+      // Coordinates
+      var coordsEl  = document.getElementById("dm-coords");
+      var coordsRow = document.getElementById("dm-coords-row");
+      if (loc.lat && loc.lng) {
+        coordsEl.textContent = parseFloat(loc.lat).toFixed(5) + ", " + parseFloat(loc.lng).toFixed(5);
+        coordsRow.style.display = "";
+      } else {
+        coordsRow.style.display = "none";
+      }
+
+      currentDetailId = id;
+      document.getElementById("detail-modal").classList.add("visible");
+    }
+
+    function closeDetail() {
+      document.getElementById("detail-modal").classList.remove("visible");
+      currentDetailId = null;
+    }
+
+    function deleteCurrentLocation() {
+      if (!currentDetailId) return;
+      var loc = LOC_MAP[currentDetailId];
+      if (!confirm('Delete "' + (loc ? loc.name : "this location") + '"? This cannot be undone.')) return;
+
+      // Remove from localStorage
+      var saved = [];
+      try { saved = JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); } catch(e) {}
+      saved = saved.filter(function(l) { return l.id !== currentDetailId; });
+      localStorage.setItem("tn_polling_custom", JSON.stringify(saved));
+
+      // Remove from in-memory arrays so the view updates without a full reload
+      var idx = ALL_LOCATIONS.findIndex(function(l) { return l.id === currentDetailId; });
+      if (idx !== -1) ALL_LOCATIONS.splice(idx, 1);
+      delete LOC_MAP[currentDetailId];
+
+      var cidx = customIds.indexOf(currentDetailId);
+      if (cidx !== -1) customIds.splice(cidx, 1);
+
+      document.getElementById("total-badge").textContent = ALL_LOCATIONS.length + " total locations";
+
+      closeDetail();
+
+      // Re-render whichever view is active
+      if (currentView === "district")  renderDistrict();
+      else if (currentView === "county") document.getElementById("county-select").dispatchEvent(new Event("change"));
+      else if (currentView === "search") doSearch(document.getElementById("search-input").value);
+      else if (currentView === "dashboard") renderDashboard();
+    }
+
+    document.getElementById("btn-delete-detail").addEventListener("click", deleteCurrentLocation);
+    document.getElementById("btn-close-detail").addEventListener("click", closeDetail);
+    document.getElementById("btn-close-detail-2").addEventListener("click", closeDetail);
+    document.getElementById("detail-modal").addEventListener("click", function(e) {
+      // Close if clicking the dim backdrop (not the box itself)
+      if (e.target === this) closeDetail();
+    });
+
+    // Event delegation - one listener per grid handles all card clicks
+    ["district-cards", "county-cards", "search-cards"].forEach(function(gridId) {
+      document.getElementById(gridId).addEventListener("click", function(e) {
+        var card = e.target.closest(".loc-card[data-id]");
+        if (card) showDetail(card.getAttribute("data-id"));
+      });
+    });
 
     // =========================================================================
     // URL PARAM: ?view=search&q=haywood  - support deep-linking from other pages

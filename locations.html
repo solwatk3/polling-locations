@@ -455,10 +455,10 @@
         <input type="text" id="f-name" placeholder="e.g. Haywood County Election Commission" />
       </div>
 
-      <!-- Address (geocodes as you type) -->
+      <!-- Address (geocodes as you type, or paste full address and tab out) -->
       <div class="fp-group">
         <label>Street Address *</label>
-        <input type="text" id="f-address" placeholder="123 Main St" />
+        <input type="text" id="f-address" placeholder="e.g. 404 E Cherry St Brownsville 38012" />
         <div id="geocode-status" class="inline-status"></div>
       </div>
 
@@ -543,10 +543,23 @@
         <div id="district-status" class="inline-status"></div>
       </div>
 
-      <!-- Hours -->
+      <!-- Voting Hours - two dropdowns so format is always consistent -->
       <div class="fp-group">
         <label>Voting Hours</label>
-        <input type="text" id="f-hours" placeholder="7am - 7pm" />
+        <div class="fp-grid-2">
+          <div class="fp-group">
+            <label>Opens</label>
+            <select id="f-hours-open">
+              <!-- Options injected by JS -->
+            </select>
+          </div>
+          <div class="fp-group">
+            <label>Closes</label>
+            <select id="f-hours-close">
+              <!-- Options injected by JS -->
+            </select>
+          </div>
+        </div>
       </div>
 
       <!-- Notes -->
@@ -749,7 +762,10 @@
       document.getElementById("f-address").value = loc ? (loc.address || "") : "";
       document.getElementById("f-city").value    = loc ? (loc.city    || "") : "";
       document.getElementById("f-county").value  = loc ? (loc.county  || "") : "";
-      document.getElementById("f-hours").value   = loc ? (loc.hours   || "") : "";
+      // Reset hours dropdowns to default, then parse saved value if editing
+      document.getElementById("f-hours-open").value  = "8:00am";
+      document.getElementById("f-hours-close").value = "7:00pm";
+      if (loc && loc.hours) setHoursFromString(loc.hours);
       document.getElementById("f-notes").value   = loc ? (loc.notes   || "") : "";
       document.getElementById("f-house").value   = loc ? (loc.state_district            || "") : "";
       document.getElementById("f-senate").value  = loc ? (loc.state_senate_district     || "") : "";
@@ -812,7 +828,7 @@
         state_district:         document.getElementById("f-house").value    || "?",
         state_senate_district:  document.getElementById("f-senate").value   || "?",
         congressional_district: document.getElementById("f-congress").value || "?",
-        hours:                  document.getElementById("f-hours").value.trim(),
+        hours:                  getHoursString(),
         notes:                  document.getElementById("f-notes").value.trim(),
         lat:                    isNaN(lat) ? 35.5  : lat,
         lng:                    isNaN(lng) ? -86.5 : lng
@@ -831,10 +847,89 @@
       closePanel();
     });
 
+    // Ctrl+Enter submits the form when the panel is open
+    document.addEventListener("keydown", function(e) {
+      if (e.ctrlKey && e.key === "Enter" && document.getElementById("right-panel").classList.contains("open")) {
+        document.getElementById("btn-save-form").click();
+      }
+    });
+
     document.getElementById("btn-add-new").addEventListener("click", function() { openPanel(); });
     document.getElementById("btn-cancel-form").addEventListener("click", closePanel);
     document.getElementById("btn-close-panel").addEventListener("click", closePanel);
     document.getElementById("panel-overlay").addEventListener("click", closePanel);
+
+    // =========================================================================
+    // VOTING HOURS DROPDOWNS
+    // Generates 30-min increments from 6:00am to 9:00pm.
+    // Saves/loads as a formatted string like "8:00am - 7:00pm".
+    // =========================================================================
+    (function buildTimeOptions() {
+      var opens  = document.getElementById("f-hours-open");
+      var closes = document.getElementById("f-hours-close");
+
+      // Build options for 6:00am through 9:00pm in 30-min steps
+      for (var h = 6; h <= 21; h++) {
+        for (var m = 0; m < 60; m += 30) {
+          var period = h < 12 ? "am" : "pm";
+          var hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+          var mins   = m === 0 ? "00" : "30";
+          var label  = hour12 + ":" + mins + period;
+
+          var optO = document.createElement("option");
+          optO.value = label;
+          optO.textContent = label;
+          opens.appendChild(optO);
+
+          var optC = document.createElement("option");
+          optC.value = label;
+          optC.textContent = label;
+          closes.appendChild(optC);
+        }
+      }
+
+      // Default: 8:00am open, 7:00pm close (most common TN polling hours)
+      opens.value  = "8:00am";
+      closes.value = "7:00pm";
+    })();
+
+    // Reads the two dropdowns and returns a formatted string: "8:00am - 7:00pm"
+    function getHoursString() {
+      var open  = document.getElementById("f-hours-open").value;
+      var close = document.getElementById("f-hours-close").value;
+      return open + " - " + close;
+    }
+
+    // Parses a saved hours string back into the two dropdowns when editing.
+    // Handles formats like "8:00am - 7:00pm", "8am - 7pm", "8:00 AM - 7:00 PM"
+    function setHoursFromString(str) {
+      if (!str) return;
+      var parts = str.split(/\s*-\s*/);
+      if (parts.length !== 2) return;
+
+      function normalize(t) {
+        // Lowercase, ensure colon and leading zero: "8am" -> "8:00am", "8:30 AM" -> "8:30am"
+        t = t.trim().toLowerCase().replace(/\s/g, "");
+        if (!t.includes(":")) {
+          t = t.replace(/(am|pm)/, ":00$1");
+        }
+        return t;
+      }
+
+      var openVal  = normalize(parts[0]);
+      var closeVal = normalize(parts[1]);
+
+      var opens  = document.getElementById("f-hours-open");
+      var closes = document.getElementById("f-hours-close");
+
+      // Match against available options - fall back to default if not found
+      if (Array.from(opens.options).some(function(o) { return o.value === openVal; })) {
+        opens.value = openVal;
+      }
+      if (Array.from(closes.options).some(function(o) { return o.value === closeVal; })) {
+        closes.value = closeVal;
+      }
+    }
 
     // =========================================================================
     // TYPE RADIO STYLING
@@ -865,6 +960,69 @@
     }
 
     // =========================================================================
+    // ADDRESS PARSER
+    // Detects when the user has pasted a full address like
+    // "404 E Cherry St Brownsville 38012" and splits it into street + city.
+    // Runs on blur (tab out) so it doesn't interrupt typing.
+    // =========================================================================
+
+    // Common street type abbreviations - used to find where the street ends
+    var STREET_TYPES = /^(st|ave|rd|blvd|dr|ln|ct|way|pl|hwy|pike|pkwy|cir|ter|trl|loop|run|row|sq|xing|expy|fwy|rte|route|aly|jct|pt|spur|trce|vis|vly|wl|cv|holw|pass)\.?$/i;
+
+    function parseFullAddress(raw) {
+      raw = raw.trim();
+
+      // Pull trailing zip code if present (5 digits, optionally -4)
+      var zipMatch = raw.match(/\s+(\d{5})(-\d{4})?\s*$/);
+      if (zipMatch) raw = raw.slice(0, zipMatch.index).trim();
+
+      var parts = raw.split(/\s+/);
+
+      // Find the last word that looks like a street type
+      var lastStreetIdx = -1;
+      for (var i = parts.length - 1; i >= 0; i--) {
+        if (STREET_TYPES.test(parts[i])) { lastStreetIdx = i; break; }
+      }
+
+      // No street type found - nothing to split
+      if (lastStreetIdx === -1 || lastStreetIdx === parts.length - 1) return null;
+
+      // Check if the word right after the street type is a suite/unit qualifier
+      // e.g. "Cherry St Suite B Bolivar" - suite stays with the street
+      var streetEnd = lastStreetIdx;
+      var next = parts[streetEnd + 1] || "";
+      if (/^(suite|ste|apt|unit|#\d*)$/i.test(next) && streetEnd + 2 < parts.length) {
+        streetEnd += 2; // skip "Suite B" and leave the rest as city
+      }
+
+      var street = parts.slice(0, streetEnd + 1).join(" ");
+      var city   = parts.slice(streetEnd + 1).join(" ");
+
+      // Sanity check - city should look like words, not a number
+      if (!city || /^\d/.test(city)) return null;
+
+      return { street: street, city: city };
+    }
+
+    // On blur: if the address field looks like a combined entry, split it
+    document.getElementById("f-address").addEventListener("blur", function() {
+      var raw = this.value.trim();
+      if (!raw) return;
+
+      var parsed = parseFullAddress(raw);
+      if (!parsed) return; // nothing to split - leave as-is
+
+      // Only auto-fill city if the city field is currently empty
+      this.value = parsed.street;
+      if (!document.getElementById("f-city").value.trim()) {
+        document.getElementById("f-city").value = parsed.city;
+      }
+
+      // Trigger geocoding with the now-clean address
+      geocodeAddress(parsed.street);
+    });
+
+    // =========================================================================
     // ADDRESS GEOCODING (debounced 800ms - same logic as was on the map page)
     // Nominatim (OpenStreetMap) - no key needed
     // =========================================================================
@@ -877,37 +1035,108 @@
       geocodeTimer = setTimeout(function() { geocodeAddress(address); }, 800);
     }
 
+    // Strips suite/unit designators from an address string.
+    // Nominatim often fails on "Suite B", "Apt 3", "Unit 2A", etc.
+    function stripUnit(address) {
+      return address.replace(/\s+(suite|ste|apt|unit|#)\s*\S+/gi, "").trim();
+    }
+
     function geocodeAddress(address) {
       var city  = document.getElementById("f-city").value.trim();
-      var query = address + (city ? ", " + city : "") + ", TN";
 
       showStatus("geocode-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
 
-      var url = "https://nominatim.openstreetmap.org/search?q=" +
-        encodeURIComponent(query) + "&format=json&limit=1&countrycodes=us";
+      // addressdetails=1 makes Nominatim return a full address breakdown including county
+      function doFetch(addr) {
+        var query = addr + (city ? ", " + city : "") + ", TN";
+        var url = "https://nominatim.openstreetmap.org/search?q=" +
+          encodeURIComponent(query) + "&format=json&limit=1&countrycodes=us&addressdetails=1";
+        return fetch(url, { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
+          .then(function(r) { return r.json(); });
+      }
 
-      fetch(url, { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
-        .then(function(r) { return r.json(); })
-        .then(function(results) {
-          if (!results || !results.length) {
-            showStatus("geocode-status", "Address not found - enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
-            return;
+      // Attempt 1: full address
+      // Attempt 2: address with suite/unit stripped (Nominatim often fails on "Suite B")
+      // Attempt 3: city only - places pin at city center so districts still auto-detect
+      doFetch(address).then(function(results) {
+        if (!results || !results.length) {
+          var stripped = stripUnit(address);
+          if (stripped !== address) {
+            showStatus("geocode-status", "Retrying without suite number...", "#60a5fa", "rgba(30,58,95,0.5)");
+            return doFetch(stripped);
           }
-          var lat = parseFloat(results[0].lat);
-          var lng = parseFloat(results[0].lon);
+        }
+        return results;
+      })
+      .then(function(results) {
+        if (!results || !results.length) {
+          // Address-level lookup failed - fall back to city center
+          if (city) {
+            showStatus("geocode-status", "Street not in map data - trying city...", "#60a5fa", "rgba(30,58,95,0.5)");
+            return doFetch(city); // doFetch appends city again, but city IS the query here
+          }
+        }
+        return results;
+      })
+      .then(function(results) {
+        // Resolve city-only fallback separately since doFetch includes city in query
+        // If still empty after suite strip, try bare city + TN directly
+        if (!results || !results.length) {
+          if (city) {
+            var cityUrl = "https://nominatim.openstreetmap.org/search?q=" +
+              encodeURIComponent(city + ", TN") +
+              "&format=json&limit=1&countrycodes=us&addressdetails=1";
+            return fetch(cityUrl, { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
+              .then(function(r) { return r.json(); })
+              .then(function(cityResults) {
+                if (cityResults && cityResults.length) {
+                  // Mark that this was a city-only match so we can show a different message
+                  cityResults[0]._cityOnly = true;
+                }
+                return cityResults;
+              });
+          }
+        }
+        return results;
+      })
+      .then(function(results) {
+        if (!results || !results.length) {
+          showStatus("geocode-status", "Not found - enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          return;
+        }
+        var isCityOnly = !!results[0]._cityOnly;
+        var lat = parseFloat(results[0].lat);
+        var lng = parseFloat(results[0].lon);
 
-          document.getElementById("f-lat").value = lat.toFixed(6);
-          document.getElementById("f-lng").value = lng.toFixed(6);
+        document.getElementById("f-lat").value = lat.toFixed(6);
+        document.getElementById("f-lng").value = lng.toFixed(6);
 
-          // Now detect which districts this coordinate falls in
-          lookupDistricts(lat, lng);
+        // Auto-fill county from geocode response if the dropdown is empty.
+        // Nominatim returns e.g. "Haywood County" - strip the " County" suffix.
+        var countyDropdown = document.getElementById("f-county");
+        if (!countyDropdown.value && results[0].address && results[0].address.county) {
+          var rawCounty = results[0].address.county.replace(/ County$/i, "").trim();
+          // Match against an existing dropdown option (case-insensitive)
+          var matched = Array.from(countyDropdown.options).find(function(opt) {
+            return opt.value.toLowerCase() === rawCounty.toLowerCase();
+          });
+          if (matched) countyDropdown.value = matched.value;
+        }
 
+        // Now detect which districts this coordinate falls in
+        lookupDistricts(lat, lng);
+
+        if (isCityOnly) {
+          // Let the warning stay visible - user should verify/adjust coordinates
+          showStatus("geocode-status", "Street not found - pin placed at city center. Verify coordinates.", "#f59e0b", "rgba(120,53,15,0.3)");
+        } else {
           showStatus("geocode-status", "Address found - coordinates filled", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { hideStatus("geocode-status"); }, 4000);
-        })
-        .catch(function() {
-          showStatus("geocode-status", "Geocode failed - enter coordinates manually", "#f87171", "rgba(69,10,10,0.3)");
-        });
+        }
+      })
+      .catch(function() {
+        showStatus("geocode-status", "Geocode failed - enter coordinates manually", "#f87171", "rgba(69,10,10,0.3)");
+      });
     }
 
     document.getElementById("f-address").addEventListener("input", scheduleGeocode);

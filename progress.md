@@ -30,25 +30,40 @@
 - [x] directory.html (new): 4 view modes - By District (House/Senate/Congressional), By County, Search, Dashboard; location cards with type badges and district pills; dashboard shows coverage stats and empty/filled district lists
 - [x] style.css: added top-nav, basemap toggle, sidebar-nav-link, page layout, btn-primary/secondary/danger shared styles
 
+## Done (Session 5 - 2026-07-26)
+- [x] District layers converted from independent checkboxes to mutually exclusive radio buttons - only one active at a time (2026-07-26)
+- [x] Polygon fills removed from all district layers - outlines only, subtle highlight on hover only (2026-07-26)
+- [x] County name dynamically appended to district hover tooltips via mousemove - updates as you cross county lines (2026-07-26)
+- [x] Geocoding auto-fills county dropdown from Nominatim addressdetails response (2026-07-26)
+- [x] Geocoding fallback chain: full address -> strip suite/unit -> city center with warning (2026-07-26)
+- [x] Voting hours field replaced with Opens/Closes time dropdowns (30-min increments, default 8:00am-7:00pm) (2026-07-26)
+- [x] Address parser: pasting "404 E Cherry St Brownsville 38012" on blur splits into street + city fields automatically (2026-07-26)
+- [x] Ctrl+Enter submits the location form when the panel is open (2026-07-26)
+- [x] Directory: clicking a location card opens a full detail modal (name, type, address, county, hours, district chips, notes, coords) (2026-07-26)
+- [x] Directory: Delete button in detail modal removes location from localStorage and re-renders without page reload (2026-07-26)
+- [x] All placeholder seed data cleared from data/polling-locations.js - app starts clean (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Open all 3 pages in browser and verify they load correctly
-- [ ] Add a real location in locations.html and confirm it appears on the map (index.html)
-- [ ] Verify basemap toggle switches between Street and Satellite view
-- [ ] GitHub Pages deployment (need to decide if multi-page works with Pages)
-- [ ] Step 4: Demographics overlay (population, breakdowns by county)
+- [ ] Deploy to GitHub Pages and verify all 3 pages load correctly on the live URL
+- [ ] Start entering real verified locations from county election commission websites
+- [ ] Test the full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map
+- [ ] Demographics overlay (population, voter registration breakdowns by county)
+
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
 |---|---|---|
 | Census TIGERweb Layer 0 for congressional districts | Labeled "119th Congressional Districts" but geometry not updated for TN's May 7, 2026 redistricting (Second Extraordinary Session) | 2026-07-26 |
 | unitedstates/districts GitHub repo (GeoJSON) | URLs returned empty - repo may have changed structure | 2026-07-26 |
 | Direct shapefile URL guesses from Comptroller site | 404 - shapefile triggered via JS, no direct URL | 2026-07-26 |
+| Nominatim geocoding for rural TN street addresses | Many rural roads (e.g. Lucy Black Rd, Bolivar) not in OpenStreetMap - city-center fallback implemented instead | 2026-07-26 |
 
 ## Notes
 - Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT - same service as tncot.cc/tndistrict voter lookup
 - Senate district source also available from same service: FeatureServer/8, field NEWSENATEDISTRICT
 - State House source: Census TIGERweb Legislative MapServer/2, field SLDL (still accurate - no redistricting)
-- All polling location data is PLACEHOLDER - must be verified with county election commissions before use
+- All polling location data must be verified with county election commissions before use - seed data has been cleared
 - district-report.html supports URL params: ?type=house&district=80
+- Hours are stored as formatted strings like "8:00am - 7:00pm" - dropdowns parse existing values back on edit
