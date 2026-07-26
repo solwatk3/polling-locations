@@ -563,8 +563,9 @@
       <select id="sel-type" onchange="onTypeChange()">
         <option value="">Choose type...</option>
         <option value="house">TN State House</option>
-        <option value="congressional">US Congressional</option>
         <option value="senate">TN State Senate</option>
+        <option value="congressional">US Congressional</option>
+        <option value="county">County</option>
       </select>
     </div>
 
@@ -726,8 +727,29 @@
         max: 33,
         field: "state_senate_district",
         countyNote: "Tennessee's 33 State Senate Districts"
+      },
+      county: {
+        label: "County",
+        field: "county",
+        countyNote: "Tennessee's 95 Counties"
       }
     };
+
+    // All 95 TN counties for the county dropdown
+    var TN_COUNTIES = [
+      "Anderson","Bedford","Benton","Bledsoe","Blount","Bradley","Campbell","Cannon",
+      "Carroll","Carter","Cheatham","Chester","Claiborne","Clay","Cocke","Coffee",
+      "Crockett","Cumberland","Davidson","Decatur","DeKalb","Dickson","Dyer","Fayette",
+      "Fentress","Franklin","Gibson","Giles","Grainger","Greene","Grundy","Hamblen",
+      "Hamilton","Hancock","Hardeman","Hardin","Hawkins","Haywood","Henderson","Henry",
+      "Hickman","Houston","Humphreys","Jackson","Jefferson","Johnson","Knox","Lake",
+      "Lauderdale","Lawrence","Lewis","Lincoln","Loudon","McMinn","McNairy","Macon",
+      "Madison","Marion","Marshall","Maury","Meigs","Monroe","Montgomery","Moore",
+      "Morgan","Obion","Overton","Perry","Pickett","Polk","Putnam","Rhea","Roane",
+      "Robertson","Rutherford","Scott","Sequatchie","Sevier","Shelby","Smith","Stewart",
+      "Sullivan","Sumner","Tipton","Trousdale","Unicoi","Union","Van Buren","Warren",
+      "Washington","Wayne","Weakley","White","Williamson","Wilson"
+    ];
 
     // =========================================================================
     // ALSO PULL IN ANY CUSTOM LOCATIONS SAVED IN LOCALSTORAGE
@@ -759,13 +781,24 @@
       }
 
       var cfg = DISTRICT_CONFIG[type];
-      distSel.innerHTML = "<option value=''>Select district number...</option>";
 
-      for (var i = cfg.min; i <= cfg.max; i++) {
-        var opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = cfg.label + " " + i;
-        distSel.appendChild(opt);
+      if (type === "county") {
+        // Populate with county names instead of numbers
+        distSel.innerHTML = "<option value=''>Select county...</option>";
+        TN_COUNTIES.forEach(function(c) {
+          var opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c + " County";
+          distSel.appendChild(opt);
+        });
+      } else {
+        distSel.innerHTML = "<option value=''>Select district number...</option>";
+        for (var i = cfg.min; i <= cfg.max; i++) {
+          var opt = document.createElement("option");
+          opt.value = i;
+          opt.textContent = cfg.label + " " + i;
+          distSel.appendChild(opt);
+        }
       }
 
       distSel.disabled = false;
@@ -780,11 +813,15 @@
 
       if (!type || !distNum) return;
 
-      var cfg      = DISTRICT_CONFIG[type];
-      var distStr  = String(parseInt(distNum, 10)); // normalize (remove leading zeros)
+      var cfg = DISTRICT_CONFIG[type];
+      // For county, match by name (case-insensitive). For districts, normalize to integer.
+      var distStr = (type === "county") ? distNum : String(parseInt(distNum, 10));
 
-      // Filter locations to this district
+      // Filter locations to this district or county
       var matching = ALL_LOCATIONS.filter(function(loc) {
+        if (type === "county") {
+          return (loc[cfg.field] || "").toLowerCase() === distStr.toLowerCase();
+        }
         return String(loc[cfg.field]) === distStr;
       });
 
@@ -800,7 +837,7 @@
 
       // ----- Populate header -----
       document.getElementById("rpt-title").textContent =
-        cfg.label + " " + distNum;
+        (type === "county") ? distNum + " County" : cfg.label + " " + distNum;
 
       document.getElementById("rpt-counties").textContent =
         counties.length
@@ -900,7 +937,8 @@
     (function() {
       var params = new URLSearchParams(window.location.search);
       var type   = params.get("type");
-      var dist   = params.get("district");
+      // Support both ?district=80 (numbered) and ?county=Haywood (named)
+      var dist   = params.get("district") || params.get("county");
 
       if (type && dist) {
         var typeSel = document.getElementById("sel-type");

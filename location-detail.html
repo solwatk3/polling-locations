@@ -672,7 +672,10 @@
 
       // County
       if (loc.county) {
-        document.getElementById("d-county").textContent = loc.county + " County";
+        var countyReportUrl = "district-report.html?type=county&county=" + encodeURIComponent(loc.county);
+        document.getElementById("d-county").innerHTML =
+          loc.county + " County" +
+          ' <a href="' + countyReportUrl + '" target="_blank" title="Print ' + loc.county + ' County report" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;margin-left:8px;opacity:0.8;">&#128438; Print</a>';
       } else {
         document.getElementById("d-county-row").style.display = "none";
       }
@@ -691,12 +694,22 @@
         { label: "Congressional",  val: loc.congressional_district }
       ].filter(function(d) { return d.val && d.val !== "?"; });
 
+      // Map from display label to district-report.html type param
+      var distTypeParam = {
+        "State House":   "house",
+        "State Senate":  "senate",
+        "Congressional": "congressional"
+      };
+
       var chipsEl = document.getElementById("d-districts");
       if (distDefs.length) {
         chipsEl.innerHTML = distDefs.map(function(d) {
+          var reportType = distTypeParam[d.label] || "house";
+          var reportUrl = "district-report.html?type=" + reportType + "&district=" + encodeURIComponent(d.val);
           return '<div class="dist-chip">' +
             '<span class="chip-label">' + d.label + '</span>' +
             '<span class="chip-num">D' + d.val + '</span>' +
+            '<a href="' + reportUrl + '" target="_blank" title="Print ' + d.label + ' District ' + d.val + ' report" style="font-size:0.68rem;color:var(--accent-light);text-decoration:none;margin-left:6px;opacity:0.8;" onclick="event.stopPropagation()">&#128438;</a>' +
           '</div>';
         }).join("");
       } else {
