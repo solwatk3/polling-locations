@@ -54,13 +54,26 @@
 - [x] directory.html: By District view - removed single-district dropdown, now shows all districts with locations grouped as collapsible accordions sorted numerically (2026-07-26)
 - [x] directory.html: By County view - removed county dropdown, now shows all counties with locations grouped as collapsible accordions sorted alphabetically (2026-07-26)
 
+## Done (Session 7 - 2026-07-26)
+- [x] data/polling-locations.js populated with 20 verified election day locations (Hardeman + Haywood counties) (2026-07-26)
+- [x] County names corrected on seed data entries (Davidson->Hardeman, Shelby->Hardeman, Henry->Hardeman; Whiteville/Saulsbury set to McNairy) (2026-07-26)
+- [x] Duplicate Wyatt Duke Armory entry removed from seed data (2026-07-26)
+- [x] Douglas Community Center flagged with placeholder coords and "NEEDS FIX" note in seed data (2026-07-26)
+- [x] locations.html: mergeWithSeedData() function added - imports seed data into localStorage on first load so all locations appear on GitHub Pages (2026-07-26)
+- [x] locations.html: sort arrow HTML entity fix - changed .textContent to .innerHTML so up/down arrow renders correctly instead of showing raw code (2026-07-26)
+- [x] locations.html: ?edit=ID URL param detection added - auto-opens edit panel when arriving from directory (2026-07-26)
+- [x] location-detail.html: slide-in edit panel added - full form (all fields), save to localStorage, geocoding via Nominatim, live info panel refresh after save (2026-07-26)
+- [x] directory.html: card clicks restored to navigate to location-detail.html?id= (2026-07-26)
+- [x] Fixed git push rejection caused by remote divergence (git pull + resolved merge conflict in polling-locations.js) (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Deploy to GitHub Pages and verify all 4 pages load correctly on the live URL
-- [ ] Start entering real verified locations from county election commission websites
-- [ ] Test the full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map and directory
+- [ ] Fix Douglas Community Center: look up real coordinates and district data, update seed data entry
+- [ ] Verify live GitHub Pages site: open location-detail.html for a location, confirm Edit button opens slide-in panel, test save flow
+- [ ] Start entering additional verified locations from county election commission websites
+- [ ] Test full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map and directory
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
 ## Dead Ends
