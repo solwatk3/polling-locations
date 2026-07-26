@@ -71,6 +71,7 @@
 - [x] index.html: map pins now navigate directly to location-detail.html?id= on click - popup removed (2026-07-26)
 - [x] index.html: reverted pin click to popup (restored original behavior), added "-> View Full Detail" link inside each popup pointing to location-detail.html?id= (2026-07-26)
 - [x] location-detail.html: fixed seed data delete button showing raw HTML entity - changed textContent to innerHTML so the page icon renders correctly (2026-07-26)
+- [x] location-detail.html: saving lat/lng in edit panel now immediately moves the pin on the map and pans to it - detailMap and detailMarker lifted to outer scope so save handler can call setLatLng/setView (2026-07-26)
 
 ## In Progress
 - Nothing currently

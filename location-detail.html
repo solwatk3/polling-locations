@@ -614,6 +614,10 @@
 
     var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
 
+    // Outer-scope references so the save handler can move the pin after editing
+    var detailMap    = null;
+    var detailMarker = null;
+
     // =========================================================================
     // PARSE URL: ?id=some-location-id
     // =========================================================================
@@ -763,11 +767,12 @@
       var startLng = loc.lng && loc.lng !== -86.5 ? loc.lng : -86.35;
       var hasCoords = loc.lat && loc.lat !== 35.5;
 
-      var map = L.map("detail-map", {
+      detailMap = L.map("detail-map", {
         center:          [startLat, startLng],
         zoom:            hasCoords ? 17 : 7,
         scrollWheelZoom: true
       });
+      var map = detailMap;
 
       // Street layer
       var streetLayer = L.tileLayer(
@@ -816,11 +821,12 @@
         iconAnchor: [11, 11]
       });
 
-      var marker = L.marker([lat, lng], {
+      detailMarker = L.marker([lat, lng], {
         icon:      pinIcon,
         draggable: true,
         title:     "Drag to correct position"
       }).addTo(map);
+      var marker = detailMarker;
 
       // Hide the drag hint after 4 seconds
       setTimeout(function() {
@@ -990,6 +996,13 @@
       var idx = saved.findIndex(function(l) { return l.id === loc.id; });
       if (idx !== -1) { saved[idx] = updated; } else { saved.push(updated); }
       saveCustom(saved);
+
+      // Move the pin on the map to the saved coordinates
+      if (detailMarker && !isNaN(lat) && !isNaN(lng)) {
+        detailMarker.setLatLng([lat, lng]);
+        detailMap.setView([lat, lng], 17);
+        updateCoordsDisplay(lat, lng);
+      }
 
       // Refresh the info panel with the new values and close the edit panel
       loc = updated;
