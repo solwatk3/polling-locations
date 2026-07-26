@@ -445,8 +445,14 @@
   <!-- ===== TOP BAR ===== -->
   <header class="top-bar">
     <div class="top-bar-left">
-      <a href="directory.html" class="btn-back">&#8592; Directory</a>
+      <a href="directory.html" class="btn-back" id="btn-back">&#8592; Directory</a>
       <div class="top-bar-title" id="page-title">Location Detail</div>
+    </div>
+    <!-- Prev/Next nav - only shown when a group context is present in the URL -->
+    <div id="loc-nav" style="display:none;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+      <button id="btn-prev" onclick="navToNeighbor(-1)" style="padding:4px 12px;font-size:0.8rem;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;">&#8592; Prev</button>
+      <span id="loc-nav-label" style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;"></span>
+      <button id="btn-next" onclick="navToNeighbor(1)" style="padding:4px 12px;font-size:0.8rem;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer;">Next &#8594;</button>
     </div>
     <nav class="top-bar-nav">
       <a href="index.html"     class="top-nav-link">&#128506; Map</a>
@@ -630,6 +636,72 @@
     var ALL_LOCATIONS = POLLING_LOCATIONS
       .filter(function(l) { return _deleted.indexOf(l.id) === -1; })
       .concat(loadCustom());
+
+    // =========================================================================
+    // PREV / NEXT NAVIGATION
+    // Reads ?context=house-80 (or senate-26 / congressional-8 / county-Haywood)
+    // from the URL, builds a sorted list of locations in that group, and wires
+    // the Prev/Next buttons to step through them alphabetically.
+    // =========================================================================
+    (function() {
+      var params  = new URLSearchParams(window.location.search);
+      var locId   = params.get("id");
+      var context = params.get("context"); // e.g. "house-80", "county-Haywood"
+      if (!context || !locId) return;
+
+      // Parse context string into type + value
+      var dashIdx = context.indexOf("-");
+      var ctxType = context.slice(0, dashIdx);             // "house","senate","congressional","county"
+      var ctxVal  = decodeURIComponent(context.slice(dashIdx + 1)); // "80" or "Haywood"
+
+      // Field map: context type -> location object field
+      var fieldMap = {
+        house:          "state_district",
+        senate:         "state_senate_district",
+        congressional:  "congressional_district",
+        county:         "county"
+      };
+      var field = fieldMap[ctxType];
+      if (!field) return;
+
+      // Filter to this group (case-insensitive for county), sort A-Z by name
+      var group = ALL_LOCATIONS.filter(function(l) {
+        var val = String(l[field] || "");
+        return ctxType === "county"
+          ? val.toLowerCase() === ctxVal.toLowerCase()
+          : val === String(parseInt(ctxVal, 10));
+      }).sort(function(a, b) {
+        return (a.name || "").localeCompare(b.name || "");
+      });
+
+      var idx = group.findIndex(function(l) { return l.id === locId; });
+      if (idx === -1 || group.length < 2) return;
+
+      // Show the nav bar
+      var navEl   = document.getElementById("loc-nav");
+      var prevBtn = document.getElementById("btn-prev");
+      var nextBtn = document.getElementById("btn-next");
+      var label   = document.getElementById("loc-nav-label");
+
+      navEl.style.display = "flex";
+      label.textContent   = (idx + 1) + " of " + group.length;
+      prevBtn.disabled    = idx === 0;
+      nextBtn.disabled    = idx === group.length - 1;
+      prevBtn.style.opacity = idx === 0 ? "0.35" : "1";
+      nextBtn.style.opacity = idx === group.length - 1 ? "0.35" : "1";
+
+      // Also update the back button to return to the correct directory view
+      var backEl = document.getElementById("btn-back");
+      if (backEl) backEl.href = "directory.html"; // stays as-is (directory remembers its last view)
+
+      // navToNeighbor(dir) - called by the Prev/Next button onclick attributes
+      window.navToNeighbor = function(dir) {
+        var target = group[idx + dir];
+        if (!target) return;
+        window.location.href = "location-detail.html?id=" +
+          encodeURIComponent(target.id) + "&context=" + encodeURIComponent(context);
+      };
+    })();
 
     // Outer-scope references so the save handler can move the pin after editing
     var detailMap    = null;

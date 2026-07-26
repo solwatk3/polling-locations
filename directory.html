@@ -851,7 +851,7 @@
       container.innerHTML = keys.map(function(num) {
         var locs = groups[num];
         var count = locs.length;
-        return '<div class="loc-group-section">' +
+        return '<div class="loc-group-section" data-context="' + districtType + '-' + num + '">' +
           '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
           '<span class="loc-group-arrow">&#9654;</span>' +
           typeLabel + ' District ' + num +
@@ -898,7 +898,7 @@
       container.innerHTML = keys.map(function(county) {
         var locs = groups[county];
         var count = locs.length;
-        return '<div class="loc-group-section">' +
+        return '<div class="loc-group-section" data-context="county-' + encodeURIComponent(county) + '">' +
           '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
           '<span class="loc-group-arrow">&#9654;</span>' +
           escHtml(county) + ' County' +
@@ -1141,7 +1141,13 @@
       document.getElementById(gridId).addEventListener("click", function(e) {
         var card = e.target.closest(".loc-card[data-id]");
         if (card) {
-          window.location.href = "location-detail.html?id=" + encodeURIComponent(card.getAttribute("data-id"));
+          var id  = encodeURIComponent(card.getAttribute("data-id"));
+          // Pass the group context (e.g. "house-80" or "county-Haywood") so
+          // location-detail.html can build a Prev/Next list within the same group
+          var section = card.closest("[data-context]");
+          var context = section ? section.getAttribute("data-context") : "";
+          var url = "location-detail.html?id=" + id + (context ? "&context=" + encodeURIComponent(context) : "");
+          window.location.href = url;
         }
       });
     });
