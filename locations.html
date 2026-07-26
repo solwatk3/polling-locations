@@ -1362,7 +1362,25 @@
       })
       .then(function(results) {
         if (!results || !results.length) {
-          showStatus("geocode-status", "Not found - enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          showStatus("geocode-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          // Highlight the coordinate inputs and scroll to them so the user can see where to type
+          var latInput = document.getElementById("f-lat");
+          var lngInput = document.getElementById("f-lng");
+          latInput.style.borderColor = "#f59e0b";
+          lngInput.style.borderColor = "#f59e0b";
+          setTimeout(function() {
+            latInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            latInput.focus();
+          }, 200);
+          // Clear the highlight once the user starts typing
+          function clearHighlight() {
+            latInput.style.borderColor = "";
+            lngInput.style.borderColor = "";
+            latInput.removeEventListener("input", clearHighlight);
+            lngInput.removeEventListener("input", clearHighlight);
+          }
+          latInput.addEventListener("input", clearHighlight);
+          lngInput.addEventListener("input", clearHighlight);
           return;
         }
         var isCityOnly = !!results[0]._cityOnly;

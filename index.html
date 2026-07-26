@@ -454,8 +454,11 @@
 
       var group = loc.type === "early" ? earlyLayer : electionLayer;
 
+      // Click navigates directly to the location detail page
       L.marker([lat, lng], { icon: icon, draggable: false })
-        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+        .on("click", function() {
+          window.location.href = "location-detail.html?id=" + encodeURIComponent(loc.id);
+        })
         .addTo(group);
     }
 
