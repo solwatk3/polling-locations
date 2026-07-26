@@ -507,7 +507,8 @@
       <div class="detail-footer">
         <button class="btn-danger" id="btn-delete-detail" style="margin-right:auto;">&#128465; Delete</button>
         <a id="dm-map-link" href="index.html" class="btn-secondary" style="text-decoration:none;padding:8px 16px;font-size:0.82rem;">&#128506; View on Map</a>
-        <button class="btn-primary" id="btn-close-detail-2">Close</button>
+        <a id="btn-edit-detail" href="locations.html" class="btn-primary" style="text-decoration:none;padding:8px 16px;font-size:0.82rem;">&#9998; Edit</a>
+        <button class="btn-secondary" id="btn-close-detail-2">Close</button>
       </div>
     </div>
   </div>
@@ -882,6 +883,8 @@
       }
 
       currentDetailId = id;
+      // Set Edit button to link to locations page with this ID so edit panel auto-opens
+      document.getElementById("btn-edit-detail").href = "locations.html?edit=" + encodeURIComponent(id);
       document.getElementById("detail-modal").classList.add("visible");
     }
 
@@ -929,12 +932,12 @@
     });
 
     // Event delegation - one listener per grid handles all card clicks.
-    // Navigates to the full-page detail view instead of opening a modal.
+    // Opens the detail modal so the user can view and edit without leaving the page.
     ["district-cards", "county-cards", "search-cards"].forEach(function(gridId) {
       document.getElementById(gridId).addEventListener("click", function(e) {
         var card = e.target.closest(".loc-card[data-id]");
         if (card) {
-          window.location.href = "location-detail.html?id=" + encodeURIComponent(card.getAttribute("data-id"));
+          showDetail(card.getAttribute("data-id"));
         }
       });
     });

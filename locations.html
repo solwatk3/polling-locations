@@ -973,6 +973,18 @@
 
     renderTable();
 
+    // If the URL has ?edit=ID (set by the Directory's Edit button), auto-open
+    // the edit panel for that location as soon as the page finishes rendering.
+    (function checkEditParam() {
+      var params = new URLSearchParams(window.location.search);
+      var editId = params.get("edit");
+      if (!editId) return;
+      var loc = locations.find(function(l) { return l.id === editId; });
+      if (loc) {
+        setTimeout(function() { openPanel(loc); }, 150);
+      }
+    })();
+
     // =========================================================================
     // SORT HEADERS
     // =========================================================================
