@@ -341,10 +341,12 @@
       "?where=STATE+%3D+%2747%27&outFields=NAME%2CSLDL%2CSTATE" +
       "&returnGeometry=true&geometryPrecision=4&outSR=4326&f=geojson";
 
-    // Congressional districts - Layer 0, field CD119
+    // Congressional districts - TN Comptroller FeatureServer/10, field DISTRICT
+    // Source: TN Comptroller Address Lookup (tn-cot.maps.arcgis.com)
+    // Reflects the new boundaries adopted May 7, 2026 (Second Extraordinary Session)
     var CONGRESS_URL =
-      "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0/query" +
-      "?where=STATE+%3D+%2747%27&outFields=NAME%2CCD119%2CSTATE" +
+      "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query" +
+      "?where=1%3D1&outFields=DISTRICT" +
       "&returnGeometry=true&geometryPrecision=4&outSR=4326&f=geojson";
 
     // =========================================================================
@@ -598,7 +600,7 @@
               return { color:"#a855f7", weight:2, fillColor:"#a855f7", fillOpacity:0.06, dashArray:"6,4" };
             },
             onEachFeature: function(f, layer) {
-              var num = parseInt(f.properties.CD119, 10);
+              var num = parseInt(f.properties.DISTRICT, 10);
               layer.bindTooltip("US Congressional District " + num, { sticky:true, direction:"top" });
               layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.2, weight:2.5 }); });
               layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.06, weight:2 }); });

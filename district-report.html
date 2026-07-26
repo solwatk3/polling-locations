@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TN Polling Locations - District Report</title>
+
+  <style>
+    /* =================================================================
+       BASE STYLES - light/white theme for print friendliness
+       ================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      min-height: 100vh;
+    }
+
+    /* =================================================================
+       SCREEN-ONLY: top nav bar (hidden when printing)
+       ================================================================= */
+    .screen-bar {
+      background: #1e3a5f;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .screen-bar a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .screen-bar a:hover { color: #fff; }
+
+    .screen-bar h1 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* =================================================================
+       SCREEN-ONLY: district selector controls
+       ================================================================= */
+    .selector-bar {
+      background: #fff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 16px 24px;
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .selector-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .selector-group label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+    }
+
+    .selector-group select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.88rem;
+      padding: 7px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+      color: #1a202c;
+      min-width: 200px;
+      cursor: pointer;
+    }
+    .selector-group select:focus { outline: 2px solid #2563eb; }
+
+    .btn-print {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+    .btn-print:hover { background: #1d4ed8; }
+
+    .selector-note {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      align-self: center;
+      line-height: 1.4;
+    }
+
+    /* =================================================================
+       REPORT WRAPPER
+       ================================================================= */
+    #report-wrapper {
+      max-width: 860px;
+      margin: 28px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* =================================================================
+       EMPTY / PLACEHOLDER STATE
+       ================================================================= */
+    #empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    #empty-state .big-icon { font-size: 3rem; margin-bottom: 12px; }
+    #empty-state h2 { font-size: 1.1rem; font-weight: 600; color: #64748b; margin-bottom: 6px; }
+    #empty-state p  { font-size: 0.85rem; }
+
+    /* =================================================================
+       REPORT DOCUMENT (the actual printable content)
+       ================================================================= */
+    #report-doc {
+      display: none; /* shown by JS when a district is selected */
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* ----- Report header banner ----- */
+    .report-header {
+      background: #1e3a5f;
+      padding: 28px 36px 24px;
+      color: #fff;
+    }
+
+    .report-header .state-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #93c5fd;
+      margin-bottom: 6px;
+    }
+
+    .report-header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .report-header .counties-line {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      color: #93c5fd;
+      margin-bottom: 16px;
+    }
+
+    .report-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 14px;
+      margin-top: 4px;
+    }
+
+    .report-meta-item {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: #93c5fd;
+    }
+    .report-meta-item strong {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1px;
+    }
+
+    /* ----- At a glance summary strip ----- */
+    .summary-strip {
+      background: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 16px 36px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .summary-item {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .summary-badge.total    { background: #dbeafe; color: #1e40af; }
+    .summary-badge.early    { background: #d1fae5; color: #065f46; }
+    .summary-badge.election { background: #fef3c7; color: #78350f; }
+
+    /* ----- Verify warning strip ----- */
+    .verify-strip {
+      background: #fffbeb;
+      border-bottom: 1px solid #fde68a;
+      padding: 10px 36px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ----- Report body ----- */
+    .report-body {
+      padding: 28px 36px;
+    }
+
+    /* ----- Section headers (Early Voting / Election Day) ----- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .section-dot.early    { background: #10b981; }
+    .section-dot.election { background: #f59e0b; }
+
+    .section-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      flex: 1;
+    }
+
+    .section-count {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+
+    .section-block {
+      margin-bottom: 32px;
+    }
+
+    /* ----- No locations in this section ----- */
+    .no-locations {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      padding: 18px 0;
+      text-align: center;
+      border: 1px dashed #e2e8f0;
+      border-radius: 6px;
+    }
+
+    /* ----- Location cards ----- */
+    .location-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .location-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 20px;
+      align-items: start;
+    }
+
+    .location-card.early-card    { border-left: 4px solid #10b981; }
+    .location-card.election-card { border-left: 4px solid #f59e0b; }
+
+    .location-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .location-address {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      color: #374151;
+      margin-bottom: 3px;
+    }
+
+    .location-hours {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      color: #2563eb;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .location-notes {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #b45309;
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    .location-county-tag {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 3px 9px;
+      border-radius: 12px;
+      white-space: nowrap;
+      align-self: start;
+    }
+
+    /* ----- Report footer ----- */
+    .report-footer {
+      border-top: 2px solid #e2e8f0;
+      padding: 16px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-source {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .footer-date {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* =================================================================
+       PRINT STYLES
+       Everything with class "screen-only" disappears.
+       The report document fills the page cleanly.
+       ================================================================= */
+    @media print {
+      /* Hide all screen controls */
+      .screen-bar,
+      .selector-bar,
+      #empty-state        { display: none !important; }
+
+      /* Remove page chrome */
+      body { background: #fff; }
+
+      #report-wrapper {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #report-doc {
+        display: block !important;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      /* Keep header colors in print */
+      .report-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .summary-strip { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .verify-strip  { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .location-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      /* Prevent cards from breaking across pages */
+      .location-card  { break-inside: avoid; }
+      .section-block  { break-inside: avoid-page; }
+
+      /* Force a new page before each main section if content is long */
+      .section-block + .section-block { break-before: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== SCREEN-ONLY NAV BAR ===== -->
+  <div class="screen-bar">
+    <a href="index.html">&#8592; Back to Map</a>
+    <h1>District Report</h1>
+    <span style="font-family:sans-serif;font-size:0.75rem;color:#475569;">
+      Select a district below to generate a printable report
+    </span>
+  </div>
+
+  <!-- ===== DISTRICT SELECTOR ===== -->
+  <div class="selector-bar">
+
+    <div class="selector-group">
+      <label>District Type</label>
+      <select id="sel-type" onchange="onTypeChange()">
+        <option value="">Choose type...</option>
+        <option value="house">TN State House</option>
+        <option value="congressional">US Congressional</option>
+        <option value="senate">TN State Senate</option>
+      </select>
+    </div>
+
+    <div class="selector-group">
+      <label>District Number</label>
+      <select id="sel-district" disabled onchange="generateReport()">
+        <option value="">Select type first...</option>
+      </select>
+    </div>
+
+    <button class="btn-print" onclick="window.print()" id="btn-print" style="display:none;">
+      &#128438; Print / Save as PDF
+    </button>
+
+    <div class="selector-note">
+      After printing: File > Save as PDF to share digitally.<br/>
+      Verify all data with the county election commission before distributing.
+    </div>
+
+  </div>
+
+  <!-- ===== REPORT AREA ===== -->
+  <div id="report-wrapper">
+
+    <!-- Empty state shown before a district is selected -->
+    <div id="empty-state">
+      <div class="big-icon">&#128204;</div>
+      <h2>Select a district above to generate a report</h2>
+      <p>The report will show all polling locations for that district,<br/>
+         formatted cleanly for printing or sharing as a PDF.</p>
+    </div>
+
+    <!-- The actual printable report (populated by JS) -->
+    <div id="report-doc">
+
+      <!-- Report header -->
+      <div class="report-header">
+        <div class="state-label">Tennessee Polling Locations Report</div>
+        <h1 id="rpt-title">District Name</h1>
+        <div class="counties-line" id="rpt-counties">Counties covered</div>
+        <div class="report-meta">
+          <div class="report-meta-item">
+            <strong id="rpt-total">0</strong>
+            Total Polling Sites
+          </div>
+          <div class="report-meta-item">
+            <strong id="rpt-early-count">0</strong>
+            Early Voting Sites
+          </div>
+          <div class="report-meta-item">
+            <strong id="rpt-eday-count">0</strong>
+            Election Day Sites
+          </div>
+          <div class="report-meta-item">
+            <strong id="rpt-counties-count">0</strong>
+            Counties
+          </div>
+        </div>
+      </div>
+
+      <!-- Verify warning -->
+      <div class="verify-strip">
+        &#9888;&nbsp;
+        <strong>Important:</strong>&nbsp;
+        Verify all addresses and hours with the county election commission before distributing.
+        This data may be incomplete or contain placeholder information.
+      </div>
+
+      <!-- Report body -->
+      <div class="report-body">
+
+        <!-- Early voting section -->
+        <div class="section-block" id="section-early">
+          <div class="section-header">
+            <div class="section-dot early"></div>
+            <h2>Early Voting Locations</h2>
+            <span class="section-count" id="rpt-early-label">0 sites</span>
+          </div>
+          <div class="location-cards" id="cards-early"></div>
+        </div>
+
+        <!-- Election day section -->
+        <div class="section-block" id="section-election">
+          <div class="section-header">
+            <div class="section-dot election"></div>
+            <h2>Election Day Locations</h2>
+            <span class="section-count" id="rpt-eday-label">0 sites</span>
+          </div>
+          <div class="location-cards" id="cards-election"></div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="report-footer">
+        <div class="footer-source">
+          Data source: County election commissions &amp; TN Secretary of State (tnsos.gov/elections)<br/>
+          Generated from TN Polling Locations Map &bull; Verify before distributing
+        </div>
+        <div class="footer-date" id="rpt-date"></div>
+      </div>
+
+    </div><!-- end #report-doc -->
+
+  </div><!-- end #report-wrapper -->
+
+  <!-- Base polling data (same file the map uses) -->
+  <script src="data/polling-locations.js"></script>
+
+  <script>
+    // =========================================================================
+    // DISTRICT NUMBER RANGES AND LABELS
+    // Used to populate the district number dropdown
+    // =========================================================================
+    var DISTRICT_CONFIG = {
+      house: {
+        label: "TN State House District",
+        min: 1,
+        max: 99,
+        field: "state_district",
+        countyNote: "Tennessee's 99 State House Districts"
+      },
+      congressional: {
+        label: "US Congressional District",
+        min: 1,
+        max: 9,
+        field: "congressional_district",
+        countyNote: "Tennessee's 9 Congressional Districts"
+      },
+      senate: {
+        label: "TN State Senate District",
+        min: 1,
+        max: 33,
+        field: "state_senate_district",
+        countyNote: "Tennessee's 33 State Senate Districts"
+      }
+    };
+
+    // =========================================================================
+    // ALSO PULL IN ANY CUSTOM LOCATIONS SAVED IN LOCALSTORAGE
+    // =========================================================================
+    function loadCustom() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
+      catch(e) { return []; }
+    }
+
+    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
+
+    // =========================================================================
+    // STEP 1: User picks a district type
+    // Populates the district number dropdown
+    // =========================================================================
+    function onTypeChange() {
+      var type = document.getElementById("sel-type").value;
+      var distSel = document.getElementById("sel-district");
+
+      distSel.innerHTML = "";
+      document.getElementById("btn-print").style.display = "none";
+      document.getElementById("report-doc").style.display = "none";
+      document.getElementById("empty-state").style.display = "block";
+
+      if (!type) {
+        distSel.innerHTML = "<option>Select type first...</option>";
+        distSel.disabled = true;
+        return;
+      }
+
+      var cfg = DISTRICT_CONFIG[type];
+      distSel.innerHTML = "<option value=''>Select district number...</option>";
+
+      for (var i = cfg.min; i <= cfg.max; i++) {
+        var opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = cfg.label + " " + i;
+        distSel.appendChild(opt);
+      }
+
+      distSel.disabled = false;
+    }
+
+    // =========================================================================
+    // STEP 2: User picks a district number - generate the report
+    // =========================================================================
+    function generateReport() {
+      var type     = document.getElementById("sel-type").value;
+      var distNum  = document.getElementById("sel-district").value;
+
+      if (!type || !distNum) return;
+
+      var cfg      = DISTRICT_CONFIG[type];
+      var distStr  = String(parseInt(distNum, 10)); // normalize (remove leading zeros)
+
+      // Filter locations to this district
+      var matching = ALL_LOCATIONS.filter(function(loc) {
+        return String(loc[cfg.field]) === distStr;
+      });
+
+      var earlyLocs    = matching.filter(function(l) { return l.type === "early"; });
+      var electionLocs = matching.filter(function(l) { return l.type === "election_day"; });
+
+      // Get unique counties in this district
+      var counties = [];
+      matching.forEach(function(l) {
+        if (l.county && counties.indexOf(l.county) === -1) counties.push(l.county);
+      });
+      counties.sort();
+
+      // ----- Populate header -----
+      document.getElementById("rpt-title").textContent =
+        cfg.label + " " + distNum;
+
+      document.getElementById("rpt-counties").textContent =
+        counties.length
+          ? counties.map(function(c) { return c + " County"; }).join(" • ")
+          : "No location data loaded yet for this district";
+
+      document.getElementById("rpt-total").textContent        = matching.length;
+      document.getElementById("rpt-early-count").textContent  = earlyLocs.length;
+      document.getElementById("rpt-eday-count").textContent   = electionLocs.length;
+      document.getElementById("rpt-counties-count").textContent = counties.length || "-";
+
+      // ----- Date line in footer -----
+      var now = new Date();
+      document.getElementById("rpt-date").textContent =
+        "Generated: " + now.toLocaleDateString("en-US", {
+          weekday: "long", year: "numeric", month: "long", day: "numeric"
+        });
+
+      // ----- Build location cards -----
+      document.getElementById("cards-early").innerHTML    = buildCards(earlyLocs, "early");
+      document.getElementById("cards-election").innerHTML = buildCards(electionLocs, "election");
+
+      // Section count labels
+      document.getElementById("rpt-early-label").textContent =
+        earlyLocs.length + (earlyLocs.length === 1 ? " site" : " sites");
+      document.getElementById("rpt-eday-label").textContent =
+        electionLocs.length + (electionLocs.length === 1 ? " site" : " sites");
+
+      // ----- Show the report -----
+      document.getElementById("empty-state").style.display  = "none";
+      document.getElementById("report-doc").style.display   = "block";
+      document.getElementById("btn-print").style.display    = "flex";
+    }
+
+    // =========================================================================
+    // BUILD LOCATION CARD HTML
+    // =========================================================================
+    function buildCards(locations, typeClass) {
+      if (!locations.length) {
+        return '<div class="no-locations">No ' +
+          (typeClass === "early" ? "early voting" : "election day") +
+          ' locations on file for this district yet.</div>';
+      }
+
+      return locations.map(function(loc) {
+        var notes = loc.notes
+          ? '<div class="location-notes">&#9888; ' + escHtml(loc.notes) + '</div>'
+          : "";
+
+        var hours = loc.hours
+          ? '<div class="location-hours">&#128336; ' + escHtml(loc.hours) + '</div>'
+          : '<div class="location-hours" style="color:#94a3b8;">Hours not on file - verify with election commission</div>';
+
+        var countyTag = loc.county
+          ? '<div class="location-county-tag">' + escHtml(loc.county) + ' Co.</div>'
+          : "";
+
+        return '<div class="location-card ' + typeClass + '-card">' +
+          '<div>' +
+            '<div class="location-name">' + escHtml(loc.name) + '</div>' +
+            '<div class="location-address">&#128205; ' + escHtml(loc.address || "Address not on file") + '</div>' +
+            hours +
+            notes +
+          '</div>' +
+          countyTag +
+        '</div>';
+      }).join("");
+    }
+
+    // =========================================================================
+    // ESCAPE HTML (prevent XSS from data values)
+    // =========================================================================
+    function escHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // =========================================================================
+    // AUTO-SELECT DISTRICT 80 IF URL HAS ?district=80&type=house
+    // Lets the map page link directly to a pre-populated report
+    // =========================================================================
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var type   = params.get("type");
+      var dist   = params.get("district");
+
+      if (type && dist) {
+        var typeSel = document.getElementById("sel-type");
+        typeSel.value = type;
+        onTypeChange();
+
+        var distSel = document.getElementById("sel-district");
+        distSel.value = dist;
+        generateReport();
+      }
+    })();
+  </script>
+
+</body>
+</html>
