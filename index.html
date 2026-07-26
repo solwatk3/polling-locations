@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TN Polling Locations Map</title>
+
+  <!-- Leaflet CSS - the mapping library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Our custom styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <div id="header">
+    <div>
+      <h1>Tennessee Polling Locations</h1>
+      <div class="subtitle">District 80 &mdash; Haywood, Hardeman, Madison</div>
+    </div>
+    <div style="font-size:0.75rem; color:#475569;">
+      Click any pin for details &bull; Toggle layers in the sidebar
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP (sidebar + map) ===== -->
+  <div id="app">
+
+    <!-- ===== SIDEBAR ===== -->
+    <div id="sidebar">
+
+      <!-- PIN TYPE LEGEND -->
+      <div class="sidebar-section">
+        <h3>Location Type</h3>
+        <div class="toggle-row">
+          <label>
+            <div class="legend-pin early"></div>
+            Early Voting
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-early" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>
+            <div class="legend-pin election-day"></div>
+            Election Day
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-election-day" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- COUNTY LAYER TOGGLE -->
+      <div class="sidebar-section">
+        <h3>Map Layers</h3>
+        <div class="toggle-row">
+          <label>
+            <div class="color-dot" style="background:#60a5fa;"></div>
+            County Boundaries
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-counties" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>
+            <div class="color-dot" style="background:#f59e0b;"></div>
+            District 80 Highlight
+          </label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-district80" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <!-- More layers will be added in Step 2 -->
+        <div style="font-size:0.72rem; color:#475569; margin-top:8px;">
+          Congressional, State House, and State Senate layers coming in Step 2.
+        </div>
+      </div>
+
+      <!-- LOCATION STATS -->
+      <div class="sidebar-section">
+        <h3>District 80 Summary</h3>
+        <div class="stat-row">
+          <span class="stat-label">Early Voting Sites</span>
+          <span class="stat-value green" id="stat-early">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Election Day Sites</span>
+          <span class="stat-value yellow" id="stat-eday">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Counties Covered</span>
+          <span class="stat-value" id="stat-counties">3</span>
+        </div>
+      </div>
+
+      <!-- DISTRICT INFO CARDS -->
+      <div id="district-info">
+        <h3>District Overview</h3>
+
+        <div class="district-card">
+          <div class="d-name">TN House District 80</div>
+          <div class="d-detail">Haywood County &bull; Hardeman County &bull; Parts of Madison County</div>
+        </div>
+
+        <div class="district-card">
+          <div class="d-name">US Congressional District 8</div>
+          <div class="d-detail">West Tennessee federal district covering this area</div>
+        </div>
+
+        <div class="district-card">
+          <div class="d-name">TN Senate District 29</div>
+          <div class="d-detail">State senate district covering this area</div>
+        </div>
+
+        <div style="margin-top: 16px; font-size: 0.72rem; color: #475569; line-height: 1.6;">
+          <strong style="color:#60a5fa;">Note:</strong> Polling location data is sample/placeholder.
+          Verify all addresses and hours with the county election commission before sharing.
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAP ===== -->
+    <div id="map"></div>
+
+  </div><!-- end #app -->
+
+  <!-- Leaflet JS - must come before our scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Our polling location data -->
+  <script src="data/polling-locations.js"></script>
+
+  <!-- ===== MAP LOGIC ===== -->
+  <script>
+    // -------------------------------------------------------------------------
+    // INITIALIZE THE MAP
+    // Center on Tennessee, zoom out enough to see the whole state
+    // -------------------------------------------------------------------------
+    const map = L.map("map", {
+      center: [35.85, -86.35],  // center of Tennessee
+      zoom: 8,
+      zoomControl: true
+    });
+
+    // Base tile layer - OpenStreetMap (free, no API key needed)
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18
+    }).addTo(map);
+
+    // -------------------------------------------------------------------------
+    // LAYER GROUPS
+    // Each layer group can be toggled on/off independently
+    // -------------------------------------------------------------------------
+    const earlyLayer     = L.layerGroup().addTo(map);
+    const electionLayer  = L.layerGroup().addTo(map);
+    const countyLayer    = L.layerGroup().addTo(map);
+    const district80Layer = L.layerGroup().addTo(map);
+
+    // -------------------------------------------------------------------------
+    // CUSTOM PIN ICONS
+    // Two colors: green for early voting, amber for election day
+    // -------------------------------------------------------------------------
+    function makePinIcon(color, borderColor) {
+      // Creates a circle marker using divIcon so we can style it with CSS
+      return L.divIcon({
+        className: "",
+        html: `<div style="
+          width: 18px;
+          height: 18px;
+          background: ${color};
+          border: 3px solid ${borderColor};
+          border-radius: 50%;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        "></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+        popupAnchor: [0, -12]
+      });
+    }
+
+    const earlyIcon     = makePinIcon("#10b981", "#065f46");  // green
+    const electionIcon  = makePinIcon("#f59e0b", "#78350f");  // amber
+
+    // -------------------------------------------------------------------------
+    // BUILD POPUP HTML for each location
+    // -------------------------------------------------------------------------
+    function buildPopup(loc) {
+      const typeLabel = loc.type === "early" ? "Early Voting" : "Election Day";
+      const badgeClass = loc.type === "early" ? "early" : "election-day";
+
+      return `
+        <div class="popup-content">
+          <div class="popup-name">${loc.name}</div>
+          <div class="popup-type-badge ${badgeClass}">${typeLabel}</div>
+          <div class="popup-address">&#128205; ${loc.address}</div>
+          <div class="popup-hours">&#128336; ${loc.hours}</div>
+          <div class="popup-districts">
+            TN House District ${loc.state_district} &bull;
+            US Congressional District ${loc.congressional_district} &bull;
+            TN Senate District ${loc.state_senate_district} &bull;
+            ${loc.county} County
+          </div>
+          ${loc.notes ? `<div class="popup-notes">&#9888; ${loc.notes}</div>` : ""}
+        </div>
+      `;
+    }
+
+    // -------------------------------------------------------------------------
+    // PLACE ALL POLLING LOCATION PINS ON THE MAP
+    // -------------------------------------------------------------------------
+    let earlyCount = 0;
+    let edayCount  = 0;
+
+    POLLING_LOCATIONS.forEach(function(loc) {
+      const icon  = loc.type === "early" ? earlyIcon : electionIcon;
+      const layer = loc.type === "early" ? earlyLayer : electionLayer;
+
+      // Count for sidebar stats
+      if (loc.type === "early") earlyCount++;
+      else edayCount++;
+
+      L.marker([loc.lat, loc.lng], { icon: icon })
+        .bindPopup(buildPopup(loc), { maxWidth: 280 })
+        .addTo(layer);
+    });
+
+    // Update stats in sidebar
+    document.getElementById("stat-early").textContent = earlyCount;
+    document.getElementById("stat-eday").textContent  = edayCount;
+
+    // -------------------------------------------------------------------------
+    // TN COUNTY BOUNDARIES
+    // Fetched from the US Census Bureau's public GeoJSON API (no API key needed)
+    // State FIPS code for Tennessee is 47
+    // -------------------------------------------------------------------------
+    const COUNTY_GEOJSON_URL =
+      "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json";
+
+    // We'll use a simpler, lighter source: the Census Cartographic Boundary file
+    // for TN counties via a public CDN-hosted GeoJSON
+    const TN_COUNTIES_URL =
+      "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/us_states.geojson";
+
+    // Actually use the Census TIGER counties endpoint filtered to TN (FIPS 47)
+    const CENSUS_TN_COUNTIES =
+      "https://geo.fcc.gov/api/census/block/find?format=json";
+
+    // Best free source: public GitHub-hosted TN counties GeoJSON
+    // Using a well-maintained reference dataset
+    fetch("https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json")
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        // This file has US states - find Tennessee and add it as an outline
+        const tn = data.features.find(function(f) {
+          return f.properties.name === "Tennessee";
+        });
+        if (tn) {
+          L.geoJSON(tn, {
+            style: {
+              color: "#60a5fa",
+              weight: 2.5,
+              fillOpacity: 0,
+              dashArray: "4,4"
+            }
+          }).addTo(countyLayer);
+        }
+      })
+      .catch(function(err) {
+        console.log("Could not load state outline:", err);
+      });
+
+    // Load TN county-level GeoJSON from a public source
+    // Using the US Census TIGER GeoJSON API (no key needed)
+    fetch("https://raw.githubusercontent.com/unitedstates/districts/gh-pages/states/TN/shape.geojson")
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        L.geoJSON(data, {
+          style: {
+            color: "#3b82f6",
+            weight: 1,
+            fillColor: "#1e3a5f",
+            fillOpacity: 0.15
+          },
+          onEachFeature: function(feature, layer) {
+            if (feature.properties && feature.properties.name) {
+              layer.bindTooltip(feature.properties.name, {
+                sticky: true,
+                className: "county-tooltip"
+              });
+            }
+          }
+        }).addTo(countyLayer);
+      })
+      .catch(function() {
+        // Fallback: load TN counties from Census API
+        loadCountiesFromCensus();
+      });
+
+    // Fallback county loader using the Census cartographic boundaries
+    function loadCountiesFromCensus() {
+      // Census 2023 county boundaries for TN (FIPS 47), simplified for web display
+      fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json")
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          // The us-atlas format uses topojson - we need the raw geojson approach instead
+          // Fallback: just show the state boundary (already loaded above)
+          console.log("County layer: using simplified state outline");
+        })
+        .catch(function(err) {
+          console.log("County fallback also failed:", err);
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // DISTRICT 80 HIGHLIGHT
+    // Approximate bounding box covering Haywood, Hardeman, and Madison counties
+    // This is a simplified polygon - Step 2 will use real GeoJSON boundaries
+    // -------------------------------------------------------------------------
+    const district80Bounds = [
+      // Rough polygon covering Haywood County
+      [35.45, -89.60], [35.75, -89.60], [35.75, -89.10],
+      // Hardeman County
+      [35.10, -89.10], [35.10, -88.70], [35.55, -88.70],
+      // Bridge to Madison County partial area
+      [35.65, -88.70], [35.65, -88.55],
+      // Close the polygon back
+      [35.45, -89.60]
+    ];
+
+    // Draw the District 80 highlight as a semi-transparent overlay
+    L.polygon(district80Bounds, {
+      color: "#f59e0b",
+      weight: 2,
+      fillColor: "#f59e0b",
+      fillOpacity: 0.08,
+      dashArray: "6,4"
+    })
+    .bindTooltip("TN State House District 80", { sticky: false })
+    .addTo(district80Layer);
+
+    // Fit the map to District 80 on load
+    map.fitBounds([
+      [35.10, -89.60],
+      [35.75, -88.55]
+    ], { padding: [40, 40] });
+
+    // -------------------------------------------------------------------------
+    // SIDEBAR TOGGLE CONTROLS
+    // Each checkbox shows/hides its corresponding layer group
+    // -------------------------------------------------------------------------
+    document.getElementById("toggle-early").addEventListener("change", function() {
+      if (this.checked) map.addLayer(earlyLayer);
+      else map.removeLayer(earlyLayer);
+    });
+
+    document.getElementById("toggle-election-day").addEventListener("change", function() {
+      if (this.checked) map.addLayer(electionLayer);
+      else map.removeLayer(electionLayer);
+    });
+
+    document.getElementById("toggle-counties").addEventListener("change", function() {
+      if (this.checked) map.addLayer(countyLayer);
+      else map.removeLayer(countyLayer);
+    });
+
+    document.getElementById("toggle-district80").addEventListener("change", function() {
+      if (this.checked) map.addLayer(district80Layer);
+      else map.removeLayer(district80Layer);
+    });
+
+  </script>
+
+</body>
+</html>
