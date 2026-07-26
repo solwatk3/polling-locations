@@ -578,7 +578,7 @@
 
       // Edit button - links back to locations.html (edit panel auto-opens
       // only for custom locations; seed data must be added as custom first)
-      document.getElementById("btn-edit").href = "locations.html";
+      document.getElementById("btn-edit").href = "locations.html?edit=" + encodeURIComponent(loc.id);
 
       // Delete button - only meaningful for custom locations
       var btnDelete = document.getElementById("btn-delete");
