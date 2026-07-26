@@ -1130,6 +1130,20 @@
     document.getElementById("btn-close-panel").addEventListener("click", closePanel);
     document.getElementById("panel-overlay").addEventListener("click", closePanel);
 
+    // Auto-split Google Maps coords paste: "35.6949, -88.8563" -> fills both lat + lng fields
+    ["f-lat", "f-lng"].forEach(function(id) {
+      document.getElementById(id).addEventListener("paste", function(e) {
+        var text = (e.clipboardData || window.clipboardData).getData("text").trim();
+        // Match two signed decimals separated by a comma
+        var match = text.match(/^(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)$/);
+        if (match) {
+          e.preventDefault();
+          document.getElementById("f-lat").value = parseFloat(match[1]).toFixed(6);
+          document.getElementById("f-lng").value = parseFloat(match[2]).toFixed(6);
+        }
+      });
+    });
+
     // =========================================================================
     // VOTING HOURS DROPDOWNS
     // Generates 30-min increments from 6:00am to 9:00pm.

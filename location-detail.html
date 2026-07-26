@@ -984,6 +984,19 @@
     document.getElementById("ep-cancel").addEventListener("click", closeEditPanel);
     document.getElementById("panel-overlay").addEventListener("click", closeEditPanel);
 
+    // Auto-split Google Maps coords paste: "35.6949, -88.8563" -> fills both lat + lng fields
+    ["ep-lat", "ep-lng"].forEach(function(id) {
+      document.getElementById(id).addEventListener("paste", function(e) {
+        var text = (e.clipboardData || window.clipboardData).getData("text").trim();
+        var match = text.match(/^(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)$/);
+        if (match) {
+          e.preventDefault();
+          document.getElementById("ep-lat").value = parseFloat(match[1]).toFixed(6);
+          document.getElementById("ep-lng").value = parseFloat(match[2]).toFixed(6);
+        }
+      });
+    });
+
     document.getElementById("ep-save").addEventListener("click", function() {
       var name = document.getElementById("ep-name").value.trim();
       if (!name) { alert("Location name is required."); return; }
