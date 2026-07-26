@@ -82,12 +82,19 @@
 - [x] locations.html + location-detail.html: paste Google Maps lat/lng string ("35.69, -88.85") into either coordinate field and both fields auto-fill - no manual splitting needed (2026-07-26)
 - [x] locations.html + location-detail.html: Zip Code field added to both forms (displayed alongside City); address parser now extracts and auto-fills zip from pasted full addresses; zip included in geocoding query to improve hit rate on rural/highway addresses (2026-07-26)
 
+## Done (Session 10 - 2026-07-26)
+- [x] district-report.html: layout redesigned - removed boxed cards, replaced with compact list rows with left color stripe (green=early voting, amber=election day), full address now shown in every row (street, city, TN, zip) (2026-07-26)
+- [x] location-detail.html + index.html + directory.html: seed data delete enabled - locations in POLLING_LOCATIONS can now be deleted from within the app; deleted IDs stored in tn_polling_deleted localStorage key; mergeWithSeedData() skips deleted IDs to prevent re-adding on reload (2026-07-26)
+- [x] location-detail.html: "Detect from Coords" button added to edit panel - re-runs ArcGIS district lookup using current lat/lng fields and updates House, Senate, and Congressional fields (2026-07-26)
+- [x] location-detail.html: district detection auto-triggers whenever address geocodes (passes lat/lng directly), whenever Google Maps coords are pasted (auto-split fires detection), and on manual lat/lng field change (600ms debounce) - no button click needed (2026-07-26)
+- [x] location-detail.html + directory.html: Prev/Next navigation added - clicking a card from a directory group passes context (e.g. context=house-80) in URL; detail page reads context, filters+sorts that group, shows position label ("3 of 12") and Prev/Next buttons to step through locations without returning to directory (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Fix Douglas Community Center: open in location-detail.html, click Edit, right-click the pin location in Google Maps to get coords ("What's here?"), paste the "lat, lng" string into the lat field - it will auto-split now
-- [ ] After fixing Douglas, run Export to JS from locations.html and update data/polling-locations.js so the fix is permanent
+- [ ] Fix Douglas Community Center: open in location-detail.html, click Edit, right-click pin location in Google Maps to get coords, paste into lat field - auto-splits and auto-detects districts now
+- [ ] After fixing Douglas, run Export to JS from locations.html and commit updated data/polling-locations.js to make the fix permanent
 - [ ] Start entering additional verified polling locations from county election commission websites - include zip codes for better geocoding
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
