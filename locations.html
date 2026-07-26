@@ -522,16 +522,15 @@
 
     <!-- INFO NOTICE -->
     <div class="page-notice">
-      &#8505;&nbsp; This page manages <strong>your custom locations</strong>.
-      Placeholder seed data from the data file appears on the map but is not shown here.
-      Add verified locations below - they save to your browser and appear on the map immediately.
+      &#8505;&nbsp; All polling locations are shown here. Locations from the data file load automatically.
+      Add new locations with <strong>+ Add Location</strong> - they save to your browser and appear on the map immediately.
     </div>
 
     <!-- STATS BAR -->
     <div class="stat-bar" id="stat-bar">
       <span class="stat-chip green">Early Voting: <strong id="count-early">0</strong></span>
       <span class="stat-chip amber">Election Day: <strong id="count-eday">0</strong></span>
-      <span class="stat-chip">Total Custom: <strong id="count-total">0</strong></span>
+      <span class="stat-chip">Total: <strong id="count-total">0</strong></span>
     </div>
 
     <!-- FILTER BAR -->
@@ -860,7 +859,24 @@
       return "custom-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
     }
 
-    var locations = loadCustom(); // working array for this session
+    // Merge seed data from the JS file with custom locations from localStorage.
+    // On each load, any seed items not yet in localStorage get added automatically.
+    // This ensures everything is visible in the table regardless of source.
+    function mergeWithSeedData() {
+      var stored = loadCustom();
+      var storedIds = {};
+      stored.forEach(function(l) { storedIds[l.id] = true; });
+      var seedItems = (typeof POLLING_LOCATIONS !== "undefined" ? POLLING_LOCATIONS : []);
+      var newItems = seedItems.filter(function(l) { return !storedIds[l.id]; });
+      if (newItems.length > 0) {
+        var merged = stored.concat(newItems);
+        saveCustom(merged);
+        return merged;
+      }
+      return stored;
+    }
+
+    var locations = mergeWithSeedData(); // unified working array for this session
 
     // =========================================================================
     // SORT STATE
