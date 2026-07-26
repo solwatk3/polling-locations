@@ -1318,8 +1318,14 @@
       showStatus("geocode-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
 
       // addressdetails=1 makes Nominatim return a full address breakdown including county
+      // If the address already contains state/zip (e.g. "123 Main St Jackson, TN 38305"),
+      // don't append the city field again - it produces a garbled query.
+      var addrAlreadyHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(address);
+
       function doFetch(addr) {
-        var query = addr + (city ? ", " + city : "") + ", TN";
+        var query = addrAlreadyHasLocation
+          ? addr
+          : addr + (city ? ", " + city : "") + ", TN";
         var url = "https://nominatim.openstreetmap.org/search?q=" +
           encodeURIComponent(query) + "&format=json&limit=1&countrycodes=us&addressdetails=1";
         return fetch(url, { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })

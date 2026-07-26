@@ -1041,8 +1041,11 @@
       if (!addr) return;
       epGeoTimer = setTimeout(function() {
         var city = document.getElementById("ep-city").value.trim();
+        // If address already contains state/zip, don't append city again
+        var addrHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(addr);
+        var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + ", TN";
         epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
-        fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(addr + (city ? ", " + city : "") + ", TN") +
+        fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(geoQuery) +
           "&format=json&limit=1&countrycodes=us&addressdetails=1",
           { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
         .then(function(r) { return r.json(); })
