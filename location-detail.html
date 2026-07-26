@@ -1085,10 +1085,12 @@
     // using the lat/lng currently in the ep-lat / ep-lng fields.
     // Mirrors the lookupDistricts() function in locations.html.
     // =========================================================================
-    document.getElementById("ep-detect-districts").addEventListener("click", function() {
-      var lat = parseFloat(document.getElementById("ep-lat").value);
-      var lng = parseFloat(document.getElementById("ep-lng").value);
-
+    // -------------------------------------------------------------------------
+    // epDetectDistricts(lat, lng)
+    // Fires three ArcGIS point-in-polygon queries and fills the district fields.
+    // Called by the button, after geocoding, after coord paste, and on coord blur.
+    // -------------------------------------------------------------------------
+    function epDetectDistricts(lat, lng) {
       if (isNaN(lat) || isNaN(lng)) {
         epShowStatus("ep-dist-status", "Enter coordinates first - save the address or paste lat/lng above", "#f87171", "rgba(69,10,10,0.3)");
         return;
@@ -1150,9 +1152,17 @@
           document.getElementById(id).disabled = false;
         });
       });
+    }
+
+    // Button still works as a manual trigger
+    document.getElementById("ep-detect-districts").addEventListener("click", function() {
+      epDetectDistricts(
+        parseFloat(document.getElementById("ep-lat").value),
+        parseFloat(document.getElementById("ep-lng").value)
+      );
     });
 
-    // Auto-split Google Maps coords paste: "35.6949, -88.8563" -> fills both lat + lng fields
+    // Auto-split Google Maps coords paste and immediately detect districts
     ["ep-lat", "ep-lng"].forEach(function(id) {
       document.getElementById(id).addEventListener("paste", function(e) {
         var text = (e.clipboardData || window.clipboardData).getData("text").trim();
@@ -1161,7 +1171,22 @@
           e.preventDefault();
           document.getElementById("ep-lat").value = parseFloat(match[1]).toFixed(6);
           document.getElementById("ep-lng").value = parseFloat(match[2]).toFixed(6);
+          epDetectDistricts(parseFloat(match[1]), parseFloat(match[2]));
         }
+      });
+    });
+
+    // Auto-detect on blur of individual lat/lng fields (manual entry)
+    var epCoordTimer = null;
+    ["ep-lat", "ep-lng"].forEach(function(id) {
+      document.getElementById(id).addEventListener("change", function() {
+        clearTimeout(epCoordTimer);
+        epCoordTimer = setTimeout(function() {
+          epDetectDistricts(
+            parseFloat(document.getElementById("ep-lat").value),
+            parseFloat(document.getElementById("ep-lng").value)
+          );
+        }, 600);
       });
     });
 
@@ -1255,8 +1280,10 @@
               lngInput.addEventListener("input", clearHighlight);
               return;
             }
-          document.getElementById("ep-lat").value = parseFloat(results[0].lat).toFixed(6);
-          document.getElementById("ep-lng").value = parseFloat(results[0].lon).toFixed(6);
+          var gLat = parseFloat(results[0].lat);
+          var gLng = parseFloat(results[0].lon);
+          document.getElementById("ep-lat").value = gLat.toFixed(6);
+          document.getElementById("ep-lng").value = gLng.toFixed(6);
           if (!document.getElementById("ep-county").value && results[0].address && results[0].address.county) {
             var raw = results[0].address.county.replace(/ County$/i, "").trim();
             var match = Array.from(document.getElementById("ep-county").options).find(function(o) { return o.value.toLowerCase() === raw.toLowerCase(); });
@@ -1264,6 +1291,8 @@
           }
           epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
+          // Auto-detect districts now that we have fresh coordinates
+          epDetectDistricts(gLat, gLng);
         })
         .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
       }, 800);
