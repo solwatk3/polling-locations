@@ -746,8 +746,15 @@
       try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
       catch(e) { return []; }
     }
+    function loadDeleted() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_deleted") || "[]"); }
+      catch(e) { return []; }
+    }
 
-    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
+    var _deleted = loadDeleted();
+    var ALL_LOCATIONS = POLLING_LOCATIONS
+      .filter(function(l) { return _deleted.indexOf(l.id) === -1; })
+      .concat(loadCustom().filter(function(l) { return _deleted.indexOf(l.id) === -1; }));
 
     // =========================================================================
     // STEP 1: User picks a district type

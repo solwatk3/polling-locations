@@ -614,8 +614,19 @@
     function saveCustom(arr) {
       localStorage.setItem("tn_polling_custom", JSON.stringify(arr));
     }
+    // loadDeleted: returns Set of seed IDs the user has hidden via in-app delete
+    function loadDeleted() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_deleted") || "[]"); }
+      catch(e) { return []; }
+    }
+    function saveDeleted(arr) {
+      localStorage.setItem("tn_polling_deleted", JSON.stringify(arr));
+    }
 
-    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
+    var _deleted = loadDeleted();
+    var ALL_LOCATIONS = POLLING_LOCATIONS
+      .filter(function(l) { return _deleted.indexOf(l.id) === -1; })
+      .concat(loadCustom());
 
     // Outer-scope references so the save handler can move the pin after editing
     var detailMap    = null;
@@ -745,12 +756,18 @@
           window.location.href = "directory.html";
         });
       } else {
-        // Seed data - cannot delete from this page
-        btnDelete.innerHTML    = "&#128196; Seed Data";
-        btnDelete.title        = "This is placeholder seed data - edit in data/polling-locations.js";
-        btnDelete.style.cursor = "default";
-        btnDelete.style.opacity = "0.45";
-        btnDelete.disabled     = true;
+        // Seed data - hide it by adding to the deleted list in localStorage
+        btnDelete.innerHTML = "&#128465; Delete";
+        btnDelete.addEventListener("click", function() {
+          if (!confirm('Hide "' + (loc.name || "this location") + '"? It will no longer appear in the app. (It lives in the seed data file - this hides it without editing code.)')) return;
+          var deleted = loadDeleted();
+          if (deleted.indexOf(loc.id) === -1) deleted.push(loc.id);
+          saveDeleted(deleted);
+          // Also remove from custom storage in case mergeWithSeedData already copied it there
+          var custom = loadCustom().filter(function(l) { return l.id !== loc.id; });
+          saveCustom(custom);
+          window.location.href = "directory.html";
+        });
       }
     }
 

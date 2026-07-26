@@ -861,6 +861,10 @@
     function saveCustom(arr) {
       localStorage.setItem("tn_polling_custom", JSON.stringify(arr));
     }
+    function loadDeleted() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_deleted") || "[]"); }
+      catch(e) { return []; }
+    }
     function generateId() {
       return "custom-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
     }
@@ -869,11 +873,17 @@
     // On each load, any seed items not yet in localStorage get added automatically.
     // This ensures everything is visible in the table regardless of source.
     function mergeWithSeedData() {
-      var stored = loadCustom();
+      var stored   = loadCustom();
+      var deleted  = loadDeleted();
+      // Remove any previously-deleted seed items that got into custom storage
+      stored = stored.filter(function(l) { return deleted.indexOf(l.id) === -1; });
       var storedIds = {};
       stored.forEach(function(l) { storedIds[l.id] = true; });
       var seedItems = (typeof POLLING_LOCATIONS !== "undefined" ? POLLING_LOCATIONS : []);
-      var newItems = seedItems.filter(function(l) { return !storedIds[l.id]; });
+      // Skip seed items that are already stored OR have been deleted by the user
+      var newItems = seedItems.filter(function(l) {
+        return !storedIds[l.id] && deleted.indexOf(l.id) === -1;
+      });
       if (newItems.length > 0) {
         var merged = stored.concat(newItems);
         saveCustom(merged);

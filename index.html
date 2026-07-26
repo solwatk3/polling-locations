@@ -309,9 +309,14 @@
       try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
       catch(e) { return []; }
     }
+    function loadDeleted() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_deleted") || "[]"); }
+      catch(e) { return []; }
+    }
 
     var positionOverrides = loadOverrides();
-    var customLocations   = loadCustom();
+    var _deleted          = loadDeleted();
+    var customLocations   = loadCustom().filter(function(l) { return _deleted.indexOf(l.id) === -1; });
 
     // =========================================================================
     // INITIALIZE MAP with two basemap tile layers
@@ -460,7 +465,7 @@
     }
 
     // Place all base placeholder locations
-    POLLING_LOCATIONS.forEach(function(loc) { placePin(loc, false); });
+    POLLING_LOCATIONS.filter(function(l) { return _deleted.indexOf(l.id) === -1; }).forEach(function(loc) { placePin(loc, false); });
 
     // Place all user-added custom locations
     customLocations.forEach(function(loc) { placePin(loc, true); });
