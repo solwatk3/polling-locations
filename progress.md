@@ -43,13 +43,24 @@
 - [x] Directory: Delete button in detail modal removes location from localStorage and re-renders without page reload (2026-07-26)
 - [x] All placeholder seed data cleared from data/polling-locations.js - app starts clean (2026-07-26)
 
+## Done (Session 6 - 2026-07-26)
+- [x] district-report.html: Map button added to each location card - opens Leaflet mini-map modal (satellite default, street/satellite toggle, Nominatim geocoding with fallback chain) (2026-07-26)
+- [x] locations.html: Table rows made clickable - each opens a side-by-side detail modal (info left, map right, ACC layout) (2026-07-26)
+- [x] locations.html: Purple draggable pin in detail modal - dragend saves updated lat/lng to localStorage (2026-07-26)
+- [x] location-detail.html: New full-page location detail view - map fills left side (full viewport height), info panel right (360px scrollable) (2026-07-26)
+- [x] location-detail.html: Draggable pin saves to tn_polling_custom (custom) or tn_polling_overrides (seed data) (2026-07-26)
+- [x] location-detail.html: Geocodes address via Nominatim if no coordinates stored (2026-07-26)
+- [x] directory.html: Card clicks now navigate to location-detail.html?id= instead of opening popup modal (2026-07-26)
+- [x] directory.html: By District view - removed single-district dropdown, now shows all districts with locations grouped as collapsible accordions sorted numerically (2026-07-26)
+- [x] directory.html: By County view - removed county dropdown, now shows all counties with locations grouped as collapsible accordions sorted alphabetically (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Deploy to GitHub Pages and verify all 3 pages load correctly on the live URL
+- [ ] Deploy to GitHub Pages and verify all 4 pages load correctly on the live URL
 - [ ] Start entering real verified locations from county election commission websites
-- [ ] Test the full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map
+- [ ] Test the full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map and directory
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
 ## Dead Ends

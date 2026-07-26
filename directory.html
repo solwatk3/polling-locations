@@ -168,6 +168,45 @@
       margin-left: auto;
     }
 
+    /* ===== GROUPED SECTIONS (By District / By County accordion) ===== */
+    .loc-group-section { margin-bottom: 2px; }
+    .loc-group-header {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .loc-group-header:hover { background: var(--surface-hover, #2a2a3a); }
+    .loc-group-arrow {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      display: inline-block;
+      transition: transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    .loc-group-section.open .loc-group-arrow { transform: rotate(90deg); }
+    .loc-group-header .group-count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    /* Cards hidden by default; shown when section is .open */
+    .loc-group-cards {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      padding: 12px 20px;
+    }
+    .loc-group-section.open .loc-group-cards { display: grid; }
+
     /* ===== EMPTY / NO RESULTS ===== */
     .no-results {
       text-align: center;
@@ -378,55 +417,13 @@
           <button class="type-btn" data-dtype="senate">&#127909; State Senate</button>
           <button class="type-btn" data-dtype="congress">&#127479; Congressional</button>
         </div>
-        <label style="margin-left:10px;">District #:</label>
-        <select id="district-num">
-          <!-- Options populated by JS -->
-        </select>
       </div>
       <div id="district-cards" class="card-grid"></div>
     </div>
 
     <!-- ===== BY COUNTY VIEW ===== -->
     <div id="view-county" style="display:none;">
-      <div class="selector-row">
-        <label>County:</label>
-        <select id="county-select">
-          <option value="">Select a county...</option>
-          <option>Anderson</option><option>Bedford</option><option>Benton</option>
-          <option>Bledsoe</option><option>Blount</option><option>Bradley</option>
-          <option>Campbell</option><option>Cannon</option><option>Carroll</option>
-          <option>Carter</option><option>Cheatham</option><option>Chester</option>
-          <option>Claiborne</option><option>Clay</option><option>Cocke</option>
-          <option>Coffee</option><option>Crockett</option><option>Cumberland</option>
-          <option>Davidson</option><option>Decatur</option><option>DeKalb</option>
-          <option>Dickson</option><option>Dyer</option><option>Fayette</option>
-          <option>Fentress</option><option>Franklin</option><option>Gibson</option>
-          <option>Giles</option><option>Grainger</option><option>Greene</option>
-          <option>Grundy</option><option>Hamblen</option><option>Hamilton</option>
-          <option>Hancock</option><option>Hardeman</option><option>Hardin</option>
-          <option>Hawkins</option><option>Haywood</option><option>Henderson</option>
-          <option>Henry</option><option>Hickman</option><option>Houston</option>
-          <option>Humphreys</option><option>Jackson</option><option>Jefferson</option>
-          <option>Johnson</option><option>Knox</option><option>Lake</option>
-          <option>Lauderdale</option><option>Lawrence</option><option>Lewis</option>
-          <option>Lincoln</option><option>Loudon</option><option>McMinn</option>
-          <option>McNairy</option><option>Macon</option><option>Madison</option>
-          <option>Marion</option><option>Marshall</option><option>Maury</option>
-          <option>Meigs</option><option>Monroe</option><option>Montgomery</option>
-          <option>Moore</option><option>Morgan</option><option>Obion</option>
-          <option>Overton</option><option>Perry</option><option>Pickett</option>
-          <option>Polk</option><option>Putnam</option><option>Rhea</option>
-          <option>Roane</option><option>Robertson</option><option>Rutherford</option>
-          <option>Scott</option><option>Sequatchie</option><option>Sevier</option>
-          <option>Shelby</option><option>Smith</option><option>Stewart</option>
-          <option>Sullivan</option><option>Sumner</option><option>Tipton</option>
-          <option>Trousdale</option><option>Unicoi</option><option>Union</option>
-          <option>Van Buren</option><option>Warren</option><option>Washington</option>
-          <option>Wayne</option><option>Weakley</option><option>White</option>
-          <option>Williamson</option><option>Wilson</option>
-        </select>
-      </div>
-      <div id="county-cards" class="card-grid"></div>
+      <div id="county-cards"></div>
     </div>
 
     <!-- ===== SEARCH VIEW ===== -->
@@ -605,6 +602,7 @@
         document.getElementById("view-dashboard").style.display = currentView === "dashboard" ? "" : "none";
 
         if (currentView === "district")  renderDistrict();
+        if (currentView === "county")    renderCounty();
         if (currentView === "dashboard") renderDashboard();
         if (currentView === "search")    document.getElementById("search-input").focus();
       });
@@ -614,68 +612,95 @@
     // BY DISTRICT VIEW
     // =========================================================================
     var districtType = "house"; // house | senate | congress
-    var districtNum  = "80";    // default to 80
 
-    // District ranges
-    var DISTRICT_RANGES = { house: 99, senate: 33, congress: 9 };
-
-    function populateDistrictDropdown(type, selectedNum) {
-      var max = DISTRICT_RANGES[type] || 99;
-      var sel = document.getElementById("district-num");
-      sel.innerHTML = "";
-      for (var i = 1; i <= max; i++) {
-        var opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = "District " + i;
-        if (String(i) === String(selectedNum)) opt.selected = true;
-        sel.appendChild(opt);
-      }
-    }
-
+    // Render ALL districts of the current type that have at least one location,
+    // grouped under section headers in numerical order.
     function renderDistrict() {
-      districtNum = document.getElementById("district-num").value;
       var field = districtType === "house"    ? "state_district"
                 : districtType === "senate"   ? "state_senate_district"
                 :                               "congressional_district";
-      var filtered = ALL_LOCATIONS.filter(function(loc) {
-        return String(loc[field]) === String(districtNum);
-      });
-      renderCards("district-cards", filtered,
-        (districtType === "house" ? "House" : districtType === "senate" ? "Senate" : "Congressional") +
-        " District " + districtNum + " - no locations yet");
-    }
+      var typeLabel = districtType === "house" ? "House"
+                    : districtType === "senate" ? "Senate"
+                    : "Congressional";
 
-    // Initialize
-    populateDistrictDropdown("house", "80");
+      // Build a map of district number -> locations array
+      var groups = {};
+      ALL_LOCATIONS.forEach(function(loc) {
+        var num = loc[field];
+        if (num === undefined || num === null || num === "") return;
+        if (!groups[num]) groups[num] = [];
+        groups[num].push(loc);
+      });
+
+      var keys = Object.keys(groups).sort(function(a, b) { return Number(a) - Number(b); });
+
+      var container = document.getElementById("district-cards");
+
+      if (!keys.length) {
+        container.innerHTML = '<div class="no-results"><h3>No ' + typeLabel +
+          ' districts have locations yet</h3><p>Add locations with a district assignment ' +
+          'to see them here.</p></div>';
+        return;
+      }
+
+      container.innerHTML = keys.map(function(num) {
+        var locs = groups[num];
+        var count = locs.length;
+        return '<div class="loc-group-section">' +
+          '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+          '<span class="loc-group-arrow">&#9654;</span>' +
+          typeLabel + ' District ' + num +
+          ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span></div>' +
+          '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+        '</div>';
+      }).join("");
+    }
 
     document.querySelectorAll(".type-btn[data-dtype]").forEach(function(btn) {
       btn.addEventListener("click", function() {
         districtType = this.getAttribute("data-dtype");
         document.querySelectorAll(".type-btn[data-dtype]").forEach(function(b) { b.classList.remove("active"); });
         this.classList.add("active");
-        populateDistrictDropdown(districtType, 1);
         renderDistrict();
       });
     });
 
-    document.getElementById("district-num").addEventListener("change", renderDistrict);
     renderDistrict(); // initial render
 
     // =========================================================================
     // BY COUNTY VIEW
     // =========================================================================
-    document.getElementById("county-select").addEventListener("change", function() {
-      var county = this.value;
-      if (!county) {
-        document.getElementById("county-cards").innerHTML =
-          '<div class="no-results"><h3>Select a county above</h3></div>';
+    // Render ALL counties that have at least one location, grouped alphabetically.
+    function renderCounty() {
+      var groups = {};
+      ALL_LOCATIONS.forEach(function(loc) {
+        var county = (loc.county || "").trim();
+        if (!county) return;
+        if (!groups[county]) groups[county] = [];
+        groups[county].push(loc);
+      });
+
+      var keys = Object.keys(groups).sort();
+      var container = document.getElementById("county-cards");
+
+      if (!keys.length) {
+        container.innerHTML = '<div class="no-results"><h3>No locations with county assignments yet</h3>' +
+          '<p>Add locations with a county to see them here.</p></div>';
         return;
       }
-      var filtered = ALL_LOCATIONS.filter(function(loc) {
-        return (loc.county || "").toLowerCase() === county.toLowerCase();
-      });
-      renderCards("county-cards", filtered, county + " County - no locations yet");
-    });
+
+      container.innerHTML = keys.map(function(county) {
+        var locs = groups[county];
+        var count = locs.length;
+        return '<div class="loc-group-section">' +
+          '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+          '<span class="loc-group-arrow">&#9654;</span>' +
+          escHtml(county) + ' County' +
+          ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span></div>' +
+          '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+        '</div>';
+      }).join("");
+    }
 
     // =========================================================================
     // SEARCH VIEW
@@ -890,7 +915,7 @@
 
       // Re-render whichever view is active
       if (currentView === "district")  renderDistrict();
-      else if (currentView === "county") document.getElementById("county-select").dispatchEvent(new Event("change"));
+      else if (currentView === "county") renderCounty();
       else if (currentView === "search") doSearch(document.getElementById("search-input").value);
       else if (currentView === "dashboard") renderDashboard();
     }
@@ -903,11 +928,14 @@
       if (e.target === this) closeDetail();
     });
 
-    // Event delegation - one listener per grid handles all card clicks
+    // Event delegation - one listener per grid handles all card clicks.
+    // Navigates to the full-page detail view instead of opening a modal.
     ["district-cards", "county-cards", "search-cards"].forEach(function(gridId) {
       document.getElementById(gridId).addEventListener("click", function(e) {
         var card = e.target.closest(".loc-card[data-id]");
-        if (card) showDetail(card.getAttribute("data-id"));
+        if (card) {
+          window.location.href = "location-detail.html?id=" + encodeURIComponent(card.getAttribute("data-id"));
+        }
       });
     });
 

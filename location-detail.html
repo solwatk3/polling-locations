@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Location Detail - TN Polling Locations</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    /* =================================================================
+       CSS VARIABLES - matches the dark theme in css/style.css
+       ================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:       #1a001a;
+      --primary-light: #3b0a5c;
+      --accent:        #9b30ff;
+      --accent-light:  #b96aff;
+      --bg:            #0d0d0d;
+      --surface:       #1a0a1a;
+      --surface-2:     #220f22;
+      --text:          #ffffff;
+      --text-muted:    #c4b0e0;
+      --border:        #4a2e6a;
+      --success:       #22c55e;
+      --warning:       #f59e0b;
+      --danger:        #ef4444;
+      --info:          #60a5fa;
+      --topbar-height: 56px;
+      --radius:        8px;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden; /* no page scroll - each panel scrolls independently */
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* =================================================================
+       TOP BAR
+       ================================================================= */
+    .top-bar {
+      height: var(--topbar-height);
+      background: var(--primary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 16px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-back:hover { color: var(--text); border-color: var(--accent); }
+
+    .top-bar-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 320px;
+    }
+
+    .top-bar-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .top-nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: color 0.15s, background 0.15s;
+    }
+    .top-nav-link:hover     { color: var(--text); background: var(--primary-light); }
+    .top-nav-link.active    { color: var(--accent-light); background: rgba(155,48,255,0.15); }
+
+    /* =================================================================
+       MAIN LAYOUT: map left, info right
+       Below the top bar, fills the remaining viewport height.
+       ================================================================= */
+    .detail-layout {
+      display: flex;
+      height: calc(100vh - var(--topbar-height));
+      overflow: hidden;
+    }
+
+    /* ----- LEFT: MAP ----- */
+    .detail-map-pane {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+
+    #detail-map {
+      width: 100%;
+      height: 100%;
+      background: #12001e;
+    }
+
+    /* Small "drag to adjust" hint overlay on top of the map */
+    .map-drag-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26,0,26,0.88);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 5px 14px;
+      pointer-events: none;
+      z-index: 500;
+      white-space: nowrap;
+      transition: opacity 0.4s;
+    }
+    .map-drag-hint.hidden { opacity: 0; }
+
+    /* ----- RIGHT: INFO PANEL ----- */
+    .detail-info-pane {
+      width: 360px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .detail-info-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .detail-info-scroll::-webkit-scrollbar { width: 4px; }
+    .detail-info-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* Location name + type badge at the top */
+    .detail-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .type-badge.early    { background: #064e3b; color: #6ee7b7; }
+    .type-badge.eday     { background: #78350f; color: #fde68a; }
+    .type-badge.custom   { background: #3b0a5c; color: var(--accent-light); }
+
+    /* Divider line between sections */
+    .detail-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* Each info row */
+    .detail-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .detail-label {
+      font-size: 0.64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+    .detail-value {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .detail-value.muted { color: var(--text-muted); font-style: italic; }
+
+    /* District chips */
+    .dist-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .dist-chip {
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+    .dist-chip .chip-label {
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-light);
+    }
+    .dist-chip .chip-num {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    /* Coords display */
+    .coords-value {
+      font-family: "Courier New", monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin-top: 2px;
+    }
+
+    /* Save coords confirmation message */
+    #coords-saved-msg {
+      font-size: 0.72rem;
+      color: var(--success);
+      display: none;
+      margin-top: 4px;
+    }
+
+    /* =================================================================
+       FOOTER - action buttons pinned to the bottom of the info pane
+       ================================================================= */
+    .detail-footer {
+      padding: 14px 22px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      flex: 1;
+      padding: 9px 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-light); }
+
+    .btn-secondary {
+      padding: 9px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-secondary:hover { background: var(--primary-light); color: var(--text); }
+
+    .btn-danger {
+      padding: 9px 14px;
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      border-radius: var(--radius);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-danger:hover { background: rgba(239,68,68,0.15); }
+
+    /* =================================================================
+       NOT FOUND STATE
+       ================================================================= */
+    .not-found {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 40px;
+    }
+    .not-found .icon { font-size: 3rem; }
+    .not-found h2 { color: var(--text); font-size: 1.1rem; }
+    .not-found p  { font-size: 0.85rem; line-height: 1.6; }
+
+    /* =================================================================
+       RESPONSIVE - stack on narrow screens
+       ================================================================= */
+    @media (max-width: 680px) {
+      .detail-layout { flex-direction: column; overflow-y: auto; }
+      .detail-map-pane { height: 55vw; min-height: 220px; flex: none; }
+      .detail-info-pane { width: 100%; border-left: none; border-top: 1px solid var(--border); }
+      html, body { overflow: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <a href="directory.html" class="btn-back">&#8592; Directory</a>
+      <div class="top-bar-title" id="page-title">Location Detail</div>
+    </div>
+    <nav class="top-bar-nav">
+      <a href="index.html"     class="top-nav-link">&#128506; Map</a>
+      <a href="locations.html" class="top-nav-link">&#128203; Locations</a>
+      <a href="directory.html" class="top-nav-link active">&#128196; Directory</a>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <div class="detail-layout" id="detail-layout">
+
+    <!-- LEFT: full-height Leaflet map -->
+    <div class="detail-map-pane">
+      <div id="detail-map"></div>
+      <div class="map-drag-hint" id="drag-hint">&#128205; Drag pin to correct its position</div>
+    </div>
+
+    <!-- RIGHT: info panel -->
+    <div class="detail-info-pane" id="info-pane">
+
+      <!-- Not-found fallback (hidden once a location loads) -->
+      <div class="not-found" id="not-found" style="display:none;">
+        <div class="icon">&#128205;</div>
+        <h2>Location not found</h2>
+        <p>No location matches that ID.<br/>It may have been deleted.</p>
+        <a href="directory.html" class="btn-secondary">&#8592; Back to Directory</a>
+      </div>
+
+      <!-- Info content (hidden until a location loads) -->
+      <div class="detail-info-scroll" id="info-content" style="display:none;">
+
+        <!-- Name + type badge -->
+        <div>
+          <h1 class="detail-name" id="d-name">-</h1>
+          <div id="d-type-badge"></div>
+        </div>
+
+        <hr class="detail-divider" />
+
+        <!-- Address -->
+        <div class="detail-field">
+          <div class="detail-label">Address</div>
+          <div class="detail-value" id="d-address">-</div>
+        </div>
+
+        <!-- County -->
+        <div class="detail-field" id="d-county-row">
+          <div class="detail-label">County</div>
+          <div class="detail-value" id="d-county">-</div>
+        </div>
+
+        <!-- Voting Hours -->
+        <div class="detail-field" id="d-hours-row">
+          <div class="detail-label">Voting Hours</div>
+          <div class="detail-value" id="d-hours">-</div>
+        </div>
+
+        <hr class="detail-divider" />
+
+        <!-- Districts -->
+        <div class="detail-field">
+          <div class="detail-label">Districts</div>
+          <div class="dist-chips" id="d-districts"></div>
+        </div>
+
+        <hr class="detail-divider" />
+
+        <!-- Notes -->
+        <div class="detail-field" id="d-notes-row" style="display:none;">
+          <div class="detail-label">Notes</div>
+          <div class="detail-value" id="d-notes">-</div>
+        </div>
+
+        <!-- Coordinates - updates live when pin is dragged -->
+        <div class="detail-field">
+          <div class="detail-label">Pin Coordinates</div>
+          <div class="coords-value" id="d-coords">-</div>
+          <div id="coords-saved-msg">&#10003; Position saved</div>
+        </div>
+
+      </div><!-- end #info-content -->
+
+      <!-- Footer action buttons -->
+      <div class="detail-footer" id="detail-footer" style="display:none;">
+        <button class="btn-danger" id="btn-delete">&#128465; Delete</button>
+        <a href="locations.html" class="btn-secondary" id="btn-edit">&#9998; Edit</a>
+      </div>
+
+    </div><!-- end .detail-info-pane -->
+
+  </div><!-- end .detail-layout -->
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Base polling data -->
+  <script src="data/polling-locations.js"></script>
+
+  <script>
+    // =========================================================================
+    // DATA: merge seed data + custom locations from localStorage
+    // =========================================================================
+    function loadCustom() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
+      catch(e) { return []; }
+    }
+    function saveCustom(arr) {
+      localStorage.setItem("tn_polling_custom", JSON.stringify(arr));
+    }
+
+    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
+
+    // =========================================================================
+    // PARSE URL: ?id=some-location-id
+    // =========================================================================
+    var params = new URLSearchParams(window.location.search);
+    var locId  = params.get("id");
+    var loc    = ALL_LOCATIONS.find(function(l) { return l.id === locId; });
+
+    // =========================================================================
+    // SHOW NOT FOUND if ID missing or location deleted
+    // =========================================================================
+    if (!loc) {
+      document.getElementById("not-found").style.display  = "flex";
+      document.getElementById("info-content").style.display = "none";
+      document.getElementById("detail-footer").style.display = "none";
+      // Still initialize a bare map centered on Tennessee
+      initEmptyMap();
+    } else {
+      populateInfo(loc);
+      initDetailMap(loc);
+    }
+
+    // =========================================================================
+    // POPULATE INFO PANEL
+    // =========================================================================
+    function populateInfo(loc) {
+      var isCustom = loadCustom().some(function(l) { return l.id === loc.id; });
+      var isEarly  = loc.type === "early";
+
+      // Page title (top bar)
+      document.title = (loc.name || "Location") + " - TN Polling Locations";
+      document.getElementById("page-title").textContent = loc.name || "Location";
+
+      // Name
+      document.getElementById("d-name").textContent = loc.name || "Unnamed Location";
+
+      // Type badge
+      var badgeClass = isCustom ? "custom" : (isEarly ? "early" : "eday");
+      var badgeLabel = isCustom ? "Custom" : (isEarly ? "Early Voting" : "Election Day");
+      var dot        = isCustom ? "#9b30ff" : (isEarly ? "#10b981" : "#f59e0b");
+      document.getElementById("d-type-badge").innerHTML =
+        '<span class="type-badge ' + badgeClass + '">' +
+          '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';display:inline-block;"></span>' +
+          badgeLabel +
+        '</span>';
+
+      // Address
+      var addrEl = document.getElementById("d-address");
+      addrEl.textContent = loc.address
+        ? loc.address + (loc.city ? ", " + loc.city + ", TN" : ", TN")
+        : "Address not on file";
+      if (!loc.address) addrEl.classList.add("muted");
+
+      // County
+      if (loc.county) {
+        document.getElementById("d-county").textContent = loc.county + " County";
+      } else {
+        document.getElementById("d-county-row").style.display = "none";
+      }
+
+      // Hours
+      if (loc.hours) {
+        document.getElementById("d-hours").textContent = loc.hours;
+      } else {
+        document.getElementById("d-hours-row").style.display = "none";
+      }
+
+      // Districts
+      var distDefs = [
+        { label: "State House",    val: loc.state_district },
+        { label: "State Senate",   val: loc.state_senate_district },
+        { label: "Congressional",  val: loc.congressional_district }
+      ].filter(function(d) { return d.val && d.val !== "?"; });
+
+      var chipsEl = document.getElementById("d-districts");
+      if (distDefs.length) {
+        chipsEl.innerHTML = distDefs.map(function(d) {
+          return '<div class="dist-chip">' +
+            '<span class="chip-label">' + d.label + '</span>' +
+            '<span class="chip-num">D' + d.val + '</span>' +
+          '</div>';
+        }).join("");
+      } else {
+        chipsEl.innerHTML = '<span style="font-size:0.82rem;color:var(--text-muted);">No district data on file</span>';
+      }
+
+      // Notes
+      if (loc.notes) {
+        document.getElementById("d-notes").textContent = loc.notes;
+        document.getElementById("d-notes-row").style.display = "";
+      }
+
+      // Coordinates (initial - updated live when pin is dragged)
+      updateCoordsDisplay(loc.lat, loc.lng);
+
+      // Show info + footer
+      document.getElementById("info-content").style.display  = "flex";
+      document.getElementById("detail-footer").style.display = "flex";
+
+      // Edit button - links back to locations.html (edit panel auto-opens
+      // only for custom locations; seed data must be added as custom first)
+      document.getElementById("btn-edit").href = "locations.html";
+
+      // Delete button - only meaningful for custom locations
+      var btnDelete = document.getElementById("btn-delete");
+      if (isCustom) {
+        btnDelete.addEventListener("click", function() {
+          if (!confirm('Delete "' + (loc.name || "this location") + '"? This cannot be undone.')) return;
+          var custom = loadCustom().filter(function(l) { return l.id !== loc.id; });
+          saveCustom(custom);
+          window.location.href = "directory.html";
+        });
+      } else {
+        // Seed data - cannot delete from this page
+        btnDelete.textContent  = "&#128196; Seed Data";
+        btnDelete.title        = "This is placeholder seed data - edit in data/polling-locations.js";
+        btnDelete.style.cursor = "default";
+        btnDelete.style.opacity = "0.45";
+        btnDelete.disabled     = true;
+      }
+    }
+
+    // Updates the coordinates display in the info panel
+    function updateCoordsDisplay(lat, lng) {
+      var el = document.getElementById("d-coords");
+      if (lat && lng) {
+        el.textContent = parseFloat(lat).toFixed(5) + ", " + parseFloat(lng).toFixed(5);
+      } else {
+        el.textContent = "Not set";
+      }
+    }
+
+    // =========================================================================
+    // EMPTY MAP (shown when location not found)
+    // =========================================================================
+    function initEmptyMap() {
+      var map = L.map("detail-map", { scrollWheelZoom: true })
+        .setView([35.85, -86.35], 7);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors", maxZoom: 19
+      }).addTo(map);
+    }
+
+    // =========================================================================
+    // DETAIL MAP - full-height Leaflet map with draggable pin
+    // =========================================================================
+    function initDetailMap(loc) {
+      var startLat = loc.lat && loc.lat !== 35.5 ? loc.lat : 35.85;
+      var startLng = loc.lng && loc.lng !== -86.5 ? loc.lng : -86.35;
+      var hasCoords = loc.lat && loc.lat !== 35.5;
+
+      var map = L.map("detail-map", {
+        center:          [startLat, startLng],
+        zoom:            hasCoords ? 17 : 7,
+        scrollWheelZoom: true
+      });
+
+      // Street layer
+      var streetLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }
+      );
+
+      // Satellite layer - default (useful at street level zoom)
+      var satLayer = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        { attribution: "Tiles &copy; Esri", maxZoom: 19 }
+      );
+
+      satLayer.addTo(map);
+
+      // Layer toggle top-right
+      L.control.layers(
+        { "Street": streetLayer, "Satellite": satLayer },
+        {},
+        { position: "topright", collapsed: false }
+      ).addTo(map);
+
+      // If no valid coordinates, try to geocode the address first
+      if (!hasCoords && loc.address) {
+        geocodeAndPlace(map, loc);
+        return;
+      }
+
+      if (hasCoords) {
+        placePin(map, loc, startLat, startLng);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // placePin(map, loc, lat, lng)
+    // Adds a draggable purple pin. On drag end, saves new coords to
+    // the custom locations array in localStorage and updates the display.
+    // -------------------------------------------------------------------------
+    function placePin(map, loc, lat, lng) {
+      var pinIcon = L.divIcon({
+        className: "",
+        html: '<div style="width:22px;height:22px;border-radius:50%;' +
+              'background:#9b30ff;border:3px solid #ffffff;' +
+              'box-shadow:0 2px 8px rgba(0,0,0,0.6);"></div>',
+        iconSize:   [22, 22],
+        iconAnchor: [11, 11]
+      });
+
+      var marker = L.marker([lat, lng], {
+        icon:      pinIcon,
+        draggable: true,
+        title:     "Drag to correct position"
+      }).addTo(map);
+
+      // Hide the drag hint after 4 seconds
+      setTimeout(function() {
+        var hint = document.getElementById("drag-hint");
+        if (hint) hint.classList.add("hidden");
+      }, 4000);
+
+      // Drag end - save updated coordinates
+      marker.on("dragend", function() {
+        var pos = marker.getLatLng();
+
+        // Update coords display immediately
+        updateCoordsDisplay(pos.lat, pos.lng);
+
+        // Save to custom locations in localStorage
+        var custom = loadCustom();
+        var idx    = custom.findIndex(function(l) { return l.id === loc.id; });
+        if (idx !== -1) {
+          // This is a custom location - update it directly
+          custom[idx].lat = pos.lat;
+          custom[idx].lng = pos.lng;
+          saveCustom(custom);
+        } else {
+          // Seed location - save position override in a separate key so
+          // the original data file is not modified
+          var overrides = {};
+          try { overrides = JSON.parse(localStorage.getItem("tn_polling_overrides") || "{}"); } catch(e) {}
+          overrides[loc.id] = { lat: pos.lat, lng: pos.lng };
+          localStorage.setItem("tn_polling_overrides", JSON.stringify(overrides));
+        }
+
+        // Flash the save confirmation
+        var msg = document.getElementById("coords-saved-msg");
+        msg.style.display = "block";
+        setTimeout(function() { msg.style.display = "none"; }, 2500);
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // geocodeAndPlace(map, loc)
+    // Nominatim geocode as a fallback when the location has no coordinates.
+    // -------------------------------------------------------------------------
+    function geocodeAndPlace(map, loc) {
+      var hint = document.getElementById("drag-hint");
+      if (hint) hint.textContent = "Locating address...";
+
+      var query = loc.address + (loc.city ? ", " + loc.city : "") + ", TN";
+      var url   = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
+                  encodeURIComponent(query);
+
+      fetch(url, { headers: { "Accept-Language": "en" } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data[0]) {
+            var lat = parseFloat(data[0].lat);
+            var lng = parseFloat(data[0].lon);
+            map.setView([lat, lng], 17);
+            updateCoordsDisplay(lat, lng);
+            placePin(map, loc, lat, lng);
+            if (hint) hint.textContent = "&#128205; Approximate - drag pin to correct";
+          } else {
+            if (hint) hint.textContent = "Address not found - location unknown";
+          }
+        })
+        .catch(function() {
+          if (hint) hint.textContent = "Could not geocode address";
+        });
+    }
+  </script>
+
+</body>
+</html>

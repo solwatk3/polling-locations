@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TN Polling Locations - Manage Locations</title>
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Leaflet CSS - used by the location detail mini-map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     /* ===== FILTER BAR ===== */
     .filter-bar {
@@ -318,6 +320,172 @@
     .stat-chip.amber strong { color: var(--warning); }
     .stat-chip.purple strong { color: var(--accent-light); }
 
+    /* Make table rows feel clickable */
+    .loc-table tbody tr { cursor: pointer; }
+    .loc-table tbody tr:hover td { background: rgba(155,48,255,0.08); }
+
+    /* =================================================================
+       LOCATION DETAIL MODAL - full-screen overlay
+       ================================================================= */
+    .loc-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 400;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .loc-detail-overlay.open { display: flex; }
+
+    /* Outer box - wide enough for side-by-side layout */
+    .loc-detail-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: min(820px, 96vw);
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    /* Header bar with name and close button */
+    .loc-detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--primary);
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .loc-detail-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 1.3;
+    }
+    .loc-detail-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .loc-detail-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .loc-detail-close:hover { color: var(--text); background: rgba(255,255,255,0.08); }
+
+    /* Body: info panel left, map panel right - mirrors ACC school-detail-outer */
+    .loc-detail-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Left info panel */
+    .loc-detail-info {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .loc-detail-info::-webkit-scrollbar { width: 4px; }
+    .loc-detail-info::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* Individual field rows inside the info panel */
+    .ld-field { display: flex; flex-direction: column; gap: 3px; }
+    .ld-label {
+      font-size: 0.64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+    .ld-value {
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    /* District chips row */
+    .ld-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+    .ld-chip {
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Right map panel - same style as ACC school-detail-map-wrap */
+    .loc-detail-map-wrap {
+      width: 340px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border);
+    }
+
+    /* Leaflet canvas - fills the panel */
+    #loc-detail-map-el {
+      flex: 1;
+      min-height: 260px;
+      background: #12001e;
+      z-index: 1;
+    }
+
+    /* Caption strip at the bottom of the map panel */
+    .loc-detail-map-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+
+    /* Footer: action buttons */
+    .loc-detail-footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    /* Mobile: stack map below info */
+    @media (max-width: 640px) {
+      .loc-detail-body { flex-direction: column; }
+      .loc-detail-map-wrap {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        min-height: 200px;
+      }
+      #loc-detail-map-el { min-height: 180px; }
+    }
+
     @media (max-width: 640px) {
       .right-panel { width: 100%; }
       .filter-bar { gap: 6px; }
@@ -594,6 +762,67 @@
     </div>
   </div>
 
+  <!-- ===== LOCATION DETAIL MODAL =====
+       Opens when a table row is clicked.
+       Shows location info on the left and a Leaflet mini-map on the right.
+       Mirrors the ACC school-detail layout.
+  ===== -->
+  <div id="loc-detail-modal" class="loc-detail-overlay" onclick="if(event.target===this)closeDetailModal()">
+    <div class="loc-detail-box">
+
+      <!-- Header -->
+      <div class="loc-detail-header">
+        <div>
+          <div class="loc-detail-title" id="ldm-name">Location</div>
+          <div class="loc-detail-subtitle" id="ldm-county"></div>
+        </div>
+        <button class="loc-detail-close" onclick="closeDetailModal()" title="Close">&#10005;</button>
+      </div>
+
+      <!-- Body: info left, map right -->
+      <div class="loc-detail-body">
+
+        <!-- Left: info fields -->
+        <div class="loc-detail-info">
+          <div class="ld-field">
+            <div class="ld-label">Type</div>
+            <div class="ld-value" id="ldm-type"></div>
+          </div>
+          <div class="ld-field">
+            <div class="ld-label">Address</div>
+            <div class="ld-value" id="ldm-address"></div>
+          </div>
+          <div class="ld-field">
+            <div class="ld-label">Voting Hours</div>
+            <div class="ld-value" id="ldm-hours"></div>
+          </div>
+          <div class="ld-field">
+            <div class="ld-label">Districts</div>
+            <div class="ld-chips" id="ldm-districts"></div>
+          </div>
+          <div class="ld-field" id="ldm-notes-row" style="display:none;">
+            <div class="ld-label">Notes</div>
+            <div class="ld-value" id="ldm-notes"></div>
+          </div>
+        </div>
+
+        <!-- Right: Leaflet mini-map -->
+        <div class="loc-detail-map-wrap">
+          <div id="loc-detail-map-el"></div>
+          <div class="loc-detail-map-note" id="ldm-map-note">Loading map...</div>
+        </div>
+
+      </div>
+
+      <!-- Footer actions -->
+      <div class="loc-detail-footer">
+        <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
+        <button class="btn-primary" id="ldm-edit-btn" onclick="editFromDetail()">&#9998; Edit</button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ===== EXPORT MODAL ===== -->
   <div class="export-modal" id="export-modal">
     <div class="export-box">
@@ -612,6 +841,8 @@
   </div>
 
   <script src="data/polling-locations.js"></script>
+  <!-- Leaflet JS - for the location detail mini-map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     // =========================================================================
     // DATA LAYER
@@ -691,13 +922,15 @@
             loc.state_senate_district ? '<span class="dist-pill">S' + loc.state_senate_district + '</span>' : '',
             loc.congressional_district ? '<span class="dist-pill">C' + loc.congressional_district + '</span>' : ''
           ].join('');
-          return '<tr>' +
+          // Clicking the row opens the detail modal; Edit/Delete stop propagation so
+          // they don't also trigger the row click
+          return '<tr onclick="openDetailModal(\'' + loc.id + '\')">' +
             '<td class="cell-name">' + escHtml(loc.name || "Unnamed") + '</td>' +
             '<td>' + escHtml(loc.county || "-") + '</td>' +
             '<td>' + typeBadge + '</td>' +
             '<td>' + (dists || '<span style="color:#555;">-</span>') + '</td>' +
             '<td style="font-size:0.75rem;">' + escHtml(loc.hours || "-") + '</td>' +
-            '<td class="cell-actions">' +
+            '<td class="cell-actions" onclick="event.stopPropagation()">' +
               '<button class="btn-secondary" style="padding:4px 10px;font-size:0.73rem;" onclick="editLocation(\'' + loc.id + '\')">Edit</button>' +
               '<button class="btn-danger" style="padding:4px 10px;font-size:0.73rem;" onclick="deleteLocation(\'' + loc.id + '\')">Delete</button>' +
             '</td>' +
@@ -1272,6 +1505,264 @@
         document.getElementById("btn-copy-code").innerHTML = "&#128203; Copy to Clipboard";
       }, 2000);
     });
+
+    // =========================================================================
+    // LOCATION DETAIL MODAL
+    // Opens when a table row is clicked. Populates info fields and launches
+    // a Leaflet mini-map at zoom 17 with satellite default - same pattern as
+    // the ACC school-detail-map.
+    // =========================================================================
+
+    var detailMapInstance  = null;  // single Leaflet instance, replaced each open
+    var detailGeoCache     = {};    // in-memory cache so addresses don't re-geocode
+    var currentDetailLocId = null;  // id of the location currently shown
+
+    // -------------------------------------------------------------------------
+    // openDetailModal(id) - called by the row onclick
+    // -------------------------------------------------------------------------
+    function openDetailModal(id) {
+      var loc = locations.find(function(l) { return l.id === id; });
+      if (!loc) return;
+
+      currentDetailLocId = id;
+
+      // Populate info fields
+      document.getElementById("ldm-name").textContent   = loc.name || "Unnamed Location";
+      document.getElementById("ldm-county").textContent = loc.county ? loc.county + " County" : "";
+
+      var typeLabel = loc.type === "early" ? "Early Voting" : "Election Day";
+      document.getElementById("ldm-type").textContent = typeLabel;
+
+      document.getElementById("ldm-address").textContent =
+        loc.address
+          ? loc.address + (loc.city ? ", " + loc.city : "")
+          : "Address not on file";
+
+      document.getElementById("ldm-hours").textContent = loc.hours || "Hours not on file";
+
+      // District chips
+      var chipsEl = document.getElementById("ldm-districts");
+      var chips = [
+        { label: "House",    val: loc.state_district, pre: "H" },
+        { label: "Senate",   val: loc.state_senate_district, pre: "S" },
+        { label: "Congress", val: loc.congressional_district, pre: "C" }
+      ].filter(function(d) { return d.val && d.val !== "?"; })
+       .map(function(d) {
+         return '<span class="ld-chip">' + d.label + ' ' + d.val + '</span>';
+       });
+      chipsEl.innerHTML = chips.length
+        ? chips.join("")
+        : '<span style="font-size:0.8rem;color:var(--text-muted);">Not set</span>';
+
+      // Notes
+      var notesRow = document.getElementById("ldm-notes-row");
+      if (loc.notes) {
+        document.getElementById("ldm-notes").textContent = loc.notes;
+        notesRow.style.display = "";
+      } else {
+        notesRow.style.display = "none";
+      }
+
+      // Show the modal
+      document.getElementById("loc-detail-modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+
+      // Destroy any previous map instance
+      if (detailMapInstance) {
+        detailMapInstance.remove();
+        detailMapInstance = null;
+      }
+      document.getElementById("loc-detail-map-el").innerHTML = "";
+
+      // Kick off geocoding / map render
+      if (loc.lat && loc.lng && loc.lat !== 35.5) {
+        // We already have valid coordinates - skip geocoding and render immediately
+        renderDetailMap({ lat: loc.lat, lng: loc.lng }, loc.address || loc.name, false);
+      } else if (loc.address) {
+        document.getElementById("ldm-map-note").textContent = "Finding location...";
+        var key = (loc.address + (loc.city || "")).trim().toLowerCase();
+        if (detailGeoCache[key]) {
+          renderDetailMap(detailGeoCache[key], loc.address, detailGeoCache[key].fallback);
+        } else {
+          geocodeForDetail(loc.address, loc.city || "", key);
+        }
+      } else {
+        document.getElementById("ldm-map-note").textContent = "No address on file - map unavailable.";
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // closeDetailModal()
+    // -------------------------------------------------------------------------
+    function closeDetailModal() {
+      document.getElementById("loc-detail-modal").classList.remove("open");
+      document.body.style.overflow = "";
+      if (detailMapInstance) {
+        detailMapInstance.remove();
+        detailMapInstance = null;
+      }
+      currentDetailLocId = null;
+    }
+
+    // Escape key closes the detail modal
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeDetailModal();
+    });
+
+    // -------------------------------------------------------------------------
+    // editFromDetail() - opens the edit panel from inside the detail modal
+    // -------------------------------------------------------------------------
+    function editFromDetail() {
+      var id = currentDetailLocId;
+      closeDetailModal();
+      if (id) editLocation(id);
+    }
+
+    // -------------------------------------------------------------------------
+    // geocodeForDetail(address, city, cacheKey)
+    // Nominatim geocoding with fallback chain - same approach as ACC.
+    // -------------------------------------------------------------------------
+    function geocodeForDetail(address, city, cacheKey) {
+      var parts = address.split(",").map(function(p) { return p.trim(); });
+      var zip   = (parts[parts.length - 1] || "").replace(/^TN\s*/i, "").trim();
+
+      var attempts = [
+        { query: address + (city ? ", " + city : "") + ", TN", fallback: false }
+      ];
+      if (city) attempts.push({ query: city + ", TN", fallback: true });
+      if (zip && /^\d{5}$/.test(zip)) attempts.push({ query: zip, fallback: true });
+
+      runDetailAttempts(attempts, 0, cacheKey, address);
+    }
+
+    function runDetailAttempts(attempts, idx, cacheKey, address) {
+      if (idx >= attempts.length) {
+        document.getElementById("ldm-map-note").textContent =
+          "Location not found - address could not be geocoded.";
+        return;
+      }
+
+      var url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
+                encodeURIComponent(attempts[idx].query);
+
+      fetch(url, { headers: { "Accept-Language": "en" } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data[0]) {
+            var coords = {
+              lat:      parseFloat(data[0].lat),
+              lng:      parseFloat(data[0].lon),
+              fallback: attempts[idx].fallback
+            };
+            detailGeoCache[cacheKey] = coords;
+            renderDetailMap(coords, address, attempts[idx].fallback);
+          } else {
+            setTimeout(function() {
+              runDetailAttempts(attempts, idx + 1, cacheKey, address);
+            }, 1100);
+          }
+        })
+        .catch(function() {
+          setTimeout(function() {
+            runDetailAttempts(attempts, idx + 1, cacheKey, address);
+          }, 1100);
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // renderDetailMap(coords, address, isFallback)
+    // Creates the Leaflet map at zoom 17 with satellite default and pin.
+    // Mirrors initSchoolDetailMap from the ACC project.
+    // -------------------------------------------------------------------------
+    function renderDetailMap(coords, address, isFallback) {
+      var mapEl = document.getElementById("loc-detail-map-el");
+
+      // Create Leaflet map - scroll-wheel zoom off to avoid page scroll conflicts
+      detailMapInstance = L.map("loc-detail-map-el", {
+        zoomControl:     true,
+        scrollWheelZoom: false,
+        dragging:        true
+      }).setView([coords.lat, coords.lng], 17);
+
+      // Street layer
+      var streetLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }
+      );
+
+      // Satellite layer (Esri World Imagery) - default at street level
+      var satLayer = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        { attribution: "Tiles &copy; Esri", maxZoom: 19 }
+      );
+
+      satLayer.addTo(detailMapInstance); // satellite on by default
+
+      L.control.layers(
+        { "Street": streetLayer, "Satellite": satLayer },
+        {},
+        { position: "topright", collapsed: false }
+      ).addTo(detailMapInstance);
+
+      // Purple pin - matches the app's accent color
+      var pinIcon = L.divIcon({
+        className: "",
+        html: '<div style="width:20px;height:20px;border-radius:50%;' +
+              'background:#9b30ff;border:3px solid #ffffff;' +
+              'box-shadow:0 2px 6px rgba(0,0,0,0.5);"></div>',
+        iconSize:   [20, 20],
+        iconAnchor: [10, 10]
+      });
+
+      var noteEl = document.getElementById("ldm-map-note");
+
+      // Draggable marker - user can correct the pin position
+      var marker = L.marker([coords.lat, coords.lng], {
+        icon:      pinIcon,
+        draggable: true,
+        title:     "Drag to correct position"
+      }).addTo(detailMapInstance);
+
+      // On drag end, save the new coordinates to the location in localStorage
+      marker.on("dragend", function() {
+        var pos = marker.getLatLng();
+        var id  = currentDetailLocId;
+        if (!id) return;
+
+        // Update the in-memory array and persist to localStorage
+        var idx = locations.findIndex(function(l) { return l.id === id; });
+        if (idx !== -1) {
+          locations[idx].lat = pos.lat;
+          locations[idx].lng = pos.lng;
+          saveCustom(locations);
+        }
+
+        // Also update the geocode cache so reopening uses the new position
+        var locObj = locations[idx];
+        if (locObj && locObj.address) {
+          var cacheKey = (locObj.address + (locObj.city || "")).trim().toLowerCase();
+          detailGeoCache[cacheKey] = { lat: pos.lat, lng: pos.lng, fallback: false };
+        }
+
+        // Brief confirmation in the caption strip
+        var original = noteEl.innerHTML;
+        noteEl.innerHTML  = "&#10003; Position saved!";
+        noteEl.style.color = "var(--success, #10b981)";
+        setTimeout(function() {
+          noteEl.innerHTML   = original;
+          noteEl.style.color = "";
+        }, 2500);
+      });
+
+      // Update caption strip
+      if (isFallback) {
+        noteEl.innerHTML = "&#9432; Approximate - drag pin to correct position.";
+        noteEl.style.color = "var(--warning)";
+      } else {
+        noteEl.innerHTML = "&#128205; " + escHtml(address || "") + " &nbsp;&middot;&nbsp; <span style='opacity:0.6;'>Drag pin to adjust</span>";
+        noteEl.style.color = "";
+      }
+    }
 
   </script>
 </body>
