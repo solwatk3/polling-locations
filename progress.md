@@ -66,14 +66,19 @@
 - [x] directory.html: card clicks restored to navigate to location-detail.html?id= (2026-07-26)
 - [x] Fixed git push rejection caused by remote divergence (git pull + resolved merge conflict in polling-locations.js) (2026-07-26)
 
+## Done (Session 8 - 2026-07-26)
+- [x] location-detail.html + locations.html: when geocoding fails, edit form now auto-scrolls to lat/lng fields, highlights them amber, and focuses lat input so user knows exactly where to enter manual coordinates (2026-07-26)
+- [x] index.html: map pins now navigate directly to location-detail.html?id= on click - popup removed (2026-07-26)
+- [x] index.html: reverted pin click to popup (restored original behavior), added "-> View Full Detail" link inside each popup pointing to location-detail.html?id= (2026-07-26)
+- [x] location-detail.html: fixed seed data delete button showing raw HTML entity - changed textContent to innerHTML so the page icon renders correctly (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Fix Douglas Community Center: look up real coordinates and district data, update seed data entry
-- [ ] Verify live GitHub Pages site: open location-detail.html for a location, confirm Edit button opens slide-in panel, test save flow
+- [ ] Fix Douglas Community Center: open it in location-detail.html, click Edit, get real coordinates from Google Maps (right-click pin -> "What's here?"), enter lat/lng manually into the now-highlighted fields, save
+- [ ] After fixing Douglas, run Export to JS from locations.html and update data/polling-locations.js so the fix is permanent
 - [ ] Start entering additional verified locations from county election commission websites
-- [ ] Test full add-location flow end to end: address parse -> geocode -> district detect -> save -> appears on map and directory
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
 ## Dead Ends

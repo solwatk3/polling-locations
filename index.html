@@ -431,8 +431,8 @@
         '</div>' +
         (loc.notes ? '<div class="popup-notes">&#9888; ' + loc.notes + '</div>' : '') +
         '<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">' +
-          '<a href="directory.html" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;">' +
-            '&#128196; Browse in Directory' +
+          '<a href="location-detail.html?id=' + encodeURIComponent(loc.id) + '" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:700;">' +
+            '&#8594; View Full Detail' +
           '</a>' +
         '</div>' +
       '</div>';
@@ -454,11 +454,8 @@
 
       var group = loc.type === "early" ? earlyLayer : electionLayer;
 
-      // Click navigates directly to the location detail page
       L.marker([lat, lng], { icon: icon, draggable: false })
-        .on("click", function() {
-          window.location.href = "location-detail.html?id=" + encodeURIComponent(loc.id);
-        })
+        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
         .addTo(group);
     }
 
