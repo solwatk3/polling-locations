@@ -987,6 +987,16 @@
     document.getElementById("ep-save").addEventListener("click", function() {
       var name = document.getElementById("ep-name").value.trim();
       if (!name) { alert("Location name is required."); return; }
+
+      // Duplicate check - same name (case-insensitive), excluding the record being edited
+      var nameLower = name.toLowerCase();
+      var duplicate = ALL_LOCATIONS.find(function(l) {
+        return l.name.toLowerCase() === nameLower && l.id !== loc.id;
+      });
+      if (duplicate) {
+        alert('A location named "' + duplicate.name + '" already exists. Use a different name or edit the existing entry.');
+        return;
+      }
       var lat = parseFloat(document.getElementById("ep-lat").value);
       var lng = parseFloat(document.getElementById("ep-lng").value);
       var updated = {

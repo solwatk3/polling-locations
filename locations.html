@@ -1095,6 +1095,16 @@
         lng:                    isNaN(lng) ? -86.5 : lng
       };
 
+      // Duplicate check - same name (case-insensitive), excluding the record being edited
+      var nameLower = name.toLowerCase();
+      var duplicate = locations.find(function(l) {
+        return l.name.toLowerCase() === nameLower && l.id !== editingId;
+      });
+      if (duplicate) {
+        alert('A location named "' + duplicate.name + '" already exists. Use a different name or edit the existing entry.');
+        return;
+      }
+
       if (editingId) {
         // Replace existing
         var idx = locations.findIndex(function(l) { return l.id === editingId; });
