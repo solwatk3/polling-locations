@@ -549,7 +549,10 @@
     <div class="ep-body">
       <div class="fp-group"><label>Location Name *</label><input type="text" id="ep-name" /></div>
       <div class="fp-group"><label>Street Address</label><input type="text" id="ep-address" /><div id="ep-geo-status" class="inline-status"></div></div>
-      <div class="fp-group"><label>City</label><input type="text" id="ep-city" /></div>
+      <div style="display:flex;gap:12px;">
+        <div class="fp-group" style="flex:2;"><label>City</label><input type="text" id="ep-city" /></div>
+        <div class="fp-group" style="flex:1;"><label>Zip Code</label><input type="text" id="ep-zip" maxlength="10" /></div>
+      </div>
       <div class="fp-group">
         <label>County</label>
         <select id="ep-county">
@@ -666,7 +669,7 @@
       // Address
       var addrEl = document.getElementById("d-address");
       addrEl.textContent = loc.address
-        ? loc.address + (loc.city ? ", " + loc.city + ", TN" : ", TN")
+        ? loc.address + (loc.city ? ", " + loc.city : "") + (loc.zip ? " " + loc.zip : "") + ", TN"
         : "Address not on file";
       if (!loc.address) addrEl.classList.add("muted");
 
@@ -955,6 +958,7 @@
       document.getElementById("ep-name").value    = locObj.name    || "";
       document.getElementById("ep-address").value = locObj.address || "";
       document.getElementById("ep-city").value    = locObj.city    || "";
+      document.getElementById("ep-zip").value     = locObj.zip     || "";
       document.getElementById("ep-county").value  = locObj.county  || "";
       document.getElementById("ep-notes").value   = locObj.notes   || "";
       document.getElementById("ep-house").value   = locObj.state_district            || "";
@@ -1016,6 +1020,7 @@
         id: loc.id, name: name,
         address: document.getElementById("ep-address").value.trim(),
         city: document.getElementById("ep-city").value.trim(),
+        zip: document.getElementById("ep-zip").value.trim(),
         county: document.getElementById("ep-county").value,
         type: document.querySelector('input[name="ep-type"]:checked').value,
         state_district: document.getElementById("ep-house").value    || "?",
@@ -1054,9 +1059,10 @@
       if (!addr) return;
       epGeoTimer = setTimeout(function() {
         var city = document.getElementById("ep-city").value.trim();
+        var zip  = document.getElementById("ep-zip").value.trim();
         // If address already contains state/zip, don't append city again
         var addrHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(addr);
-        var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + ", TN";
+        var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
         epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
         fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(geoQuery) +
           "&format=json&limit=1&countrycodes=us&addressdetails=1",

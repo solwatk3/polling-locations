@@ -73,13 +73,22 @@
 - [x] location-detail.html: fixed seed data delete button showing raw HTML entity - changed textContent to innerHTML so the page icon renders correctly (2026-07-26)
 - [x] location-detail.html: saving lat/lng in edit panel now immediately moves the pin on the map and pans to it - detailMap and detailMarker lifted to outer scope so save handler can call setLatLng/setView (2026-07-26)
 
+## Done (Session 9 - 2026-07-26)
+- [x] district-report.html: extended to support all 4 report types - House, Senate, Congressional, and County - including full 95-county list, county-based filtering, and correct URL params (?type=county&county=Haywood) (2026-07-26)
+- [x] directory.html: Print Report link added to every accordion header (By District and By County views) - opens district-report.html with correct params in a new tab, does not toggle accordion (2026-07-26)
+- [x] location-detail.html: print icon added to each district chip linking to that district's report; Print link added next to county field linking to county report (2026-07-26)
+- [x] locations.html + location-detail.html: duplicate location name check added to both save handlers - blocks save and alerts if another location already has the same name (case-insensitive) (2026-07-26)
+- [x] locations.html + location-detail.html: geocoder fixed to not append city field when the address already contains state/zip - was producing garbled Nominatim queries for addresses pasted with city+state+zip included (2026-07-26)
+- [x] locations.html + location-detail.html: paste Google Maps lat/lng string ("35.69, -88.85") into either coordinate field and both fields auto-fill - no manual splitting needed (2026-07-26)
+- [x] locations.html + location-detail.html: Zip Code field added to both forms (displayed alongside City); address parser now extracts and auto-fills zip from pasted full addresses; zip included in geocoding query to improve hit rate on rural/highway addresses (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Fix Douglas Community Center: open it in location-detail.html, click Edit, get real coordinates from Google Maps (right-click pin -> "What's here?"), enter lat/lng manually into the now-highlighted fields, save
+- [ ] Fix Douglas Community Center: open in location-detail.html, click Edit, right-click the pin location in Google Maps to get coords ("What's here?"), paste the "lat, lng" string into the lat field - it will auto-split now
 - [ ] After fixing Douglas, run Export to JS from locations.html and update data/polling-locations.js so the fix is permanent
-- [ ] Start entering additional verified locations from county election commission websites
+- [ ] Start entering additional verified polling locations from county election commission websites - include zip codes for better geocoding
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
 ## Dead Ends
@@ -89,11 +98,14 @@
 | unitedstates/districts GitHub repo (GeoJSON) | URLs returned empty - repo may have changed structure | 2026-07-26 |
 | Direct shapefile URL guesses from Comptroller site | 404 - shapefile triggered via JS, no direct URL | 2026-07-26 |
 | Nominatim geocoding for rural TN street addresses | Many rural roads (e.g. Lucy Black Rd, Bolivar) not in OpenStreetMap - city-center fallback implemented instead | 2026-07-26 |
+| Nominatim geocoding for "Hwy 45 Bypass" in Jackson, TN | Highway bypass not mapped under that name in OSM - need to enter coordinates manually from Google Maps | 2026-07-26 |
 
 ## Notes
 - Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT - same service as tncot.cc/tndistrict voter lookup
 - Senate district source also available from same service: FeatureServer/8, field NEWSENATEDISTRICT
 - State House source: Census TIGERweb Legislative MapServer/2, field SLDL (still accurate - no redistricting)
-- All polling location data must be verified with county election commissions before use - seed data has been cleared
-- district-report.html supports URL params: ?type=house&district=80
+- All polling location data must be verified with county election commissions before use
+- district-report.html supports URL params: ?type=house&district=80, ?type=senate&district=26, ?type=congressional&district=8, ?type=county&county=Haywood
 - Hours are stored as formatted strings like "8:00am - 7:00pm" - dropdowns parse existing values back on edit
+- Google Maps lat/lng can be pasted directly into either coordinate field - "35.694966, -88.856304" auto-splits into both fields
+- Zip code is now stored on every location record and included in geocoding queries
