@@ -1132,12 +1132,12 @@
     });
 
     // Event delegation - one listener per grid handles all card clicks.
-    // Opens the detail modal so the user can view and edit without leaving the page.
+    // Navigates to the full-page detail view with the satellite map.
     ["district-cards", "county-cards", "search-cards"].forEach(function(gridId) {
       document.getElementById(gridId).addEventListener("click", function(e) {
         var card = e.target.closest(".loc-card[data-id]");
         if (card) {
-          showDetail(card.getAttribute("data-id"));
+          window.location.href = "location-detail.html?id=" + encodeURIComponent(card.getAttribute("data-id"));
         }
       });
     });
