@@ -3,290 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TN Polling Locations Map</title>
+  <title>TN Polling Locations - Map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    .layer-status { font-size:0.72rem; margin-top:4px; padding:3px 6px; border-radius:4px; }
-    .layer-status.loading { color:#60a5fa; background:#1e3a5f; }
-    .layer-status.loaded  { color:#10b981; background:#064e3b; }
-    .layer-status.error   { color:#f87171; background:#450a0a; }
-    .d80-badge { display:inline-block; background:#f59e0b; color:#1a1a2e; font-size:0.68rem; font-weight:700; padding:1px 6px; border-radius:3px; margin-left:6px; }
-  </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <div id="header">
-    <div>
-      <h1>Tennessee Polling Locations</h1>
-      <div class="subtitle">All 99 State House Districts &bull; 9 Congressional Districts &bull; 95 Counties</div>
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+      <span class="app-title">TN Polling Locations</span>
     </div>
-    <div style="font-size:0.75rem;color:#475569;">
-      Click pin for details &bull; Drag pin to reposition &bull; Hover district for number
-    </div>
-  </div>
+    <nav class="top-nav">
+      <a href="index.html" class="top-nav-link active">&#128506; Map</a>
+      <a href="locations.html" class="top-nav-link">&#128203; Locations</a>
+      <a href="directory.html" class="top-nav-link">&#128196; Directory</a>
+    </nav>
+  </header>
 
-  <!-- ===== APP LAYOUT ===== -->
-  <div id="app">
+  <!-- ===== SIDEBAR (slide-out overlay) ===== -->
+  <nav id="sidebar" class="sidebar">
 
-    <!-- ===== SIDEBAR ===== -->
-    <div id="sidebar">
-
-      <!-- Normal sidebar content -->
-      <div id="sidebar-main">
-
-        <!-- MANAGE LOCATIONS -->
-        <div class="sidebar-section">
-          <h3>Manage Locations</h3>
-          <button id="btn-add-location">&#43; Add New Location</button>
-          <button id="btn-export">&#8659; Export to JS file</button>
-        </div>
-
-        <!-- PIN TYPE TOGGLES -->
-        <div class="sidebar-section">
-          <h3>Polling Locations</h3>
-          <div class="toggle-row">
-            <label><div class="legend-pin early"></div>Early Voting</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-early" checked />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="toggle-row">
-            <label><div class="legend-pin election-day"></div>Election Day</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-election-day" checked />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div style="font-size:0.72rem;color:#475569;margin-top:6px;">
-            Pins stay visible regardless of which district layer is active.
-          </div>
-        </div>
-
-        <!-- DISTRICT BOUNDARY LAYER TOGGLES -->
-        <div class="sidebar-section">
-          <h3>District Layers</h3>
-
-          <div class="toggle-row">
-            <label><div class="color-dot" style="background:#f59e0b;"></div>State House Districts</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-house" checked />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div id="status-house" class="layer-status loading">Loading all 99 districts...</div>
-
-          <div class="toggle-row" style="margin-top:10px;">
-            <label><div class="color-dot" style="background:#a855f7;"></div>Congressional Districts</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-congress" />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div id="status-congress" class="layer-status loading">Off by default - toggle to load</div>
-
-          <div class="toggle-row" style="margin-top:10px;">
-            <label><div class="color-dot" style="background:#60a5fa;"></div>TN Counties</label>
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-counties" checked />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div id="status-counties" class="layer-status loading">Loading 95 counties...</div>
-        </div>
-
-        <!-- STATS -->
-        <div class="sidebar-section">
-          <h3>District 80 Summary <span class="d80-badge">D-80</span></h3>
-          <div class="stat-row">
-            <span class="stat-label">Early Voting Sites</span>
-            <span class="stat-value green" id="stat-early">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Election Day Sites</span>
-            <span class="stat-value yellow" id="stat-eday">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Custom Pins Added</span>
-            <span class="stat-value" id="stat-custom">0</span>
-          </div>
-        </div>
-
-        <!-- DISTRICT INFO CARDS -->
-        <div id="district-info">
-          <h3>District Overview</h3>
-          <div class="district-card">
-            <div class="d-name">TN House District 80</div>
-            <div class="d-detail">Haywood &bull; Hardeman &bull; Parts of Madison</div>
-          </div>
-          <div class="district-card">
-            <div class="d-name">US Congressional District 8</div>
-            <div class="d-detail">West Tennessee federal district</div>
-          </div>
-          <div class="district-card">
-            <div class="d-name">TN Senate District 29</div>
-            <div class="d-detail">West Tennessee state senate district</div>
-          </div>
-          <div style="margin-top:10px;font-size:0.72rem;color:#f87171;line-height:1.6;background:#1a0a0a;padding:8px;border-radius:4px;border:1px solid #450a0a;">
-            <strong>Verify all data</strong> with county election commissions before use.
-          </div>
-        </div>
-      </div><!-- end #sidebar-main -->
-
-      <!-- ADD LOCATION FORM PANEL (replaces sidebar-main when open) -->
-      <div id="add-panel">
-        <div class="add-panel-header">
-          <h3>Add New Location</h3>
-          <button class="btn-back" id="btn-cancel-add">&#8592; Back</button>
-        </div>
-
-        <div class="form-body">
-
-          <!-- Location name -->
-          <div class="form-group">
-            <label>Location Name *</label>
-            <input type="text" id="f-name" placeholder="e.g. Haywood County Election Commission" />
-          </div>
-
-          <!-- Address -->
-          <div class="form-group">
-            <label>Street Address *</label>
-            <input type="text" id="f-address" placeholder="123 Main St" />
-          </div>
-
-          <!-- City -->
-          <div class="form-group">
-            <label>City</label>
-            <input type="text" id="f-city" placeholder="Brownsville" />
-          </div>
-
-          <!-- County -->
-          <div class="form-group">
-            <label>County</label>
-            <select id="f-county">
-              <option value="">Select county...</option>
-              <option>Anderson</option><option>Bedford</option><option>Benton</option>
-              <option>Bledsoe</option><option>Blount</option><option>Bradley</option>
-              <option>Campbell</option><option>Cannon</option><option>Carroll</option>
-              <option>Carter</option><option>Cheatham</option><option>Chester</option>
-              <option>Claiborne</option><option>Clay</option><option>Cocke</option>
-              <option>Coffee</option><option>Crockett</option><option>Cumberland</option>
-              <option>Davidson</option><option>Decatur</option><option>DeKalb</option>
-              <option>Dickson</option><option>Dyer</option><option>Fayette</option>
-              <option>Fentress</option><option>Franklin</option><option>Gibson</option>
-              <option>Giles</option><option>Grainger</option><option>Greene</option>
-              <option>Grundy</option><option>Hamblen</option><option>Hamilton</option>
-              <option>Hancock</option><option selected>Hardeman</option><option>Hardin</option>
-              <option>Hawkins</option><option>Haywood</option><option>Henderson</option>
-              <option>Henry</option><option>Hickman</option><option>Houston</option>
-              <option>Humphreys</option><option>Jackson</option><option>Jefferson</option>
-              <option>Johnson</option><option>Knox</option><option>Lake</option>
-              <option>Lauderdale</option><option>Lawrence</option><option>Lewis</option>
-              <option>Lincoln</option><option>Loudon</option><option>McMinn</option>
-              <option>McNairy</option><option>Macon</option><option>Madison</option>
-              <option>Marion</option><option>Marshall</option><option>Maury</option>
-              <option>Meigs</option><option>Monroe</option><option>Montgomery</option>
-              <option>Moore</option><option>Morgan</option><option>Obion</option>
-              <option>Overton</option><option>Perry</option><option>Pickett</option>
-              <option>Polk</option><option>Putnam</option><option>Rhea</option>
-              <option>Roane</option><option>Robertson</option><option>Rutherford</option>
-              <option>Scott</option><option>Sequatchie</option><option>Sevier</option>
-              <option>Shelby</option><option>Smith</option><option>Stewart</option>
-              <option>Sullivan</option><option>Sumner</option><option>Tipton</option>
-              <option>Trousdale</option><option>Unicoi</option><option>Union</option>
-              <option>Van Buren</option><option>Warren</option><option>Washington</option>
-              <option>Wayne</option><option>Weakley</option><option>White</option>
-              <option>Williamson</option><option>Wilson</option>
-            </select>
-          </div>
-
-          <!-- Location type -->
-          <div class="form-group">
-            <label>Type *</label>
-            <div class="type-radios">
-              <label class="type-radio selected-early" id="radio-early">
-                <input type="radio" name="loc-type" value="early" checked />
-                &#11044; Early Voting
-              </label>
-              <label class="type-radio" id="radio-election">
-                <input type="radio" name="loc-type" value="election_day" />
-                &#11044; Election Day
-              </label>
-            </div>
-          </div>
-
-          <!-- District numbers -->
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-            <div class="form-group">
-              <label>House Dist.</label>
-              <input type="number" id="f-house" placeholder="80" value="80" min="1" max="99" />
-            </div>
-            <div class="form-group">
-              <label>Congress Dist.</label>
-              <input type="number" id="f-congress" placeholder="8" value="8" min="1" max="9" />
-            </div>
-            <div class="form-group">
-              <label>Senate Dist.</label>
-              <input type="number" id="f-senate" placeholder="29" value="29" min="1" max="33" />
-            </div>
-          </div>
-
-          <!-- Hours -->
-          <div class="form-group">
-            <label>Hours</label>
-            <input type="text" id="f-hours" placeholder="7am-7pm (Election Day only)" />
-          </div>
-
-          <!-- Notes -->
-          <div class="form-group">
-            <label>Notes / Verify</label>
-            <textarea id="f-notes" placeholder="Any notes about this location..."></textarea>
-          </div>
-
-          <!-- Place on map button -->
-          <div class="form-group">
-            <label>Map Position *</label>
-            <button id="btn-place-pin">&#128205; Click here, then click the map to place pin</button>
-            <div id="coords-display" class="coords-display"></div>
-          </div>
-
-        </div><!-- end .form-body -->
-
-        <div class="form-actions">
-          <button class="btn-cancel-form" id="btn-form-cancel">Cancel</button>
-          <button class="btn-save" id="btn-save-location" disabled>Save Location</button>
-        </div>
-      </div><!-- end #add-panel -->
-
-    </div><!-- end #sidebar -->
-
-    <!-- ===== MAP ===== -->
-    <div id="map">
-      <!-- Placement mode hint overlay -->
-      <div id="placement-hint">&#128205; Click anywhere on the map to place the pin</div>
-      <!-- Toast notification -->
-      <div id="toast"></div>
+    <div class="sidebar-header">
+      <span class="sidebar-title">Map Controls</span>
+      <button class="close-sidebar" id="close-sidebar">&#10005;</button>
     </div>
 
-  </div><!-- end #app -->
+    <div id="sidebar-main">
 
-  <!-- Export modal -->
-  <div id="export-modal">
-    <div class="export-box">
-      <h3>Export to polling-locations.js</h3>
-      <p>
-        Copy everything below and paste it into <code>data/polling-locations.js</code>
-        to make your added locations and repositioned pins permanent.
-        Replace the entire file contents with this code.
-      </p>
-      <textarea id="export-code" readonly></textarea>
-      <div class="export-actions">
-        <button class="btn-close-export" id="btn-close-export">Close</button>
-        <button class="btn-copy-code" id="btn-copy-code">Copy to Clipboard</button>
+      <!-- BASEMAP TOGGLE -->
+      <div class="sidebar-section">
+        <h3>Basemap</h3>
+        <div class="basemap-toggle">
+          <button id="btn-street" class="basemap-btn active">&#128739; Street</button>
+          <button id="btn-satellite" class="basemap-btn">&#127759; Satellite</button>
+        </div>
       </div>
-    </div>
+
+      <!-- PIN TYPE TOGGLES -->
+      <div class="sidebar-section">
+        <h3>Polling Locations</h3>
+        <div class="toggle-row">
+          <label><div class="legend-pin early"></div>Early Voting</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-early" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label><div class="legend-pin election-day"></div>Election Day</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-election-day" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
+          Pins stay visible regardless of which district layer is active.
+        </div>
+      </div>
+
+      <!-- DISTRICT BOUNDARY LAYER TOGGLES -->
+      <div class="sidebar-section">
+        <h3>District Layers</h3>
+
+        <div class="toggle-row">
+          <label><div class="color-dot" style="background:#f59e0b;"></div>State House Districts</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-house" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="status-house" class="layer-status loading">Loading all 99 districts...</div>
+
+        <div class="toggle-row" style="margin-top:10px;">
+          <label><div class="color-dot" style="background:#a855f7;"></div>Congressional Districts</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-congress" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="status-congress" class="layer-status loading">Off by default - toggle to load</div>
+
+        <div class="toggle-row" style="margin-top:10px;">
+          <label><div class="color-dot" style="background:#f472b6;"></div>State Senate Districts</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-senate" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="status-senate" class="layer-status loading">Off by default - toggle to load</div>
+
+        <div class="toggle-row" style="margin-top:10px;">
+          <label><div class="color-dot" style="background:#60a5fa;"></div>TN Counties</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-counties" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div id="status-counties" class="layer-status loading">Loading 95 counties...</div>
+      </div>
+
+      <!-- STATS -->
+      <div class="sidebar-section">
+        <h3>District 80 Summary <span class="d80-badge">D-80</span></h3>
+        <div class="stat-row">
+          <span class="stat-label">Early Voting Sites</span>
+          <span class="stat-value green" id="stat-early">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Election Day Sites</span>
+          <span class="stat-value yellow" id="stat-eday">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Custom Locations Added</span>
+          <span class="stat-value" id="stat-custom">0</span>
+        </div>
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div class="sidebar-section">
+        <h3>Quick Links</h3>
+        <a href="locations.html" class="sidebar-nav-link">&#128203; Add / Edit Locations</a>
+        <a href="directory.html" class="sidebar-nav-link">&#128196; Browse Directory</a>
+        <a href="district-report.html?type=house&district=80" target="_blank" class="sidebar-nav-link">&#128438; District 80 Report</a>
+      </div>
+
+      <!-- DISTRICT INFO CARDS -->
+      <div id="district-info">
+        <h3>District Overview</h3>
+        <div class="district-card">
+          <div class="d-name">TN House District 80</div>
+          <div class="d-detail">Haywood &bull; Hardeman &bull; Parts of Madison</div>
+        </div>
+        <div class="district-card">
+          <div class="d-name">US Congressional District 8</div>
+          <div class="d-detail">West Tennessee federal district</div>
+        </div>
+        <div class="district-card">
+          <div class="d-name">TN Senate District 29</div>
+          <div class="d-detail">West Tennessee state senate district</div>
+        </div>
+        <div style="margin-top:10px;font-size:0.72rem;color:#f87171;line-height:1.6;background:rgba(239,68,68,0.08);padding:8px;border-radius:4px;border:1px solid rgba(239,68,68,0.2);">
+          <strong>Verify all data</strong> with county election commissions before use.
+        </div>
+      </div>
+
+    </div><!-- end #sidebar-main -->
+  </nav>
+
+  <!-- Dims the map when sidebar is open -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <!-- ===== MAP (full screen below top bar) ===== -->
+  <div id="map">
+    <div id="toast"></div>
   </div>
 
   <!-- Leaflet -->
@@ -328,7 +199,7 @@
     };
 
     // =========================================================================
-    // CENSUS API URLS
+    // CENSUS / COMPTROLLER API URLS
     // =========================================================================
     var COUNTIES_URL =
       "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/13/query" +
@@ -342,52 +213,60 @@
       "&returnGeometry=true&geometryPrecision=4&outSR=4326&f=geojson";
 
     // Congressional districts - TN Comptroller FeatureServer/10, field DISTRICT
-    // Source: TN Comptroller Address Lookup (tn-cot.maps.arcgis.com)
-    // Reflects the new boundaries adopted May 7, 2026 (Second Extraordinary Session)
+    // Reflects new boundaries from May 7, 2026 (Second Extraordinary Session)
     var CONGRESS_URL =
       "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query" +
       "?where=1%3D1&outFields=DISTRICT" +
       "&returnGeometry=true&geometryPrecision=4&outSR=4326&f=geojson";
 
+    // State Senate districts - TN Comptroller FeatureServer/8, field NEWSENATEDISTRICT
+    var SENATE_URL =
+      "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/8/query" +
+      "?where=1%3D1&outFields=NEWSENATEDISTRICT" +
+      "&returnGeometry=true&geometryPrecision=4&outSR=4326&f=geojson";
+
     // =========================================================================
-    // LOCALSTORAGE HELPERS
-    // tn_polling_overrides  - position overrides: { "loc-id": {lat, lng} }
-    // tn_polling_custom     - user-added locations: [ {...} ]
+    // LOCALSTORAGE - READ ONLY on the map page
+    // tn_polling_overrides: { "loc-id": { lat, lng } }
+    // tn_polling_custom:    [ { ...location objects... } ]
     // =========================================================================
     function loadOverrides() {
       try { return JSON.parse(localStorage.getItem("tn_polling_overrides") || "{}"); }
       catch(e) { return {}; }
     }
-    function saveOverrides(obj) {
-      localStorage.setItem("tn_polling_overrides", JSON.stringify(obj));
-    }
     function loadCustom() {
       try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
       catch(e) { return []; }
-    }
-    function saveCustom(arr) {
-      localStorage.setItem("tn_polling_custom", JSON.stringify(arr));
     }
 
     var positionOverrides = loadOverrides();
     var customLocations   = loadCustom();
 
     // =========================================================================
-    // INITIALIZE MAP
+    // INITIALIZE MAP with two basemap tile layers
     // =========================================================================
     var map = L.map("map", { center: [35.85, -86.35], zoom: 7 });
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    // Street view - default
+    var streetTiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 18
     }).addTo(map);
 
-    // Layer groups - pins and boundaries are fully independent
+    // Satellite view - ESRI World Imagery (free, no key needed)
+    var satelliteTiles = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: 'Imagery &copy; Esri',
+        maxZoom: 19
+    });
+
+    // Layer groups - pins and boundaries stay fully independent
     var earlyLayer    = L.layerGroup().addTo(map);
     var electionLayer = L.layerGroup().addTo(map);
     var countyLayer   = L.layerGroup().addTo(map);
     var houseLayer    = L.layerGroup().addTo(map);
     var congressLayer = L.layerGroup(); // off by default
+    var senateLayer   = L.layerGroup(); // off by default
 
     // =========================================================================
     // PIN ICONS
@@ -397,13 +276,13 @@
         className: "",
         html: '<div style="width:18px;height:18px;background:' + color +
               ';border:3px solid ' + border +
-              ';border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.5);cursor:grab;"></div>',
+              ';border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.5);"></div>',
         iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -14]
       });
     }
     var earlyIcon    = makePinIcon("#10b981", "#065f46");
     var electionIcon = makePinIcon("#f59e0b", "#78350f");
-    var customIcon   = makePinIcon("#a855f7", "#6b21a8"); // purple for custom-added pins
+    var customIcon   = makePinIcon("#a855f7", "#6b21a8");
 
     // =========================================================================
     // TOAST HELPER
@@ -416,7 +295,7 @@
     }
 
     // =========================================================================
-    // STATUS LABEL HELPER
+    // STATUS LABEL HELPER (for layer load messages)
     // =========================================================================
     function setStatus(id, type, msg) {
       var el = document.getElementById(id);
@@ -425,47 +304,43 @@
     }
 
     // =========================================================================
-    // BUILD POPUP HTML
-    // Includes current coordinates and a drag hint
+    // BUILD POPUP HTML (view-only - info display, no edit controls)
     // =========================================================================
-    function buildPopup(loc, currentLat, currentLng, isCustom) {
+    function buildPopup(loc, isCustom) {
       var typeLabel  = loc.type === "early" ? "Early Voting" : "Election Day";
       var badgeClass = loc.type === "early" ? "early" : "election-day";
-      var isOverridden = positionOverrides[loc.id];
-      var lat = currentLat.toFixed(5);
-      var lng = currentLng.toFixed(5);
-
       return '<div class="popup-content">' +
-        '<div class="popup-name">' + loc.name + (isCustom ? ' <small style="color:#a855f7;">(custom)</small>' : '') + '</div>' +
+        '<div class="popup-name">' + (loc.name || "Unnamed") +
+          (isCustom ? ' <small style="color:var(--accent-light);">(custom)</small>' : '') +
+        '</div>' +
         '<div class="popup-type-badge ' + badgeClass + '">' + typeLabel + '</div>' +
-        '<div class="popup-address">&#128205; ' + loc.address + (loc.city ? ', ' + loc.city : '') + '</div>' +
-        '<div class="popup-hours">&#128336; ' + (loc.hours || 'Hours not set') + '</div>' +
+        '<div class="popup-address">&#128205; ' + (loc.address || "Address not set") +
+          (loc.city ? ', ' + loc.city : '') + '</div>' +
+        '<div class="popup-hours">&#128336; ' + (loc.hours || "Hours not set") + '</div>' +
         '<div class="popup-districts">' +
-          'House Dist. ' + (loc.state_district || '?') + ' &bull; ' +
-          'Congress Dist. ' + (loc.congressional_district || '?') + ' &bull; ' +
-          'Senate Dist. ' + (loc.state_senate_district || '?') + ' &bull; ' +
+          'House ' + (loc.state_district || '?') + ' &bull; ' +
+          'Senate ' + (loc.state_senate_district || '?') + ' &bull; ' +
+          'Congress ' + (loc.congressional_district || '?') + ' &bull; ' +
           (loc.county || '') + ' County' +
         '</div>' +
         (loc.notes ? '<div class="popup-notes">&#9888; ' + loc.notes + '</div>' : '') +
-        '<div class="popup-coords">' +
-          (isOverridden ? '&#10003; Repositioned: ' : 'Position: ') +
-          lat + ', ' + lng +
+        '<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">' +
+          '<a href="directory.html" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;">' +
+            '&#128196; Browse in Directory' +
+          '</a>' +
         '</div>' +
-        '<div class="popup-drag-hint">&#8645; Drag this pin to reposition it accurately</div>' +
       '</div>';
     }
 
     // =========================================================================
-    // PLACE A SINGLE PIN ON THE MAP
-    // All pins are draggable. On drag-end, save new position to localStorage.
+    // PLACE A PIN ON THE MAP (read-only - no dragging on this page)
     // =========================================================================
     function placePin(loc, isCustom) {
-      // Apply any saved position override
+      // Apply any saved position override (from when user repositioned via locations page)
       var override = positionOverrides[loc.id];
       var lat = override ? override.lat : loc.lat;
       var lng = override ? override.lng : loc.lng;
 
-      // Pick icon based on type
       var icon;
       if (isCustom)                  icon = customIcon;
       else if (loc.type === "early") icon = earlyIcon;
@@ -473,44 +348,25 @@
 
       var group = loc.type === "early" ? earlyLayer : electionLayer;
 
-      var marker = L.marker([lat, lng], { icon: icon, draggable: true })
-        .bindPopup(buildPopup(loc, lat, lng, isCustom), { maxWidth: 300 });
-
-      // When drag finishes, save new position and update popup
-      marker.on("dragend", function(e) {
-        var newPos = e.target.getLatLng();
-        positionOverrides[loc.id] = { lat: newPos.lat, lng: newPos.lng };
-        saveOverrides(positionOverrides);
-
-        // Rebuild popup with updated coordinates
-        marker.setPopupContent(buildPopup(loc, newPos.lat, newPos.lng, isCustom));
-        showToast("Pin repositioned and saved!");
-      });
-
-      marker.addTo(group);
-      return marker;
+      L.marker([lat, lng], { icon: icon, draggable: false })
+        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+        .addTo(group);
     }
 
-    // =========================================================================
-    // PLACE ALL BASE LOCATIONS
-    // =========================================================================
+    // Place all base placeholder locations
     var earlyCount = 0, edayCount = 0;
     POLLING_LOCATIONS.forEach(function(loc) {
       placePin(loc, false);
       if (loc.type === "early") earlyCount++; else edayCount++;
     });
 
-    // =========================================================================
-    // PLACE ALL CUSTOM (user-added) LOCATIONS
-    // =========================================================================
-    function refreshCustomStat() {
-      document.getElementById("stat-custom").textContent = customLocations.length;
-    }
-
+    // Place all user-added custom locations
     customLocations.forEach(function(loc) { placePin(loc, true); });
-    document.getElementById("stat-early").textContent = earlyCount;
-    document.getElementById("stat-eday").textContent  = edayCount;
-    refreshCustomStat();
+
+    // Update the stats panel
+    document.getElementById("stat-early").textContent  = earlyCount;
+    document.getElementById("stat-eday").textContent   = edayCount;
+    document.getElementById("stat-custom").textContent = customLocations.length;
 
     // =========================================================================
     // LOAD TN COUNTY BOUNDARIES
@@ -540,7 +396,7 @@
               L.geoJSON(tn, {
                 style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
                 onEachFeature: function(f, layer) {
-                  var fips = String(f.id).padStart(5,"0");
+                  var fips = String(f.id).padStart(5, "0");
                   layer.bindTooltip((TN_COUNTY_NAMES[fips] || fips) + " County", { sticky:true, direction:"top" });
                 }
               }).addTo(countyLayer);
@@ -551,8 +407,7 @@
     }
 
     // =========================================================================
-    // LOAD TN STATE HOUSE DISTRICTS (all 99)
-    // District 80 gets a stronger highlight
+    // LOAD STATE HOUSE DISTRICTS (all 99 - district 80 gets stronger highlight)
     // =========================================================================
     function loadHouseDistricts() {
       fetch(HOUSE_URL)
@@ -582,8 +437,7 @@
     }
 
     // =========================================================================
-    // LOAD CONGRESSIONAL DISTRICTS (9 in TN)
-    // Loaded on demand when the toggle is first turned on
+    // LOAD CONGRESSIONAL DISTRICTS (9 in TN, on demand)
     // =========================================================================
     var congressLoaded = false;
 
@@ -596,9 +450,7 @@
           var count = data.features ? data.features.length : 0;
           if (!count) throw new Error("Empty");
           L.geoJSON(data, {
-            style: function() {
-              return { color:"#a855f7", weight:2, fillColor:"#a855f7", fillOpacity:0.06, dashArray:"6,4" };
-            },
+            style: function() { return { color:"#a855f7", weight:2, fillColor:"#a855f7", fillOpacity:0.06, dashArray:"6,4" }; },
             onEachFeature: function(f, layer) {
               var num = parseInt(f.properties.DISTRICT, 10);
               layer.bindTooltip("US Congressional District " + num, { sticky:true, direction:"top" });
@@ -615,16 +467,63 @@
         });
     }
 
+    // =========================================================================
+    // LOAD STATE SENATE DISTRICTS (33 in TN, on demand)
+    // =========================================================================
+    var senateLoaded = false;
+
+    function loadSenateDistricts() {
+      if (senateLoaded) return;
+      setStatus("status-senate", "loading", "Loading 33 senate districts...");
+      fetch(SENATE_URL)
+        .then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function(data) {
+          var count = data.features ? data.features.length : 0;
+          if (!count) throw new Error("Empty");
+          L.geoJSON(data, {
+            style: function() { return { color:"#f472b6", weight:2, fillColor:"#f472b6", fillOpacity:0.06, dashArray:"4,4" }; },
+            onEachFeature: function(f, layer) {
+              var num = parseInt(f.properties.NEWSENATEDISTRICT, 10);
+              layer.bindTooltip("TN Senate District " + num, { sticky:true, direction:"top" });
+              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.2, weight:2.5 }); });
+              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.06, weight:2 }); });
+            }
+          }).addTo(senateLayer);
+          senateLoaded = true;
+          setStatus("status-senate", "loaded", count + " senate districts loaded");
+        })
+        .catch(function(err) {
+          setStatus("status-senate", "error", "Could not load - check connection");
+          console.error("Senate districts:", err);
+        });
+    }
+
     // Start loading counties and house districts immediately
     loadCounties();
     loadHouseDistricts();
 
-    // Fit map to TN on load
+    // Fit map to show all of Tennessee on load
     map.fitBounds([[34.98, -90.31], [36.68, -81.65]], { padding:[30, 30] });
 
     // =========================================================================
-    // SIDEBAR TOGGLE CONTROLS
-    // Pin toggles and district toggles are completely independent
+    // BASEMAP TOGGLE
+    // =========================================================================
+    document.getElementById("btn-street").addEventListener("click", function() {
+      if (map.hasLayer(satelliteTiles)) map.removeLayer(satelliteTiles);
+      if (!map.hasLayer(streetTiles)) streetTiles.addTo(map);
+      document.getElementById("btn-street").classList.add("active");
+      document.getElementById("btn-satellite").classList.remove("active");
+    });
+
+    document.getElementById("btn-satellite").addEventListener("click", function() {
+      if (map.hasLayer(streetTiles)) map.removeLayer(streetTiles);
+      if (!map.hasLayer(satelliteTiles)) satelliteTiles.addTo(map);
+      document.getElementById("btn-satellite").classList.add("active");
+      document.getElementById("btn-street").classList.remove("active");
+    });
+
+    // =========================================================================
+    // LAYER TOGGLE EVENT LISTENERS (pins and boundaries are fully independent)
     // =========================================================================
     document.getElementById("toggle-early").addEventListener("change", function() {
       if (this.checked) map.addLayer(earlyLayer); else map.removeLayer(earlyLayer);
@@ -640,216 +539,35 @@
     });
     document.getElementById("toggle-congress").addEventListener("change", function() {
       if (this.checked) {
-        loadCongressionalDistricts(); // loads on first toggle only
+        loadCongressionalDistricts(); // loads data only on first toggle
         map.addLayer(congressLayer);
       } else {
         map.removeLayer(congressLayer);
       }
     });
+    document.getElementById("toggle-senate").addEventListener("change", function() {
+      if (this.checked) {
+        loadSenateDistricts(); // loads data only on first toggle
+        map.addLayer(senateLayer);
+      } else {
+        map.removeLayer(senateLayer);
+      }
+    });
 
     // =========================================================================
-    // ADD LOCATION FORM
+    // SIDEBAR OPEN / CLOSE
     // =========================================================================
-    var placingPin   = false;
-    var pendingLat   = null;
-    var pendingLng   = null;
-    var pendingMarker = null;
-
-    function openAddPanel() {
-      document.getElementById("sidebar-main").classList.add("hidden");
-      document.getElementById("add-panel").classList.add("visible");
+    function openSidebar() {
+      document.getElementById("sidebar").classList.add("open");
+      document.getElementById("sidebar-overlay").classList.add("visible");
     }
-
-    function closeAddPanel() {
-      document.getElementById("sidebar-main").classList.remove("hidden");
-      document.getElementById("add-panel").classList.remove("visible");
-      cancelPlacement();
-      // Reset form
-      document.getElementById("f-name").value    = "";
-      document.getElementById("f-address").value = "";
-      document.getElementById("f-city").value    = "";
-      document.getElementById("f-county").value  = "";
-      document.getElementById("f-hours").value   = "";
-      document.getElementById("f-notes").value   = "";
-      document.getElementById("f-house").value   = "80";
-      document.getElementById("f-congress").value = "8";
-      document.getElementById("f-senate").value  = "29";
-      document.getElementById("coords-display").classList.remove("visible");
-      document.getElementById("coords-display").textContent = "";
-      document.getElementById("btn-save-location").disabled = true;
-      pendingLat = null; pendingLng = null;
+    function closeSidebar() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("sidebar-overlay").classList.remove("visible");
     }
-
-    function cancelPlacement() {
-      placingPin = false;
-      map.getContainer().classList.remove("placing");
-      document.getElementById("placement-hint").classList.remove("visible");
-      document.getElementById("btn-place-pin").classList.remove("active");
-      document.getElementById("btn-place-pin").textContent = "&#128205; Click here, then click the map to place pin";
-      if (pendingMarker) { map.removeLayer(pendingMarker); pendingMarker = null; }
-    }
-
-    document.getElementById("btn-add-location").addEventListener("click", openAddPanel);
-    document.getElementById("btn-cancel-add").addEventListener("click", closeAddPanel);
-    document.getElementById("btn-form-cancel").addEventListener("click", closeAddPanel);
-
-    // Radio button styling
-    document.querySelectorAll('input[name="loc-type"]').forEach(function(radio) {
-      radio.addEventListener("change", function() {
-        document.getElementById("radio-early").className    = "type-radio" + (this.value === "early"       ? " selected-early"    : "");
-        document.getElementById("radio-election").className = "type-radio" + (this.value === "election_day"? " selected-election" : "");
-      });
-    });
-
-    // Place pin button: enter placement mode
-    document.getElementById("btn-place-pin").addEventListener("click", function() {
-      if (placingPin) { cancelPlacement(); return; }
-      placingPin = true;
-      map.getContainer().classList.add("placing");
-      document.getElementById("placement-hint").classList.add("visible");
-      document.getElementById("btn-place-pin").classList.add("active");
-      document.getElementById("btn-place-pin").textContent = "&#128205; Click on the map... (click again to cancel)";
-    });
-
-    // Listen for map click during placement mode
-    map.on("click", function(e) {
-      if (!placingPin) return;
-
-      // Remove any existing preview marker
-      if (pendingMarker) map.removeLayer(pendingMarker);
-
-      pendingLat = e.latlng.lat;
-      pendingLng = e.latlng.lng;
-
-      // Show a preview pin (purple, draggable to fine-tune)
-      pendingMarker = L.marker([pendingLat, pendingLng], { icon: customIcon, draggable: true })
-        .bindTooltip("New location - drag to fine-tune", { permanent:true, direction:"top" })
-        .addTo(map);
-
-      // Update position if they drag the preview
-      pendingMarker.on("drag", function(ev) {
-        pendingLat = ev.latlng.lat;
-        pendingLng = ev.latlng.lng;
-        document.getElementById("coords-display").textContent =
-          "Lat: " + pendingLat.toFixed(5) + "   Lng: " + pendingLng.toFixed(5);
-      });
-
-      // Show coordinates and re-enable save
-      document.getElementById("coords-display").textContent =
-        "Lat: " + pendingLat.toFixed(5) + "   Lng: " + pendingLng.toFixed(5);
-      document.getElementById("coords-display").classList.add("visible");
-      document.getElementById("btn-save-location").disabled = false;
-
-      // Exit placement mode
-      placingPin = false;
-      map.getContainer().classList.remove("placing");
-      document.getElementById("placement-hint").classList.remove("visible");
-      document.getElementById("btn-place-pin").classList.remove("active");
-      document.getElementById("btn-place-pin").textContent = "&#128205; Pin placed - drag it to fine-tune position";
-    });
-
-    // Save the new location
-    document.getElementById("btn-save-location").addEventListener("click", function() {
-      var name = document.getElementById("f-name").value.trim();
-      if (!name) { showToast("Please enter a location name", true); return; }
-      if (!pendingLat) { showToast("Please place the pin on the map first", true); return; }
-
-      var finalLat = pendingMarker ? pendingMarker.getLatLng().lat : pendingLat;
-      var finalLng = pendingMarker ? pendingMarker.getLatLng().lng : pendingLng;
-
-      var city    = document.getElementById("f-city").value.trim();
-      var address = document.getElementById("f-address").value.trim();
-
-      var newLoc = {
-        id: "custom-" + Date.now(),
-        name: name,
-        address: address + (city ? ", " + city + ", TN" : ""),
-        city: city,
-        county: document.getElementById("f-county").value,
-        type: document.querySelector('input[name="loc-type"]:checked').value,
-        state_district: document.getElementById("f-house").value || "?",
-        congressional_district: document.getElementById("f-congress").value || "?",
-        state_senate_district: document.getElementById("f-senate").value || "?",
-        hours: document.getElementById("f-hours").value.trim(),
-        notes: document.getElementById("f-notes").value.trim(),
-        lat: finalLat,
-        lng: finalLng
-      };
-
-      // Remove preview marker before placing the real one
-      if (pendingMarker) { map.removeLayer(pendingMarker); pendingMarker = null; }
-
-      // Save and place the pin
-      customLocations.push(newLoc);
-      saveCustom(customLocations);
-      placePin(newLoc, true);
-      refreshCustomStat();
-
-      showToast("Location saved! " + name);
-      closeAddPanel();
-    });
-
-    // =========================================================================
-    // EXPORT TO JS
-    // Merges base locations + custom locations + position overrides
-    // and generates the JS file content Sol can paste into polling-locations.js
-    // =========================================================================
-    document.getElementById("btn-export").addEventListener("click", function() {
-      // Build merged list: base locations with overrides applied + custom locations
-      var allLocs = POLLING_LOCATIONS.map(function(loc) {
-        var override = positionOverrides[loc.id];
-        if (override) {
-          return Object.assign({}, loc, { lat: override.lat, lng: override.lng });
-        }
-        return loc;
-      }).concat(customLocations);
-
-      var lines = [
-        "// =============================================================================",
-        "// POLLING LOCATIONS DATA - Tennessee",
-        "// Generated: " + new Date().toLocaleString(),
-        "// =============================================================================",
-        "",
-        "const POLLING_LOCATIONS = ["
-      ];
-
-      allLocs.forEach(function(loc, idx) {
-        var isLast = idx === allLocs.length - 1;
-        lines.push("  {");
-        lines.push('    id: "' + loc.id + '",');
-        lines.push('    name: "' + (loc.name || "").replace(/"/g, '\\"') + '",');
-        lines.push('    address: "' + (loc.address || "").replace(/"/g, '\\"') + '",');
-        lines.push('    county: "' + (loc.county || "") + '",');
-        lines.push('    type: "' + loc.type + '",');
-        lines.push('    state_district: "' + loc.state_district + '",');
-        lines.push('    congressional_district: "' + loc.congressional_district + '",');
-        lines.push('    state_senate_district: "' + loc.state_senate_district + '",');
-        lines.push('    hours: "' + (loc.hours || "").replace(/"/g, '\\"') + '",');
-        lines.push('    notes: "' + (loc.notes || "").replace(/"/g, '\\"') + '",');
-        lines.push('    lat: ' + parseFloat(loc.lat).toFixed(6) + ',');
-        lines.push('    lng: ' + parseFloat(loc.lng).toFixed(6));
-        lines.push("  }" + (isLast ? "" : ","));
-      });
-
-      lines.push("];");
-      lines.push("");
-      lines.push("// District metadata (unchanged)");
-      lines.push("const DISTRICTS = " + JSON.stringify(DISTRICTS, null, 2) + ";");
-
-      document.getElementById("export-code").value = lines.join("\n");
-      document.getElementById("export-modal").classList.add("visible");
-    });
-
-    document.getElementById("btn-close-export").addEventListener("click", function() {
-      document.getElementById("export-modal").classList.remove("visible");
-    });
-
-    document.getElementById("btn-copy-code").addEventListener("click", function() {
-      var ta = document.getElementById("export-code");
-      ta.select();
-      document.execCommand("copy");
-      showToast("Copied to clipboard!");
-    });
+    document.getElementById("menu-toggle").addEventListener("click", openSidebar);
+    document.getElementById("close-sidebar").addEventListener("click", closeSidebar);
+    document.getElementById("sidebar-overlay").addEventListener("click", closeSidebar);
 
   </script>
 </body>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TN Polling Locations - Directory</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ===== VIEW MODE TABS ===== */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border);
+      padding: 0 24px;
+      background: var(--surface);
+      overflow-x: auto;
+    }
+    .view-tab {
+      padding: 12px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .view-tab:hover  { color: var(--text); }
+    .view-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ===== SELECTOR ROW (by district / by county) ===== */
+    .selector-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+    .selector-row label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .selector-row select, .selector-row input[type="text"] {
+      padding: 7px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .selector-row select:focus, .selector-row input:focus { border-color: var(--accent); }
+    .selector-row select option { background: var(--surface); }
+    .selector-row input[type="text"] { min-width: 240px; }
+
+    /* Type toggle buttons */
+    .type-btn-group { display: flex; gap: 6px; }
+    .type-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .type-btn:hover  { background: var(--primary-light); color: var(--text); }
+    .type-btn.active { background: var(--primary-light); color: var(--text); border-color: var(--accent); }
+
+    /* ===== CARD GRID ===== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+      padding: 20px 24px;
+    }
+
+    /* Location card */
+    .loc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      border-left: 4px solid var(--border);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .loc-card:hover { box-shadow: 0 4px 16px rgba(155,48,255,0.15); border-color: var(--accent); }
+    .loc-card.early-card  { border-left-color: #10b981; }
+    .loc-card.eday-card   { border-left-color: var(--warning); }
+    .loc-card.custom-card { border-left-color: var(--accent); }
+
+    .card-type {
+      font-size: 0.64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 5px;
+    }
+    .card-type.early    { color: #10b981; }
+    .card-type.eday     { color: var(--warning); }
+    .card-type.custom   { color: var(--accent-light); }
+
+    .card-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .card-address {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .card-hours {
+      font-size: 0.73rem;
+      color: var(--info);
+      margin-bottom: 8px;
+    }
+
+    .card-notes {
+      font-size: 0.72rem;
+      color: var(--warning);
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .dist-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .county-tag {
+      font-size: 0.68rem;
+      color: #7c6a9a;
+      margin-left: auto;
+    }
+
+    /* ===== EMPTY / NO RESULTS ===== */
+    .no-results {
+      text-align: center;
+      padding: 50px 24px;
+      color: var(--text-muted);
+    }
+    .no-results h3 { font-size: 0.95rem; color: var(--text); margin-bottom: 6px; }
+    .no-results p  { font-size: 0.8rem; max-width: 360px; margin: 0 auto; line-height: 1.5; }
+
+    /* ===== DASHBOARD ===== */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      padding: 20px 24px 0;
+    }
+    .dash-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+    .dash-stat .ds-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 5px; }
+    .dash-stat .ds-value { font-size: 1.6rem; font-weight: 700; color: var(--text); }
+    .dash-stat .ds-sub   { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+    .dash-stat.green .ds-value  { color: var(--success); }
+    .dash-stat.amber .ds-value  { color: var(--warning); }
+    .dash-stat.purple .ds-value { color: var(--accent-light); }
+
+    .dash-section {
+      padding: 20px 24px;
+    }
+    .dash-section h3 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .empty-districts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .empty-pill {
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border: 1px solid rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.07);
+      color: #f87171;
+      border-radius: 4px;
+    }
+    .filled-pill {
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border: 1px solid rgba(34,197,94,0.3);
+      background: rgba(34,197,94,0.07);
+      color: #4ade80;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .card-grid { padding: 12px; gap: 10px; }
+      .selector-row { padding: 12px; }
+      .view-tabs { padding: 0 12px; }
+      .dashboard-grid { padding: 12px; }
+    }
+  </style>
+</head>
+<body class="page-layout">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <span class="app-title">TN Polling Locations</span>
+    </div>
+    <nav class="top-nav">
+      <a href="index.html" class="top-nav-link">&#128506; Map</a>
+      <a href="locations.html" class="top-nav-link">&#128203; Locations</a>
+      <a href="directory.html" class="top-nav-link active">&#128196; Directory</a>
+    </nav>
+  </header>
+
+  <div class="page-body">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div>
+        <h1>Directory</h1>
+        <div class="page-header-sub">Browse all polling locations by district, county, or search</div>
+      </div>
+      <div id="total-badge" style="font-size:0.8rem;color:var(--text-muted);"></div>
+    </div>
+
+    <!-- VIEW MODE TABS -->
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="district">&#127968; By District</button>
+      <button class="view-tab" data-view="county">&#127979; By County</button>
+      <button class="view-tab" data-view="search">&#128269; Search</button>
+      <button class="view-tab" data-view="dashboard">&#128202; Dashboard</button>
+    </div>
+
+    <!-- ===== BY DISTRICT VIEW ===== -->
+    <div id="view-district">
+      <div class="selector-row">
+        <label>District Type:</label>
+        <div class="type-btn-group">
+          <button class="type-btn active" data-dtype="house">&#127968; State House</button>
+          <button class="type-btn" data-dtype="senate">&#127909; State Senate</button>
+          <button class="type-btn" data-dtype="congress">&#127479; Congressional</button>
+        </div>
+        <label style="margin-left:10px;">District #:</label>
+        <select id="district-num">
+          <!-- Options populated by JS -->
+        </select>
+      </div>
+      <div id="district-cards" class="card-grid"></div>
+    </div>
+
+    <!-- ===== BY COUNTY VIEW ===== -->
+    <div id="view-county" style="display:none;">
+      <div class="selector-row">
+        <label>County:</label>
+        <select id="county-select">
+          <option value="">Select a county...</option>
+          <option>Anderson</option><option>Bedford</option><option>Benton</option>
+          <option>Bledsoe</option><option>Blount</option><option>Bradley</option>
+          <option>Campbell</option><option>Cannon</option><option>Carroll</option>
+          <option>Carter</option><option>Cheatham</option><option>Chester</option>
+          <option>Claiborne</option><option>Clay</option><option>Cocke</option>
+          <option>Coffee</option><option>Crockett</option><option>Cumberland</option>
+          <option>Davidson</option><option>Decatur</option><option>DeKalb</option>
+          <option>Dickson</option><option>Dyer</option><option>Fayette</option>
+          <option>Fentress</option><option>Franklin</option><option>Gibson</option>
+          <option>Giles</option><option>Grainger</option><option>Greene</option>
+          <option>Grundy</option><option>Hamblen</option><option>Hamilton</option>
+          <option>Hancock</option><option>Hardeman</option><option>Hardin</option>
+          <option>Hawkins</option><option>Haywood</option><option>Henderson</option>
+          <option>Henry</option><option>Hickman</option><option>Houston</option>
+          <option>Humphreys</option><option>Jackson</option><option>Jefferson</option>
+          <option>Johnson</option><option>Knox</option><option>Lake</option>
+          <option>Lauderdale</option><option>Lawrence</option><option>Lewis</option>
+          <option>Lincoln</option><option>Loudon</option><option>McMinn</option>
+          <option>McNairy</option><option>Macon</option><option>Madison</option>
+          <option>Marion</option><option>Marshall</option><option>Maury</option>
+          <option>Meigs</option><option>Monroe</option><option>Montgomery</option>
+          <option>Moore</option><option>Morgan</option><option>Obion</option>
+          <option>Overton</option><option>Perry</option><option>Pickett</option>
+          <option>Polk</option><option>Putnam</option><option>Rhea</option>
+          <option>Roane</option><option>Robertson</option><option>Rutherford</option>
+          <option>Scott</option><option>Sequatchie</option><option>Sevier</option>
+          <option>Shelby</option><option>Smith</option><option>Stewart</option>
+          <option>Sullivan</option><option>Sumner</option><option>Tipton</option>
+          <option>Trousdale</option><option>Unicoi</option><option>Union</option>
+          <option>Van Buren</option><option>Warren</option><option>Washington</option>
+          <option>Wayne</option><option>Weakley</option><option>White</option>
+          <option>Williamson</option><option>Wilson</option>
+        </select>
+      </div>
+      <div id="county-cards" class="card-grid"></div>
+    </div>
+
+    <!-- ===== SEARCH VIEW ===== -->
+    <div id="view-search" style="display:none;">
+      <div class="selector-row">
+        <label>Search:</label>
+        <input type="text" id="search-input" placeholder="Name, address, county, or district number..." autofocus />
+      </div>
+      <div id="search-cards" class="card-grid"></div>
+    </div>
+
+    <!-- ===== DASHBOARD VIEW ===== -->
+    <div id="view-dashboard" style="display:none;">
+      <div class="dashboard-grid" id="dash-stats"></div>
+
+      <div class="dash-section">
+        <h3>House Districts With Data</h3>
+        <div class="empty-districts" id="dash-house-filled"></div>
+      </div>
+      <div class="dash-section">
+        <h3>House Districts With No Data</h3>
+        <div class="empty-districts" id="dash-house-empty"></div>
+      </div>
+      <div class="dash-section">
+        <h3>Senate Districts With Data</h3>
+        <div class="empty-districts" id="dash-senate-filled"></div>
+      </div>
+      <div class="dash-section">
+        <h3>Senate Districts With No Data</h3>
+        <div class="empty-districts" id="dash-senate-empty"></div>
+      </div>
+      <div class="dash-section">
+        <h3>Congressional Districts With Data</h3>
+        <div class="empty-districts" id="dash-congress-filled"></div>
+      </div>
+      <div class="dash-section">
+        <h3>Congressional Districts With No Data</h3>
+        <div class="empty-districts" id="dash-congress-empty"></div>
+      </div>
+    </div>
+
+  </div><!-- end .page-body -->
+
+  <script src="data/polling-locations.js"></script>
+  <script>
+    // =========================================================================
+    // LOAD ALL LOCATIONS (base seed + custom from localStorage)
+    // =========================================================================
+    function loadCustom() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_custom") || "[]"); }
+      catch(e) { return []; }
+    }
+
+    // Combine seed data with custom - custom can supplement or shadow base entries
+    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
+    // Mark which are custom
+    var customIds = loadCustom().map(function(l) { return l.id; });
+
+    document.getElementById("total-badge").textContent =
+      ALL_LOCATIONS.length + " total locations";
+
+    // =========================================================================
+    // BUILD A LOCATION CARD (HTML string)
+    // =========================================================================
+    function buildCard(loc) {
+      var isCustom   = customIds.indexOf(loc.id) !== -1;
+      var isEarly    = loc.type === "early";
+      var cardClass  = isCustom ? "custom-card" : (isEarly ? "early-card" : "eday-card");
+      var typeClass  = isCustom ? "custom" : (isEarly ? "early" : "eday");
+      var typeLabel  = isCustom ? "Custom" : (isEarly ? "Early Voting" : "Election Day");
+
+      var badges = [
+        loc.state_district            ? '<span class="dist-badge">H' + loc.state_district + '</span>'            : '',
+        loc.state_senate_district     ? '<span class="dist-badge">S' + loc.state_senate_district + '</span>'     : '',
+        loc.congressional_district    ? '<span class="dist-badge">C' + loc.congressional_district + '</span>'    : ''
+      ].filter(Boolean).join('');
+
+      return '<div class="loc-card ' + cardClass + '">' +
+        '<div class="card-type ' + typeClass + '">' + typeLabel + '</div>' +
+        '<div class="card-name">' + escHtml(loc.name || "Unnamed Location") + '</div>' +
+        (loc.address ? '<div class="card-address">&#128205; ' + escHtml(loc.address) + (loc.city ? ', ' + escHtml(loc.city) : '') + '</div>' : '') +
+        (loc.hours ? '<div class="card-hours">&#128336; ' + escHtml(loc.hours) + '</div>' : '') +
+        (loc.notes ? '<div class="card-notes">&#9888; ' + escHtml(loc.notes) + '</div>' : '') +
+        '<div class="card-meta">' +
+          badges +
+          (loc.county ? '<span class="county-tag">' + escHtml(loc.county) + ' Co.</span>' : '') +
+        '</div>' +
+      '</div>';
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // Render cards into a container element
+    function renderCards(containerId, locs, emptyMsg) {
+      var el = document.getElementById(containerId);
+      if (!locs || locs.length === 0) {
+        el.innerHTML = '<div class="no-results"><h3>' + (emptyMsg || "No locations found") + '</h3>' +
+          '<p>Try a different selection, or <a href="locations.html" style="color:var(--accent-light);">add locations</a> in the Locations page.</p></div>';
+        return;
+      }
+      el.innerHTML = locs.map(buildCard).join("");
+    }
+
+    // =========================================================================
+    // VIEW MODE SWITCHING
+    // =========================================================================
+    var currentView = "district";
+
+    document.querySelectorAll(".view-tab").forEach(function(tab) {
+      tab.addEventListener("click", function() {
+        currentView = this.getAttribute("data-view");
+        document.querySelectorAll(".view-tab").forEach(function(t) { t.classList.remove("active"); });
+        this.classList.add("active");
+        document.getElementById("view-district").style.display  = currentView === "district"  ? "" : "none";
+        document.getElementById("view-county").style.display    = currentView === "county"    ? "" : "none";
+        document.getElementById("view-search").style.display    = currentView === "search"    ? "" : "none";
+        document.getElementById("view-dashboard").style.display = currentView === "dashboard" ? "" : "none";
+
+        if (currentView === "district")  renderDistrict();
+        if (currentView === "dashboard") renderDashboard();
+        if (currentView === "search")    document.getElementById("search-input").focus();
+      });
+    });
+
+    // =========================================================================
+    // BY DISTRICT VIEW
+    // =========================================================================
+    var districtType = "house"; // house | senate | congress
+    var districtNum  = "80";    // default to 80
+
+    // District ranges
+    var DISTRICT_RANGES = { house: 99, senate: 33, congress: 9 };
+
+    function populateDistrictDropdown(type, selectedNum) {
+      var max = DISTRICT_RANGES[type] || 99;
+      var sel = document.getElementById("district-num");
+      sel.innerHTML = "";
+      for (var i = 1; i <= max; i++) {
+        var opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = "District " + i;
+        if (String(i) === String(selectedNum)) opt.selected = true;
+        sel.appendChild(opt);
+      }
+    }
+
+    function renderDistrict() {
+      districtNum = document.getElementById("district-num").value;
+      var field = districtType === "house"    ? "state_district"
+                : districtType === "senate"   ? "state_senate_district"
+                :                               "congressional_district";
+      var filtered = ALL_LOCATIONS.filter(function(loc) {
+        return String(loc[field]) === String(districtNum);
+      });
+      renderCards("district-cards", filtered,
+        (districtType === "house" ? "House" : districtType === "senate" ? "Senate" : "Congressional") +
+        " District " + districtNum + " - no locations yet");
+    }
+
+    // Initialize
+    populateDistrictDropdown("house", "80");
+
+    document.querySelectorAll(".type-btn[data-dtype]").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        districtType = this.getAttribute("data-dtype");
+        document.querySelectorAll(".type-btn[data-dtype]").forEach(function(b) { b.classList.remove("active"); });
+        this.classList.add("active");
+        populateDistrictDropdown(districtType, 1);
+        renderDistrict();
+      });
+    });
+
+    document.getElementById("district-num").addEventListener("change", renderDistrict);
+    renderDistrict(); // initial render
+
+    // =========================================================================
+    // BY COUNTY VIEW
+    // =========================================================================
+    document.getElementById("county-select").addEventListener("change", function() {
+      var county = this.value;
+      if (!county) {
+        document.getElementById("county-cards").innerHTML =
+          '<div class="no-results"><h3>Select a county above</h3></div>';
+        return;
+      }
+      var filtered = ALL_LOCATIONS.filter(function(loc) {
+        return (loc.county || "").toLowerCase() === county.toLowerCase();
+      });
+      renderCards("county-cards", filtered, county + " County - no locations yet");
+    });
+
+    // =========================================================================
+    // SEARCH VIEW
+    // =========================================================================
+    var searchTimer = null;
+    document.getElementById("search-input").addEventListener("input", function() {
+      clearTimeout(searchTimer);
+      var q = this.value;
+      searchTimer = setTimeout(function() { doSearch(q); }, 200);
+    });
+
+    function doSearch(q) {
+      var container = document.getElementById("search-cards");
+      if (!q.trim()) {
+        container.innerHTML = '<div class="no-results"><h3>Type above to search</h3><p>Search by location name, address, county, or district number.</p></div>';
+        return;
+      }
+      var lower = q.toLowerCase();
+      var filtered = ALL_LOCATIONS.filter(function(loc) {
+        return (loc.name    || "").toLowerCase().includes(lower) ||
+               (loc.address || "").toLowerCase().includes(lower) ||
+               (loc.county  || "").toLowerCase().includes(lower) ||
+               String(loc.state_district            || "").includes(q) ||
+               String(loc.state_senate_district     || "").includes(q) ||
+               String(loc.congressional_district    || "").includes(q);
+      });
+      if (!filtered.length) {
+        container.innerHTML = '<div class="no-results"><h3>No results for "' + escHtml(q) + '"</h3></div>';
+        return;
+      }
+      container.innerHTML = filtered.map(buildCard).join("");
+    }
+
+    // Seed the search placeholder
+    document.getElementById("search-cards").innerHTML =
+      '<div class="no-results"><h3>Type above to search</h3><p>Search by location name, address, county, or district number.</p></div>';
+
+    // =========================================================================
+    // DASHBOARD VIEW
+    // =========================================================================
+    function renderDashboard() {
+      var total   = ALL_LOCATIONS.length;
+      var custom  = loadCustom().length;
+      var early   = ALL_LOCATIONS.filter(function(l) { return l.type === "early"; }).length;
+      var eday    = ALL_LOCATIONS.filter(function(l) { return l.type !== "early"; }).length;
+
+      // Count unique districts with at least one location
+      function districtSet(field) {
+        var s = {};
+        ALL_LOCATIONS.forEach(function(l) { if (l[field] && l[field] !== "?") s[l[field]] = true; });
+        return Object.keys(s).map(Number).filter(Boolean).sort(function(a,b){return a-b;});
+      }
+
+      var houseWith    = districtSet("state_district");
+      var senateWith   = districtSet("state_senate_district");
+      var congressWith = districtSet("congressional_district");
+
+      function missingRange(filled, max) {
+        var result = [];
+        for (var i = 1; i <= max; i++) { if (filled.indexOf(i) === -1) result.push(i); }
+        return result;
+      }
+
+      var houseMissing    = missingRange(houseWith, 99);
+      var senateMissing   = missingRange(senateWith, 33);
+      var congressMissing = missingRange(congressWith, 9);
+
+      // Stats cards
+      document.getElementById("dash-stats").innerHTML = [
+        '<div class="dash-stat"><div class="ds-label">Total Locations</div><div class="ds-value">' + total + '</div><div class="ds-sub">seed + custom combined</div></div>',
+        '<div class="dash-stat green"><div class="ds-label">Early Voting</div><div class="ds-value">' + early + '</div><div class="ds-sub">early voting sites</div></div>',
+        '<div class="dash-stat amber"><div class="ds-label">Election Day</div><div class="ds-value">' + eday + '</div><div class="ds-sub">election day sites</div></div>',
+        '<div class="dash-stat purple"><div class="ds-label">Custom Added</div><div class="ds-value">' + custom + '</div><div class="ds-sub">your verified entries</div></div>',
+        '<div class="dash-stat"><div class="ds-label">House Districts Covered</div><div class="ds-value">' + houseWith.length + '<span style="font-size:1rem;color:var(--text-muted);font-weight:400;"> / 99</span></div></div>',
+        '<div class="dash-stat"><div class="ds-label">Senate Districts Covered</div><div class="ds-value">' + senateWith.length + '<span style="font-size:1rem;color:var(--text-muted);font-weight:400;"> / 33</span></div></div>',
+        '<div class="dash-stat"><div class="ds-label">Congressional Districts</div><div class="ds-value">' + congressWith.length + '<span style="font-size:1rem;color:var(--text-muted);font-weight:400;"> / 9</span></div></div>'
+      ].join("");
+
+      // Filled / empty pills
+      function fillPills(containerId, nums, isFilled) {
+        var el = document.getElementById(containerId);
+        if (!nums.length) {
+          el.innerHTML = '<span style="font-size:0.75rem;color:var(--text-muted);">None</span>';
+          return;
+        }
+        el.innerHTML = nums.map(function(n) {
+          return '<span class="' + (isFilled ? "filled-pill" : "empty-pill") + '">D' + n + '</span>';
+        }).join('');
+      }
+
+      fillPills("dash-house-filled",    houseWith,    true);
+      fillPills("dash-house-empty",     houseMissing, false);
+      fillPills("dash-senate-filled",   senateWith,   true);
+      fillPills("dash-senate-empty",    senateMissing, false);
+      fillPills("dash-congress-filled", congressWith,  true);
+      fillPills("dash-congress-empty",  congressMissing, false);
+    }
+
+    // =========================================================================
+    // URL PARAM: ?view=search&q=haywood  - support deep-linking from other pages
+    // =========================================================================
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var v = params.get("view");
+      var q = params.get("q");
+      if (v && document.querySelector('.view-tab[data-view="' + v + '"]')) {
+        document.querySelector('.view-tab[data-view="' + v + '"]').click();
+      }
+      if (q && currentView === "search") {
+        document.getElementById("search-input").value = q;
+        doSearch(q);
+      }
+    })();
+
+  </script>
+</body>
+</html>
