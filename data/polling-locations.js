@@ -1,10 +1,6 @@
 // =============================================================================
 // POLLING LOCATIONS DATA - Tennessee
 // Exported from TN Polling Locations app: 7/26/2026, 2:46:51 PM
-<<<<<<< HEAD
-=======
-// Replace the entire contents of data/polling-locations.js with this code.
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
 // =============================================================================
 
 const POLLING_LOCATIONS = [
@@ -28,11 +24,7 @@ const POLLING_LOCATIONS = [
     name: "Bolivar Municipal Center",
     address: "Jefferson St.",
     city: "Bolivar",
-<<<<<<< HEAD
     county: "Hardeman",
-=======
-    county: "Davidson",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "80",
     state_senate_district: "26",
@@ -47,11 +39,7 @@ const POLLING_LOCATIONS = [
     name: "Community Center",
     address: "151 Main St.",
     city: "Whiteville",
-<<<<<<< HEAD
     county: "McNairy",
-=======
-    county: "Davidson",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "80",
     state_senate_district: "26",
@@ -111,11 +99,7 @@ const POLLING_LOCATIONS = [
     name: "Middleton Community Center",
     address: "400 S. Main St.",
     city: "Middleton",
-<<<<<<< HEAD
     county: "Hardeman",
-=======
-    county: "Shelby",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "94",
     state_senate_district: "26",
@@ -145,11 +129,7 @@ const POLLING_LOCATIONS = [
     name: "Hornsby City Hall",
     address: "450 Main St.",
     city: "Hornsby",
-<<<<<<< HEAD
     county: "Hardeman",
-=======
-    county: "Davidson",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "80",
     state_senate_district: "26",
@@ -194,11 +174,7 @@ const POLLING_LOCATIONS = [
     name: "Toone City Hall",
     address: "2005 Hwy 138",
     city: "Toone",
-<<<<<<< HEAD
     county: "Hardeman",
-=======
-    county: "Henry",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "80",
     state_senate_district: "26",
@@ -299,32 +275,10 @@ const POLLING_LOCATIONS = [
     lng: -89.231408
   },
   {
-<<<<<<< HEAD
     id: "custom-1785094254954-943",
     name: "Christ Church, Anderson Ave.",
     address: "2120 Anderson Ave, Brownsville, TN",
     city: "Brownsville",
-=======
-    id: "custom-1785094236434-128",
-    name: "Wyatt Duke NG Armory",
-    address: "221 Morgan St",
-    city: "Brownsville",
-    county: "Haywood",
-    type: "election_day",
-    state_district: "80",
-    state_senate_district: "26",
-    congressional_district: "8",
-    hours: "8:00am - 7:00pm",
-    notes: "",
-    lat: 35.598410,
-    lng: -89.231408
-  },
-  {
-    id: "custom-1785094254954-943",
-    name: "Christ Church, Anderson Ave.",
-    address: "2120 Anderson Ave, Brownsville, TN",
-    city: "",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     county: "Haywood",
     type: "election_day",
     state_district: "80",
@@ -340,25 +294,15 @@ const POLLING_LOCATIONS = [
     name: "Douglas Community Center",
     address: "1037 Douglas Rd",
     city: "Stanton",
-<<<<<<< HEAD
     county: "Haywood",
-=======
-    county: "",
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
     type: "election_day",
     state_district: "?",
     state_senate_district: "?",
     congressional_district: "?",
     hours: "8:00am - 7:00pm",
-<<<<<<< HEAD
     notes: "NEEDS FIX - coordinates are wrong, districts unknown",
     lat: 35.460000,
     lng: -89.390000
-=======
-    notes: "",
-    lat: 29.911144,
-    lng: -89.959048
->>>>>>> 67d75d7e2b0d8bf5b9338abc20c5ed08bcc39e4b
   }
 ];
 
