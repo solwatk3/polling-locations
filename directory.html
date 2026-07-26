@@ -373,6 +373,102 @@
       .view-tabs { padding: 0 12px; }
       .dashboard-grid { padding: 12px; }
     }
+
+    /* ===== EDIT PANEL (slide-in from right) ===== */
+    .panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: var(--topbar-height);
+      background: rgba(0,0,0,0.5);
+      z-index: 700;
+    }
+    .panel-overlay.visible { display: block; }
+    .right-panel {
+      position: fixed;
+      top: var(--topbar-height);
+      right: 0;
+      bottom: 0;
+      width: 380px;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.5);
+    }
+    .right-panel.open { transform: translateX(0); }
+    .right-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px;
+      background: var(--primary);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .right-panel-header h3 { font-size: 0.88rem; font-weight: 700; color: var(--accent); }
+    .btn-close-panel {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .btn-close-panel:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .right-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .right-panel-body::-webkit-scrollbar { width: 4px; }
+    .right-panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .right-panel-footer {
+      display: flex;
+      gap: 8px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .fp-group { display: flex; flex-direction: column; gap: 4px; }
+    .fp-group label {
+      font-size: 0.64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+    .fp-group input, .fp-group select, .fp-group textarea {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.82rem;
+      padding: 7px 10px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .fp-group input:focus, .fp-group select:focus, .fp-group textarea:focus { border-color: var(--accent); }
+    .fp-group select option { background: var(--surface); }
+    .fp-group textarea { resize: vertical; min-height: 54px; }
+    .fp-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .fp-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .inline-status {
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: none;
+    }
+    @media (max-width: 640px) { .right-panel { width: 100%; } }
   </style>
 </head>
 <body class="page-layout">
@@ -507,9 +603,115 @@
       <div class="detail-footer">
         <button class="btn-danger" id="btn-delete-detail" style="margin-right:auto;">&#128465; Delete</button>
         <a id="dm-map-link" href="index.html" class="btn-secondary" style="text-decoration:none;padding:8px 16px;font-size:0.82rem;">&#128506; View on Map</a>
-        <a id="btn-edit-detail" href="locations.html" class="btn-primary" style="text-decoration:none;padding:8px 16px;font-size:0.82rem;">&#9998; Edit</a>
+        <button class="btn-primary" id="btn-edit-detail">&#9998; Edit</button>
         <button class="btn-secondary" id="btn-close-detail-2">Close</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== EDIT PANEL (slide-in form) ===== -->
+  <div class="panel-overlay" id="panel-overlay"></div>
+  <div class="right-panel" id="right-panel">
+    <div class="right-panel-header">
+      <h3 id="ep-title">Edit Location</h3>
+      <button class="btn-close-panel" id="btn-close-panel">&#10005;</button>
+    </div>
+    <div class="right-panel-body">
+      <div class="fp-group">
+        <label>Location Name *</label>
+        <input type="text" id="ep-name" placeholder="e.g. Haywood County Election Commission" />
+      </div>
+      <div class="fp-group">
+        <label>Street Address</label>
+        <input type="text" id="ep-address" placeholder="404 E Cherry St" />
+        <div id="ep-geocode-status" class="inline-status"></div>
+      </div>
+      <div class="fp-group">
+        <label>City</label>
+        <input type="text" id="ep-city" placeholder="Brownsville" />
+      </div>
+      <div class="fp-group">
+        <label>County</label>
+        <select id="ep-county">
+          <option value="">Select county...</option>
+          <option>Anderson</option><option>Bedford</option><option>Benton</option>
+          <option>Bledsoe</option><option>Blount</option><option>Bradley</option>
+          <option>Campbell</option><option>Cannon</option><option>Carroll</option>
+          <option>Carter</option><option>Cheatham</option><option>Chester</option>
+          <option>Claiborne</option><option>Clay</option><option>Cocke</option>
+          <option>Coffee</option><option>Crockett</option><option>Cumberland</option>
+          <option>Davidson</option><option>Decatur</option><option>DeKalb</option>
+          <option>Dickson</option><option>Dyer</option><option>Fayette</option>
+          <option>Fentress</option><option>Franklin</option><option>Gibson</option>
+          <option>Giles</option><option>Grainger</option><option>Greene</option>
+          <option>Grundy</option><option>Hamblen</option><option>Hamilton</option>
+          <option>Hancock</option><option>Hardeman</option><option>Hardin</option>
+          <option>Hawkins</option><option>Haywood</option><option>Henderson</option>
+          <option>Henry</option><option>Hickman</option><option>Houston</option>
+          <option>Humphreys</option><option>Jackson</option><option>Jefferson</option>
+          <option>Johnson</option><option>Knox</option><option>Lake</option>
+          <option>Lauderdale</option><option>Lawrence</option><option>Lewis</option>
+          <option>Lincoln</option><option>Loudon</option><option>McMinn</option>
+          <option>McNairy</option><option>Macon</option><option>Madison</option>
+          <option>Marion</option><option>Marshall</option><option>Maury</option>
+          <option>Meigs</option><option>Monroe</option><option>Montgomery</option>
+          <option>Moore</option><option>Morgan</option><option>Obion</option>
+          <option>Overton</option><option>Perry</option><option>Pickett</option>
+          <option>Polk</option><option>Putnam</option><option>Rhea</option>
+          <option>Roane</option><option>Robertson</option><option>Rutherford</option>
+          <option>Scott</option><option>Sequatchie</option><option>Sevier</option>
+          <option>Shelby</option><option>Smith</option><option>Stewart</option>
+          <option>Sullivan</option><option>Sumner</option><option>Tipton</option>
+          <option>Trousdale</option><option>Unicoi</option><option>Union</option>
+          <option>Van Buren</option><option>Warren</option><option>Washington</option>
+          <option>Wayne</option><option>Weakley</option><option>White</option>
+          <option>Williamson</option><option>Wilson</option>
+        </select>
+      </div>
+      <div class="fp-group">
+        <label>Location Type *</label>
+        <div class="type-radios">
+          <label class="type-radio" id="ep-radio-early">
+            <input type="radio" name="ep-loc-type" value="early" />
+            &#11044; Early Voting
+          </label>
+          <label class="type-radio" id="ep-radio-election">
+            <input type="radio" name="ep-loc-type" value="election_day" checked />
+            &#11044; Election Day
+          </label>
+        </div>
+      </div>
+      <div class="fp-group">
+        <label>Districts (auto-detected from address)</label>
+        <div class="fp-grid-3">
+          <div class="fp-group"><label>House</label><input type="number" id="ep-house" placeholder="auto" min="1" max="99" /></div>
+          <div class="fp-group"><label>Senate</label><input type="number" id="ep-senate" placeholder="auto" min="1" max="33" /></div>
+          <div class="fp-group"><label>Congress</label><input type="number" id="ep-congress" placeholder="auto" min="1" max="9" /></div>
+        </div>
+        <div id="ep-district-status" class="inline-status"></div>
+      </div>
+      <div class="fp-group">
+        <label>Voting Hours</label>
+        <div class="fp-grid-2">
+          <div class="fp-group"><label>Opens</label><select id="ep-hours-open"></select></div>
+          <div class="fp-group"><label>Closes</label><select id="ep-hours-close"></select></div>
+        </div>
+      </div>
+      <div class="fp-group">
+        <label>Notes</label>
+        <textarea id="ep-notes" placeholder="Any notes..."></textarea>
+      </div>
+      <div class="fp-group">
+        <label>Coordinates</label>
+        <div class="fp-grid-2">
+          <div class="fp-group"><label>Latitude</label><input type="number" id="ep-lat" step="0.00001" /></div>
+          <div class="fp-group"><label>Longitude</label><input type="number" id="ep-lng" step="0.00001" /></div>
+        </div>
+      </div>
+    </div>
+    <div class="right-panel-footer">
+      <button class="btn-secondary" id="btn-ep-cancel">Cancel</button>
+      <button class="btn-primary" id="btn-ep-save" style="flex:1;">Save Location</button>
     </div>
   </div>
 
@@ -883,8 +1085,6 @@
       }
 
       currentDetailId = id;
-      // Set Edit button to link to locations page with this ID so edit panel auto-opens
-      document.getElementById("btn-edit-detail").href = "locations.html?edit=" + encodeURIComponent(id);
       document.getElementById("detail-modal").classList.add("visible");
     }
 
@@ -957,6 +1157,222 @@
         doSearch(q);
       }
     })();
+
+    // =========================================================================
+    // EDIT PANEL - slide-in form for editing locations directly in the directory
+    // =========================================================================
+    var editingId = null;
+
+    // Build time dropdown options (6am - 9pm in 30-min steps)
+    (function buildTimeOptions() {
+      var opens  = document.getElementById("ep-hours-open");
+      var closes = document.getElementById("ep-hours-close");
+      for (var h = 6; h <= 21; h++) {
+        for (var m = 0; m < 60; m += 30) {
+          var period = h < 12 ? "am" : "pm";
+          var hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+          var label  = hour12 + ":" + (m === 0 ? "00" : "30") + period;
+          var optO = document.createElement("option"); optO.value = label; optO.textContent = label; opens.appendChild(optO);
+          var optC = document.createElement("option"); optC.value = label; optC.textContent = label; closes.appendChild(optC);
+        }
+      }
+      opens.value  = "8:00am";
+      closes.value = "7:00pm";
+    })();
+
+    function getHoursString() {
+      return document.getElementById("ep-hours-open").value + " - " + document.getElementById("ep-hours-close").value;
+    }
+
+    function setHoursFromString(str) {
+      if (!str) return;
+      var parts = str.split(/\s*-\s*/);
+      if (parts.length !== 2) return;
+      function norm(t) {
+        t = t.trim().toLowerCase().replace(/\s/g, "");
+        if (!t.includes(":")) t = t.replace(/(am|pm)/, ":00$1");
+        return t;
+      }
+      var opens  = document.getElementById("ep-hours-open");
+      var closes = document.getElementById("ep-hours-close");
+      var ov = norm(parts[0]); var cv = norm(parts[1]);
+      if (Array.from(opens.options).some(function(o) { return o.value === ov; }))   opens.value  = ov;
+      if (Array.from(closes.options).some(function(o) { return o.value === cv; }))  closes.value = cv;
+    }
+
+    function updateTypeStyles() {
+      var val = document.querySelector('input[name="ep-loc-type"]:checked').value;
+      document.getElementById("ep-radio-early").className    = "type-radio" + (val === "early"        ? " sel-early"    : "");
+      document.getElementById("ep-radio-election").className = "type-radio" + (val === "election_day" ? " sel-election" : "");
+    }
+    document.querySelectorAll('input[name="ep-loc-type"]').forEach(function(r) {
+      r.addEventListener("change", updateTypeStyles);
+    });
+
+    function showStatus(id, msg, color, bg) {
+      var el = document.getElementById(id);
+      el.textContent = msg; el.style.color = color; el.style.background = bg; el.style.display = "block";
+    }
+    function hideStatus(id) {
+      var el = document.getElementById(id); el.style.display = "none"; el.textContent = "";
+    }
+
+    function openEditPanel(id) {
+      var loc = LOC_MAP[id];
+      if (!loc) return;
+      editingId = id;
+      document.getElementById("ep-name").value    = loc.name    || "";
+      document.getElementById("ep-address").value = loc.address || "";
+      document.getElementById("ep-city").value    = loc.city    || "";
+      document.getElementById("ep-county").value  = loc.county  || "";
+      document.getElementById("ep-notes").value   = loc.notes   || "";
+      document.getElementById("ep-house").value   = loc.state_district            || "";
+      document.getElementById("ep-senate").value  = loc.state_senate_district     || "";
+      document.getElementById("ep-congress").value= loc.congressional_district    || "";
+      document.getElementById("ep-lat").value     = loc.lat || "";
+      document.getElementById("ep-lng").value     = loc.lng || "";
+      document.getElementById("ep-hours-open").value  = "8:00am";
+      document.getElementById("ep-hours-close").value = "7:00pm";
+      if (loc.hours) setHoursFromString(loc.hours);
+      var typeVal = loc.type || "election_day";
+      document.querySelector('input[name="ep-loc-type"][value="early"]').checked        = typeVal === "early";
+      document.querySelector('input[name="ep-loc-type"][value="election_day"]').checked = typeVal === "election_day";
+      updateTypeStyles();
+      hideStatus("ep-geocode-status");
+      hideStatus("ep-district-status");
+      // Close the detail modal so the panel isn't stacked on top
+      closeDetail();
+      document.getElementById("right-panel").classList.add("open");
+      document.getElementById("panel-overlay").classList.add("visible");
+      setTimeout(function() { document.getElementById("ep-name").focus(); }, 100);
+    }
+
+    function closeEditPanel() {
+      document.getElementById("right-panel").classList.remove("open");
+      document.getElementById("panel-overlay").classList.remove("visible");
+      editingId = null;
+    }
+
+    document.getElementById("btn-close-panel").addEventListener("click", closeEditPanel);
+    document.getElementById("btn-ep-cancel").addEventListener("click", closeEditPanel);
+    document.getElementById("panel-overlay").addEventListener("click", closeEditPanel);
+
+    // Save the edited location back to localStorage and refresh the view
+    document.getElementById("btn-ep-save").addEventListener("click", function() {
+      var name = document.getElementById("ep-name").value.trim();
+      if (!name) { alert("Location name is required."); return; }
+      var lat = parseFloat(document.getElementById("ep-lat").value);
+      var lng = parseFloat(document.getElementById("ep-lng").value);
+      var updated = {
+        id:                     editingId,
+        name:                   name,
+        address:                document.getElementById("ep-address").value.trim(),
+        city:                   document.getElementById("ep-city").value.trim(),
+        county:                 document.getElementById("ep-county").value,
+        type:                   document.querySelector('input[name="ep-loc-type"]:checked').value,
+        state_district:         document.getElementById("ep-house").value    || "?",
+        state_senate_district:  document.getElementById("ep-senate").value   || "?",
+        congressional_district: document.getElementById("ep-congress").value || "?",
+        hours:                  getHoursString(),
+        notes:                  document.getElementById("ep-notes").value.trim(),
+        lat:                    isNaN(lat) ? 35.5  : lat,
+        lng:                    isNaN(lng) ? -86.5 : lng
+      };
+
+      // Update localStorage
+      var saved = loadCustom();
+      var idx = saved.findIndex(function(l) { return l.id === editingId; });
+      if (idx !== -1) {
+        saved[idx] = updated;
+      } else {
+        // Location was from seed data - save a custom copy so the edit persists
+        saved.push(updated);
+      }
+      localStorage.setItem("tn_polling_custom", JSON.stringify(saved));
+
+      // Update in-memory map and array so the directory refreshes without a reload
+      LOC_MAP[editingId] = updated;
+      var allIdx = ALL_LOCATIONS.findIndex(function(l) { return l.id === editingId; });
+      if (allIdx !== -1) ALL_LOCATIONS[allIdx] = updated;
+
+      closeEditPanel();
+
+      // Re-render whichever view is active
+      if (currentView === "district")      renderDistrict();
+      else if (currentView === "county")   renderCounty();
+      else if (currentView === "search")   doSearch(document.getElementById("search-input").value);
+      else if (currentView === "dashboard") renderDashboard();
+    });
+
+    // Wire the detail modal Edit button to open the panel
+    document.getElementById("btn-edit-detail").addEventListener("click", function() {
+      if (currentDetailId) openEditPanel(currentDetailId);
+    });
+
+    // Geocoding for the edit panel (simplified - same logic as locations.html)
+    var epGeoTimer = null;
+    function epScheduleGeocode() {
+      clearTimeout(epGeoTimer);
+      var addr = document.getElementById("ep-address").value.trim();
+      if (!addr) return;
+      epGeoTimer = setTimeout(function() { epGeocode(addr); }, 800);
+    }
+    function epGeocode(address) {
+      var city = document.getElementById("ep-city").value.trim();
+      showStatus("ep-geocode-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
+      var query = address + (city ? ", " + city : "") + ", TN";
+      fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(query) +
+        "&format=json&limit=1&countrycodes=us&addressdetails=1",
+        { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
+      .then(function(r) { return r.json(); })
+      .then(function(results) {
+        if (!results || !results.length) {
+          showStatus("ep-geocode-status", "Not found - check address or enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          return;
+        }
+        var lat = parseFloat(results[0].lat);
+        var lng = parseFloat(results[0].lon);
+        document.getElementById("ep-lat").value = lat.toFixed(6);
+        document.getElementById("ep-lng").value = lng.toFixed(6);
+        // Auto-fill county from geocode response
+        var countyDropdown = document.getElementById("ep-county");
+        if (!countyDropdown.value && results[0].address && results[0].address.county) {
+          var rawCounty = results[0].address.county.replace(/ County$/i, "").trim();
+          var matched = Array.from(countyDropdown.options).find(function(opt) {
+            return opt.value.toLowerCase() === rawCounty.toLowerCase();
+          });
+          if (matched) countyDropdown.value = matched.value;
+        }
+        epLookupDistricts(lat, lng);
+        showStatus("ep-geocode-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+        setTimeout(function() { hideStatus("ep-geocode-status"); }, 3000);
+      })
+      .catch(function() {
+        showStatus("ep-geocode-status", "Geocode failed - enter coordinates manually", "#f87171", "rgba(69,10,10,0.3)");
+      });
+    }
+    function epLookupDistricts(lat, lng) {
+      showStatus("ep-district-status", "Detecting districts...", "#60a5fa", "rgba(30,58,95,0.5)");
+      var geo = lng + "," + lat;
+      Promise.all([
+        fetch("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2/query?geometry=" + encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&where=STATE+%3D+%2747%27&outFields=SLDL&inSR=4326&returnGeometry=false&f=json").then(function(r) { return r.json(); }),
+        fetch("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query?geometry=" + encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&outFields=DISTRICT&inSR=4326&returnGeometry=false&f=json").then(function(r) { return r.json(); }),
+        fetch("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/8/query?geometry=" + encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&outFields=NEWSENATEDISTRICT&inSR=4326&returnGeometry=false&f=json").then(function(r) { return r.json(); })
+      ]).then(function(res) {
+        var h = res[0].features && res[0].features.length ? parseInt(res[0].features[0].attributes.SLDL, 10) : null;
+        var c = res[1].features && res[1].features.length ? parseInt(res[1].features[0].attributes.DISTRICT, 10) : null;
+        var s = res[2].features && res[2].features.length ? parseInt(res[2].features[0].attributes.NEWSENATEDISTRICT, 10) : null;
+        if (h) document.getElementById("ep-house").value    = h;
+        if (c) document.getElementById("ep-congress").value = c;
+        if (s) document.getElementById("ep-senate").value   = s;
+        showStatus("ep-district-status", "Districts detected", "#10b981", "rgba(6,78,59,0.3)");
+        setTimeout(function() { hideStatus("ep-district-status"); }, 3000);
+      }).catch(function() {
+        showStatus("ep-district-status", "District lookup failed - enter manually", "#f87171", "rgba(69,10,10,0.3)");
+      });
+    }
+    document.getElementById("ep-address").addEventListener("input", epScheduleGeocode);
+    document.getElementById("ep-city").addEventListener("input", epScheduleGeocode);
 
   </script>
 </body>
