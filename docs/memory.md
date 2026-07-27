@@ -111,8 +111,13 @@ All three edit pages (locations.html, location-detail.html, directory.html) now 
   - Replaced simple open/close selects with full schedule builder (paste parser + multi-row)
   - Fixed geocode in directory.html with same hasExistingCoords guard
 
+### 2026-07-27 (Session 6)
+- Time dropdowns now default to blank "-- time --" - no pre-filled times on new rows
+- "Save & Add Another" button added to locations.html footer for fast back-to-back data entry
+- saveFormData() extracted as shared function used by both Save and Save & Add Another
+
 ## Start Here Next Session
-1. Commit and push the session 5 changes (git commit block was generated)
-2. Test the fixes: drag a pin in location-detail.html, open the edit panel, confirm coords show the dragged position
-3. Test directory.html edit panel: open a location, verify schedule builder shows existing hours, edit and save
-4. Consider: GitHub Pages deployment, import from spreadsheet workflow
+1. Commit and push session 6 changes (git commit block generated)
+2. Enter early voting locations using the paste parser - pull schedule data from county election commission sites
+3. Run Export to JS and commit updated data/polling-locations.js to make all location data permanent in the repo
+4. Work through the 46 "House District ?" locations and run district detection on each

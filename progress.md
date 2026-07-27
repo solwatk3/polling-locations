@@ -126,6 +126,10 @@
 ## Done (Session 14 - 2026-07-27)
 - [x] location-detail.html: fixed Prev/Next navigation broken for "House District ?" group - parseInt("?") returned NaN so filter matched nothing; added special case: ctxVal === "?" matches locations where district field is "?" or empty (2026-07-27)
 
+## Done (Session 15 - 2026-07-27)
+- [x] locations.html + location-detail.html + directory.html: time dropdowns now default to blank "-- time --" placeholder instead of pre-filling 8:00am/7:00pm - times only appear when user picks them or paste parser fills them (2026-07-27)
+- [x] locations.html: "Save & Add Another" button added to form footer - saves current location and immediately reopens a blank form for the next entry; save logic extracted into shared saveFormData() function used by both buttons (2026-07-27)
+
 ## In Progress
 - Nothing currently
 
