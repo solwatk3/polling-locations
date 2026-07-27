@@ -452,8 +452,9 @@
       var lat = override ? override.lat : loc.lat;
       var lng = override ? override.lng : loc.lng;
 
+      // Purple = needs correction (flagged explicitly). Otherwise color by type.
       var icon;
-      if (isCustom)                  icon = customIcon;
+      if (loc.needs_correction)      icon = customIcon;
       else if (loc.type === "early") icon = earlyIcon;
       else                           icon = electionIcon;
 
