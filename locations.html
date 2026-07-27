@@ -1650,8 +1650,9 @@
       var raw = (document.getElementById("sched-paste-input").value || "").trim();
       if (!raw) return;
 
-      // Split on semicolons, ignore empty chunks
-      var segments = raw.split(/\s*;\s*/).map(function(s) { return s.trim(); }).filter(Boolean);
+      // Split on semicolons OR line breaks - supports both single-line and multi-line formats.
+      // Lines with no parenthesized time (e.g. "July 17th through August 1st") are skipped below.
+      var segments = raw.split(/\r?\n|;/).map(function(s) { return s.trim(); }).filter(Boolean);
       var parsed = [];
 
       segments.forEach(function(seg) {
