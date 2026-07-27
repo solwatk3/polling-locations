@@ -1226,7 +1226,8 @@
           <textarea id="bulk-textarea"
             placeholder="04-08 Balmoral Presbyterian Church 6413 Quince Rd Memphis 38119 04-09 Emmanuel United Methodist Church 2404 Kirby Rd Memphis 38119 ..."></textarea>
           <div class="bulk-hint">
-            Works with rows that start with a precinct number like <strong>04-08</strong> or <strong>5</strong>.
+            Works with rows that start with a precinct number like <strong>04-08</strong> or <strong>5</strong>,
+            or tab-separated rows (Name &rarr; Address &rarr; City &rarr; Zip) copied from a spreadsheet.
             Each location needs a name, street address, city, and zip. The app will flag anything it can't fully parse.
           </div>
         </div>
@@ -3019,6 +3020,43 @@
     // -------------------------------------------------------------------------
     function parseBulkText(text) {
       text = text.trim();
+
+      // --- Tab-separated format detection ---
+      // If the pasted text looks like spreadsheet rows (tabs between columns),
+      // parse each line as: Name [tab] Address [tab] City [tab] Zip.
+      // Precinct is left blank since this format doesn't include one.
+      var lines = text.split(/\r?\n/);
+      var tabLines = lines.filter(function(l) { return l.trim() && l.indexOf("\t") !== -1; });
+      if (tabLines.length > 0 && tabLines.length >= lines.filter(function(l) { return l.trim(); }).length * 0.8) {
+        var results = [];
+        lines.forEach(function(line, idx) {
+          line = line.trim();
+          if (!line) return;
+          var cols = line.split("\t");
+          var name    = (cols[0] || "").trim();
+          var address = (cols[1] || "").trim();
+          var city    = (cols[2] || "").trim();
+          var zip     = (cols[3] || "").trim();
+          var reviewReasons = [];
+          if (!name)    reviewReasons.push("No name");
+          if (!address) reviewReasons.push("No address");
+          if (!city)    reviewReasons.push("No city");
+          if (!zip)     reviewReasons.push("No zip");
+          results.push({
+            rowIndex:     idx,
+            raw:          line,
+            name:         name,
+            address:      address,
+            city:         city,
+            zip:          zip,
+            type:         "election_day",
+            needsReview:  reviewReasons.length > 0,
+            reviewReason: reviewReasons.join(", ")
+          });
+        });
+        return results;
+      }
+      // --- End tab-separated format ---
 
       // Split before each precinct number pattern (digits-digits at start of entry)
       // Using lookahead so the precinct stays with its location.
