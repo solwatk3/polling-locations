@@ -525,6 +525,11 @@
 
       /* Prevent individual location cards from splitting across pages */
       .location-card  { break-inside: avoid; }
+
+      /* Convert flex container to block so Chrome can break between cards.
+         Without this, Chrome treats the entire list as one unbreakable unit
+         and pushes it to the next page, leaving a big blank gap. */
+      .location-cards { display: block; }
     }
   </style>
 </head>
