@@ -1039,6 +1039,11 @@
           localStorage.setItem("tn_polling_overrides", JSON.stringify(overrides));
         }
 
+        // Keep loc in memory in sync so the edit panel uses the dragged position
+        // if the user opens it after dragging without reloading the page
+        loc.lat = pos.lat;
+        loc.lng = pos.lng;
+
         // Flash the save confirmation
         var msg = document.getElementById("coords-saved-msg");
         msg.style.display = "block";
