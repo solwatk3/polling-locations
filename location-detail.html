@@ -526,8 +526,14 @@
 
         <!-- Districts -->
         <div class="detail-field">
-          <div class="detail-label">Districts</div>
+          <div class="detail-label" style="display:flex;align-items:center;justify-content:space-between;">
+            Districts
+            <button id="btn-detect-districts"
+              style="font-size:0.68rem;font-weight:600;color:var(--accent-light);background:none;border:1px solid var(--accent-light);border-radius:4px;padding:2px 8px;cursor:pointer;line-height:1.4;"
+              title="Auto-detect districts from pin coordinates">&#128204; Detect</button>
+          </div>
           <div class="dist-chips" id="d-districts"></div>
+          <div id="d-dist-status" style="display:none;font-size:0.7rem;padding:4px 8px;border-radius:4px;margin-top:4px;"></div>
         </div>
 
         <hr class="detail-divider" />
@@ -1520,6 +1526,143 @@
     }
     document.getElementById("ep-address").addEventListener("input", epScheduleGeocode);
     document.getElementById("ep-city").addEventListener("input", epScheduleGeocode);
+
+    // =========================================================================
+    // DETECT DISTRICTS BUTTON - fires from the info panel without opening edit.
+    // Reads coords from the in-memory loc object, calls ArcGIS, updates chips,
+    // and saves results to localStorage so they persist on reload.
+    // =========================================================================
+    function showDistStatus(msg, color, bg) {
+      var el = document.getElementById("d-dist-status");
+      el.textContent = msg; el.style.color = color; el.style.background = bg;
+      el.style.display = "block";
+    }
+    function hideDistStatus() {
+      var el = document.getElementById("d-dist-status");
+      el.style.display = "none"; el.textContent = "";
+    }
+
+    // Refresh the district chips in the info panel from the loc object
+    function refreshDistrictChips(locObj) {
+      var distDefs = [
+        { label: "State House",   val: locObj.state_district },
+        { label: "State Senate",  val: locObj.state_senate_district },
+        { label: "Congressional", val: locObj.congressional_district }
+      ].filter(function(d) { return d.val && d.val !== "?"; });
+
+      var distTypeParam = { "State House": "house", "State Senate": "senate", "Congressional": "congressional" };
+      var chipsEl = document.getElementById("d-districts");
+      if (distDefs.length) {
+        chipsEl.innerHTML = distDefs.map(function(d) {
+          var rType = distTypeParam[d.label] || "house";
+          var rUrl  = "district-report.html?type=" + rType + "&district=" + encodeURIComponent(d.val);
+          return '<div class="dist-chip">' +
+            '<span class="chip-label">' + d.label + '</span>' +
+            '<span class="chip-num">D' + d.val + '</span>' +
+            '<a href="' + rUrl + '" target="_blank" title="Print report" style="font-size:0.68rem;color:var(--accent-light);text-decoration:none;margin-left:6px;opacity:0.8;" onclick="event.stopPropagation()">&#128438;</a>' +
+          '</div>';
+        }).join("");
+      } else {
+        chipsEl.innerHTML = '<span style="font-size:0.82rem;color:var(--text-muted);">No district data on file</span>';
+      }
+    }
+
+    // detectAndSave: run ArcGIS queries, update info panel, save to localStorage
+    function detectAndSave(lat, lng) {
+      if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+        showDistStatus("No pin coordinates - drag a pin or open Edit to add an address first.", "#f87171", "rgba(69,10,10,0.3)");
+        return;
+      }
+
+      var btn = document.getElementById("btn-detect-districts");
+      btn.disabled = true;
+      btn.textContent = "Detecting...";
+      showDistStatus("Querying district databases...", "#60a5fa", "rgba(30,58,95,0.5)");
+
+      var geo = lng + "," + lat; // ArcGIS uses x=lng,y=lat
+
+      var houseQ =
+        "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&where=STATE+%3D+%2747%27&outFields=SLDL&inSR=4326&returnGeometry=false&f=json";
+
+      var congressQ =
+        "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&outFields=DISTRICT&inSR=4326&returnGeometry=false&f=json";
+
+      var senateQ =
+        "https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/8/query" +
+        "?geometry=" + encodeURIComponent(geo) +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&outFields=NEWSENATEDISTRICT&inSR=4326&returnGeometry=false&f=json";
+
+      Promise.all([
+        fetch(houseQ).then(function(r)    { return r.json(); }),
+        fetch(congressQ).then(function(r) { return r.json(); }),
+        fetch(senateQ).then(function(r)   { return r.json(); })
+      ]).then(function(results) {
+        var houseFeats    = results[0].features || [];
+        var congressFeats = results[1].features || [];
+        var senateFeats   = results[2].features || [];
+
+        var houseNum    = houseFeats.length    ? parseInt(houseFeats[0].attributes.SLDL,               10) : null;
+        var congressNum = congressFeats.length  ? parseInt(congressFeats[0].attributes.DISTRICT,        10) : null;
+        var senateNum   = senateFeats.length    ? parseInt(senateFeats[0].attributes.NEWSENATEDISTRICT, 10) : null;
+
+        // Update in-memory loc object
+        if (houseNum)    loc.state_district            = String(houseNum);
+        if (congressNum) loc.congressional_district    = String(congressNum);
+        if (senateNum)   loc.state_senate_district     = String(senateNum);
+
+        // Save to localStorage - create/update a custom entry for this location
+        var custom = loadCustom();
+        var idx    = custom.findIndex(function(l) { return l.id === loc.id; });
+        if (idx !== -1) {
+          // Already a custom entry - just update the district fields
+          if (houseNum)    custom[idx].state_district            = String(houseNum);
+          if (congressNum) custom[idx].congressional_district    = String(congressNum);
+          if (senateNum)   custom[idx].state_senate_district     = String(senateNum);
+        } else {
+          // Seed location - write a full custom copy with the detected districts merged in
+          var copy = Object.assign({}, loc);
+          if (houseNum)    copy.state_district            = String(houseNum);
+          if (congressNum) copy.congressional_district    = String(congressNum);
+          if (senateNum)   copy.state_senate_district     = String(senateNum);
+          custom.push(copy);
+        }
+        saveCustom(custom);
+
+        // Refresh the chips in the info panel
+        refreshDistrictChips(loc);
+
+        var allFound = houseNum && congressNum && senateNum;
+        showDistStatus(
+          allFound ? "Districts detected and saved." : "Partial detection - verify blank fields in Edit.",
+          allFound ? "#10b981" : "#f59e0b",
+          allFound ? "rgba(6,78,59,0.3)" : "rgba(120,53,15,0.3)"
+        );
+        setTimeout(function() { hideDistStatus(); }, 4000);
+      }).catch(function() {
+        showDistStatus("Lookup failed - check connection and try again.", "#f87171", "rgba(69,10,10,0.3)");
+      }).finally(function() {
+        btn.disabled = false;
+        btn.textContent = "📌 Detect";
+      });
+    }
+
+    // Wire up the Detect button - runs only if a location is loaded
+    var detectBtn = document.getElementById("btn-detect-districts");
+    if (detectBtn && loc) {
+      detectBtn.addEventListener("click", function() {
+        detectAndSave(
+          parseFloat(loc.lat),
+          parseFloat(loc.lng)
+        );
+      });
+    }
 
   </script>
 
