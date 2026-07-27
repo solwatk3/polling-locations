@@ -874,16 +874,29 @@
       "city": "Millington",
       "zip": "38053",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "99",
       "state_senate_district": "29",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -962,20 +975,33 @@
     {
       "id": "custom-1785119325746-242",
       "name": "Arlington Safe Room",
-      "address": "11842 Otto Lane Arlington 38002",
-      "city": "",
-      "zip": "",
+      "address": "11842 Otto Lane",
+      "city": "Arlington",
+      "zip": "38002",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "99",
       "state_senate_district": "31",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -1127,16 +1153,29 @@
       "city": "Germantown",
       "zip": "38139",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "95",
       "state_senate_district": "31",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -1219,16 +1258,29 @@
       "city": "Collierville",
       "zip": "38017",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "95",
       "state_senate_district": "31",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -1541,16 +1593,29 @@
       "city": "Memphis",
       "zip": "38117",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "97",
       "state_senate_district": "31",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -1766,12 +1831,32 @@
       "city": "Cordova",
       "zip": "38018",
       "county": "Shelby",
-      "type": "election_day",
-      "state_district": 97,
-      "state_senate_district": 30,
-      "congressional_district": 8,
-      "hours": "",
-      "notes": "",
+      "type": "both",
+      "state_district": "97",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "No Signs.",
       "lat": 35.14289752921474,
       "lng": -89.7981905937195
     },
@@ -1805,16 +1890,29 @@
       "city": "Cordova",
       "zip": "38016",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "96",
       "state_senate_district": "30",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -1977,11 +2075,31 @@
       "city": "Memphis",
       "zip": "38128",
       "county": "Shelby",
-      "type": "election_day",
-      "state_district": 98,
-      "state_senate_district": 32,
-      "congressional_district": 5,
-      "hours": "",
+      "type": "both",
+      "state_district": "98",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
       "notes": "",
       "lat": 35.21586635357095,
       "lng": -89.91674423217775
@@ -2057,11 +2175,31 @@
       "city": "Memphis",
       "zip": "38127",
       "county": "Shelby",
-      "type": "election_day",
-      "state_district": 88,
-      "state_senate_district": 30,
-      "congressional_district": 5,
-      "hours": "",
+      "type": "both",
+      "state_district": "88",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
       "notes": "",
       "lat": 35.2056764,
       "lng": -90.00472
@@ -2400,21 +2538,34 @@
     },
     {
       "id": "bulk_1785121021454_1",
-      "name": "Riverside Baptist Church",
+      "name": "Riverside Missionary Baptist Church",
       "address": "3590 S 3rd St",
       "city": "Memphis",
       "zip": "38109",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "85",
       "state_senate_district": "29",
       "congressional_district": "5",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -2581,21 +2732,34 @@
     },
     {
       "id": "bulk_1785121021454_11",
-      "name": "Glenview Community Ctr",
+      "name": "Glenview Community Center",
       "address": "1141 S Barksdale St",
       "city": "Memphis",
       "zip": "38114",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "93",
       "state_senate_district": "29",
       "congressional_district": "9",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -2702,31 +2866,35 @@
       "address": "1460 Winchester Rd",
       "city": "Memphis",
       "zip": "38116",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "county": "Shelby",
+      "type": "both",
+      "state_district": "87",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785121021454_19",
-      "name": "Greater Middle Baptist Church",
-      "address": "4982 Knight Arnold Rd",
-      "city": "Memphis",
-      "zip": "38118",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.054512533017416,
+      "lng": -90.0152885913849
     },
     {
       "id": "bulk_1785121021454_20",
@@ -2734,15 +2902,35 @@
       "address": "4982 Knight Arnold Rd",
       "city": "Memphis",
       "zip": "38118",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "county": "Shelby",
+      "type": "both",
+      "state_district": "87",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.062465,
+      "lng": -89.897942
     },
     {
       "id": "bulk_1785121021454_21",
@@ -3058,21 +3246,34 @@
     },
     {
       "id": "bulk_1785121036910_4",
-      "name": "Gaisman Community Ctr",
+      "name": "Gaisman Community Center",
       "address": "4221 Macon Rd",
       "city": "Memphis",
       "zip": "38122",
       "county": "Shelby",
-      "type": "election_day",
+      "type": "both",
       "state_district": "97",
       "state_senate_district": "30",
       "congressional_district": "8",
-      "hours": "8:00am - 7:00pm",
+      "hours": "11:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
           "open": "8:00am",
-          "close": "7:00pm"
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
         }
       ],
       "notes": "",
@@ -3180,36 +3381,40 @@
       "lng": -89.950794
     },
     {
-      "id": "bulk_1785121036910_12",
-      "name": "White Station Church of Christ",
-      "address": "1106 Colonial Rd",
-      "city": "Memphis",
-      "zip": "38117",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
       "id": "bulk_1785121036910_13",
       "name": "White Station Church of Christ",
       "address": "1106 Colonial Rd",
       "city": "Memphis",
       "zip": "38117",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "county": "Shelby",
+      "type": "both",
+      "state_district": "87",
+      "state_senate_district": "33",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.103046,
+      "lng": -89.902978
     },
     {
       "id": "bulk_1785121036910_14",
@@ -3739,6 +3944,303 @@
       "notes": "",
       "lat": 35.021138,
       "lng": -90.012767
+    },
+    {
+      "id": "custom-1785159542001-859",
+      "name": "Christian Life Church",
+      "address": "9375 Davies Plantation Road Bartlett, TN 38133",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.218053,
+      "lng": -89.749835
+    },
+    {
+      "id": "custom-1785159642467-290",
+      "name": "Dave Wells Community Center",
+      "address": "915 Chelsea Avenue Memphis, TN 38107",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "88",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.166718,
+      "lng": -90.026576
+    },
+    {
+      "id": "custom-1785159789583-373",
+      "name": "Greater Lewis Street Baptist Church",
+      "address": "152 East Parkway North Memphis, TN 38104",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "93",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.140771,
+      "lng": -89.982604
+    },
+    {
+      "id": "custom-1785159970137-186",
+      "name": "Harmony Church",
+      "address": "6740 St.",
+      "city": "Elmo Road Memphis, TN",
+      "zip": "38135",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "88",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.230871,
+      "lng": -89.883573
+    },
+    {
+      "id": "custom-1785160015985-883",
+      "name": "Mississippi Blvd. Church - Family Life Center",
+      "address": "70 N Bellevue Blvd",
+      "city": "Memphis, TN",
+      "zip": "38104",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "88",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.141264,
+      "lng": -90.021229
+    },
+    {
+      "id": "custom-1785160095493-238",
+      "name": "Mt Pisgah Missionary Baptist Church",
+      "address": "1234 Pisgah Road Memphis, TN 38016",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "98",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.186238,
+      "lng": -89.725852
+    },
+    {
+      "id": "custom-1785160202319-345",
+      "name": "Mt. Zion Baptist Church",
+      "address": "60 S Parkway East Memphis, TN 38106",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "91",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.107778,
+      "lng": -90.060264
+    },
+    {
+      "id": "custom-1785160226385-835",
+      "name": "New Bethel Missionary Baptist Church",
+      "address": "7786 Poplar Pike",
+      "city": "Germantown, TN",
+      "zip": "38138",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.080328,
+      "lng": -89.801828
+    },
+    {
+      "id": "custom-1785160554827-116",
+      "name": "Shelby County Election Commission - James Meredith Building",
+      "address": "157 Poplar Avenue Memphis, TN 38103",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "9:00am - 5:00pm",
+      "schedule": [
+        {
+          "open": "9:00am",
+          "close": "5:00pm",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.149348,
+      "lng": -90.04914
     }
   ],
   "tn_polling_deleted": [
