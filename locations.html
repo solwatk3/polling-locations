@@ -1692,19 +1692,31 @@
       var raw = (document.getElementById("sched-paste-input").value || "").trim();
       if (!raw) return;
 
-      // Split on semicolons OR line breaks - supports both single-line and multi-line formats.
-      // Lines with no parenthesized time (e.g. "July 17th through August 1st") are skipped below.
-      var segments = raw.split(/\r?\n|;/).map(function(s) { return s.trim(); }).filter(Boolean);
+      // Split on semicolons OR any line-break style (\r\n, \r, or \n).
+      // \r?\n misses standalone \r (old Mac line endings common in clipboard/PDF paste),
+      // which caused "Saturday, August 1st" to be silently dropped.
+      var segments = raw.split(/\r\n|\r|\n|;/).map(function(s) { return s.trim(); }).filter(Boolean);
       var parsed = [];
+
+      // Lines with no parenthesized time (e.g. "July 17th through August 1st") are treated
+      // as a date-range header and prepended to every row that follows in the same paste,
+      // so the context stays visible without becoming its own empty schedule row.
+      var rangeHeader = "";
 
       segments.forEach(function(seg) {
         // Time range is always in parentheses at the end: "(8am-5:30pm)"
         var hoursMatch = seg.match(/\(([^)]+)\)\s*$/);
-        if (!hoursMatch) return; // skip malformed segment
+        if (!hoursMatch) {
+          // No time on this line - store as carry-forward date range header
+          rangeHeader = seg;
+          return;
+        }
 
         var hoursStr = hoursMatch[1].trim(); // "8am-5:30pm"
         // Day/date label is everything before the parenthesized time
-        var dayLabel = seg.replace(/\s*\([^)]+\)\s*$/, "").trim(); // "Fri - July 17,24,31"
+        var rawLabel = seg.replace(/\s*\([^)]+\)\s*$/, "").trim(); // "Monday thru Friday"
+        // Prepend the range header so date context appears on every row
+        var dayLabel = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
 
         // Split time range on the dash between open and close
         // Handles "8am-5:30pm" and "8:00am - 5:30pm"
