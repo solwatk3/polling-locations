@@ -91,20 +91,34 @@
 
 ## Done (Session 11 - 2026-07-26)
 - [x] Douglas Community Center: coordinates manually entered via Google Maps + lat/lng paste, districts auto-detected (2026-07-26)
-- [x] location-detail.html: pin drag position now persists on page reload - loadOverrides() reads tn_polling_overrides from localStorage and applies saved lat/lng when building ALL_LOCATIONS; previously overrides were saved but never read back (2026-07-26)
-- [x] location-detail.html + directory.html: fixed duplicate locations caused by mergeWithSeedData() copying seed entries into tn_polling_custom - both pages now deduplicate ALL_LOCATIONS by ID, preferring the custom version; this also fixed Prev/Next nav breaking and wrong position counts (2026-07-26)
-- [x] directory.html: added deleted-ID filter to seed entries (was missing, so deleted seed locations could still appear in the directory) (2026-07-26)
+- [x] location-detail.html: pin drag position now persists on page reload - loadOverrides() reads tn_polling_overrides from localStorage and applies saved lat/lng when building ALL_LOCATIONS (2026-07-26)
+- [x] location-detail.html + directory.html: fixed duplicate locations caused by mergeWithSeedData() copying seed entries into tn_polling_custom - both pages now deduplicate ALL_LOCATIONS by ID (2026-07-26)
+- [x] directory.html: added deleted-ID filter to seed entries (2026-07-26)
 - [x] location-detail.html: clicking the address field copies the full address to clipboard with a brief "Copied!" confirmation flash (2026-07-26)
-- [x] district-report.html: fixed large blank space between Early Voting and Election Day sections when printing - added display:block to .location-cards in print CSS; Chrome treats flex containers as unbreakable units so with 46+ election day entries it pushed the whole section to page 2 leaving a gap; block layout lets Chrome break between cards normally (2026-07-26)
+- [x] district-report.html: fixed large blank space between Early Voting and Election Day sections when printing - added display:block to .location-cards in print CSS (2026-07-26)
+- [x] district-report.html: county report view now shows district chips (House/Senate/Congressional) on each location card (2026-07-26)
+- [x] index.html + locations.html + location-detail.html: backup/restore system added - Export button saves data to GitHub repo (backups/latest.json) and sends EmailJS confirmation; restore URL (?restore_raw=1) fetches from raw GitHub and imports; GitHub fine-grained token stored in localStorage (2026-07-26)
+- [x] index.html: pin color fixed - purple only shows for locations with needs_correction flag; all other locations use type-based color (green=early, amber=election day) (2026-07-26)
+
+## Done (Session 12 - 2026-07-26)
+- [x] locations.html: replaced single open/close time dropdowns with a schedule builder - each row has optional day label (e.g. Mon-Fri), open time, and close time; multiple rows can be added per location (2026-07-26)
+- [x] locations.html: added "Both" type option - location can serve as both early voting and election day (2026-07-26)
+- [x] locations.html: type badge, filter, and stats all handle "Both" correctly - "Both" locations match either type filter and count toward both early and election day stats (2026-07-26)
+- [x] locations.html: schedule builder handles backward compat - old single hours string converted to one row on edit (2026-07-26)
+- [x] location-detail.html: info panel renders schedule rows with day labels; falls back to plain hours string for old data (2026-07-26)
+- [x] location-detail.html: edit panel gets schedule builder and "Both" type radio (2026-07-26)
+- [x] index.html: "Both" locations get indigo pin and are added to both earlyLayer and electionLayer so they appear on either toggle (2026-07-26)
+- [x] index.html: popup renders multi-row schedule with day labels; type badge handles Both (2026-07-26)
+- [x] css/style.css: added .popup-type-badge.both style (2026-07-26)
 
 ## In Progress
 - Nothing currently
 
 ## Next
+- [ ] Task 4: Update directory.html + district-report.html - type badges handle "Both", schedule rows display in cards and report rows
+- [ ] Investigate why Map nav link opens in a new tab on GitHub Pages (could not reproduce from code - may be browser behavior or a specific link somewhere)
 - [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make coordinate fixes permanent
-
-- [ ] Start entering additional verified polling locations from county election commission websites - include zip codes for better geocoding
-- [ ] Demographics overlay (population, voter registration breakdowns by county)
+- [ ] Start entering additional verified polling locations from county election commission websites
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
@@ -116,12 +130,13 @@
 | Nominatim geocoding for "Hwy 45 Bypass" in Jackson, TN | Highway bypass not mapped under that name in OSM - need to enter coordinates manually from Google Maps | 2026-07-26 |
 
 ## Notes
-- Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT - same service as tncot.cc/tndistrict voter lookup
-- Senate district source also available from same service: FeatureServer/8, field NEWSENATEDISTRICT
+- Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT
+- Senate district source: same service FeatureServer/8, field NEWSENATEDISTRICT
 - State House source: Census TIGERweb Legislative MapServer/2, field SLDL (still accurate - no redistricting)
 - All polling location data must be verified with county election commissions before use
 - district-report.html supports URL params: ?type=house&district=80, ?type=senate&district=26, ?type=congressional&district=8, ?type=county&county=Haywood
-- Hours are stored as formatted strings like "8:00am - 7:00pm" - dropdowns parse existing values back on edit
-- Google Maps lat/lng can be pasted directly into either coordinate field - "35.694966, -88.856304" auto-splits into both fields
-- Zip code is now stored on every location record and included in geocoding queries
-- ALL_LOCATIONS deduplication: seed entries are excluded if their ID already exists in tn_polling_custom (custom version wins) - prevents duplicates after mergeWithSeedData runs
+- Schedule stored as array: [{days, open, close}] + hours string (first row, for backward compat display)
+- "Both" type: pin is indigo, appears on both map layers, counts in both early and election day stats
+- Google Maps lat/lng can be pasted directly into either coordinate field - auto-splits into both fields
+- ALL_LOCATIONS deduplication: seed entries excluded if ID already exists in tn_polling_custom (custom version wins)
+- Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
