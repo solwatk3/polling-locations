@@ -239,11 +239,30 @@
     /* ----- Schedule builder ----- */
     .schedule-row {
       display: grid;
-      grid-template-columns: 1fr auto auto auto auto;
+      grid-template-columns: auto 1fr auto auto auto auto;
       align-items: center;
       gap: 6px;
       margin-bottom: 6px;
     }
+    /* Period label dropdown inside each schedule row.
+       Hidden by default - only shown when location type is Both.
+       CSS Grid auto-track collapses to 0 when the child is display:none. */
+    .f-sched-label {
+      display: none;
+      font-size: 0.72rem;
+      padding: 5px 5px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+      max-width: 130px;
+    }
+    /* Period column header hidden by default */
+    .period-col-header { display: none; }
+
+    /* Show period column when the schedule wrapper has the show-period class */
+    .show-period .f-sched-label { display: block; }
+    .show-period .period-col-header { display: block; }
     .schedule-row input[type="text"] {
       font-size: 0.78rem;
       padding: 5px 8px;
@@ -291,7 +310,7 @@
     .btn-add-schedule:hover { background: rgba(139,92,246,0.08); }
     .schedule-header {
       display: grid;
-      grid-template-columns: 1fr auto auto auto auto;
+      grid-template-columns: auto 1fr auto auto auto auto;
       gap: 6px;
       font-size: 0.68rem;
       color: var(--text-muted);
@@ -1042,9 +1061,10 @@
       </div>
 
       <!-- Voting Hours - schedule builder (one row = simple, multiple rows = day-specific) -->
-      <div class="fp-group">
+      <div class="fp-group" id="sched-section">
         <label>Voting Hours</label>
         <div class="schedule-header">
+          <span class="period-col-header">Period</span>
           <span>Day(s) - optional</span>
           <span>Opens</span>
           <span></span>
@@ -1321,9 +1341,10 @@
     function renderHoursCell(loc) {
       if (loc.schedule && loc.schedule.length) {
         return loc.schedule.map(function(row) {
-          var timeStr = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
-          var label   = row.days ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ':</span>' : "";
-          return '<div style="line-height:1.5;">' + label + escHtml(timeStr) + '</div>';
+          var timeStr    = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
+          var periodPart = row.label ? '<span style="color:var(--accent-light);font-weight:700;margin-right:4px;">' + escHtml(row.label) + '</span>' : "";
+          var dayPart    = row.days  ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ':</span>' : "";
+          return '<div style="line-height:1.5;">' + periodPart + dayPart + escHtml(timeStr) + '</div>';
         }).join("");
       }
       return escHtml(loc.hours || "-");
@@ -1697,17 +1718,29 @@
       setTimeout(function() { msg.textContent = ""; }, 3000);
     }
 
-    // Adds one row to the schedule builder
-    function addScheduleRow(days, open, close) {
+    // Adds one row to the schedule builder.
+    // label = "Early Voting", "Election Day", or "" (blank = unlabeled)
+    function addScheduleRow(days, open, close, label) {
       var idx  = scheduleRowCount++;
       var row  = document.createElement("div");
       row.className = "schedule-row";
       row.id        = "srow-" + idx;
 
+      // Period label dropdown - identifies which voting period this schedule applies to
+      var labelSel = document.createElement("select");
+      labelSel.className = "f-sched-label";
+      [["", "- Period -"], ["Early Voting", "Early Voting"], ["Election Day", "Election Day"]].forEach(function(opt) {
+        var o = document.createElement("option");
+        o.value       = opt[0];
+        o.textContent = opt[1];
+        if ((label || "") === opt[0]) o.selected = true;
+        labelSel.appendChild(o);
+      });
+
       var daysInput = document.createElement("input");
       daysInput.type        = "text";
       daysInput.className   = "f-sched-days";
-      daysInput.placeholder = "e.g. Mon-Fri";
+      daysInput.placeholder = "e.g. Mon-Fri or July 17,24,31";
       daysInput.value       = days || "";
 
       var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
@@ -1717,10 +1750,10 @@
       var closeSel = makeTimeSelect("f-sched-close", close || "7:00pm");
 
       var removeBtn = document.createElement("button");
-      removeBtn.type      = "button";
-      removeBtn.className = "btn-remove-row";
+      removeBtn.type        = "button";
+      removeBtn.className   = "btn-remove-row";
       removeBtn.textContent = "x";
-      removeBtn.title     = "Remove this row";
+      removeBtn.title       = "Remove this row";
       // Capture idx in closure for the click handler
       (function(rowId) {
         removeBtn.addEventListener("click", function() {
@@ -1729,6 +1762,7 @@
         });
       })(idx);
 
+      row.appendChild(labelSel);
       row.appendChild(daysInput);
       row.appendChild(openSel);
       row.appendChild(sep);
@@ -1745,10 +1779,13 @@
       var rows = document.querySelectorAll("#schedule-rows .schedule-row");
       var schedule = [];
       rows.forEach(function(row) {
+        var label = row.querySelector(".f-sched-label").value; // "Early Voting", "Election Day", or ""
         var days  = row.querySelector(".f-sched-days").value.trim();
         var open  = row.querySelector(".f-sched-open").value;
         var close = row.querySelector(".f-sched-close").value;
-        schedule.push({ days: days, open: open, close: close });
+        var entry = { days: days, open: open, close: close };
+        if (label) entry.label = label; // only store label if one was chosen
+        schedule.push(entry);
       });
 
       if (!schedule.length) return { hours: "", schedule: [] };
@@ -1767,9 +1804,9 @@
       scheduleRowCount = 0;
 
       if (loc && loc.schedule && loc.schedule.length) {
-        // Location has structured schedule - restore each row
+        // Location has structured schedule - restore each row including any period label
         loc.schedule.forEach(function(row) {
-          addScheduleRow(row.days, row.open, row.close);
+          addScheduleRow(row.days, row.open, row.close, row.label || "");
         });
       } else if (loc && loc.hours) {
         // Old single-string hours - create one row with no days label
@@ -1794,6 +1831,11 @@
       document.getElementById("radio-early").className    = "type-radio" + (val === "early"        ? " sel-early"    : "");
       document.getElementById("radio-election").className = "type-radio" + (val === "election_day" ? " sel-election" : "");
       document.getElementById("radio-both").className     = "type-radio" + (val === "both"         ? " sel-both"     : "");
+
+      // Show the Period column only when type is Both - for Early/Election Day,
+      // every schedule row obviously belongs to that single type, no label needed.
+      var isBoth = val === "both";
+      document.getElementById("sched-section").classList.toggle("show-period", isBoth);
     }
     document.querySelectorAll('input[name="loc-type"]').forEach(function(r) {
       r.addEventListener("change", updateTypeStyles);
