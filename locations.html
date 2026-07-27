@@ -3236,10 +3236,29 @@
       // Build location objects and save to localStorage
       var saved = loadCustom();
       var now   = Date.now();
-      var added = [];
+      var added      = [];
+      var duplicates = []; // track skipped entries so we can summarize them
+
+      // Build a set of fingerprints for existing locations (name + address, normalized).
+      // Used to detect duplicates before adding anything new.
+      var existingFingerprints = {};
+      saved.forEach(function(loc) {
+        var fp = (loc.name || "").toLowerCase().trim() + "|" + (loc.address || "").toLowerCase().trim();
+        existingFingerprints[fp] = true;
+      });
 
       bulkResults.forEach(function(r, i) {
         if (!r.name) return; // skip completely empty rows
+
+        // Check if this entry already exists (same name AND same address, case-insensitive)
+        var fp = r.name.toLowerCase().trim() + "|" + r.address.toLowerCase().trim();
+        if (existingFingerprints[fp]) {
+          duplicates.push(r.name); // record name for summary
+          return; // skip - do not add
+        }
+
+        // Mark fingerprint as seen so duplicates within the batch itself are also caught
+        existingFingerprints[fp] = true;
 
         var id = "bulk_" + now + "_" + i;
         var loc = {
@@ -3267,7 +3286,19 @@
       renderTable();     // refresh the table
 
       closeBulkModal();
-      showToast(added.length + " locations saved. Geocoding in the background - coordinates will update automatically.");
+
+      // Build toast message - include duplicate summary if any were skipped
+      var msg = added.length + " location" + (added.length !== 1 ? "s" : "") + " saved.";
+      if (added.length > 0) {
+        msg += " Geocoding in the background - coordinates will update automatically.";
+      }
+      if (duplicates.length > 0) {
+        msg += " " + duplicates.length + " duplicate" + (duplicates.length !== 1 ? "s" : "") + " skipped: " + duplicates.join(", ") + ".";
+      }
+      if (added.length === 0 && duplicates.length > 0) {
+        msg = "Nothing saved - all " + duplicates.length + " location" + (duplicates.length !== 1 ? "s were" : " was") + " already in your list: " + duplicates.join(", ") + ".";
+      }
+      showToast(msg);
 
       // Geocode each added location one by one with 1.2s delay
       geocodeBulkQueue(added, 0);
