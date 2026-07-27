@@ -111,14 +111,25 @@
 - [x] index.html: popup renders multi-row schedule with day labels; type badge handles Both (2026-07-26)
 - [x] css/style.css: added .popup-type-badge.both style (2026-07-26)
 
+## Done (Session 13 - 2026-07-27)
+- [x] index.html: fixed null lat/lng crash in placePin() - locations without coordinates are skipped instead of throwing a Leaflet TypeError that stopped all subsequent script execution (counties, sidebar listeners) (2026-07-27)
+- [x] locations.html: schedule paste parser added - paste single-line (semicolon-separated) or multi-line schedule text and it auto-fills all rows with day labels and normalized times (2026-07-27)
+- [x] locations.html: Period label dropdown added to each schedule row (Early Voting / Election Day / blank) - only shown when location type is "Both" (2026-07-27)
+- [x] locations.html: Period column hidden by default, shown via CSS .show-period toggle on #sched-section when type = "Both" (2026-07-27)
+- [x] locations.html: Days field restored to schedule rows - dimmed/italic styling distinguishes it from manually-filled fields; auto-populated by paste parser (2026-07-27)
+- [x] index.html: map popup schedule display updated to show Period label (bold) and Days label before each time range (2026-07-27)
+- [x] locations.html: parser fixed to handle all line-ending styles (\r\n, \r, \n) - standalone \r from PDF/clipboard paste was silently dropping rows (2026-07-27)
+- [x] locations.html: header lines without times (e.g. "July 17th through August 1st") now stored as carry-forward rangeHeader and prepended to all timed rows that follow - date range context preserved on every row (2026-07-27)
+- [x] locations.html: days input shows full text as browser tooltip on hover - truncated field content readable without editing (2026-07-27)
+- [x] locations.html: Re-geocode address button restored below lat/lng fields - calls geocodeAddress() on the current address field value (2026-07-27)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Task 4: Update directory.html + district-report.html - type badges handle "Both", schedule rows display in cards and report rows
-- [ ] Investigate why Map nav link opens in a new tab on GitHub Pages (could not reproduce from code - may be browser behavior or a specific link somewhere)
-- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make coordinate fixes permanent
-- [ ] Start entering additional verified polling locations from county election commission websites
+- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all coordinate fixes and new locations permanent in the repo
+- [ ] Start entering early voting locations - use paste parser to quickly fill in schedule data from county election commission websites
+- [ ] Investigate why Map nav link opens in a new tab on GitHub Pages (could not reproduce from code - may be browser behavior)
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
@@ -135,8 +146,9 @@
 - State House source: Census TIGERweb Legislative MapServer/2, field SLDL (still accurate - no redistricting)
 - All polling location data must be verified with county election commissions before use
 - district-report.html supports URL params: ?type=house&district=80, ?type=senate&district=26, ?type=congressional&district=8, ?type=county&county=Haywood
-- Schedule stored as array: [{days, open, close}] + hours string (first row, for backward compat display)
+- Schedule stored as array: [{days, open, close, label}] - label is "Early Voting" or "Election Day" for Both-type locations
 - "Both" type: pin is indigo, appears on both map layers, counts in both early and election day stats
 - Google Maps lat/lng can be pasted directly into either coordinate field - auto-splits into both fields
 - ALL_LOCATIONS deduplication: seed entries excluded if ID already exists in tn_polling_custom (custom version wins)
 - Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
+- Paste parser: header lines (no parens) become rangeHeader prepended to all following rows; supports \r\n, \r, \n, and semicolons

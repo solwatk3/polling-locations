@@ -1427,8 +1427,15 @@
             }
           var gLat = parseFloat(results[0].lat);
           var gLng = parseFloat(results[0].lon);
-          document.getElementById("ep-lat").value = gLat.toFixed(6);
-          document.getElementById("ep-lng").value = gLng.toFixed(6);
+          // Only overwrite the coordinate fields if they are currently empty.
+          // If the user has manually placed a pin, preserve those coordinates.
+          var existingLat = parseFloat(document.getElementById("ep-lat").value);
+          var existingLng = parseFloat(document.getElementById("ep-lng").value);
+          var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+          if (!hasExistingCoords) {
+            document.getElementById("ep-lat").value = gLat.toFixed(6);
+            document.getElementById("ep-lng").value = gLng.toFixed(6);
+          }
           if (!document.getElementById("ep-county").value && results[0].address && results[0].address.county) {
             var raw = results[0].address.county.replace(/ County$/i, "").trim();
             var match = Array.from(document.getElementById("ep-county").options).find(function(o) { return o.value.toLowerCase() === raw.toLowerCase(); });
@@ -1436,8 +1443,10 @@
           }
           epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
-          // Auto-detect districts now that we have fresh coordinates
-          epDetectDistricts(gLat, gLng);
+          // Detect districts - use existing pin coords if set, otherwise use geocoded coords
+          var detectLat = hasExistingCoords ? existingLat : gLat;
+          var detectLng = hasExistingCoords ? existingLng : gLng;
+          epDetectDistricts(detectLat, detectLng);
         })
         .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
       }, 800);
