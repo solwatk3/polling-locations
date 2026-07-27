@@ -1354,15 +1354,58 @@
     // If the location has a schedule array, shows each row on its own line.
     // Falls back to the plain hours string for older data.
     function renderHoursCell(loc) {
-      if (loc.schedule && loc.schedule.length) {
-        return loc.schedule.map(function(row) {
-          var timeStr    = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
-          var periodPart = row.label ? '<span style="color:var(--accent-light);font-weight:700;margin-right:4px;">' + escHtml(row.label) + ':</span>' : "";
-          var dayPart    = row.days  ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ' —</span> ' : "";
-          return '<div style="line-height:1.5;">' + periodPart + dayPart + escHtml(timeStr) + '</div>';
-        }).join("");
+      if (!loc.schedule || !loc.schedule.length) {
+        return escHtml(loc.hours || "-");
       }
-      return escHtml(loc.hours || "-");
+
+      var rows = loc.schedule;
+
+      // Check if every row shares the same period label (e.g. all "Early Voting")
+      // If so, show the label once as a header instead of repeating it on every row.
+      var firstLabel   = rows[0].label || "";
+      var allSameLabel = rows.every(function(r) { return (r.label || "") === firstLabel; });
+      var sharedLabel  = allSameLabel ? firstLabel : "";
+
+      var out = "";
+
+      // Show the shared label once at the top as a small styled header
+      if (sharedLabel) {
+        out += '<div style="font-size:0.61rem;font-weight:700;color:#a78bfa;text-transform:uppercase;'
+          + 'letter-spacing:0.06em;margin-bottom:5px;">'
+          + escHtml(sharedLabel)
+          + (rows.length > 1
+              ? ' <span style="font-weight:400;color:var(--text-muted);">&bull; ' + rows.length + ' time slots</span>'
+              : '')
+          + '</div>';
+      }
+
+      // Render each time slot: days on one muted line, time on the next
+      rows.forEach(function(r, i) {
+        var time = r.open === "Closed" ? "Closed" : r.open + " - " + r.close;
+
+        // Show per-row label only when rows have mixed labels
+        var labelHtml = (!sharedLabel && r.label)
+          ? '<div style="font-size:0.61rem;font-weight:700;color:#a78bfa;margin-bottom:1px;">' + escHtml(r.label) + '</div>'
+          : "";
+
+        // Days text - muted and slightly smaller than the time
+        var daysHtml = r.days
+          ? '<div style="font-size:0.67rem;color:var(--text-muted);line-height:1.3;margin-bottom:1px;">' + escHtml(r.days) + '</div>'
+          : "";
+
+        // Thin rule between slots (not before the first one)
+        if (i > 0) {
+          out += '<div style="height:1px;background:rgba(255,255,255,0.05);margin:5px 0;"></div>';
+        }
+
+        out += '<div>'
+          + labelHtml
+          + daysHtml
+          + '<div style="font-size:0.73rem;color:var(--text);">' + escHtml(time) + '</div>'
+          + '</div>';
+      });
+
+      return out;
     }
 
     function renderTable() {
