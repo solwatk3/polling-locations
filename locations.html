@@ -98,6 +98,7 @@
     }
     .type-badge.early        { background:#064e3b; color:#6ee7b7; }
     .type-badge.election-day { background:#78350f; color:#fde68a; }
+    .type-badge.both         { background:#312e81; color:#c7d2fe; }
 
     /* Dist pill */
     .dist-pill {
@@ -233,6 +234,70 @@
     .type-radio input { display: none; }
     .type-radio.sel-early    { border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.1); }
     .type-radio.sel-election { border-color: var(--warning); color: var(--warning); background: rgba(245,158,11,0.1); }
+    .type-radio.sel-both     { border-color: #818cf8; color: #818cf8; background: rgba(129,140,248,0.1); }
+
+    /* ----- Schedule builder ----- */
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto auto;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .schedule-row input[type="text"] {
+      font-size: 0.78rem;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+      width: 100%;
+    }
+    .schedule-row select {
+      font-size: 0.76rem;
+      padding: 5px 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+    }
+    .schedule-row .sched-sep {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .btn-remove-row {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.72rem;
+      padding: 3px 7px;
+      line-height: 1;
+    }
+    .btn-remove-row:hover { border-color: #f87171; color: #f87171; }
+    .btn-add-schedule {
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: none;
+      border: 1px dashed var(--accent);
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+      margin-top: 2px;
+      width: 100%;
+    }
+    .btn-add-schedule:hover { background: rgba(139,92,246,0.08); }
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto auto;
+      gap: 6px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+      padding: 0 1px;
+    }
 
     /* Status labels for geocode / district lookup */
     .inline-status {
@@ -748,6 +813,10 @@
             <input type="radio" name="loc-type" value="election_day" />
             &#11044; Election Day
           </label>
+          <label class="type-radio" id="radio-both">
+            <input type="radio" name="loc-type" value="both" />
+            &#11044; Both
+          </label>
         </div>
       </div>
 
@@ -771,22 +840,22 @@
         <div id="district-status" class="inline-status"></div>
       </div>
 
-      <!-- Voting Hours - two dropdowns so format is always consistent -->
+      <!-- Voting Hours - schedule builder (one row = simple, multiple rows = day-specific) -->
       <div class="fp-group">
         <label>Voting Hours</label>
-        <div class="fp-grid-2">
-          <div class="fp-group">
-            <label>Opens</label>
-            <select id="f-hours-open">
-              <!-- Options injected by JS -->
-            </select>
-          </div>
-          <div class="fp-group">
-            <label>Closes</label>
-            <select id="f-hours-close">
-              <!-- Options injected by JS -->
-            </select>
-          </div>
+        <div class="schedule-header">
+          <span>Day(s) - optional</span>
+          <span>Opens</span>
+          <span></span>
+          <span>Closes</span>
+          <span></span>
+        </div>
+        <div id="schedule-rows">
+          <!-- Rows injected by JS -->
+        </div>
+        <button type="button" class="btn-add-schedule" onclick="addScheduleRow()">+ Add another day / time</button>
+        <div style="font-size:0.68rem;color:var(--text-muted);margin-top:4px;">
+          Leave "Day(s)" blank if hours are the same every day. Add rows for different hours on different days (e.g. Mon-Fri, Saturday, Sunday).
         </div>
       </div>
 
@@ -959,6 +1028,20 @@
     // RENDER TABLE
     // Filters and sorts the locations array, then injects rows into the table.
     // =========================================================================
+    // Renders hours for the table cell.
+    // If the location has a schedule array, shows each row on its own line.
+    // Falls back to the plain hours string for older data.
+    function renderHoursCell(loc) {
+      if (loc.schedule && loc.schedule.length) {
+        return loc.schedule.map(function(row) {
+          var timeStr = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
+          var label   = row.days ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ':</span>' : "";
+          return '<div style="line-height:1.5;">' + label + escHtml(timeStr) + '</div>';
+        }).join("");
+      }
+      return escHtml(loc.hours || "-");
+    }
+
     function renderTable() {
       var search    = document.getElementById("filter-search").value.toLowerCase().trim();
       var typeFilter  = document.getElementById("filter-type").value;
@@ -970,7 +1053,10 @@
           (loc.name    || "").toLowerCase().includes(search) ||
           (loc.address || "").toLowerCase().includes(search) ||
           (loc.county  || "").toLowerCase().includes(search);
-        var matchType   = typeFilter === "all" || loc.type === typeFilter;
+          // "both" type locations match either early or election_day filters
+        var matchType   = typeFilter === "all" ||
+          loc.type === typeFilter ||
+          (loc.type === "both" && (typeFilter === "early" || typeFilter === "election_day"));
         var matchCounty = countyFilter === "all" || loc.county === countyFilter;
         return matchSearch && matchType && matchCounty;
       });
@@ -1001,9 +1087,10 @@
         document.querySelector(".table-wrapper table").style.display = "table";
         empty.style.display = "none";
         tbody.innerHTML = filtered.map(function(loc) {
-          var typeBadge = loc.type === "early"
-            ? '<span class="type-badge early">Early</span>'
-            : '<span class="type-badge election-day">Election Day</span>';
+          // Type badge - three options
+          var typeBadge = loc.type === "early"        ? '<span class="type-badge early">Early</span>'
+                        : loc.type === "election_day" ? '<span class="type-badge election-day">Election Day</span>'
+                        :                              '<span class="type-badge both">Both</span>';
           var dists = [
             loc.state_district ? '<span class="dist-pill">H' + loc.state_district + '</span>' : '',
             loc.state_senate_district ? '<span class="dist-pill">S' + loc.state_senate_district + '</span>' : '',
@@ -1016,7 +1103,7 @@
             '<td>' + escHtml(loc.county || "-") + '</td>' +
             '<td>' + typeBadge + '</td>' +
             '<td>' + (dists || '<span style="color:#555;">-</span>') + '</td>' +
-            '<td style="font-size:0.75rem;">' + escHtml(loc.hours || "-") + '</td>' +
+            '<td style="font-size:0.75rem;">' + renderHoursCell(loc) + '</td>' +
             '<td class="cell-actions" onclick="event.stopPropagation()">' +
               '<button class="btn-secondary" style="padding:4px 10px;font-size:0.73rem;" onclick="editLocation(\'' + loc.id + '\')">Edit</button>' +
               '<button class="btn-danger" style="padding:4px 10px;font-size:0.73rem;" onclick="deleteLocation(\'' + loc.id + '\')">Delete</button>' +
@@ -1025,9 +1112,9 @@
         }).join("");
       }
 
-      // Update stats
-      var earlyCount = locations.filter(function(l) { return l.type === "early"; }).length;
-      var edayCount  = locations.filter(function(l) { return l.type !== "early"; }).length;
+      // Update stats - "both" counts toward each category
+      var earlyCount = locations.filter(function(l) { return l.type === "early" || l.type === "both"; }).length;
+      var edayCount  = locations.filter(function(l) { return l.type === "election_day" || l.type === "both"; }).length;
       document.getElementById("count-early").textContent = earlyCount;
       document.getElementById("count-eday").textContent  = edayCount;
       document.getElementById("count-total").textContent = locations.length;
@@ -1095,10 +1182,8 @@
       document.getElementById("f-city").value    = loc ? (loc.city    || "") : "";
       document.getElementById("f-zip").value     = loc ? (loc.zip     || "") : "";
       document.getElementById("f-county").value  = loc ? (loc.county  || "") : "";
-      // Reset hours dropdowns to default, then parse saved value if editing
-      document.getElementById("f-hours-open").value  = "8:00am";
-      document.getElementById("f-hours-close").value = "7:00pm";
-      if (loc && loc.hours) setHoursFromString(loc.hours);
+      // Load schedule into schedule builder (handles both old string format and new array)
+      setScheduleData(loc);
       document.getElementById("f-notes").value   = loc ? (loc.notes   || "") : "";
       document.getElementById("f-house").value   = loc ? (loc.state_district            || "") : "";
       document.getElementById("f-senate").value  = loc ? (loc.state_senate_district     || "") : "";
@@ -1106,10 +1191,11 @@
       document.getElementById("f-lat").value     = loc ? (loc.lat || "") : "";
       document.getElementById("f-lng").value     = loc ? (loc.lng || "") : "";
 
-      // Set type radio
+      // Set type radio - supports early, election_day, and both
       var typeVal = loc ? loc.type : "early";
       document.querySelector('input[name="loc-type"][value="early"]').checked        = typeVal === "early";
       document.querySelector('input[name="loc-type"][value="election_day"]').checked = typeVal === "election_day";
+      document.querySelector('input[name="loc-type"][value="both"]').checked         = typeVal === "both";
       updateTypeStyles();
 
       // Clear status messages
@@ -1162,7 +1248,8 @@
         state_district:         document.getElementById("f-house").value    || "?",
         state_senate_district:  document.getElementById("f-senate").value   || "?",
         congressional_district: document.getElementById("f-congress").value || "?",
-        hours:                  getHoursString(),
+        hours:                  getScheduleData().hours,
+        schedule:               getScheduleData().schedule,
         notes:                  document.getElementById("f-notes").value.trim(),
         lat:                    isNaN(lat) ? 35.5  : lat,
         lng:                    isNaN(lng) ? -86.5 : lng
@@ -1218,76 +1305,132 @@
     });
 
     // =========================================================================
-    // VOTING HOURS DROPDOWNS
-    // Generates 30-min increments from 6:00am to 9:00pm.
-    // Saves/loads as a formatted string like "8:00am - 7:00pm".
+    // SCHEDULE BUILDER
+    // Replaces the old single open/close dropdown pair.
+    // Each row = one day-group (e.g. "Mon-Fri  8:00am - 7:00pm").
+    // If "Day(s)" is left blank, the row covers all days (backward compat).
+    // Data is saved as a schedule array; hours = first row's open-close string.
     // =========================================================================
-    (function buildTimeOptions() {
-      var opens  = document.getElementById("f-hours-open");
-      var closes = document.getElementById("f-hours-close");
 
-      // Build options for 6:00am through 9:00pm in 30-min steps
+    // Returns an array of time label strings: ["6:00am", "6:30am", ..., "9:00pm"]
+    function buildTimeLabels() {
+      var labels = ["Closed"];
       for (var h = 6; h <= 21; h++) {
         for (var m = 0; m < 60; m += 30) {
           var period = h < 12 ? "am" : "pm";
           var hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
           var mins   = m === 0 ? "00" : "30";
-          var label  = hour12 + ":" + mins + period;
-
-          var optO = document.createElement("option");
-          optO.value = label;
-          optO.textContent = label;
-          opens.appendChild(optO);
-
-          var optC = document.createElement("option");
-          optC.value = label;
-          optC.textContent = label;
-          closes.appendChild(optC);
+          labels.push(hour12 + ":" + mins + period);
         }
       }
+      return labels;
+    }
+    var TIME_LABELS = buildTimeLabels();
 
-      // Default: 8:00am open, 7:00pm close (most common TN polling hours)
-      opens.value  = "8:00am";
-      closes.value = "7:00pm";
-    })();
-
-    // Reads the two dropdowns and returns a formatted string: "8:00am - 7:00pm"
-    function getHoursString() {
-      var open  = document.getElementById("f-hours-open").value;
-      var close = document.getElementById("f-hours-close").value;
-      return open + " - " + close;
+    // Builds a <select> element populated with time options
+    function makeTimeSelect(cls, defaultVal) {
+      var sel = document.createElement("select");
+      sel.className = cls;
+      TIME_LABELS.forEach(function(t) {
+        var opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        if (t === defaultVal) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      return sel;
     }
 
-    // Parses a saved hours string back into the two dropdowns when editing.
-    // Handles formats like "8:00am - 7:00pm", "8am - 7pm", "8:00 AM - 7:00 PM"
-    function setHoursFromString(str) {
-      if (!str) return;
-      var parts = str.split(/\s*-\s*/);
-      if (parts.length !== 2) return;
+    var scheduleRowCount = 0;
 
-      function normalize(t) {
-        // Lowercase, ensure colon and leading zero: "8am" -> "8:00am", "8:30 AM" -> "8:30am"
-        t = t.trim().toLowerCase().replace(/\s/g, "");
-        if (!t.includes(":")) {
-          t = t.replace(/(am|pm)/, ":00$1");
-        }
-        return t;
-      }
+    // Adds one row to the schedule builder
+    function addScheduleRow(days, open, close) {
+      var idx  = scheduleRowCount++;
+      var row  = document.createElement("div");
+      row.className = "schedule-row";
+      row.id        = "srow-" + idx;
 
-      var openVal  = normalize(parts[0]);
-      var closeVal = normalize(parts[1]);
+      var daysInput = document.createElement("input");
+      daysInput.type        = "text";
+      daysInput.className   = "f-sched-days";
+      daysInput.placeholder = "e.g. Mon-Fri";
+      daysInput.value       = days || "";
 
-      var opens  = document.getElementById("f-hours-open");
-      var closes = document.getElementById("f-hours-close");
+      var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
+      var sep      = document.createElement("span");
+      sep.className   = "sched-sep";
+      sep.textContent = "to";
+      var closeSel = makeTimeSelect("f-sched-close", close || "7:00pm");
 
-      // Match against available options - fall back to default if not found
-      if (Array.from(opens.options).some(function(o) { return o.value === openVal; })) {
-        opens.value = openVal;
-      }
-      if (Array.from(closes.options).some(function(o) { return o.value === closeVal; })) {
-        closes.value = closeVal;
+      var removeBtn = document.createElement("button");
+      removeBtn.type      = "button";
+      removeBtn.className = "btn-remove-row";
+      removeBtn.textContent = "x";
+      removeBtn.title     = "Remove this row";
+      // Capture idx in closure for the click handler
+      (function(rowId) {
+        removeBtn.addEventListener("click", function() {
+          var el = document.getElementById("srow-" + rowId);
+          if (el) el.remove();
+        });
+      })(idx);
+
+      row.appendChild(daysInput);
+      row.appendChild(openSel);
+      row.appendChild(sep);
+      row.appendChild(closeSel);
+      row.appendChild(removeBtn);
+
+      document.getElementById("schedule-rows").appendChild(row);
+    }
+
+    // Reads all schedule rows and returns { hours, schedule }
+    // hours = first row's "open - close" (for backward compat display)
+    // schedule = array of {days, open, close} - only set when rows exist
+    function getScheduleData() {
+      var rows = document.querySelectorAll("#schedule-rows .schedule-row");
+      var schedule = [];
+      rows.forEach(function(row) {
+        var days  = row.querySelector(".f-sched-days").value.trim();
+        var open  = row.querySelector(".f-sched-open").value;
+        var close = row.querySelector(".f-sched-close").value;
+        schedule.push({ days: days, open: open, close: close });
+      });
+
+      if (!schedule.length) return { hours: "", schedule: [] };
+
+      // hours = first row's open-close string (used wherever a single string is needed)
+      var first = schedule[0];
+      var hours = first.open === "Closed" ? "Closed" : first.open + " - " + first.close;
+
+      return { hours: hours, schedule: schedule };
+    }
+
+    // Loads existing location data into the schedule builder
+    function setScheduleData(loc) {
+      // Clear existing rows
+      document.getElementById("schedule-rows").innerHTML = "";
+      scheduleRowCount = 0;
+
+      if (loc && loc.schedule && loc.schedule.length) {
+        // Location has structured schedule - restore each row
+        loc.schedule.forEach(function(row) {
+          addScheduleRow(row.days, row.open, row.close);
+        });
+      } else if (loc && loc.hours) {
+        // Old single-string hours - create one row with no days label
+        var parts = loc.hours.split(/\s*-\s*/);
+        var open  = parts[0] ? parts[0].trim() : "8:00am";
+        var close = parts[1] ? parts[1].trim() : "7:00pm";
+        addScheduleRow("", open, close);
+      } else {
+        // Default empty row
+        addScheduleRow("", "8:00am", "7:00pm");
       }
     }
+
+    // Initialize with one default row on page load
+    addScheduleRow("", "8:00am", "7:00pm");
 
     // =========================================================================
     // TYPE RADIO STYLING
@@ -1296,6 +1439,7 @@
       var val = document.querySelector('input[name="loc-type"]:checked').value;
       document.getElementById("radio-early").className    = "type-radio" + (val === "early"        ? " sel-early"    : "");
       document.getElementById("radio-election").className = "type-radio" + (val === "election_day" ? " sel-election" : "");
+      document.getElementById("radio-both").className     = "type-radio" + (val === "both"         ? " sel-both"     : "");
     }
     document.querySelectorAll('input[name="loc-type"]').forEach(function(r) {
       r.addEventListener("change", updateTypeStyles);
