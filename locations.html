@@ -239,10 +239,21 @@
     /* ----- Schedule builder ----- */
     .schedule-row {
       display: grid;
-      grid-template-columns: auto auto auto auto auto;
+      grid-template-columns: auto 1fr auto auto auto auto;
       align-items: center;
       gap: 6px;
       margin-bottom: 6px;
+    }
+    /* Days label input - read-only looking, filled by parser */
+    .f-sched-days {
+      font-size: 0.74rem;
+      padding: 5px 7px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      width: 100%;
+      font-style: italic;
     }
     /* Period label dropdown inside each schedule row.
        Hidden by default - only shown when location type is Both.
@@ -310,7 +321,7 @@
     .btn-add-schedule:hover { background: rgba(139,92,246,0.08); }
     .schedule-header {
       display: grid;
-      grid-template-columns: auto auto auto auto auto;
+      grid-template-columns: auto 1fr auto auto auto auto;
       gap: 6px;
       font-size: 0.68rem;
       color: var(--text-muted);
@@ -1065,6 +1076,7 @@
         <label>Voting Hours</label>
         <div class="schedule-header">
           <span class="period-col-header">Period</span>
+          <span style="color:var(--text-muted);font-style:italic;">Days (auto-filled)</span>
           <span>Opens</span>
           <span></span>
           <span>Closes</span>
@@ -1074,7 +1086,7 @@
         <div style="margin-bottom:10px;padding:8px 10px;background:rgba(139,92,246,0.07);border:1px dashed var(--border);border-radius:var(--radius);">
           <div style="font-size:0.7rem;font-weight:700;color:var(--accent);margin-bottom:5px;">&#128203; Paste schedule text to auto-fill</div>
           <textarea id="sched-paste-input"
-            placeholder="e.g.: Fri - July 17,24,31 (8am-5:30pm); Sat - July 18,25 (8am-4:30pm); Mon - July 20 (8am-5:30pm)"
+            placeholder="Paste either format:&#10;&#10;Single-line: Fri - July 17,24,31 (8am-5:30pm); Sat - July 18 (8am-4:30pm)&#10;&#10;Multi-line:&#10;Monday thru Friday (11:00 am - 7:00 pm)&#10;Saturday, July 18th &amp; 25th (10:00 am - 4:00 pm)&#10;Saturday, August 1st (8:00 am - 4:00 pm)"
             style="width:100%;height:56px;font-size:0.75rem;padding:6px 8px;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);resize:vertical;font-family:inherit;"></textarea>
           <div style="display:flex;align-items:center;gap:10px;margin-top:5px;">
             <button type="button" onclick="parseSchedulePaste()"
@@ -1342,7 +1354,8 @@
         return loc.schedule.map(function(row) {
           var timeStr    = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
           var periodPart = row.label ? '<span style="color:var(--accent-light);font-weight:700;margin-right:4px;">' + escHtml(row.label) + ':</span>' : "";
-          return '<div style="line-height:1.5;">' + periodPart + escHtml(timeStr) + '</div>';
+          var dayPart    = row.days  ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ' —</span> ' : "";
+          return '<div style="line-height:1.5;">' + periodPart + dayPart + escHtml(timeStr) + '</div>';
         }).join("");
       }
       return escHtml(loc.hours || "-");
@@ -1651,8 +1664,18 @@
 
     // =========================================================================
     // SCHEDULE TEXT PARSER
-    // Accepts format: "Fri - July 17,24,31 (8am-5:30pm); Sat - July 18 (8am-4:30pm)"
-    // Splits on semicolons, extracts day label and time range, fills schedule rows.
+    // Handles two paste formats:
+    //
+    // Single-line (semicolon-separated):
+    //   "Fri - July 17,24,31 (8am-5:30pm); Sat - July 18,25 (8am-4:30pm)"
+    //
+    // Multi-line (one entry per line, header lines without parens are skipped):
+    //   "July 17th through August 1st"           <- skipped (no parens)
+    //   "Monday thru Friday (11:00 am - 7:00 pm)"
+    //   "Saturday, July 18th & 25th (10:00 am - 4:00 pm)"
+    //
+    // In both formats, the day label is everything before the parenthesized time.
+    // Times are normalized to match the dropdown format (e.g. "11:00am", "7:00pm").
     // =========================================================================
     function normalizeTime(t) {
       // Convert "8am" -> "8:00am", "5:30pm" -> "5:30pm", "7pm" -> "7:00pm"
@@ -1735,6 +1758,13 @@
         labelSel.appendChild(o);
       });
 
+      // Days label - filled by the paste parser; editable if needed
+      var daysInput = document.createElement("input");
+      daysInput.type        = "text";
+      daysInput.className   = "f-sched-days";
+      daysInput.placeholder = "auto-filled from paste";
+      daysInput.value       = days || "";
+
       var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
       var sep      = document.createElement("span");
       sep.className   = "sched-sep";
@@ -1755,6 +1785,7 @@
       })(idx);
 
       row.appendChild(labelSel);
+      row.appendChild(daysInput);
       row.appendChild(openSel);
       row.appendChild(sep);
       row.appendChild(closeSel);
@@ -1771,10 +1802,12 @@
       var schedule = [];
       rows.forEach(function(row) {
         var label = row.querySelector(".f-sched-label").value; // "Early Voting", "Election Day", or ""
+        var days  = row.querySelector(".f-sched-days").value.trim();
         var open  = row.querySelector(".f-sched-open").value;
         var close = row.querySelector(".f-sched-close").value;
         var entry = { open: open, close: close };
-        if (label) entry.label = label; // only store label if one was chosen
+        if (label) entry.label = label;
+        if (days)  entry.days  = days;
         schedule.push(entry);
       });
 
@@ -1796,7 +1829,7 @@
       if (loc && loc.schedule && loc.schedule.length) {
         // Location has structured schedule - restore each row including any period label
         loc.schedule.forEach(function(row) {
-          addScheduleRow(row.days, row.open, row.close, row.label || "");
+          addScheduleRow(row.days || "", row.open, row.close, row.label || "");
         });
       } else if (loc && loc.hours) {
         // Old single-string hours - create one row with no days label
