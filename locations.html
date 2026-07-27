@@ -1776,6 +1776,9 @@
       daysInput.className   = "f-sched-days";
       daysInput.placeholder = "auto-filled from paste";
       daysInput.value       = days || "";
+      // Show full text as a tooltip on hover (field is truncated but content can be long)
+      daysInput.title       = days || "";
+      daysInput.addEventListener("input", function() { daysInput.title = daysInput.value; });
 
       var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
       var sep      = document.createElement("span");
