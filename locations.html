@@ -2030,7 +2030,7 @@
     // =========================================================================
 
     // Common street type abbreviations - used to find where the street ends
-    var STREET_TYPES = /^(st|ave|rd|blvd|dr|ln|lane|ct|way|pl|hwy|pike|pk|pkwy|cir|ter|trl|trail|loop|run|row|sq|xing|expy|fwy|rte|route|aly|jct|pt|spur|trce|vis|vly|wl|cv|holw|pass)\.?$/i;
+    var STREET_TYPES = /^(st|ave|rd|road|blvd|dr|drive|ln|lane|ct|way|pl|hwy|highway|pike|pk|pkwy|parkway|cir|ter|trl|trail|loop|run|row|sq|xing|expy|fwy|rte|route|aly|jct|pt|spur|trce|vis|vly|wl|cv|holw|pass)\.?$/i;
 
     function parseFullAddress(raw) {
       raw = raw.trim();
@@ -2085,6 +2085,10 @@
     // =========================================================================
     function parseRowPaste(raw) {
       raw = raw.trim();
+
+      // Strip "Voting Center N - " prefix used in some county formats.
+      // e.g. "Voting Center 1 - LaVergne Middle School 382 Stones River..."
+      raw = raw.replace(/^Voting Center \d+\s*-\s*/i, "");
 
       // Strip leading precinct number (e.g. "01-03 " or "5 " or "12-14 ").
       // Pattern: starts with a digit, followed by more digits and dashes only,
@@ -3118,10 +3122,17 @@
       }
       // --- End tab-separated format ---
 
-      // Split before each precinct number pattern (digits-digits at start of entry)
-      // Using lookahead so the precinct stays with its location.
-      // Handles "04-08", "5-01", "4", etc. followed by whitespace then a letter.
-      var chunks = text.split(/\s+(?=\d{1,3}-\d{2,3}\s+[A-Za-z])/);
+      // "Voting Center N - Name" format - split on the prefix text.
+      // Handles entries like "Voting Center 1 - LaVergne Middle School 382 Stones River..."
+      var chunks;
+      if (/Voting Center \d+\s*-/i.test(text)) {
+        chunks = text.split(/\s+(?=Voting Center \d+\s*-)/i);
+      } else {
+        // Split before each precinct number pattern (digits-digits at start of entry)
+        // Using lookahead so the precinct stays with its location.
+        // Handles "04-08", "5-01", "4", etc. followed by whitespace then a letter.
+        chunks = text.split(/\s+(?=\d{1,3}-\d{2,3}\s+[A-Za-z])/);
+      }
 
       // If no XX-XX precinct pattern found, try zip-then-vote-number boundary.
       // This handles "Vote Center #" style data like:
