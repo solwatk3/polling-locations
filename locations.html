@@ -1507,6 +1507,76 @@
       return { street: street, city: city, zip: extractedZip };
     }
 
+    // =========================================================================
+    // ROW PASTE PARSER
+    // When a full table row is pasted into the name field like:
+    //   "01-03 Oak Spring Baptist Church 10250 Godwin Road Arlington 38002"
+    // this strips the precinct number, detects where the name ends and the
+    // house number begins, then auto-fills name, address, city, and zip.
+    // =========================================================================
+    function parseRowPaste(raw) {
+      raw = raw.trim();
+
+      // Strip leading precinct number (e.g. "01-03 " or "5 " or "12-14 ").
+      // Pattern: starts with a digit, followed by more digits and dashes only,
+      // then whitespace before a letter. Does NOT strip "1st Baptist" etc.
+      raw = raw.replace(/^\d[\d-]*\s+(?=[A-Za-z])/, "");
+
+      // Find the first purely-numeric word - that is the house number and marks
+      // where the street address starts. Start at index 1 so the name always
+      // has at least one word before the house number.
+      var words = raw.split(/\s+/);
+      var houseIdx = -1;
+      for (var i = 1; i < words.length; i++) {
+        if (/^\d+$/.test(words[i])) { houseIdx = i; break; }
+      }
+
+      if (houseIdx === -1) return null; // can't detect name/address boundary
+
+      var name    = words.slice(0, houseIdx).join(" ");
+      var addrRaw = words.slice(houseIdx).join(" ");
+
+      // Re-use the existing parseFullAddress to split street, city, and zip
+      var parsed = parseFullAddress(addrRaw);
+      return {
+        name:    name,
+        address: parsed ? parsed.street : addrRaw,
+        city:    parsed ? parsed.city   : null,
+        zip:     parsed ? parsed.zip    : null
+      };
+    }
+
+    // Paste handler on the name field - detects full-row pastes and auto-splits
+    document.getElementById("f-name").addEventListener("paste", function(e) {
+      var self = this;
+      // setTimeout 0 lets the pasted text land in the field before we read it
+      setTimeout(function() {
+        var raw = self.value.trim();
+        // Only attempt parse if the pasted text contains digits (has an address)
+        if (!/\d/.test(raw)) return;
+
+        var parsed = parseRowPaste(raw);
+        if (!parsed || !parsed.address) return;
+
+        // Set name field to just the location name (precinct + address stripped)
+        self.value = parsed.name;
+
+        // Fill address, city, and zip only if those fields are currently empty
+        if (!document.getElementById("f-address").value.trim()) {
+          document.getElementById("f-address").value = parsed.address;
+        }
+        if (parsed.city && !document.getElementById("f-city").value.trim()) {
+          document.getElementById("f-city").value = parsed.city;
+        }
+        if (parsed.zip && !document.getElementById("f-zip").value.trim()) {
+          document.getElementById("f-zip").value = parsed.zip;
+        }
+
+        // Kick off geocoding now that the address field is populated
+        if (parsed.address) geocodeAddress(parsed.address);
+      }, 0);
+    });
+
     // On blur: if the address field looks like a combined entry, split it
     document.getElementById("f-address").addEventListener("blur", function() {
       var raw = this.value.trim();
