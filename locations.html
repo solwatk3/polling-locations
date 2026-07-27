@@ -2187,11 +2187,19 @@
           return;
         }
         var isCityOnly = !!results[0]._cityOnly;
-        var lat = parseFloat(results[0].lat);
-        var lng = parseFloat(results[0].lon);
+        var gLat = parseFloat(results[0].lat);
+        var gLng = parseFloat(results[0].lon);
 
-        document.getElementById("f-lat").value = lat.toFixed(6);
-        document.getElementById("f-lng").value = lng.toFixed(6);
+        // Only overwrite coordinates if the fields are currently empty.
+        // If the user has manually placed a pin, preserve those coordinates.
+        var existingLat = parseFloat(document.getElementById("f-lat").value);
+        var existingLng = parseFloat(document.getElementById("f-lng").value);
+        var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+
+        if (!hasExistingCoords) {
+          document.getElementById("f-lat").value = gLat.toFixed(6);
+          document.getElementById("f-lng").value = gLng.toFixed(6);
+        }
 
         // Auto-fill county from geocode response if the dropdown is empty.
         // Nominatim returns e.g. "Haywood County" - strip the " County" suffix.
@@ -2205,12 +2213,17 @@
           if (matched) countyDropdown.value = matched.value;
         }
 
-        // Now detect which districts this coordinate falls in
-        lookupDistricts(lat, lng);
+        // For district lookup: use existing pin coords if set, otherwise use geocoded coords
+        var detectLat = hasExistingCoords ? existingLat : gLat;
+        var detectLng = hasExistingCoords ? existingLng : gLng;
+        lookupDistricts(detectLat, detectLng);
 
         if (isCityOnly) {
           // Let the warning stay visible - user should verify/adjust coordinates
           showStatus("geocode-status", "Street not found - pin placed at city center. Verify coordinates.", "#f59e0b", "rgba(120,53,15,0.3)");
+        } else if (hasExistingCoords) {
+          showStatus("geocode-status", "Address found - districts updated (coordinates unchanged)", "#10b981", "rgba(6,78,59,0.3)");
+          setTimeout(function() { hideStatus("geocode-status"); }, 4000);
         } else {
           showStatus("geocode-status", "Address found - coordinates filled", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { hideStatus("geocode-status"); }, 4000);
