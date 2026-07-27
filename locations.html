@@ -2030,7 +2030,7 @@
     // =========================================================================
 
     // Common street type abbreviations - used to find where the street ends
-    var STREET_TYPES = /^(st|ave|rd|blvd|dr|ln|ct|way|pl|hwy|pike|pkwy|cir|ter|trl|loop|run|row|sq|xing|expy|fwy|rte|route|aly|jct|pt|spur|trce|vis|vly|wl|cv|holw|pass)\.?$/i;
+    var STREET_TYPES = /^(st|ave|rd|blvd|dr|ln|lane|ct|way|pl|hwy|pike|pk|pkwy|cir|ter|trl|trail|loop|run|row|sq|xing|expy|fwy|rte|route|aly|jct|pt|spur|trce|vis|vly|wl|cv|holw|pass)\.?$/i;
 
     function parseFullAddress(raw) {
       raw = raw.trim();
@@ -3123,7 +3123,22 @@
       // Handles "04-08", "5-01", "4", etc. followed by whitespace then a letter.
       var chunks = text.split(/\s+(?=\d{1,3}-\d{2,3}\s+[A-Za-z])/);
 
-      // If no precinct-dash-precinct pattern found, try splitting on a single leading number
+      // If no XX-XX precinct pattern found, try zip-then-vote-number boundary.
+      // This handles "Vote Center #" style data like:
+      //   "37062 2 Fairview Recreation Center 2714 Fairview Blvd..."
+      // A 5-digit zip followed by a small number (1-3 digits) then a capital word
+      // reliably marks the transition between entries without false-splitting on
+      // street house numbers like "7200 Tiger" or "2714 Fairview".
+      if (chunks.length === 1) {
+        var DELIM = "|||SPLIT|||";
+        var zipSplit = text.replace(/(\d{5})\s+(?=\d{1,3}\s+[A-Z][a-z])/g, "$1" + DELIM);
+        if (zipSplit !== text) {
+          chunks = zipSplit.split(DELIM);
+        }
+      }
+
+      // Last-resort fallback: split on any number followed by a capitalized word.
+      // Less precise - may over-split on some address formats.
       if (chunks.length === 1) {
         chunks = text.split(/\s+(?=\d+\s+[A-Za-z][a-z])/);
       }
