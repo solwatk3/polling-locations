@@ -11,9 +11,32 @@
 - Vanilla HTML/CSS/JS - no framework, keeps it simple and fast to open
 - GeoJSON for district boundaries (fetched live from ArcGIS/Census APIs)
 - polling-locations.js is the live data source; Excel spreadsheet is the editable copy
-- Obsidian markdown files are cross-linked so graph view shows district -> county -> polling location hierarchy
 - Pins and district boundary layers are fully decoupled - pins stay visible no matter what district toggle is active
 - Custom/repositioned pins saved to localStorage; Export modal generates JS to make changes permanent
+- Schedule data stored as `schedule[]` array of `{days, open, close, label}` objects; `hours` string kept for backward compat display
+
+## Critical Code Patterns
+
+### hasExistingCoords (protect manually placed pins)
+Applied in all three geocode functions. Before writing lat/lng from a geocode result, check if the fields already have values. If they do, only update district info - never overwrite coordinates.
+```js
+var existingLat = parseFloat(document.getElementById("ep-lat").value);
+var existingLng = parseFloat(document.getElementById("ep-lng").value);
+var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+if (!hasExistingCoords) {
+  document.getElementById("ep-lat").value = gLat.toFixed(6);
+  document.getElementById("ep-lng").value = gLng.toFixed(6);
+}
+var detectLat = hasExistingCoords ? existingLat : gLat;
+```
+Applied in: `epScheduleGeocode()` (location-detail.html), `geocodeAddress()` (locations.html), `epGeocode()` (directory.html).
+
+### dragend must sync loc in memory
+After saving dragged coordinates to localStorage, also update the in-memory `loc` object or the edit panel will repopulate stale pre-drag values:
+```js
+loc.lat = pos.lat;
+loc.lng = pos.lng;
+```
 
 ## Data Sources (Confirmed Working)
 | Layer | Service | Field | Notes |
@@ -26,13 +49,30 @@
 
 TN Comptroller base URL: `https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/`
 
+## localStorage Keys
+| Key | What it stores |
+|---|---|
+| `tn_polling_custom` | Custom and edited locations (JSON array) |
+| `tn_polling_overrides` | Pin position overrides for seed locations (JSON object, keyed by id) |
+| `tn_polling_deleted` | IDs of deleted seed locations (JSON array) |
+
 ## Files
 - `index.html` - main map with sidebar, toggles, add form, export modal
-- `css/style.css` - dark theme, form styles, placement mode overlay
-- `data/polling-locations.js` - POLLING_LOCATIONS array + DISTRICTS object (all data is PLACEHOLDER)
+- `locations.html` - manage locations: table view with full add/edit right panel (schedule builder, all fields)
+- `location-detail.html` - per-location detail page with draggable pin map and edit panel
+- `directory.html` - directory browse page: by district, county, search, dashboard views; has slide-in edit panel
+- `css/style.css` - dark theme, shared form styles
+- `data/polling-locations.js` - POLLING_LOCATIONS array + DISTRICTS object
 - `district-report.html` - print-friendly per-district report; supports ?type=house&district=80
 - `polling-locations.xlsx` - 3 sheets: District 80 data, All Locations template, How to Use
 - `obsidian/` - markdown notes for District 80, Congressional 8, Senate 29, Haywood, Hardeman, Madison
+
+## Schedule Builder
+All three edit pages (locations.html, location-detail.html, directory.html) now have the full schedule builder:
+- Rows: `{days, open, close, label}` where label is "Early Voting", "Election Day", or "" (unlabeled)
+- Paste parser: accepts single-line (semicolon-separated) or multi-line (parenthesized times) formats
+- Period column only visible when location type is "Both"
+- `getScheduleData()` / `epGetScheduleData()` returns `{ hours, schedule }` - always save both for compat
 
 ## Sessions
 ### 2026-07-26 (Session 1)
@@ -48,15 +88,31 @@ TN Comptroller base URL: `https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/r
 - Fixed congressional districts: switched from Census API (stale) to TN Comptroller service with May 2026 redistricting
 
 ### 2026-07-26 (Session 3)
-- Added "View District Report" button to sidebar (green link button, opens district-report.html?type=house&district=80 in new tab)
-- Added TN State Senate layer (33 districts, pink/rose color, dashed outline, loads on demand)
+- Added "View District Report" button to sidebar
+- Added TN State Senate layer (33 districts, #f472b6 pink, dashed outline, loads on demand)
 - Updated header subtitle to include Senate districts
-- Reviewed district-report.html - no bugs found, print layout confirmed solid
-- Senate layer color: #f472b6 (pink) to distinguish from congressional (purple) and house (amber)
+- Senate layer: #f472b6 (pink) to distinguish from congressional (purple) and house (amber)
+
+### 2026-07-27 (Session 4)
+- Built locations.html: table view with full add/edit right panel
+- Built location-detail.html: per-location detail page with draggable pin map
+- Built directory.html: directory browse by district, county, search, dashboard
+- All pages share the same localStorage schema
+
+### 2026-07-27 (Session 5)
+- Fixed: auto-geocode in location-detail.html was overwriting manually dragged pin coords
+  - Root cause 1: geocode function always wrote coords - fixed with hasExistingCoords check
+  - Root cause 2: dragend handler didn't sync loc in memory - fixed by adding loc.lat/loc.lng update
+- Fixed: Re-geocode button in locations.html also overwrote coords - same hasExistingCoords fix
+- Improved: schedule display in locations.html table (shared labels as header, days/time on separate lines, dividers)
+- Updated: directory.html edit panel now matches the full form from locations.html
+  - Added zip field
+  - Added "Both" type radio option
+  - Replaced simple open/close selects with full schedule builder (paste parser + multi-row)
+  - Fixed geocode in directory.html with same hasExistingCoords guard
 
 ## Start Here Next Session
-1. Open index.html in browser and toggle the Senate layer to verify it loads from the Comptroller API
-2. Click "View District Report" and verify it pre-selects House District 80
-3. Step 3: Data management - import from spreadsheet workflow
-4. Step 4: Obsidian notes for remaining counties and districts
-5. Consider: address search bar, GitHub Pages deployment
+1. Commit and push the session 5 changes (git commit block was generated)
+2. Test the fixes: drag a pin in location-detail.html, open the edit panel, confirm coords show the dragged position
+3. Test directory.html edit panel: open a location, verify schedule builder shows existing hours, edit and save
+4. Consider: GitHub Pages deployment, import from spreadsheet workflow

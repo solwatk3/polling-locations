@@ -704,7 +704,9 @@
         var val = String(l[field] || "");
         return ctxType === "county"
           ? val.toLowerCase() === ctxVal.toLowerCase()
-          : val === String(parseInt(ctxVal, 10));
+          : ctxVal === "?"
+            ? (val === "?" || val === "")   // "?" group = locations with no district assigned
+            : val === String(parseInt(ctxVal, 10));
       }).sort(function(a, b) {
         return (a.name || "").localeCompare(b.name || "");
       });
