@@ -2177,7 +2177,7 @@
       clearTimeout(geocodeTimer);
       var address = document.getElementById("f-address").value.trim();
       if (!address) return;
-      geocodeTimer = setTimeout(function() { geocodeAddress(address); }, 800);
+      geocodeTimer = setTimeout(function() { geocodeAddress(address); }, 1200);
     }
 
     // force=true is set by the Re-geocode button - overrides existing coords and
@@ -2190,18 +2190,38 @@
 
       // Build query - if address already has TN/zip in it, use as-is to avoid double city
       var addrAlreadyHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(address);
-      var query = addrAlreadyHasLocation
-        ? address
-        : address + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
 
-      // Census Geocoder - primary provider (no rate limits, no API key, US addresses only)
-      fetch("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=" +
-        encodeURIComponent(query) + "&benchmark=Public_AR_Current&format=json")
-        .then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-        .then(function(data) {
-          var matches = data.result && data.result.addressMatches;
-          if (!matches || !matches.length) {
-            // Census found nothing - use existing coords for district detection if available
+      // doFetch wraps a single Nominatim search and validates the HTTP status before parsing.
+      // Checking r.ok prevents r.json() from throwing on rate-limit (429) responses.
+      function doFetch(addr) {
+        var query = addrAlreadyHasLocation
+          ? addr
+          : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
+        var url = "https://nominatim.openstreetmap.org/search?q=" +
+          encodeURIComponent(query) + "&format=json&limit=1&countrycodes=us";
+        return fetch(url)
+          .then(function(r) {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+          });
+      }
+
+      // Attempt 1: full address
+      // Attempt 2: address with suite/unit stripped (Nominatim often fails on "Suite B")
+      doFetch(address)
+        .then(function(results) {
+          if (!results || !results.length) {
+            var stripped = address.replace(/\s+(suite|ste|apt|unit|#)\s*\S+/gi, "").trim();
+            if (stripped !== address) {
+              showStatus("geocode-status", "Retrying without suite number...", "#60a5fa", "rgba(30,58,95,0.5)");
+              return doFetch(stripped);
+            }
+          }
+          return results;
+        })
+        .then(function(results) {
+          if (!results || !results.length) {
+            // Address not found - use existing coords for district detection if available
             var fallbackLat = parseFloat(document.getElementById("f-lat").value);
             var fallbackLng = parseFloat(document.getElementById("f-lng").value);
             if (!isNaN(fallbackLat) && !isNaN(fallbackLng)) {
@@ -2231,9 +2251,8 @@
             return;
           }
 
-          // Census returns x=longitude, y=latitude
-          var gLat = matches[0].coordinates.y;
-          var gLng = matches[0].coordinates.x;
+          var gLat = parseFloat(results[0].lat);
+          var gLng = parseFloat(results[0].lon);
 
           // force=true (Re-geocode button): always update coords and use fresh position for districts.
           // force=false (auto-geocode on typing): preserve manually placed pins.
@@ -2245,8 +2264,6 @@
             document.getElementById("f-lng").value = gLng.toFixed(6);
           }
 
-          // Always use the fresh geocoded coords for district lookup when force=true.
-          // When auto-geocoding on typing, prefer existing pin coords if present.
           var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
           var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
           lookupDistricts(detectLat, detectLng);
@@ -2258,9 +2275,9 @@
           }
           setTimeout(function() { hideStatus("geocode-status"); }, 4000);
 
-          // Nominatim reverse geocode for county - best effort, silent on failure.
-          // Giving Nominatim exact coordinates is much more reliable than asking it to
-          // parse a street address, so county auto-fill still works without rate limit risk.
+          // Nominatim reverse geocode for county - one precise lookup using known coords.
+          // Far more reliable than forward geocoding: Nominatim just looks up what is at
+          // those coordinates rather than parsing a street address string.
           var countyDropdown = document.getElementById("f-county");
           if (!countyDropdown.value) {
             fetch("https://nominatim.openstreetmap.org/reverse?lat=" + gLat + "&lon=" + gLng +

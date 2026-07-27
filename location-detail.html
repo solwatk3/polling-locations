@@ -1435,13 +1435,15 @@
       var query = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
       epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
 
-      // Census Geocoder - primary provider (no rate limits, no API key, US addresses only)
-      fetch("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=" +
-        encodeURIComponent(query) + "&benchmark=Public_AR_Current&format=json")
-        .then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-        .then(function(data) {
-          var matches = data.result && data.result.addressMatches;
-          if (!matches || !matches.length) {
+      // Checking r.ok prevents r.json() from throwing on rate-limit (429) responses
+      fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(query) +
+        "&format=json&limit=1&countrycodes=us")
+        .then(function(r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
+        })
+        .then(function(results) {
+          if (!results || !results.length) {
             // If the location already has coordinates, still run district detection
             // from those coords even though the address lookup failed.
             var fallbackLat = parseFloat(document.getElementById("ep-lat").value);
@@ -1472,9 +1474,8 @@
             }
             return;
           }
-          // Census returns x=longitude, y=latitude
-          var gLat = matches[0].coordinates.y;
-          var gLng = matches[0].coordinates.x;
+          var gLat = parseFloat(results[0].lat);
+          var gLng = parseFloat(results[0].lon);
           // force=true (Re-geocode button): always update coords and use fresh position for districts.
           // force=false (auto-geocode on typing): preserve manually placed pins.
           var existingLat = parseFloat(document.getElementById("ep-lat").value);
@@ -1486,14 +1487,11 @@
           }
           epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
-          // Always use fresh geocoded coords for district lookup when force=true.
-          // When auto-geocoding on typing, prefer existing pin coords if present.
           var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
           var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
           epDetectDistricts(detectLat, detectLng);
 
-          // Nominatim reverse geocode for county - best effort, silent on failure.
-          // Giving Nominatim exact coordinates is much more reliable than parsing a street address.
+          // Nominatim reverse geocode for county - one precise lookup using known coords
           var countyEl = document.getElementById("ep-county");
           if (countyEl && !countyEl.value) {
             fetch("https://nominatim.openstreetmap.org/reverse?lat=" + gLat + "&lon=" + gLng +

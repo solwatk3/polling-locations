@@ -134,10 +134,17 @@
 ## Done (Session 16 - 2026-07-27)
 - [x] location-detail.html: delete navigates to next location in group context instead of returning to directory; falls back to previous if at end of list; falls back to directory.html if no context (2026-07-27)
 - [x] locations.html: Set County modal added - lists locations missing county by default, checkbox per row, select-all, show-all toggle, county text input, Apply button updates localStorage and in-memory array instantly (2026-07-27)
-
-## Done (Session 15 - 2026-07-27)
 - [x] locations.html + location-detail.html + directory.html: time dropdowns now default to blank "-- time --" placeholder instead of pre-filling 8:00am/7:00pm - times only appear when user picks them or paste parser fills them (2026-07-27)
 - [x] locations.html: "Save & Add Another" button added to form footer - saves current location and immediately reopens a blank form for the next entry; save logic extracted into shared saveFormData() function used by both buttons (2026-07-27)
+
+## Done (Session 17 - 2026-07-27)
+- [x] locations.html: parseFullAddress() fixed to handle comma-separated addresses like "5535 Blue Hole Rd, Antioch, TN 37013" - strips trailing state abbreviation and normalizes commas before splitting, so city/zip auto-fill correctly (2026-07-27)
+- [x] locations.html: Re-geocode button moved from buried coordinates section to directly below the Street Address field - visible without scrolling (2026-07-27)
+- [x] location-detail.html: Re-geocode address button added below Street Address field - was missing entirely (2026-07-27)
+- [x] directory.html: Re-geocode address button added below Street Address field - was missing entirely (2026-07-27)
+- [x] location-detail.html: epScheduleGeocode refactored - geocode logic extracted into named epGeocode(addr, force) so button can call it directly without the 800ms delay (2026-07-27)
+- [x] locations.html + location-detail.html + directory.html: Re-geocode button now passes force=true to bypass hasExistingCoords guard - ensures fresh geocoded coordinates are used for both coord fields and district lookup, not stale old coords (2026-07-27)
+- [x] locations.html + location-detail.html + directory.html: geocode "not found" path now checks for existing pin coordinates before giving up - if lat/lng already set, runs district detection from those coords and shows "Address not in map data - detecting districts from existing pin" (2026-07-27)
 
 ## In Progress
 - Nothing currently
@@ -145,8 +152,7 @@
 ## Next
 - [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all coordinate fixes and new locations permanent in the repo
 - [ ] Start entering early voting locations - use paste parser to quickly fill in schedule data from county election commission websites
-- [ ] Investigate why Map nav link opens in a new tab on GitHub Pages (could not reproduce from code - may be browser behavior)
-- [ ] Work through the 46 "House District ?" locations and run district detection on each to clear out the unknown group
+- [ ] Work through the "House District ?" locations and run Re-geocode on each to clear out unknown districts (districts now detect from existing pin even if address geocode fails)
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
