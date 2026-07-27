@@ -558,16 +558,17 @@
           L.geoJSON(data, {
             style: function(f) {
               var isD80 = parseInt(f.properties.SLDL, 10) === 80;
-              // No fill except for D80 focus district which gets a subtle highlight
-              return { color:"#f59e0b", weight: isD80 ? 2.5 : 1.2, fillColor:"#f59e0b", fillOpacity: isD80 ? 0.1 : 0 };
+              // Bolder lines + subtle fill so districts are visually distinct.
+              // D80 (focus district) gets a stronger highlight.
+              return { color:"#f59e0b", weight: isD80 ? 3 : 2, fillColor:"#f59e0b", fillOpacity: isD80 ? 0.18 : 0.07 };
             },
             onEachFeature: function(f, layer) {
               var num   = parseInt(f.properties.SLDL, 10);
               var isD80 = num === 80;
               var baseLabel = f.properties.NAME + (isD80 ? " (your focus)" : "");
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              // mouseover: highlight the polygon
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.2, weight:2.5 }); });
+              // mouseover: stronger highlight so hovered district stands out
+              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.3, weight:3 }); });
               // mousemove: re-check county on every move so it updates as you cross county lines
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
@@ -577,7 +578,7 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity: isD80 ? 0.1 : 0, weight: isD80 ? 2.5 : 1.2 }); });
+              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity: isD80 ? 0.18 : 0.07, weight: isD80 ? 3 : 2 }); });
             }
           }).addTo(houseLayer);
           setStatus("status-district", "loaded", count + " house districts loaded");
@@ -602,13 +603,13 @@
           var count = data.features ? data.features.length : 0;
           if (!count) throw new Error("Empty");
           L.geoJSON(data, {
-            // No fill - outlines only so boundaries are readable without overlap
-            style: function() { return { color:"#a855f7", weight:2, fillOpacity:0, dashArray:"6,4" }; },
+            // Bolder lines + subtle fill - only 9 districts so slightly more fill is fine
+            style: function() { return { color:"#a855f7", weight:3, fillColor:"#a855f7", fillOpacity:0.08, dashArray:"6,4" }; },
             onEachFeature: function(f, layer) {
               var num = parseInt(f.properties.DISTRICT, 10);
               var baseLabel = "US Congressional District " + num;
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.15, weight:2.5 }); });
+              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.25, weight:3.5 }); });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
                 if (document.getElementById("toggle-counties").checked && countyFeatures.length) {
@@ -617,7 +618,7 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0, weight:2 }); });
+              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.08, weight:3 }); });
             }
           }).addTo(congressLayer);
           congressLoaded = true;
@@ -643,13 +644,13 @@
           var count = data.features ? data.features.length : 0;
           if (!count) throw new Error("Empty");
           L.geoJSON(data, {
-            // No fill - outlines only so boundaries are readable without overlap
-            style: function() { return { color:"#f472b6", weight:2, fillOpacity:0, dashArray:"4,4" }; },
+            // Bolder lines + subtle fill - 33 districts so slightly more fill than house
+            style: function() { return { color:"#f472b6", weight:3, fillColor:"#f472b6", fillOpacity:0.08, dashArray:"4,4" }; },
             onEachFeature: function(f, layer) {
               var num = parseInt(f.properties.NEWSENATEDISTRICT, 10);
               var baseLabel = "TN Senate District " + num;
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.15, weight:2.5 }); });
+              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.25, weight:3.5 }); });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
                 if (document.getElementById("toggle-counties").checked && countyFeatures.length) {
@@ -658,7 +659,7 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0, weight:2 }); });
+              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.08, weight:3 }); });
             }
           }).addTo(senateLayer);
           senateLoaded = true;
