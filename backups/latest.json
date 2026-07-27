@@ -2368,13 +2368,20 @@
       "zip": "38105",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "96",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.154707,
+      "lng": -90.019372
     },
     {
       "id": "bulk_1785121002310_23",
@@ -2384,29 +2391,20 @@
       "zip": "38126",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "88",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785121002310_24",
-      "name": "Mississippi Blvd. Christian Church",
-      "address": "70 N Bellevue Blvd",
-      "city": "Memphis",
-      "zip": "38104",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.135328,
+      "lng": -90.048549
     },
     {
       "id": "bulk_1785121002310_25",
@@ -2414,15 +2412,22 @@
       "address": "70 N Bellevue Blvd",
       "city": "Memphis",
       "zip": "38104",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "88",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.141227,
+      "lng": -90.020476
     },
     {
       "id": "bulk_1785121002310_26",
@@ -2430,15 +2435,22 @@
       "address": "42 S Parkway W",
       "city": "Memphis",
       "zip": "38109",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.108203,
+      "lng": -90.063623
     },
     {
       "id": "bulk_1785121002310_27",
@@ -2446,15 +2458,22 @@
       "address": "555 Vance Ave",
       "city": "Memphis",
       "zip": "38126",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "91",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.134447,
+      "lng": -90.043452
     },
     {
       "id": "bulk_1785121002310_29",
@@ -2462,15 +2481,22 @@
       "address": "879 E McLemore Ave",
       "city": "Memphis",
       "zip": "38106",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "91",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.115456,
+      "lng": -90.032486
     },
     {
       "id": "bulk_1785121002310_30",
@@ -2480,29 +2506,20 @@
       "zip": "38109",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785121002310_31",
-      "name": "The Oak Grove Missionary Baptist Church",
-      "address": "183 Joubert Ave",
-      "city": "Memphis",
-      "zip": "38109",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.094147966722765,
+      "lng": -90.06916880607606
     },
     {
       "id": "bulk_1785121002310_32",
@@ -2512,13 +2529,20 @@
       "zip": "38109",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.056257,
+      "lng": -90.08444
     },
     {
       "id": "bulk_1785121021454_0",
@@ -2706,10 +2730,17 @@
       "zip": "38114",
       "county": "Shelby",
       "type": "election_day",
-      "state_district": 93,
-      "state_senate_district": 33,
-      "congressional_district": 9,
-      "hours": "",
+      "state_district": "93",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
       "lat": 35.10868374136716,
       "lng": -89.9757206439972
@@ -2722,13 +2753,20 @@
       "zip": "38106",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "91",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.09374415820771,
+      "lng": -90.03034114837646
     },
     {
       "id": "bulk_1785121021454_11",
@@ -2774,13 +2812,20 @@
       "zip": "38114",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "93",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.099880076259716,
+      "lng": -89.96962666511536
     },
     {
       "id": "bulk_1785121021454_13",
@@ -2811,31 +2856,22 @@
       "address": "1437 Norris Rd",
       "city": "Memphis",
       "zip": "38106",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "91",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785121021454_15",
-      "name": "Orange Mound Senior Ctr",
-      "address": "2590 Park Ave",
-      "city": "Memphis",
-      "zip": "38114",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.082934,
+      "lng": -90.015036
     },
     {
       "id": "bulk_1785121021454_16",
@@ -2940,13 +2976,20 @@
       "zip": "38118",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "87",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.068758,
+      "lng": -89.896742
     },
     {
       "id": "bulk_1785121021454_22",
@@ -2979,13 +3022,20 @@
       "zip": "38115",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.043867,
+      "lng": -89.853097
     },
     {
       "id": "bulk_1785121021454_24",
@@ -2995,13 +3045,20 @@
       "zip": "38115",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.026187,
+      "lng": -89.847316
     },
     {
       "id": "bulk_1785121021454_25",
@@ -3033,13 +3090,20 @@
       "zip": "38141",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.03331715443218,
+      "lng": -89.86025691032411
     },
     {
       "id": "bulk_1785121021454_27",
@@ -3072,13 +3136,20 @@
       "zip": "38119",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.06170523861929,
+      "lng": -89.81366157531738
     },
     {
       "id": "bulk_1785121021454_29",
@@ -3088,13 +3159,20 @@
       "zip": "38125",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.04753438838181,
+      "lng": -89.78826105594636
     },
     {
       "id": "bulk_1785121021454_30",
@@ -3134,19 +3212,26 @@
     },
     {
       "id": "bulk_1785121021454_31",
-      "name": "New Growth In Christ Christian Ctr",
+      "name": "New Growth In Christ Christian Center",
       "address": "7550 E Shelby Dr",
       "city": "Memphis",
       "zip": "38125",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.021303,
+      "lng": -89.812585
     },
     {
       "id": "bulk_1785121021454_32",
@@ -3154,31 +3239,45 @@
       "address": "4439 Hacks Cross Rd",
       "city": "Memphis",
       "zip": "38125",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.026954,
+      "lng": -89.796814
     },
     {
       "id": "bulk_1785121021454_33",
-      "name": "New Life In Christ Fellowship Church",
+      "name": "New Life of Memphis",
       "address": "6825 E Holmes Rd",
       "city": "Memphis",
       "zip": "38141",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.004299,
+      "lng": -89.83639
     },
     {
       "id": "bulk_1785121036910_0",
@@ -3202,15 +3301,22 @@
       "address": "8979 E Shelby Dr",
       "city": "Memphis",
       "zip": "38125",
-      "county": "",
+      "county": "Shelby",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.019462,
+      "lng": -89.762999
     },
     {
       "id": "bulk_1785121036910_2",
@@ -3220,29 +3326,20 @@
       "zip": "38125",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785121036910_3",
-      "name": "St Stephen Methodist Church",
-      "address": "3981 Macon Rd",
-      "city": "Memphis",
-      "zip": "38122",
-      "county": "",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.005433,
+      "lng": -89.806143
     },
     {
       "id": "bulk_1785121036910_4",
@@ -3288,13 +3385,20 @@
       "zip": "38120",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.134141431774154,
+      "lng": -89.87101793289186
     },
     {
       "id": "bulk_1785121036910_8",
@@ -3349,13 +3453,20 @@
       "zip": "38111",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "97",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.12286,
+      "lng": -89.953612
     },
     {
       "id": "bulk_1785121036910_11",
@@ -3424,13 +3535,20 @@
       "zip": "38134",
       "county": "",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "93",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.165713352882435,
+      "lng": -89.83721137046815
     },
     {
       "id": "custom-1785124528300-865",
