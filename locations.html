@@ -1125,8 +1125,12 @@
             <input type="number" id="f-lng" placeholder="-89.12345" step="0.00001" />
           </div>
         </div>
-        <div style="font-size:0.68rem;color:var(--text-muted);margin-top:3px;">
-          Auto-filled when you type an address. Edit manually if needed.
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+          <button type="button" onclick="geocodeAddress(document.getElementById('f-address').value.trim())"
+            style="font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
+            &#128204; Re-geocode address
+          </button>
+          <span style="font-size:0.68rem;color:var(--text-muted);">Edit manually if needed, or click to re-run the address lookup.</span>
         </div>
       </div>
 
