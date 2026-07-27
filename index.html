@@ -517,6 +517,18 @@
     }
 
     // =========================================================================
+    // DISTRICT FEATURE STORES
+    // Populated when each district layer loads. Used by district search to fit
+    // the map to a specific district's bounds after the layer is activated.
+    // =========================================================================
+    var houseFeatures    = [];
+    var senateFeatures   = [];
+    var congressFeatures = [];
+    // Set when a district result is clicked before that layer has finished loading.
+    // zoomToDistrict() fires automatically once the load completes.
+    var pendingDistrictZoom = null;
+
+    // =========================================================================
     // MARKER REGISTRY
     // Stores the primary marker for each location by id.
     // Used by the search bar to fly to a pin and open its popup.
@@ -651,6 +663,12 @@
             }
           }).addTo(houseLayer);
           setStatus("status-district", "loaded", count + " house districts loaded");
+          // Store features so district search can zoom to a specific district
+          houseFeatures = data.features;
+          if (pendingDistrictZoom && pendingDistrictZoom.type === "house") {
+            zoomToDistrict("house", pendingDistrictZoom.num);
+            pendingDistrictZoom = null;
+          }
         })
         .catch(function(err) {
           setStatus("status-district", "error", "Could not load - check connection");
@@ -692,6 +710,12 @@
           }).addTo(congressLayer);
           congressLoaded = true;
           setStatus("status-district", "loaded", count + " congressional districts loaded");
+          // Store features so district search can zoom to a specific district
+          congressFeatures = data.features;
+          if (pendingDistrictZoom && pendingDistrictZoom.type === "congress") {
+            zoomToDistrict("congress", pendingDistrictZoom.num);
+            pendingDistrictZoom = null;
+          }
         })
         .catch(function(err) {
           setStatus("status-district", "error", "Could not load - check connection");
@@ -733,6 +757,12 @@
           }).addTo(senateLayer);
           senateLoaded = true;
           setStatus("status-district", "loaded", count + " senate districts loaded");
+          // Store features so district search can zoom to a specific district
+          senateFeatures = data.features;
+          if (pendingDistrictZoom && pendingDistrictZoom.type === "senate") {
+            zoomToDistrict("senate", pendingDistrictZoom.num);
+            pendingDistrictZoom = null;
+          }
         })
         .catch(function(err) {
           setStatus("status-district", "error", "Could not load - check connection");
@@ -902,9 +932,63 @@
     })();
 
     // =========================================================================
+    // ZOOM TO DISTRICT
+    // Finds a specific district feature by type and number, then fits the map
+    // to its bounds. Called after a district search result is clicked.
+    // =========================================================================
+    function zoomToDistrict(type, num) {
+      var features = type === "house" ? houseFeatures
+                   : type === "senate" ? senateFeatures
+                   : congressFeatures;
+
+      // Find the feature whose district number matches
+      var match = features.filter(function(f) {
+        var n = type === "house"   ? parseInt(f.properties.SLDL, 10)
+              : type === "senate"  ? parseInt(f.properties.NEWSENATEDISTRICT, 10)
+              : parseInt(f.properties.DISTRICT, 10);
+        return n === num;
+      })[0];
+
+      if (!match) return;
+      // Create a temporary GeoJSON layer just to read its bounds, then discard it
+      var bounds = L.geoJSON(match).getBounds();
+      map.fitBounds(bounds, { padding: [40, 40] });
+    }
+
+    // =========================================================================
+    // PARSE DISTRICT QUERY
+    // Returns an array of {type, num, label, color} objects for the dropdown.
+    // Recognizes keywords: house/hd, senate/sd, congress/cong/cd.
+    // If no keyword given, returns all district types that have that number.
+    // =========================================================================
+    function findDistrictMatches(query) {
+      var results = [];
+      var q = query.toLowerCase().trim();
+      var numMatch = q.match(/\d+/);
+      if (!numMatch) return results;
+      var num = parseInt(numMatch[0], 10);
+
+      // Detect explicit type keywords
+      var wantHouse    = /house|hd/.test(q);
+      var wantSenate   = /senate|sd/.test(q);
+      var wantCongress = /congress|cong|cd/.test(q);
+      // If no keyword, search all three types
+      var wantAll = !wantHouse && !wantSenate && !wantCongress;
+
+      if ((wantHouse || wantAll) && num >= 1 && num <= 99)
+        results.push({ type:"house",    num:num, label:"House District " + num,          color:"#f59e0b" });
+      if ((wantSenate || wantAll) && num >= 1 && num <= 33)
+        results.push({ type:"senate",   num:num, label:"Senate District " + num,         color:"#f472b6" });
+      if ((wantCongress || wantAll) && num >= 1 && num <= 9)
+        results.push({ type:"congress", num:num, label:"Congressional District " + num,  color:"#a855f7" });
+
+      return results;
+    }
+
+    // =========================================================================
     // MAP SEARCH BAR
-    // Searches all locations by name, address, city, or county.
-    // Flies to the matching pin and opens its popup.
+    // Searches districts (House/Senate/Congressional) and polling locations.
+    // District results appear first, then location results below.
     // If the relevant layer is hidden it is turned back on automatically.
     // =========================================================================
 
@@ -925,19 +1009,66 @@
         return;
       }
 
-      // Match any location whose name, address, city, or county contains the query
-      var matches = allSearchable.filter(function(loc) {
+      // Find district matches (House / Senate / Congressional)
+      var districtMatches = findDistrictMatches(query);
+
+      // Find location matches by name, address, city, or county
+      var locMatches = allSearchable.filter(function(loc) {
         var haystack = [loc.name, loc.address, loc.city, loc.county].join(" ").toLowerCase();
         return haystack.indexOf(query) !== -1;
-      }).slice(0, 8); // cap at 8 results to keep the list manageable
+      }).slice(0, 8);
 
-      if (!matches.length) {
-        searchResults.innerHTML = '<div class="search-no-results">No locations found</div>';
+      if (!districtMatches.length && !locMatches.length) {
+        searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
         searchResults.style.display = "block";
         return;
       }
 
-      matches.forEach(function(loc) {
+      // --- DISTRICT RESULTS (shown first) ---
+      districtMatches.forEach(function(d) {
+        var item = document.createElement("div");
+        item.className = "search-result-item";
+        item.innerHTML =
+          '<div class="search-result-name" style="display:flex;align-items:center;gap:7px;">' +
+            '<span style="width:9px;height:9px;border-radius:50%;background:' + d.color +
+              ';flex-shrink:0;display:inline-block;"></span>' +
+            d.label +
+          '</div>' +
+          '<div class="search-result-sub">Activate layer and zoom to district</div>';
+
+        item.addEventListener("click", function() {
+          var featArr = d.type === "house" ? houseFeatures
+                      : d.type === "senate" ? senateFeatures
+                      : congressFeatures;
+
+          // Activate the correct district radio + load the layer if needed
+          setDistrictLayer(d.type);
+
+          if (featArr.length) {
+            // Features already in memory - zoom right away
+            zoomToDistrict(d.type, d.num);
+          } else {
+            // Layer is still fetching - store the zoom request;
+            // zoomToDistrict fires automatically when the load completes
+            pendingDistrictZoom = { type: d.type, num: d.num };
+          }
+
+          searchInput.value = "";
+          searchResults.style.display = "none";
+        });
+
+        searchResults.appendChild(item);
+      });
+
+      // Divider between district and location results when both are present
+      if (districtMatches.length && locMatches.length) {
+        var div = document.createElement("div");
+        div.style.cssText = "height:1px;background:var(--border);margin:0;";
+        searchResults.appendChild(div);
+      }
+
+      // --- LOCATION RESULTS ---
+      locMatches.forEach(function(loc) {
         var item = document.createElement("div");
         item.className = "search-result-item";
         var sub = [loc.address, loc.city, loc.county ? loc.county + " County" : ""].filter(Boolean).join(", ");
@@ -969,7 +1100,6 @@
           map.flyTo([entry.lat, entry.lng], 15, { duration: 0.8 });
           setTimeout(function() { entry.marker.openPopup(); }, 850);
 
-          // Clear the search field and close dropdown
           searchInput.value = "";
           searchResults.style.display = "none";
         });
