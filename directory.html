@@ -721,6 +721,11 @@
         <label>Street Address</label>
         <input type="text" id="ep-address" placeholder="404 E Cherry St" />
         <div id="ep-geocode-status" class="inline-status"></div>
+        <button type="button"
+          onclick="epGeocode(document.getElementById('ep-address').value.trim())"
+          style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
+          &#128204; Re-geocode address
+        </button>
       </div>
       <div class="fp-grid-2">
         <div class="fp-group"><label>City</label><input type="text" id="ep-city" placeholder="Brownsville" /></div>

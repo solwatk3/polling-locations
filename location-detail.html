@@ -566,7 +566,16 @@
     </div>
     <div class="ep-body">
       <div class="fp-group"><label>Location Name *</label><input type="text" id="ep-name" /></div>
-      <div class="fp-group"><label>Street Address</label><input type="text" id="ep-address" /><div id="ep-geo-status" class="inline-status"></div></div>
+      <div class="fp-group">
+        <label>Street Address</label>
+        <input type="text" id="ep-address" />
+        <div id="ep-geo-status" class="inline-status"></div>
+        <button type="button"
+          onclick="epGeocode(document.getElementById('ep-address').value.trim())"
+          style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
+          &#128204; Re-geocode address
+        </button>
+      </div>
       <div style="display:flex;gap:12px;">
         <div class="fp-group" style="flex:2;"><label>City</label><input type="text" id="ep-city" /></div>
         <div class="fp-group" style="flex:1;"><label>Zip Code</label><input type="text" id="ep-zip" maxlength="10" /></div>
@@ -1412,71 +1421,75 @@
       closeEditPanel();
     });
 
-    // Geocoding for the edit panel
+    // Geocoding for the edit panel.
+    // epGeocode(addr) runs immediately - called by the Re-geocode button and the debounce timer.
+    // epScheduleGeocode() is called on input events - waits 800ms then calls epGeocode().
+    function epGeocode(addr) {
+      if (!addr) return;
+      var city = document.getElementById("ep-city").value.trim();
+      var zip  = document.getElementById("ep-zip").value.trim();
+      // If address already contains state/zip, don't append city again
+      var addrHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(addr);
+      var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
+      epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
+      fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(geoQuery) +
+        "&format=json&limit=1&countrycodes=us&addressdetails=1",
+        { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
+      .then(function(r) { return r.json(); })
+      .then(function(results) {
+        if (!results || !results.length) {
+          epShowStatus("ep-geo-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          // Highlight the coordinate inputs and scroll to them so the user can see where to type
+          var latInput = document.getElementById("ep-lat");
+          var lngInput = document.getElementById("ep-lng");
+          latInput.style.borderColor = "#f59e0b";
+          lngInput.style.borderColor = "#f59e0b";
+          setTimeout(function() {
+            latInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            latInput.focus();
+          }, 200);
+          // Clear the highlight once the user starts typing
+          function clearHighlight() {
+            latInput.style.borderColor = "";
+            lngInput.style.borderColor = "";
+            latInput.removeEventListener("input", clearHighlight);
+            lngInput.removeEventListener("input", clearHighlight);
+          }
+          latInput.addEventListener("input", clearHighlight);
+          lngInput.addEventListener("input", clearHighlight);
+          return;
+        }
+        var gLat = parseFloat(results[0].lat);
+        var gLng = parseFloat(results[0].lon);
+        // Only overwrite the coordinate fields if they are currently empty.
+        // If the user has manually placed a pin, preserve those coordinates.
+        var existingLat = parseFloat(document.getElementById("ep-lat").value);
+        var existingLng = parseFloat(document.getElementById("ep-lng").value);
+        var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+        if (!hasExistingCoords) {
+          document.getElementById("ep-lat").value = gLat.toFixed(6);
+          document.getElementById("ep-lng").value = gLng.toFixed(6);
+        }
+        if (!document.getElementById("ep-county").value && results[0].address && results[0].address.county) {
+          var raw = results[0].address.county.replace(/ County$/i, "").trim();
+          var match = Array.from(document.getElementById("ep-county").options).find(function(o) { return o.value.toLowerCase() === raw.toLowerCase(); });
+          if (match) document.getElementById("ep-county").value = match.value;
+        }
+        epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+        setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
+        // Detect districts - use existing pin coords if set, otherwise use geocoded coords
+        var detectLat = hasExistingCoords ? existingLat : gLat;
+        var detectLng = hasExistingCoords ? existingLng : gLng;
+        epDetectDistricts(detectLat, detectLng);
+      })
+      .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
+    }
     var epGeoTimer = null;
     function epScheduleGeocode() {
       clearTimeout(epGeoTimer);
       var addr = document.getElementById("ep-address").value.trim();
       if (!addr) return;
-      epGeoTimer = setTimeout(function() {
-        var city = document.getElementById("ep-city").value.trim();
-        var zip  = document.getElementById("ep-zip").value.trim();
-        // If address already contains state/zip, don't append city again
-        var addrHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(addr);
-        var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
-        epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
-        fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(geoQuery) +
-          "&format=json&limit=1&countrycodes=us&addressdetails=1",
-          { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
-        .then(function(r) { return r.json(); })
-        .then(function(results) {
-          if (!results || !results.length) {
-              epShowStatus("ep-geo-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
-              // Highlight the coordinate inputs and scroll to them so the user can see where to type
-              var latInput = document.getElementById("ep-lat");
-              var lngInput = document.getElementById("ep-lng");
-              latInput.style.borderColor = "#f59e0b";
-              lngInput.style.borderColor = "#f59e0b";
-              setTimeout(function() {
-                latInput.scrollIntoView({ behavior: "smooth", block: "center" });
-                latInput.focus();
-              }, 200);
-              // Clear the highlight once the user starts typing
-              function clearHighlight() {
-                latInput.style.borderColor = "";
-                lngInput.style.borderColor = "";
-                latInput.removeEventListener("input", clearHighlight);
-                lngInput.removeEventListener("input", clearHighlight);
-              }
-              latInput.addEventListener("input", clearHighlight);
-              lngInput.addEventListener("input", clearHighlight);
-              return;
-            }
-          var gLat = parseFloat(results[0].lat);
-          var gLng = parseFloat(results[0].lon);
-          // Only overwrite the coordinate fields if they are currently empty.
-          // If the user has manually placed a pin, preserve those coordinates.
-          var existingLat = parseFloat(document.getElementById("ep-lat").value);
-          var existingLng = parseFloat(document.getElementById("ep-lng").value);
-          var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
-          if (!hasExistingCoords) {
-            document.getElementById("ep-lat").value = gLat.toFixed(6);
-            document.getElementById("ep-lng").value = gLng.toFixed(6);
-          }
-          if (!document.getElementById("ep-county").value && results[0].address && results[0].address.county) {
-            var raw = results[0].address.county.replace(/ County$/i, "").trim();
-            var match = Array.from(document.getElementById("ep-county").options).find(function(o) { return o.value.toLowerCase() === raw.toLowerCase(); });
-            if (match) document.getElementById("ep-county").value = match.value;
-          }
-          epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
-          setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
-          // Detect districts - use existing pin coords if set, otherwise use geocoded coords
-          var detectLat = hasExistingCoords ? existingLat : gLat;
-          var detectLng = hasExistingCoords ? existingLng : gLng;
-          epDetectDistricts(detectLat, detectLng);
-        })
-        .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
-      }, 800);
+      epGeoTimer = setTimeout(function() { epGeocode(addr); }, 800);
     }
     document.getElementById("ep-address").addEventListener("input", epScheduleGeocode);
     document.getElementById("ep-city").addEventListener("input", epScheduleGeocode);
