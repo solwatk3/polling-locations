@@ -470,6 +470,10 @@
       var lat = override ? override.lat : loc.lat;
       var lng = override ? override.lng : loc.lng;
 
+      // Skip locations that haven't been geocoded yet - null lat/lng crashes Leaflet
+      // and stops all remaining script execution (including sidebar listeners)
+      if (lat == null || lng == null) return;
+
       // Purple = needs correction (flagged explicitly). Otherwise color by type.
       var icon;
       if (loc.needs_correction)       icon = customIcon;
