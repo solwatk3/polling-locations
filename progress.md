@@ -127,6 +127,11 @@
 - [x] location-detail.html: fixed Prev/Next navigation broken for "House District ?" group - parseInt("?") returned NaN so filter matched nothing; added special case: ctxVal === "?" matches locations where district field is "?" or empty (2026-07-27)
 
 ## Done (Session 15 - 2026-07-27)
+- [x] locations.html: bulk import now accepts tab-separated rows (Name/Address/City/Zip) copied from a spreadsheet - no precinct number required; 80%+ tab-line threshold triggers format; falls through to precinct parser otherwise (2026-07-27)
+- [x] locations.html: bulk import duplicate detection added - fingerprint is lowercased name+address; duplicates against existing locations AND within the batch itself are blocked; toast names all skipped locations (2026-07-27)
+- [x] locations.html: bulk import hint text updated to document both accepted formats (2026-07-27)
+
+## Done (Session 15 - 2026-07-27)
 - [x] locations.html + location-detail.html + directory.html: time dropdowns now default to blank "-- time --" placeholder instead of pre-filling 8:00am/7:00pm - times only appear when user picks them or paste parser fills them (2026-07-27)
 - [x] locations.html: "Save & Add Another" button added to form footer - saves current location and immediately reopens a blank form for the next entry; save logic extracted into shared saveFormData() function used by both buttons (2026-07-27)
 

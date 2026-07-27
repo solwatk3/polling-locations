@@ -738,6 +738,19 @@
         window.location.href = "location-detail.html?id=" +
           encodeURIComponent(target.id) + "&context=" + encodeURIComponent(context);
       };
+
+      // navAfterDelete - called by the delete handler so deleting moves to the
+      // next location in the current group instead of dumping back to directory.
+      // Prefers the next item; falls back to the previous if at the end of the list.
+      window.navAfterDelete = function() {
+        var next = group[idx + 1] || group[idx - 1];
+        if (next) {
+          window.location.href = "location-detail.html?id=" +
+            encodeURIComponent(next.id) + "&context=" + encodeURIComponent(context);
+        } else {
+          window.location.href = "directory.html";
+        }
+      };
     })();
 
     // Outer-scope references so the save handler can move the pin after editing
@@ -903,7 +916,8 @@
           if (!confirm('Delete "' + (loc.name || "this location") + '"? This cannot be undone.')) return;
           var custom = loadCustom().filter(function(l) { return l.id !== loc.id; });
           saveCustom(custom);
-          window.location.href = "directory.html";
+          // Go to next/prev in group if navigating in context, otherwise back to directory
+          (window.navAfterDelete || function() { window.location.href = "directory.html"; })();
         });
       } else {
         // Seed data - hide it by adding to the deleted list in localStorage
@@ -916,7 +930,8 @@
           // Also remove from custom storage in case mergeWithSeedData already copied it there
           var custom = loadCustom().filter(function(l) { return l.id !== loc.id; });
           saveCustom(custom);
-          window.location.href = "directory.html";
+          // Go to next/prev in group if navigating in context, otherwise back to directory
+          (window.navAfterDelete || function() { window.location.href = "directory.html"; })();
         });
       }
     }

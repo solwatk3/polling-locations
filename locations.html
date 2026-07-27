@@ -867,6 +867,7 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <button class="btn-secondary" id="btn-export">&#8659; Export to JS</button>
         <button class="btn-secondary" id="btn-bulk-import">&#128229; Bulk Import</button>
+        <button class="btn-secondary" id="btn-set-county">&#127963; Set County</button>
         <button class="btn-primary" id="btn-add-new">&#43; Add Location</button>
       </div>
     </div>
@@ -1275,6 +1276,68 @@
       </div><!-- end step 2 -->
     </div><!-- end bulk-box -->
   </div><!-- end bulk-overlay -->
+
+  <!-- ===== SET COUNTY MODAL ===== -->
+  <!-- Lets user pick a county and apply it to multiple locations at once.
+       Useful after a bulk import when the county field was not auto-detected. -->
+  <div class="bulk-overlay" id="county-overlay">
+    <div class="bulk-box">
+
+      <!-- Header -->
+      <div class="bulk-header">
+        <div>
+          <h3>&#127963; Set County</h3>
+          <p>Apply a county to one or more locations that are missing it.</p>
+        </div>
+        <button class="btn-close-bulk" id="btn-close-county">&#10005;</button>
+      </div>
+
+      <!-- County input + filter toggle -->
+      <div class="bulk-step" style="padding-bottom:10px;">
+        <div class="fp-group">
+          <label style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);">
+            County to assign
+          </label>
+          <input type="text" id="county-input"
+            placeholder="e.g. Davidson"
+            style="width:100%;padding:8px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:0.85rem;outline:none;" />
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--text-muted);">
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
+            <input type="checkbox" id="county-show-all" />
+            Show all locations (not just missing county)
+          </label>
+          <span id="county-list-count" style="margin-left:auto;"></span>
+        </div>
+      </div>
+
+      <!-- Location list with checkboxes -->
+      <div style="overflow-y:auto;max-height:50vh;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <table class="bulk-table" id="county-table">
+          <thead>
+            <tr>
+              <th style="width:32px;">
+                <input type="checkbox" id="county-select-all" title="Select all" />
+              </th>
+              <th>Name</th>
+              <th>City</th>
+              <th>Current County</th>
+            </tr>
+          </thead>
+          <tbody id="county-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div class="bulk-footer">
+        <span class="bulk-geocode-note" id="county-apply-note"></span>
+        <button class="btn-secondary" id="btn-county-cancel">Cancel</button>
+        <button class="btn-primary" id="btn-county-apply">Apply County</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ===== END SET COUNTY MODAL ===== -->
 
   <!-- ===== EXPORT MODAL ===== -->
   <div class="export-modal" id="export-modal">
@@ -3396,6 +3459,119 @@
       var memIdx = locations.findIndex(function(l) { return l.id === id; });
       if (memIdx !== -1) locations[memIdx] = updated;
     }
+
+    // =========================================================================
+    // SET COUNTY MODAL
+    // Lets the user apply a county name to multiple locations at once.
+    // Defaults to showing only locations with a blank county field, but a
+    // checkbox lets them show all locations if they need to correct existing values.
+    // =========================================================================
+
+    function openCountyModal() {
+      renderCountyList();
+      document.getElementById("county-input").value = "";
+      document.getElementById("county-apply-note").textContent = "";
+      document.getElementById("county-show-all").checked = false;
+      document.getElementById("county-overlay").classList.add("open");
+      setTimeout(function() { document.getElementById("county-input").focus(); }, 100);
+    }
+
+    function closeCountyModal() {
+      document.getElementById("county-overlay").classList.remove("open");
+    }
+
+    // Renders the list of locations into the county table.
+    // When showAll is false (default), only locations with a blank county are shown.
+    function renderCountyList() {
+      var showAll = document.getElementById("county-show-all").checked;
+      var list    = locations.filter(function(l) {
+        return showAll || !l.county || l.county.trim() === "";
+      }).sort(function(a, b) {
+        return (a.name || "").localeCompare(b.name || "");
+      });
+
+      var countEl = document.getElementById("county-list-count");
+      countEl.textContent = list.length + " location" + (list.length !== 1 ? "s" : "") +
+        (showAll ? "" : " missing county");
+
+      var rows = list.map(function(loc) {
+        return '<tr data-loc-id="' + loc.id + '">' +
+          '<td><input type="checkbox" class="county-row-check" /></td>' +
+          '<td style="font-weight:600;">' + (loc.name || "") + '</td>' +
+          '<td style="color:var(--text-muted);">' + (loc.city || "") + '</td>' +
+          '<td style="color:var(--text-muted);font-style:' + (loc.county ? "normal" : "italic") + ';">' +
+            (loc.county || "none") + '</td>' +
+        '</tr>';
+      }).join("");
+
+      document.getElementById("county-tbody").innerHTML =
+        rows || '<tr><td colspan="4" style="padding:16px;text-align:center;color:var(--text-muted);">' +
+                (showAll ? "No locations found." : "All locations already have a county.") + '</td></tr>';
+
+      // Reset select-all checkbox
+      document.getElementById("county-select-all").checked = false;
+    }
+
+    // Select/deselect all visible checkboxes
+    document.getElementById("county-select-all").addEventListener("change", function() {
+      var checked = this.checked;
+      document.querySelectorAll("#county-tbody .county-row-check").forEach(function(cb) {
+        cb.checked = checked;
+      });
+    });
+
+    // Re-render list when "show all" toggle changes
+    document.getElementById("county-show-all").addEventListener("change", function() {
+      renderCountyList();
+    });
+
+    // Open / close
+    document.getElementById("btn-set-county").addEventListener("click", openCountyModal);
+    document.getElementById("btn-close-county").addEventListener("click", closeCountyModal);
+    document.getElementById("btn-county-cancel").addEventListener("click", closeCountyModal);
+
+    // Apply button - write the county to every checked location
+    document.getElementById("btn-county-apply").addEventListener("click", function() {
+      var county = document.getElementById("county-input").value.trim();
+      if (!county) {
+        alert("Type a county name first.");
+        return;
+      }
+
+      var checked = document.querySelectorAll("#county-tbody tr[data-loc-id]");
+      var updated = [];
+      checked.forEach(function(row) {
+        var cb = row.querySelector(".county-row-check");
+        if (!cb || !cb.checked) return;
+        var id = row.getAttribute("data-loc-id");
+        // Update in localStorage and in-memory array
+        var saved = loadCustom();
+        var idx   = saved.findIndex(function(l) { return l.id === id; });
+        if (idx !== -1) {
+          saved[idx].county = county;
+          localStorage.setItem("tn_polling_custom", JSON.stringify(saved));
+        }
+        var memIdx = locations.findIndex(function(l) { return l.id === id; });
+        if (memIdx !== -1) locations[memIdx].county = county;
+        updated.push(id);
+      });
+
+      if (!updated.length) {
+        alert("Check at least one location first.");
+        return;
+      }
+
+      renderTable();   // refresh the main locations table
+      renderCountyList(); // refresh the modal list to reflect changes
+
+      var note = document.getElementById("county-apply-note");
+      note.textContent = updated.length + " location" + (updated.length !== 1 ? "s" : "") +
+        ' updated to "' + county + '".';
+    });
+
+    // =========================================================================
+    // END SET COUNTY MODAL
+    // =========================================================================
 
     // Simple toast notification (reuses or creates a toast element)
     function showToast(msg) {
