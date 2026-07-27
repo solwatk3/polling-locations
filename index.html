@@ -79,6 +79,52 @@
     }
     .leg-dot.green  { background: #10b981; border: 2px solid #065f46; }
     .leg-dot.amber  { background: #f59e0b; border: 2px solid #78350f; }
+
+    /* Floating search box - top-right of map */
+    #map-search {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 500;
+      width: 270px;
+    }
+    #search-input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(13,0,13,0.88);
+      color: var(--text);
+      font-size: 0.85rem;
+      backdrop-filter: blur(6px);
+      box-sizing: border-box;
+      outline: none;
+      font-family: inherit;
+    }
+    #search-input:focus { border-color: var(--accent); }
+    #search-input::placeholder { color: var(--text-muted); }
+    #search-results {
+      display: none;
+      margin-top: 4px;
+      background: rgba(13,0,13,0.95);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .search-result-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--primary-light); }
+    .search-result-name { font-size: 0.82rem; font-weight: 700; }
+    .search-result-sub  { font-size: 0.71rem; color: var(--text-muted); margin-top: 2px; }
+    .search-no-results  { padding: 10px 12px; font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
   </style>
 </head>
 <body>
@@ -196,6 +242,12 @@
   <!-- ===== MAP (full screen below top bar) ===== -->
   <div id="map">
     <div id="toast"></div>
+
+    <!-- Floating search box - top-right corner of map -->
+    <div id="map-search">
+      <input type="text" id="search-input" placeholder="&#128269; Search locations..." autocomplete="off" />
+      <div id="search-results"></div>
+    </div>
 
     <!-- Floating legend - shows what each layer's line/color means -->
     <div id="map-legend">
@@ -465,6 +517,13 @@
     }
 
     // =========================================================================
+    // MARKER REGISTRY
+    // Stores the primary marker for each location by id.
+    // Used by the search bar to fly to a pin and open its popup.
+    // =========================================================================
+    var markerRegistry = {};
+
+    // =========================================================================
     // PLACE A PIN ON THE MAP (read-only - no dragging on this page)
     // =========================================================================
     function placePin(loc, isCustom) {
@@ -487,6 +546,9 @@
       // "both" pins go on both layers so they appear regardless of which toggle is active
       var marker = L.marker([lat, lng], { icon: icon, draggable: false })
         .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 });
+
+      // Register primary marker so search can fly to it and open its popup
+      markerRegistry[loc.id] = { marker: marker, lat: lat, lng: lng };
 
       if (loc.type === "both") {
         marker.addTo(earlyLayer);
@@ -838,6 +900,107 @@
       alert("Restored " + locCount + " locations. The page will reload.");
       window.location.reload();
     })();
+
+    // =========================================================================
+    // MAP SEARCH BAR
+    // Searches all locations by name, address, city, or county.
+    // Flies to the matching pin and opens its popup.
+    // If the relevant layer is hidden it is turned back on automatically.
+    // =========================================================================
+
+    // All visible locations in one array (seed + custom, excluding deleted)
+    var allSearchable = POLLING_LOCATIONS
+      .filter(function(l) { return _deleted.indexOf(l.id) === -1; })
+      .concat(customLocations);
+
+    var searchInput   = document.getElementById("search-input");
+    var searchResults = document.getElementById("search-results");
+
+    function runSearch(query) {
+      query = query.trim().toLowerCase();
+      searchResults.innerHTML = "";
+
+      if (!query) {
+        searchResults.style.display = "none";
+        return;
+      }
+
+      // Match any location whose name, address, city, or county contains the query
+      var matches = allSearchable.filter(function(loc) {
+        var haystack = [loc.name, loc.address, loc.city, loc.county].join(" ").toLowerCase();
+        return haystack.indexOf(query) !== -1;
+      }).slice(0, 8); // cap at 8 results to keep the list manageable
+
+      if (!matches.length) {
+        searchResults.innerHTML = '<div class="search-no-results">No locations found</div>';
+        searchResults.style.display = "block";
+        return;
+      }
+
+      matches.forEach(function(loc) {
+        var item = document.createElement("div");
+        item.className = "search-result-item";
+        var sub = [loc.address, loc.city, loc.county ? loc.county + " County" : ""].filter(Boolean).join(", ");
+        item.innerHTML =
+          '<div class="search-result-name">' + (loc.name || "Unnamed") + '</div>' +
+          '<div class="search-result-sub">' + sub + '</div>';
+
+        item.addEventListener("click", function() {
+          var entry = markerRegistry[loc.id];
+          if (!entry) {
+            showToast("This location has no coordinates yet", true);
+            searchInput.value = "";
+            searchResults.style.display = "none";
+            return;
+          }
+
+          // Ensure the right layer(s) are visible so the popup can open
+          if (loc.type === "early" || loc.type === "both") {
+            document.getElementById("toggle-early").checked = true;
+            map.addLayer(earlyLayer);
+          }
+          if (loc.type !== "early" || loc.type === "both") {
+            document.getElementById("toggle-election-day").checked = true;
+            map.addLayer(electionLayer);
+          }
+          updateLegend();
+
+          // Fly to the pin then open its popup once the animation settles
+          map.flyTo([entry.lat, entry.lng], 15, { duration: 0.8 });
+          setTimeout(function() { entry.marker.openPopup(); }, 850);
+
+          // Clear the search field and close dropdown
+          searchInput.value = "";
+          searchResults.style.display = "none";
+        });
+
+        searchResults.appendChild(item);
+      });
+
+      searchResults.style.display = "block";
+    }
+
+    // Run search on every keystroke
+    searchInput.addEventListener("input", function() { runSearch(this.value); });
+
+    // Keyboard shortcuts: Escape closes dropdown, Enter selects first result
+    searchInput.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        searchResults.style.display = "none";
+        searchInput.blur();
+      }
+      if (e.key === "Enter") {
+        var first = searchResults.querySelector(".search-result-item");
+        if (first) first.click();
+      }
+    });
+
+    // Close dropdown when clicking anywhere outside the search box
+    document.addEventListener("click", function(e) {
+      if (!document.getElementById("map-search").contains(e.target)) {
+        searchResults.style.display = "none";
+      }
+    });
 
   </script>
 </body>
