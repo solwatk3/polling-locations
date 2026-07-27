@@ -431,10 +431,8 @@
       var hoursHtml;
       if (loc.schedule && loc.schedule.length) {
         hoursHtml = loc.schedule.map(function(row) {
-          var t       = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
-          var prefix  = "";
-          if (row.label) prefix += "<strong>" + row.label + "</strong> ";
-          if (row.days)  prefix += row.days + ": ";
+          var t      = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
+          var prefix = row.label ? "<strong>" + row.label + ":</strong> " : "";
           return prefix + t;
         }).join("<br>");
       } else {

@@ -239,7 +239,7 @@
     /* ----- Schedule builder ----- */
     .schedule-row {
       display: grid;
-      grid-template-columns: auto 1fr auto auto auto auto;
+      grid-template-columns: auto auto auto auto auto;
       align-items: center;
       gap: 6px;
       margin-bottom: 6px;
@@ -310,7 +310,7 @@
     .btn-add-schedule:hover { background: rgba(139,92,246,0.08); }
     .schedule-header {
       display: grid;
-      grid-template-columns: auto 1fr auto auto auto auto;
+      grid-template-columns: auto auto auto auto auto;
       gap: 6px;
       font-size: 0.68rem;
       color: var(--text-muted);
@@ -1065,7 +1065,6 @@
         <label>Voting Hours</label>
         <div class="schedule-header">
           <span class="period-col-header">Period</span>
-          <span>Day(s) - optional</span>
           <span>Opens</span>
           <span></span>
           <span>Closes</span>
@@ -1091,7 +1090,7 @@
         </div>
         <button type="button" class="btn-add-schedule" onclick="addScheduleRow()">+ Add another day / time</button>
         <div style="font-size:0.68rem;color:var(--text-muted);margin-top:4px;">
-          Leave "Day(s)" blank if hours are the same every day. Add rows for different hours on different days (e.g. Mon-Fri, Saturday, Sunday).
+          Add one row per time block. Use the Period label when a location has both early voting and election day hours.
         </div>
       </div>
 
@@ -1342,9 +1341,8 @@
       if (loc.schedule && loc.schedule.length) {
         return loc.schedule.map(function(row) {
           var timeStr    = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
-          var periodPart = row.label ? '<span style="color:var(--accent-light);font-weight:700;margin-right:4px;">' + escHtml(row.label) + '</span>' : "";
-          var dayPart    = row.days  ? '<span style="color:var(--text-muted);margin-right:4px;">' + escHtml(row.days) + ':</span>' : "";
-          return '<div style="line-height:1.5;">' + periodPart + dayPart + escHtml(timeStr) + '</div>';
+          var periodPart = row.label ? '<span style="color:var(--accent-light);font-weight:700;margin-right:4px;">' + escHtml(row.label) + ':</span>' : "";
+          return '<div style="line-height:1.5;">' + periodPart + escHtml(timeStr) + '</div>';
         }).join("");
       }
       return escHtml(loc.hours || "-");
@@ -1737,12 +1735,6 @@
         labelSel.appendChild(o);
       });
 
-      var daysInput = document.createElement("input");
-      daysInput.type        = "text";
-      daysInput.className   = "f-sched-days";
-      daysInput.placeholder = "e.g. Mon-Fri or July 17,24,31";
-      daysInput.value       = days || "";
-
       var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
       var sep      = document.createElement("span");
       sep.className   = "sched-sep";
@@ -1763,7 +1755,6 @@
       })(idx);
 
       row.appendChild(labelSel);
-      row.appendChild(daysInput);
       row.appendChild(openSel);
       row.appendChild(sep);
       row.appendChild(closeSel);
@@ -1780,10 +1771,9 @@
       var schedule = [];
       rows.forEach(function(row) {
         var label = row.querySelector(".f-sched-label").value; // "Early Voting", "Election Day", or ""
-        var days  = row.querySelector(".f-sched-days").value.trim();
         var open  = row.querySelector(".f-sched-open").value;
         var close = row.querySelector(".f-sched-close").value;
-        var entry = { days: days, open: open, close: close };
+        var entry = { open: open, close: close };
         if (label) entry.label = label; // only store label if one was chosen
         schedule.push(entry);
       });
