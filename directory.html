@@ -1448,6 +1448,11 @@
     function epMakeTimeSelect(cls, defaultVal) {
       var sel = document.createElement("select");
       sel.className = cls;
+      // Blank placeholder option - shows when no time has been chosen
+      var blank = document.createElement("option");
+      blank.value = ""; blank.textContent = "-- time --";
+      if (!defaultVal) blank.selected = true;
+      sel.appendChild(blank);
       EP_TIME_LABELS.forEach(function(t) {
         var opt = document.createElement("option");
         opt.value = t;
@@ -1486,11 +1491,11 @@
       daysInput.title       = days || "";
       daysInput.addEventListener("input", function() { daysInput.title = daysInput.value; });
 
-      var openSel  = epMakeTimeSelect("f-sched-open",  open  || "8:00am");
+      var openSel  = epMakeTimeSelect("f-sched-open",  open  || "");
       var sep      = document.createElement("span");
       sep.className   = "sched-sep";
       sep.textContent = "to";
-      var closeSel = epMakeTimeSelect("f-sched-close", close || "7:00pm");
+      var closeSel = epMakeTimeSelect("f-sched-close", close || "");
 
       var removeBtn = document.createElement("button");
       removeBtn.type        = "button";
@@ -1544,11 +1549,11 @@
         });
       } else if (loc && loc.hours) {
         var parts = loc.hours.split(/\s*-\s*/);
-        var open  = parts[0] ? parts[0].trim() : "8:00am";
-        var close = parts[1] ? parts[1].trim() : "7:00pm";
+        var open  = parts[0] ? parts[0].trim() : "";
+        var close = parts[1] ? parts[1].trim() : "";
         epAddScheduleRow("", open, close);
       } else {
-        epAddScheduleRow("", "8:00am", "7:00pm");
+        epAddScheduleRow("", "", "");
       }
     }
 
@@ -1600,8 +1605,8 @@
       setTimeout(function() { msg.textContent = ""; }, 3000);
     }
 
-    // Initialize with one default row so the builder isn't empty on first open
-    epAddScheduleRow("", "8:00am", "7:00pm");
+    // Initialize with one empty row so the builder isn't empty on first open
+    epAddScheduleRow("", "", "");
 
     // =========================================================================
     // Geocoding for the edit panel (simplified - same logic as locations.html)

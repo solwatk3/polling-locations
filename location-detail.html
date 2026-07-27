@@ -1106,6 +1106,11 @@
     function epMakeTimeSelect(cls, defaultVal) {
       var sel = document.createElement("select");
       sel.className = cls;
+      // Blank placeholder option - shows when no time has been chosen
+      var blank = document.createElement("option");
+      blank.value = ""; blank.textContent = "-- time --";
+      if (!defaultVal) blank.selected = true;
+      sel.appendChild(blank);
       EP_TIME_LABELS.forEach(function(t) {
         var opt = document.createElement("option");
         opt.value = t; opt.textContent = t;
@@ -1129,11 +1134,11 @@
       daysInput.placeholder = "e.g. Mon-Fri";
       daysInput.value       = days || "";
 
-      var openSel  = epMakeTimeSelect("ep-sched-open",  open  || "8:00am");
+      var openSel  = epMakeTimeSelect("ep-sched-open",  open  || "");
       var sep      = document.createElement("span");
       sep.className   = "sched-sep";
       sep.textContent = "to";
-      var closeSel = epMakeTimeSelect("ep-sched-close", close || "7:00pm");
+      var closeSel = epMakeTimeSelect("ep-sched-close", close || "");
 
       var removeBtn = document.createElement("button");
       removeBtn.type      = "button";
@@ -1177,14 +1182,14 @@
         locObj.schedule.forEach(function(row) { epAddScheduleRow(row.days, row.open, row.close); });
       } else if (locObj && locObj.hours) {
         var parts = locObj.hours.split(/\s*-\s*/);
-        epAddScheduleRow("", parts[0] ? parts[0].trim() : "8:00am", parts[1] ? parts[1].trim() : "7:00pm");
+        epAddScheduleRow("", parts[0] ? parts[0].trim() : "", parts[1] ? parts[1].trim() : "");
       } else {
-        epAddScheduleRow("", "8:00am", "7:00pm");
+        epAddScheduleRow("", "", "");
       }
     }
 
-    // Initialize one default row (replaced when edit panel opens)
-    epAddScheduleRow("", "8:00am", "7:00pm");
+    // Initialize one empty row (replaced when edit panel opens)
+    epAddScheduleRow("", "", "");
 
     function epUpdateTypeStyles() {
       var val = document.querySelector('input[name="ep-type"]:checked').value;

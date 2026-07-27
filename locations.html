@@ -1138,6 +1138,7 @@
 
     <div class="right-panel-footer">
       <button class="btn-secondary" id="btn-cancel-form">Cancel</button>
+      <button class="btn-secondary" id="btn-save-add-another">Save & Add Another</button>
       <button class="btn-primary" id="btn-save-form" style="flex:1;">Save Location</button>
     </div>
   </div>
@@ -1596,9 +1597,11 @@
     }
 
     // Save (add or update)
-    document.getElementById("btn-save-form").addEventListener("click", function() {
+    // Shared save logic - validates, saves, re-renders the table.
+    // Returns true on success, false if validation fails (so callers know whether to proceed).
+    function saveFormData() {
       var name = document.getElementById("f-name").value.trim();
-      if (!name) { alert("Location name is required."); return; }
+      if (!name) { alert("Location name is required."); return false; }
 
       var lat = parseFloat(document.getElementById("f-lat").value);
       var lng = parseFloat(document.getElementById("f-lng").value);
@@ -1628,7 +1631,7 @@
       });
       if (duplicate) {
         alert('A location named "' + duplicate.name + '" already exists. Use a different name or edit the existing entry.');
-        return;
+        return false;
       }
 
       if (editingId) {
@@ -1641,7 +1644,17 @@
 
       saveCustom(locations);
       renderTable();
-      closePanel();
+      return true;
+    }
+
+    // Save and close the panel
+    document.getElementById("btn-save-form").addEventListener("click", function() {
+      if (saveFormData()) closePanel();
+    });
+
+    // Save and immediately open a blank form to add another location
+    document.getElementById("btn-save-add-another").addEventListener("click", function() {
+      if (saveFormData()) openPanel();
     });
 
     // Ctrl+Enter submits the form when the panel is open
@@ -1697,6 +1710,11 @@
     function makeTimeSelect(cls, defaultVal) {
       var sel = document.createElement("select");
       sel.className = cls;
+      // Blank placeholder option - shows when no time has been chosen
+      var blank = document.createElement("option");
+      blank.value = ""; blank.textContent = "-- time --";
+      if (!defaultVal) blank.selected = true;
+      sel.appendChild(blank);
       TIME_LABELS.forEach(function(t) {
         var opt = document.createElement("option");
         opt.value = t;
@@ -1827,11 +1845,11 @@
       daysInput.title       = days || "";
       daysInput.addEventListener("input", function() { daysInput.title = daysInput.value; });
 
-      var openSel  = makeTimeSelect("f-sched-open",  open  || "8:00am");
+      var openSel  = makeTimeSelect("f-sched-open",  open  || "");
       var sep      = document.createElement("span");
       sep.className   = "sched-sep";
       sep.textContent = "to";
-      var closeSel = makeTimeSelect("f-sched-close", close || "7:00pm");
+      var closeSel = makeTimeSelect("f-sched-close", close || "");
 
       var removeBtn = document.createElement("button");
       removeBtn.type        = "button";
@@ -1896,17 +1914,17 @@
       } else if (loc && loc.hours) {
         // Old single-string hours - create one row with no days label
         var parts = loc.hours.split(/\s*-\s*/);
-        var open  = parts[0] ? parts[0].trim() : "8:00am";
-        var close = parts[1] ? parts[1].trim() : "7:00pm";
+        var open  = parts[0] ? parts[0].trim() : "";
+        var close = parts[1] ? parts[1].trim() : "";
         addScheduleRow("", open, close);
       } else {
-        // Default empty row
-        addScheduleRow("", "8:00am", "7:00pm");
+        // Default empty row - no pre-filled times
+        addScheduleRow("", "", "");
       }
     }
 
-    // Initialize with one default row on page load
-    addScheduleRow("", "8:00am", "7:00pm");
+    // Initialize with one empty row on page load
+    addScheduleRow("", "", "");
 
     // =========================================================================
     // TYPE RADIO STYLING

@@ -123,6 +123,9 @@
 - [x] locations.html: days input shows full text as browser tooltip on hover - truncated field content readable without editing (2026-07-27)
 - [x] locations.html: Re-geocode address button restored below lat/lng fields - calls geocodeAddress() on the current address field value (2026-07-27)
 
+## Done (Session 14 - 2026-07-27)
+- [x] location-detail.html: fixed Prev/Next navigation broken for "House District ?" group - parseInt("?") returned NaN so filter matched nothing; added special case: ctxVal === "?" matches locations where district field is "?" or empty (2026-07-27)
+
 ## In Progress
 - Nothing currently
 
@@ -130,6 +133,7 @@
 - [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all coordinate fixes and new locations permanent in the repo
 - [ ] Start entering early voting locations - use paste parser to quickly fill in schedule data from county election commission websites
 - [ ] Investigate why Map nav link opens in a new tab on GitHub Pages (could not reproduce from code - may be browser behavior)
+- [ ] Work through the 46 "House District ?" locations and run district detection on each to clear out the unknown group
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
