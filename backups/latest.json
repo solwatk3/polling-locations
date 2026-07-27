@@ -4737,22 +4737,6 @@
       "lng": -86.7518612
     },
     {
-      "id": "bulk_1785165116248_13",
-      "name": "Parkway Baptist Church",
-      "address": "505 Cunniff Parkway",
-      "city": "Goodlettsville",
-      "zip": "37072",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
       "id": "bulk_1785165116248_14",
       "name": "Parkwood Community Center",
       "address": "3220 Vailview Drive",
@@ -4760,13 +4744,20 @@
       "zip": "37207",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "54",
+      "state_senate_district": "19",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.23532563008287,
+      "lng": -86.77081346511842
     },
     {
       "id": "bulk_1785165116248_15",
@@ -4799,13 +4790,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "59",
+      "state_senate_district": "20",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.02233387626494,
+      "lng": -86.71412229537964
     },
     {
       "id": "bulk_1785165116248_17",
@@ -4815,13 +4813,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "59",
+      "state_senate_district": "20",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.03693650604375,
+      "lng": -86.74299359321594
     },
     {
       "id": "bulk_1785165116248_19",
@@ -4854,13 +4859,20 @@
       "zip": "37207",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.205256422729974,
+      "lng": -86.76621079444887
     },
     {
       "id": "bulk_1785165116248_22",
@@ -4870,13 +4882,20 @@
       "zip": "37207",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.18210374438489,
+      "lng": -86.76723003387453
     },
     {
       "id": "bulk_1785165116248_23",
@@ -4909,13 +4928,20 @@
       "zip": "37206",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.180207241944125,
+      "lng": -86.75393700599672
     },
     {
       "id": "bulk_1785165116248_25",
@@ -4925,13 +4951,20 @@
       "zip": "37207",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.20847682131025,
+      "lng": -86.7559003829956
     },
     {
       "id": "bulk_1785165116248_26",
@@ -4987,13 +5020,20 @@
       "zip": "37206",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.18402617945056,
+      "lng": -86.71826362609863
     },
     {
       "id": "bulk_1785165116248_30",
@@ -5003,13 +5043,20 @@
       "zip": "37206",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.188933,
+      "lng": -86.725954
     },
     {
       "id": "bulk_1785165116248_31",
@@ -5042,13 +5089,20 @@
       "zip": "37206",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.166301,
+      "lng": -86.755692
     },
     {
       "id": "bulk_1785165116248_33",
@@ -5058,13 +5112,20 @@
       "zip": "37206",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.17078899841515,
+      "lng": -86.73508107662202
     },
     {
       "id": "bulk_1785165116248_34",
@@ -5074,13 +5135,20 @@
       "zip": "37216",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.197325,
+      "lng": -86.726908
     },
     {
       "id": "bulk_1785165116248_35",
@@ -5205,13 +5273,20 @@
       "zip": "37216",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.19728276901258,
+      "lng": -86.71853184700014
     },
     {
       "id": "bulk_1785165116248_41",
@@ -5244,29 +5319,20 @@
       "zip": "37013",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785165116248_45",
-      "name": "Neely's Bend Middle School",
-      "address": "1251 Neely's Bend Rd",
-      "city": "Madison",
-      "zip": "37115",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.062575,
+      "lng": -86.604829
     },
     {
       "id": "bulk_1785165116248_48",
@@ -5276,29 +5342,43 @@
       "zip": "37072",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.342293,
+      "lng": -86.757525
     },
     {
       "id": "bulk_1785165116248_49",
       "name": "Union Hill Baptist Church",
-      "address": "1301 Union Hill Rd",
+      "address": "1301 Union Hill Rd, Goodlettsville, TN 37072",
       "city": "Goodlettsville",
       "zip": "37072",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.326612,
+      "lng": -86.770995
     },
     {
       "id": "bulk_1785165116248_50",
@@ -5331,13 +5411,20 @@
       "zip": "37115",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "54",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.295870365559686,
+      "lng": -86.70704126358034
     },
     {
       "id": "bulk_1785165116248_54",
@@ -5393,13 +5480,20 @@
       "zip": "37138",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "60",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.26428465505407,
+      "lng": -86.64507150650026
     },
     {
       "id": "bulk_1785165116248_57",
@@ -5446,22 +5540,6 @@
       "notes": "",
       "lat": 36.173478,
       "lng": -86.580964
-    },
-    {
-      "id": "bulk_1785165116248_62",
-      "name": "Ruby Major Elementary School",
-      "address": "5141 John Hagar Rd",
-      "city": "Hermitage",
-      "zip": "37076",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
     },
     {
       "id": "bulk_1785165116248_64",
@@ -5517,13 +5595,20 @@
       "zip": "37214",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "60",
+      "state_senate_district": "17",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.14307331243062,
+      "lng": -86.64794683456422
     },
     {
       "id": "bulk_1785165116248_67",
@@ -5625,13 +5710,20 @@
       "zip": "37214",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.19452080381698,
+      "lng": -86.67444705963136
     },
     {
       "id": "bulk_1785165116248_75",
@@ -5641,13 +5733,20 @@
       "zip": "37210",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.145915064868454,
+      "lng": -86.72036647796631
     },
     {
       "id": "bulk_1785165116248_76",
@@ -5657,13 +5756,20 @@
       "zip": "37214",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.17848,
+      "lng": -86.679344
     },
     {
       "id": "bulk_1785165116248_77",
@@ -5719,13 +5825,20 @@
       "zip": "37214",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "60",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.16026087709353,
+      "lng": -86.68025135993958
     },
     {
       "id": "bulk_1785165116248_80",
@@ -5827,13 +5940,20 @@
       "zip": "37212",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.1377620783909,
+      "lng": -86.79006099700929
     },
     {
       "id": "bulk_1785165116248_86",
@@ -5889,29 +6009,43 @@
       "zip": "37210",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.14247549164712,
+      "lng": -86.75246715545654
     },
     {
       "id": "bulk_1785165116248_89",
-      "name": "Napier Community Center",
+      "name": "J. C. Napier Community Center",
       "address": "73 Fairfield Ave",
       "city": "Nashville",
       "zip": "37210",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.1506626410875,
+      "lng": -86.75642609596254
     },
     {
       "id": "bulk_1785165116248_90",
@@ -5921,13 +6055,20 @@
       "zip": "37204",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "55",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.118272921937546,
+      "lng": -86.78843021392822
     },
     {
       "id": "bulk_1785165116248_91",
@@ -6029,13 +6170,20 @@
       "zip": "37208",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "51",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.18040642015725,
+      "lng": -86.79060816764833
     },
     {
       "id": "bulk_1785165116248_97",
@@ -6045,13 +6193,20 @@
       "zip": "37203",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.16244370540024,
+      "lng": -86.80007100105287
     },
     {
       "id": "bulk_1785165116248_98",
@@ -6084,13 +6239,20 @@
       "zip": "37209",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.168541443355785,
+      "lng": -86.86150431632997
     },
     {
       "id": "bulk_1785165116248_102",
@@ -6114,22 +6276,6 @@
       "notes": "",
       "lat": 36.151418,
       "lng": -86.882884
-    },
-    {
-      "id": "bulk_1785165116248_103",
-      "name": "TN College of Applied Technology",
-      "address": "100 White Bridge Rd",
-      "city": "Nashville",
-      "zip": "37209",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
     },
     {
       "id": "bulk_1785165116248_105",
@@ -6162,13 +6308,20 @@
       "zip": "37208",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.16441859292501,
+      "lng": -86.81504845619203
     },
     {
       "id": "bulk_1785165116248_107",
@@ -6178,13 +6331,20 @@
       "zip": "37208",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.17554805928192,
+      "lng": -86.80992007255556
     },
     {
       "id": "bulk_1785165116248_108",
@@ -6355,13 +6515,20 @@
       "zip": "37205",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.091921507482674,
+      "lng": -86.89252138137819
     },
     {
       "id": "bulk_1785165116248_116",
@@ -6371,13 +6538,20 @@
       "zip": "37205",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.130604773505006,
+      "lng": -86.83587312698364
     },
     {
       "id": "bulk_1785165116248_117",
@@ -6387,13 +6561,20 @@
       "zip": "37209",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.151052484030856,
+      "lng": -86.82978987693788
     },
     {
       "id": "bulk_1785165116248_118",
@@ -6403,13 +6584,20 @@
       "zip": "37205",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.13211254091306,
+      "lng": -86.82425379753114
     },
     {
       "id": "bulk_1785165116248_120",
@@ -6419,13 +6607,20 @@
       "zip": "37209",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.14151810249695,
+      "lng": -86.84195101261139
     },
     {
       "id": "bulk_1785165116248_121",
@@ -6435,13 +6630,20 @@
       "zip": "37209",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.14433825153393,
+      "lng": -86.8452286720276
     },
     {
       "id": "bulk_1785165116248_123",
@@ -6543,13 +6745,20 @@
       "zip": "37215",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.113618726090074,
+      "lng": -86.80210947990419
     },
     {
       "id": "bulk_1785165116248_128",
@@ -6628,13 +6837,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "53",
+      "state_senate_district": "21",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.07745047598628,
+      "lng": -86.74848675727846
     },
     {
       "id": "bulk_1785165116248_132",
@@ -6667,13 +6883,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "53",
+      "state_senate_district": "21",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.06222223734839,
+      "lng": -86.72003388404846
     },
     {
       "id": "bulk_1785165116248_135",
@@ -6683,13 +6906,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "53",
+      "state_senate_district": "21",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.05737390496207,
+      "lng": -86.72431468963624
     },
     {
       "id": "bulk_1785165116248_136",
@@ -6699,13 +6929,20 @@
       "zip": "37217",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.086158,
+      "lng": -86.650239
     },
     {
       "id": "bulk_1785165116248_138",
@@ -6784,13 +7021,20 @@
       "zip": "37217",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.088158775339835,
+      "lng": -86.61288499832153
     },
     {
       "id": "bulk_1785165116248_144",
@@ -6800,13 +7044,20 @@
       "zip": "37217",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "52",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.087066335495486,
+      "lng": -86.6116511821747
     },
     {
       "id": "bulk_1785165116248_146",
@@ -6816,13 +7067,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "55",
+      "state_senate_district": "21",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.0878553213504,
+      "lng": -86.70685887336732
     },
     {
       "id": "bulk_1785165116248_147",
@@ -6855,29 +7113,20 @@
       "zip": "37211",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "59",
+      "state_senate_district": "20",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785165116248_150",
-      "name": "Thurgood Marshall Middle School",
-      "address": "5832 Pettus Rd",
-      "city": "Antioch",
-      "zip": "37013",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.02029467219015,
+      "lng": -86.71231985092163
     },
     {
       "id": "bulk_1785165116248_151",
@@ -6910,29 +7159,20 @@
       "zip": "37013",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "55",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "bulk_1785165116248_155",
-      "name": "Rural Hill Church of Christ",
-      "address": "564 Bell Rd",
-      "city": "Antioch",
-      "zip": "37013",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.0522650526496,
+      "lng": -86.65552139282228
     },
     {
       "id": "bulk_1785165116248_157",
@@ -6956,22 +7196,6 @@
       "notes": "",
       "lat": 36.02192,
       "lng": -86.659526
-    },
-    {
-      "id": "bulk_1785165116248_158",
-      "name": "Nashville Fire Station 26",
-      "address": "5410 Hickory Park Dr",
-      "city": "Antioch",
-      "zip": "37013",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
-      "notes": "",
-      "lat": null,
-      "lng": null
     },
     {
       "id": "bulk_1785165116248_159",
@@ -7142,13 +7366,20 @@
       "zip": "37209",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.11157321943296,
+      "lng": -86.92005157470705
     },
     {
       "id": "bulk_1785165116248_171",
@@ -7224,7 +7455,7 @@
       "address": "1795 Bakers Grove Rd, Hermitage, TN 37076",
       "city": "",
       "zip": "",
-      "county": "",
+      "county": "Knox",
       "type": "early",
       "state_district": "52",
       "state_senate_district": "17",
@@ -7270,7 +7501,7 @@
       "address": "13126 Old Hickory Blvd, Antioch, TN 37013",
       "city": "",
       "zip": "",
-      "county": "",
+      "county": "Davidson",
       "type": "election_day",
       "state_district": "53",
       "state_senate_district": "19",
@@ -7278,7 +7509,6 @@
       "hours": " - ",
       "schedule": [
         {
-          "days": "",
           "open": "",
           "close": ""
         }
@@ -7293,7 +7523,7 @@
       "address": "3105 Hamilton Church Rd, Antioch, TN 37013",
       "city": "",
       "zip": "",
-      "county": "",
+      "county": "Davidson",
       "type": "election_day",
       "state_district": "52",
       "state_senate_district": "19",
@@ -7301,7 +7531,6 @@
       "hours": " - ",
       "schedule": [
         {
-          "days": "",
           "open": "",
           "close": ""
         }
@@ -7339,15 +7568,14 @@
       "address": "5535 Blue Hole Rd",
       "city": "Antioch",
       "zip": "37013",
-      "county": "",
-      "type": "early",
+      "county": "Davidson",
+      "type": "election_day",
       "state_district": "53",
       "state_senate_district": "19",
       "congressional_district": "4",
       "hours": " - ",
       "schedule": [
         {
-          "days": "",
           "open": "",
           "close": ""
         }
@@ -7362,7 +7590,7 @@
       "address": "3720 James Kay Ln",
       "city": "Hermitage",
       "zip": "37076",
-      "county": "",
+      "county": "Davidson",
       "type": "election_day",
       "state_district": "60",
       "state_senate_district": "17",
@@ -7370,7 +7598,6 @@
       "hours": " - ",
       "schedule": [
         {
-          "days": "",
           "open": "",
           "close": ""
         }
@@ -7467,6 +7694,944 @@
       "notes": "",
       "lat": 36.049901,
       "lng": -86.645606
+    },
+    {
+      "id": "custom-1785173415459-297",
+      "name": "Luton's United Methodist Church",
+      "address": "8363 Old Springfield Pike",
+      "city": "Goodlettsville",
+      "zip": "37072",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.373541,
+      "lng": -86.747079
+    },
+    {
+      "id": "custom-1785173474132-494",
+      "name": "Lakeview Elementary Design Center",
+      "address": "455 Rural Hill Rd",
+      "city": "Nashville",
+      "zip": "37217",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "52",
+      "state_senate_district": "17",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.079150028146934,
+      "lng": -86.63070559501648
+    },
+    {
+      "id": "custom-1785173516230-909",
+      "name": "Madison Community Center",
+      "address": "550 N Dupont Ave",
+      "city": "Madison",
+      "zip": "37115",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "51",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.26566009311483,
+      "lng": -86.70066833496095
+    },
+    {
+      "id": "custom-1785173560976-254",
+      "name": "Madison Heights Baptist Church",
+      "address": "815 E Old Hickory Blvd",
+      "city": "Madison",
+      "zip": "37115",
+      "county": "Madison",
+      "type": "election_day",
+      "state_district": "51",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.263584,
+      "lng": -86.691279
+    },
+    {
+      "id": "custom-1785173577426-933",
+      "name": "Maplewood High School",
+      "address": "401 Walton Ln",
+      "city": "Nashville",
+      "zip": "37216",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "54",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.23223614941988,
+      "lng": -86.74976348876955
+    },
+    {
+      "id": "custom-1785173960354-244",
+      "name": "Nashville Fire Department",
+      "address": "5410 Hickory Park Dr",
+      "city": "Antioch 37013",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "53",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.040471,
+      "lng": -86.671845
+    },
+    {
+      "id": "custom-1785174026549-434",
+      "name": "LEAD Neely's Bend Middle and High School",
+      "address": "1251 Neely's Bend Rd",
+      "city": "Madison",
+      "zip": "37115",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "54",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.242244,
+      "lng": -86.674173
+    },
+    {
+      "id": "custom-1785174171178-232",
+      "name": "Parkway Baptist Church",
+      "address": "505 Cunniff Parkway, Goodlettsville 37072, TN",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "54",
+      "state_senate_district": "19",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.28388452252142,
+      "lng": -86.73255443572998
+    },
+    {
+      "id": "custom-1785174368016-447",
+      "name": "Ruby Major Elementary School",
+      "address": "5141 John Hagar Road, Hermitage, TN 37076",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "60",
+      "state_senate_district": "17",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.156344,
+      "lng": -86.579023
+    },
+    {
+      "id": "custom-1785174446382-607",
+      "name": "Rural Hill Church of Christ",
+      "address": "564 Bell Rd",
+      "city": "Antioch",
+      "zip": "37013",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "55",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.067377,
+      "lng": -86.63619
+    },
+    {
+      "id": "custom-1785174933929-472",
+      "name": "Thurgood Marshall Middle School",
+      "address": "5832 Pettus Rd",
+      "city": "Antioch",
+      "zip": "37013",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "53",
+      "state_senate_district": "19",
+      "congressional_district": "4",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.022172,
+      "lng": -86.661136
+    },
+    {
+      "id": "custom-1785175114262-311",
+      "name": "Tennessee College of Applied Technology Nashville",
+      "address": "100 White Bridge Pike",
+      "city": "Nashville",
+      "zip": "37209",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.13234650222503,
+      "lng": -86.85634374618532
+    },
+    {
+      "id": "bulk_1785176096909_0",
+      "name": "Green Magnet Elementary",
+      "address": "801 Lula Powell Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_1",
+      "name": "Eternal Life Harvest Center",
+      "address": "1801 Western Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 5,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.966628,
+      "lng": -83.939986
+    },
+    {
+      "id": "bulk_1785176096909_2",
+      "name": "Fort Sanders School",
+      "address": "501 S Twenty First St",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_3",
+      "name": "Howard H. Baker Jr. Center",
+      "address": "1640 Cumberland Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 7,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9564684,
+      "lng": -83.9323692
+    },
+    {
+      "id": "bulk_1785176096909_4",
+      "name": "Central United Methodist Church",
+      "address": "201 Third Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_5",
+      "name": "Phyllis Wheatley YWCA",
+      "address": "1245 Cruze St",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 6,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9769533,
+      "lng": -83.9024367
+    },
+    {
+      "id": "bulk_1785176096909_6",
+      "name": "Fair Garden School",
+      "address": "400 Fern St",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 6,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.995775,
+      "lng": -83.873521
+    },
+    {
+      "id": "bulk_1785176096909_7",
+      "name": "Austin-East High School",
+      "address": "2800 ML King Jr Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.989901,
+      "lng": -83.887259
+    },
+    {
+      "id": "bulk_1785176096909_8",
+      "name": "John T. O'Connor Center",
+      "address": "611 Winona St",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 7,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9808108,
+      "lng": -83.9115494
+    },
+    {
+      "id": "bulk_1785176096909_9",
+      "name": "Larry Cox Senior Recreation Center",
+      "address": "3109 Ocoee Trl",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 90,
+      "state_senate_district": 5,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 36.0017744,
+      "lng": -83.9234426
+    },
+    {
+      "id": "bulk_1785176096909_10",
+      "name": "Christenberry Community Center",
+      "address": "931 Oglewood Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 90,
+      "state_senate_district": 5,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9949209,
+      "lng": -83.929877
+    },
+    {
+      "id": "bulk_1785176096909_11",
+      "name": "Lincoln Park Center",
+      "address": "535 Chickamauga Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 90,
+      "state_senate_district": 5,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9998026,
+      "lng": -83.938271
+    },
+    {
+      "id": "bulk_1785176096909_12",
+      "name": "Thrive Lonsdale",
+      "address": "1317 Connecticut Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": 15,
+      "state_senate_district": 5,
+      "congressional_district": 2,
+      "hours": "",
+      "notes": "",
+      "lat": 35.984402,
+      "lng": -83.9550445
+    },
+    {
+      "id": "bulk_1785176096909_13",
+      "name": "Communications Workers of America",
+      "address": "1415 Elm St",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_14",
+      "name": "WestView Elementary",
+      "address": "1714 Mingle Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_15",
+      "name": "Sequoyah Hills School",
+      "address": "942 Southgate Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_16",
+      "name": "South Knoxville Community Center",
+      "address": "522 Maryville Pike",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_17",
+      "name": "Dogwood School",
+      "address": "705 Tipton Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_18",
+      "name": "South Knoxville Optimist Club",
+      "address": "6135 Moore Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_19",
+      "name": "Anderson Head Start",
+      "address": "4808 Prospect Rd",
+      "city": "Knoxville",
+      "zip": "",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "19",
+      "state_senate_district": "6",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.92876258227414,
+      "lng": -83.86536955833435
+    },
+    {
+      "id": "bulk_1785176096909_20",
+      "name": "Sarah Moore Greene School",
+      "address": "3001 Brooks Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_21",
+      "name": "Chilhowee School",
+      "address": "5005 Asheville Hwy",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_22",
+      "name": "Spring Hill Elementary School",
+      "address": "4711 Mildred Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_23",
+      "name": "Richard Yeakley School",
+      "address": "4415 Washington Pike",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_24",
+      "name": "Central High School",
+      "address": "5321 Jacksboro Pike",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_25",
+      "name": "Shannondale Elementary School",
+      "address": "5316 Shannondale Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_26",
+      "name": "Gresham Middle School",
+      "address": "500 Gresham Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_27",
+      "name": "Inskip Elementary School",
+      "address": "4701 High School Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_28",
+      "name": "Inskip Recreation Center",
+      "address": "301 W Inskip Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_29",
+      "name": "Norwood Elementary School",
+      "address": "1909 Merchant Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_31",
+      "name": "Pleasant Ridge Elementary School",
+      "address": "3013 Walnoaks Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_32",
+      "name": "West Haven Elementary School",
+      "address": "3620 Sisk Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_33",
+      "name": "Ridgedale School",
+      "address": "4600 Ridgedale Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_34",
+      "name": "Bearden Middle School",
+      "address": "1000 Francis Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_35",
+      "name": "Knoxville First Church of Nazarene",
+      "address": "538 Vanosdale Rd",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_36",
+      "name": "Bearden High School",
+      "address": "8352 Kingston Pike",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "18",
+      "state_senate_district": "7",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.92128216635381,
+      "lng": -84.05691146850587
+    },
+    {
+      "id": "bulk_1785176096909_37",
+      "name": "Pond Gap School",
+      "address": "4530 Papermill Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_38",
+      "name": "Bearden Elementary School",
+      "address": "5717 Kingston Pike",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "90",
+      "state_senate_district": "6",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.93505218686996,
+      "lng": -83.99828374385835
+    },
+    {
+      "id": "bulk_1785176096909_39",
+      "name": "West High School",
+      "address": "3326 Sutherland Ave",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785176096909_40",
+      "name": "Deane Hill Recreation Center",
+      "address": "7414 Deane Hill Dr",
+      "city": "Knoxville",
+      "zip": "TN",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
     }
   ],
   "tn_polling_deleted": [
