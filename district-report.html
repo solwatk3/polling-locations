@@ -359,6 +359,26 @@
       flex-shrink: 0;
     }
 
+    /* ----- District chips shown on county reports ----- */
+    .location-districts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .dist-chip {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .dist-chip.house   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .dist-chip.senate  { background: #fdf4ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .dist-chip.congress { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
     /* ----- Report footer ----- */
     .report-footer {
       border-top: 2px solid #e2e8f0;
@@ -852,9 +872,9 @@
           weekday: "long", year: "numeric", month: "long", day: "numeric"
         });
 
-      // ----- Build location cards -----
-      document.getElementById("cards-early").innerHTML    = buildCards(earlyLocs, "early");
-      document.getElementById("cards-election").innerHTML = buildCards(electionLocs, "election");
+      // ----- Build location cards (pass type so county reports show district chips) -----
+      document.getElementById("cards-early").innerHTML    = buildCards(earlyLocs, "early", type);
+      document.getElementById("cards-election").innerHTML = buildCards(electionLocs, "election", type);
 
       // Section count labels
       document.getElementById("rpt-early-label").textContent =
@@ -870,8 +890,9 @@
 
     // =========================================================================
     // BUILD LOCATION CARD HTML
+    // reportType is passed in so county reports can show district chips
     // =========================================================================
-    function buildCards(locations, typeClass) {
+    function buildCards(locations, typeClass, reportType) {
       if (!locations.length) {
         return '<div class="no-locations">No ' +
           (typeClass === "early" ? "early voting" : "election day") +
@@ -899,6 +920,17 @@
           ? '<div class="location-county-tag">' + escHtml(loc.county) + ' Co.</div>'
           : "";
 
+        // District chips - only shown on county reports where locations can
+        // span multiple districts, so the info is actually meaningful
+        var distChips = "";
+        if (reportType === "county") {
+          var chips = "";
+          if (loc.state_district)        chips += '<span class="dist-chip house">House ' + escHtml(String(loc.state_district)) + '</span>';
+          if (loc.state_senate_district)  chips += '<span class="dist-chip senate">Senate ' + escHtml(String(loc.state_senate_district)) + '</span>';
+          if (loc.congressional_district) chips += '<span class="dist-chip congress">CD-' + escHtml(String(loc.congressional_district)) + '</span>';
+          if (chips) distChips = '<div class="location-districts">' + chips + '</div>';
+        }
+
         // Map button - only shown on screen, hidden in print
         var mapBtn = loc.address
           ? '<button class="location-map-btn" onclick="openLocationMap(' +
@@ -912,6 +944,7 @@
             '<div class="location-address">' + escHtml(fullAddr) + '</div>' +
             hours +
             notes +
+            distChips +
           '</div>' +
           '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
             countyTag +

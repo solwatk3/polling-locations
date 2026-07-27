@@ -90,18 +90,19 @@
 - [x] location-detail.html + directory.html: Prev/Next navigation added - clicking a card from a directory group passes context (e.g. context=house-80) in URL; detail page reads context, filters+sorts that group, shows position label ("3 of 12") and Prev/Next buttons to step through locations without returning to directory (2026-07-26)
 
 ## Done (Session 11 - 2026-07-26)
+- [x] Douglas Community Center: coordinates manually entered via Google Maps + lat/lng paste, districts auto-detected (2026-07-26)
 - [x] location-detail.html: pin drag position now persists on page reload - loadOverrides() reads tn_polling_overrides from localStorage and applies saved lat/lng when building ALL_LOCATIONS; previously overrides were saved but never read back (2026-07-26)
 - [x] location-detail.html + directory.html: fixed duplicate locations caused by mergeWithSeedData() copying seed entries into tn_polling_custom - both pages now deduplicate ALL_LOCATIONS by ID, preferring the custom version; this also fixed Prev/Next nav breaking and wrong position counts (2026-07-26)
 - [x] directory.html: added deleted-ID filter to seed entries (was missing, so deleted seed locations could still appear in the directory) (2026-07-26)
 - [x] location-detail.html: clicking the address field copies the full address to clipboard with a brief "Copied!" confirmation flash (2026-07-26)
-- [x] district-report.html: fixed large blank space between Early Voting and Election Day sections when printing - removed break-inside: avoid-page from .section-block which was forcing the Election Day section to start on a new page (2026-07-26)
+- [x] district-report.html: fixed large blank space between Early Voting and Election Day sections when printing - added display:block to .location-cards in print CSS; Chrome treats flex containers as unbreakable units so with 46+ election day entries it pushed the whole section to page 2 leaving a gap; block layout lets Chrome break between cards normally (2026-07-26)
 
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Fix Douglas Community Center: open in location-detail.html, click Edit, right-click pin location in Google Maps to get coords, paste into lat field - auto-splits and auto-detects districts now
-- [ ] After fixing Douglas, run Export to JS from locations.html and commit updated data/polling-locations.js to make the fix permanent
+- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make coordinate fixes permanent
+
 - [ ] Start entering additional verified polling locations from county election commission websites - include zip codes for better geocoding
 - [ ] Demographics overlay (population, voter registration breakdowns by county)
 
