@@ -599,6 +599,206 @@
       padding: 0;
     }
     .setup-token-link:hover { color: #64748b; }
+
+    /* ===== BULK IMPORT MODAL ===== */
+    .bulk-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 900;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-y: auto;
+    }
+    .bulk-overlay.open { display: flex; }
+
+    .bulk-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: min(900px, 100%);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    .bulk-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--primary);
+    }
+    .bulk-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent); }
+    .bulk-header p  { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    .btn-close-bulk {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.1rem; cursor: pointer; padding: 2px 8px; border-radius: 4px; flex-shrink: 0;
+    }
+    .btn-close-bulk:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* Step 1 - paste area */
+    .bulk-step { padding: 20px; }
+
+    #bulk-textarea {
+      width: 100%;
+      height: 140px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.82rem;
+      padding: 10px 12px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+    }
+    #bulk-textarea:focus { border-color: var(--accent); }
+
+    .bulk-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* Step 2 - review table */
+    .bulk-summary {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .bulk-summary strong { color: var(--text); }
+    .bulk-warn-badge {
+      background: rgba(245,158,11,0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .bulk-ok-badge {
+      background: rgba(16,185,129,0.1);
+      color: #10b981;
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    /* The review table itself */
+    .bulk-table-wrap {
+      overflow-x: auto;
+      max-height: 55vh;
+      overflow-y: auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .bulk-table-wrap::-webkit-scrollbar { width: 4px; height: 4px; }
+    .bulk-table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .bulk-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .bulk-table th {
+      background: var(--primary);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 8px 10px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .bulk-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    /* Row that parsed cleanly */
+    .bulk-row-ok { background: transparent; }
+    /* Row that needs user attention - highlighted amber */
+    .bulk-row-warn { background: rgba(245,158,11,0.07); }
+    .bulk-row-warn td:first-child { border-left: 3px solid #f59e0b; }
+
+    /* Editable inputs inside each table row */
+    .bulk-cell-input {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.78rem;
+      padding: 4px 7px;
+      width: 100%;
+      outline: none;
+      min-width: 80px;
+    }
+    .bulk-cell-input:focus { border-color: var(--accent); }
+    .bulk-cell-input.wide  { min-width: 160px; }
+    .bulk-cell-input.med   { min-width: 110px; }
+
+    .bulk-cell-select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.75rem;
+      padding: 4px 6px;
+      outline: none;
+    }
+    .bulk-cell-select option { background: var(--surface); }
+
+    /* Status icon in last column */
+    .bulk-status-ok   { color: #10b981; font-size: 0.72rem; white-space: nowrap; }
+    .bulk-status-warn { color: #f59e0b; font-size: 0.72rem; white-space: nowrap; }
+
+    /* Delete row button */
+    .btn-bulk-del {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .btn-bulk-del:hover { color: #f87171; }
+
+    /* Footer bar */
+    .bulk-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .bulk-geocode-note {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      flex: 1;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body class="page-layout">
@@ -636,6 +836,7 @@
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <button class="btn-secondary" id="btn-export">&#8659; Export to JS</button>
+        <button class="btn-secondary" id="btn-bulk-import">&#128229; Bulk Import</button>
         <button class="btn-primary" id="btn-add-new">&#43; Add Location</button>
       </div>
     </div>
@@ -951,6 +1152,77 @@
 
     </div>
   </div>
+
+  <!-- ===== BULK IMPORT MODAL ===== -->
+  <div class="bulk-overlay" id="bulk-overlay">
+    <div class="bulk-box">
+
+      <!-- Header -->
+      <div class="bulk-header">
+        <div>
+          <h3>&#128229; Bulk Import Locations</h3>
+          <p>Paste a block of location data and the app will parse it into individual entries for review.</p>
+        </div>
+        <button class="btn-close-bulk" id="btn-close-bulk">&#10005;</button>
+      </div>
+
+      <!-- Step 1: paste textarea (shown first) -->
+      <div class="bulk-step" id="bulk-step-1">
+        <div class="fp-group">
+          <label style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);">
+            Paste your location data
+          </label>
+          <textarea id="bulk-textarea"
+            placeholder="04-08 Balmoral Presbyterian Church 6413 Quince Rd Memphis 38119 04-09 Emmanuel United Methodist Church 2404 Kirby Rd Memphis 38119 ..."></textarea>
+          <div class="bulk-hint">
+            Works with rows that start with a precinct number like <strong>04-08</strong> or <strong>5</strong>.
+            Each location needs a name, street address, city, and zip. The app will flag anything it can't fully parse.
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <button class="btn-secondary" id="btn-bulk-cancel-1">Cancel</button>
+          <button class="btn-primary" id="btn-bulk-parse" style="flex:1;">Parse Locations &#8594;</button>
+        </div>
+      </div>
+
+      <!-- Step 2: review table (hidden until parsed) -->
+      <div id="bulk-step-2" style="display:none;">
+
+        <!-- Summary line -->
+        <div class="bulk-summary" id="bulk-summary"></div>
+
+        <!-- Editable review table -->
+        <div class="bulk-table-wrap">
+          <table class="bulk-table" id="bulk-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Location Name</th>
+                <th>Street Address</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="bulk-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Footer: save or go back -->
+        <div class="bulk-footer">
+          <div class="bulk-geocode-note">
+            &#8505; After saving, coordinates and districts will be looked up automatically
+            in the background (1 per second to respect geocoding limits).
+          </div>
+          <button class="btn-secondary" id="btn-bulk-back">&#8592; Back</button>
+          <button class="btn-primary" id="btn-bulk-save">Save All Locations</button>
+        </div>
+
+      </div><!-- end step 2 -->
+    </div><!-- end bulk-box -->
+  </div><!-- end bulk-overlay -->
 
   <!-- ===== EXPORT MODAL ===== -->
   <div class="export-modal" id="export-modal">
@@ -2465,6 +2737,370 @@
         alert("Connection failed (" + res.status + "): " + (data.message || "check the token and its permissions.")
           + "\n\nMake sure:\n- Token has Contents: Read and write\n- Repository is set to polling-locations only");
       }
+    }
+
+    // =========================================================================
+    // BULK IMPORT
+    // Parses a pasted block of location rows (each starting with a precinct
+    // number like "04-08") into individual entries, shows a review table,
+    // then saves all rows and geocodes them in the background.
+    // =========================================================================
+
+    // Open / close the modal
+    document.getElementById("btn-bulk-import").addEventListener("click", function() {
+      // Reset to step 1 each time it opens
+      document.getElementById("bulk-step-1").style.display = "";
+      document.getElementById("bulk-step-2").style.display = "none";
+      document.getElementById("bulk-textarea").value = "";
+      document.getElementById("bulk-overlay").classList.add("open");
+      setTimeout(function() { document.getElementById("bulk-textarea").focus(); }, 100);
+    });
+
+    function closeBulkModal() {
+      document.getElementById("bulk-overlay").classList.remove("open");
+    }
+    document.getElementById("btn-close-bulk").addEventListener("click", closeBulkModal);
+    document.getElementById("btn-bulk-cancel-1").addEventListener("click", closeBulkModal);
+    document.getElementById("btn-bulk-back").addEventListener("click", function() {
+      document.getElementById("bulk-step-2").style.display = "none";
+      document.getElementById("bulk-step-1").style.display = "";
+    });
+
+    // Close on backdrop click (not on the box itself)
+    document.getElementById("bulk-overlay").addEventListener("click", function(e) {
+      if (e.target === this) closeBulkModal();
+    });
+
+    // -------------------------------------------------------------------------
+    // parseBulkText(text)
+    // Splits a pasted block into individual location chunks using the precinct
+    // number as the delimiter, then parses each chunk with parseRowPaste().
+    // Returns an array of result objects.
+    // -------------------------------------------------------------------------
+    function parseBulkText(text) {
+      text = text.trim();
+
+      // Split before each precinct number pattern (digits-digits at start of entry)
+      // Using lookahead so the precinct stays with its location.
+      // Handles "04-08", "5-01", "4", etc. followed by whitespace then a letter.
+      var chunks = text.split(/\s+(?=\d{1,3}-\d{2,3}\s+[A-Za-z])/);
+
+      // If no precinct-dash-precinct pattern found, try splitting on a single leading number
+      if (chunks.length === 1) {
+        chunks = text.split(/\s+(?=\d+\s+[A-Za-z][a-z])/);
+      }
+
+      var results = [];
+      chunks.forEach(function(chunk, idx) {
+        chunk = chunk.trim();
+        if (!chunk) return;
+
+        var parsed = parseRowPaste(chunk);
+
+        var needsReview = false;
+        var reviewReasons = [];
+
+        if (!parsed) {
+          needsReview = true;
+          reviewReasons.push("Could not parse");
+          results.push({
+            rowIndex:     idx,
+            raw:          chunk,
+            name:         chunk,
+            address:      "",
+            city:         "",
+            zip:          "",
+            type:         "election_day",
+            needsReview:  true,
+            reviewReason: "Could not parse - edit manually"
+          });
+          return;
+        }
+
+        if (!parsed.address) reviewReasons.push("No address");
+        if (!parsed.city)    reviewReasons.push("No city");
+        if (!parsed.zip)     reviewReasons.push("No zip");
+        needsReview = reviewReasons.length > 0;
+
+        results.push({
+          rowIndex:     idx,
+          raw:          chunk,
+          name:         parsed.name    || "",
+          address:      parsed.address || "",
+          city:         parsed.city    || "",
+          zip:          parsed.zip     || "",
+          type:         "election_day", // default - user can change in review
+          needsReview:  needsReview,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results;
+    }
+
+    // -------------------------------------------------------------------------
+    // buildReviewTable(results)
+    // Renders the review table in step 2 with one editable row per location.
+    // Rows that need attention are highlighted amber.
+    // -------------------------------------------------------------------------
+    var bulkResults = []; // module-level so saveBulkLocations can read it
+
+    function buildReviewTable(results) {
+      bulkResults = results;
+
+      var okCount   = results.filter(function(r) { return !r.needsReview; }).length;
+      var warnCount = results.filter(function(r) { return  r.needsReview; }).length;
+
+      // Summary bar
+      var summaryHtml = '<strong>' + results.length + ' locations parsed</strong>';
+      if (okCount)   summaryHtml += ' &nbsp;<span class="bulk-ok-badge">&#10003; ' + okCount + ' ready</span>';
+      if (warnCount) summaryHtml += ' &nbsp;<span class="bulk-warn-badge">&#9888; ' + warnCount + ' need a quick fix</span>';
+      document.getElementById("bulk-summary").innerHTML = summaryHtml;
+
+      // Update save button label
+      document.getElementById("btn-bulk-save").textContent =
+        "Save " + results.length + " Location" + (results.length !== 1 ? "s" : "");
+
+      // Build table rows - each field is an editable input so the user can
+      // fix anything before saving without opening a separate form.
+      var rowsHtml = results.map(function(r, i) {
+        var rowClass = r.needsReview ? "bulk-row-warn" : "bulk-row-ok";
+        var statusHtml = r.needsReview
+          ? '<span class="bulk-status-warn">&#9888; ' + escHtml(r.reviewReason) + '</span>'
+          : '<span class="bulk-status-ok">&#10003; Ready</span>';
+
+        return '<tr class="' + rowClass + '" data-bulk-idx="' + i + '">' +
+          '<td style="color:var(--text-muted);font-size:0.7rem;white-space:nowrap;padding-left:12px;">' + (i + 1) + '</td>' +
+          '<td><input class="bulk-cell-input wide" data-field="name" value="' + escHtmlAttr(r.name) + '" /></td>' +
+          '<td><input class="bulk-cell-input wide" data-field="address" value="' + escHtmlAttr(r.address) + '" /></td>' +
+          '<td><input class="bulk-cell-input med" data-field="city" value="' + escHtmlAttr(r.city) + '" /></td>' +
+          '<td><input class="bulk-cell-input" style="min-width:62px;" data-field="zip" value="' + escHtmlAttr(r.zip) + '" /></td>' +
+          '<td><select class="bulk-cell-select" data-field="type">' +
+            '<option value="election_day"' + (r.type === "election_day" ? " selected" : "") + '>Election Day</option>' +
+            '<option value="early"'        + (r.type === "early"        ? " selected" : "") + '>Early Voting</option>' +
+            '<option value="both"'         + (r.type === "both"         ? " selected" : "") + '>Both</option>' +
+          '</select></td>' +
+          '<td>' + statusHtml + '</td>' +
+          '<td><button class="btn-bulk-del" data-bulk-idx="' + i + '" title="Remove this row">&#10005;</button></td>' +
+        '</tr>';
+      }).join("");
+
+      document.getElementById("bulk-tbody").innerHTML = rowsHtml;
+
+      // Sync input/select changes back into bulkResults so saveBulkLocations reads fresh values
+      document.getElementById("bulk-tbody").addEventListener("input", function(e) {
+        var row = e.target.closest("tr[data-bulk-idx]");
+        if (!row) return;
+        var idx   = parseInt(row.getAttribute("data-bulk-idx"), 10);
+        var field = e.target.getAttribute("data-field");
+        if (field && bulkResults[idx]) bulkResults[idx][field] = e.target.value.trim();
+        // Clear the warn highlight on a row once the user starts editing it
+        if (row.classList.contains("bulk-row-warn")) {
+          row.classList.remove("bulk-row-warn");
+          row.classList.add("bulk-row-ok");
+          var statusCell = row.querySelector(".bulk-status-warn");
+          if (statusCell) { statusCell.className = "bulk-status-ok"; statusCell.textContent = "&#10003; Ready"; statusCell.innerHTML = "&#10003; Edited"; }
+        }
+      });
+
+      // Delete row
+      document.getElementById("bulk-tbody").addEventListener("click", function(e) {
+        var btn = e.target.closest(".btn-bulk-del");
+        if (!btn) return;
+        var idx = parseInt(btn.getAttribute("data-bulk-idx"), 10);
+        bulkResults.splice(idx, 1);
+        buildReviewTable(bulkResults); // re-render with updated array
+      });
+    }
+
+    // Attribute-safe escaping for input values
+    function escHtmlAttr(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // -------------------------------------------------------------------------
+    // Parse button click - run parseBulkText and show review table
+    // -------------------------------------------------------------------------
+    document.getElementById("btn-bulk-parse").addEventListener("click", function() {
+      var text = document.getElementById("bulk-textarea").value.trim();
+      if (!text) { alert("Paste some location data first."); return; }
+
+      var results = parseBulkText(text);
+      if (!results.length) {
+        alert("Could not find any locations in the pasted text. Make sure each location starts with a precinct number (e.g. 04-08).");
+        return;
+      }
+
+      buildReviewTable(results);
+      document.getElementById("bulk-step-1").style.display = "none";
+      document.getElementById("bulk-step-2").style.display = "";
+    });
+
+    // -------------------------------------------------------------------------
+    // saveBulkLocations()
+    // Saves all rows in bulkResults to localStorage, then geocodes each one
+    // in the background at 1.2-second intervals (Nominatim rate limit).
+    // -------------------------------------------------------------------------
+    document.getElementById("btn-bulk-save").addEventListener("click", function() {
+      // Read current input values from the table (in case user typed but didn't blur)
+      document.querySelectorAll("#bulk-tbody tr[data-bulk-idx]").forEach(function(row) {
+        var idx = parseInt(row.getAttribute("data-bulk-idx"), 10);
+        if (!bulkResults[idx]) return;
+        row.querySelectorAll("[data-field]").forEach(function(el) {
+          bulkResults[idx][el.getAttribute("data-field")] = el.value.trim();
+        });
+      });
+
+      // Build location objects and save to localStorage
+      var saved = loadCustom();
+      var now   = Date.now();
+      var added = [];
+
+      bulkResults.forEach(function(r, i) {
+        if (!r.name) return; // skip completely empty rows
+
+        var id = "bulk_" + now + "_" + i;
+        var loc = {
+          id:                     id,
+          name:                   r.name,
+          address:                r.address,
+          city:                   r.city,
+          zip:                    r.zip,
+          county:                 "",
+          type:                   r.type || "election_day",
+          state_district:         "?",
+          state_senate_district:  "?",
+          congressional_district: "?",
+          hours:                  "",
+          notes:                  "",
+          lat:                    null,
+          lng:                    null
+        };
+        saved.push(loc);
+        added.push(loc);
+      });
+
+      localStorage.setItem("tn_polling_custom", JSON.stringify(saved));
+      locations = saved; // update in-memory array
+      renderTable();     // refresh the table
+
+      closeBulkModal();
+      showToast(added.length + " locations saved. Geocoding in the background - coordinates will update automatically.");
+
+      // Geocode each added location one by one with 1.2s delay
+      geocodeBulkQueue(added, 0);
+    });
+
+    // -------------------------------------------------------------------------
+    // geocodeBulkQueue(queue, index)
+    // Steps through the queue one at a time, geocoding each location and
+    // updating its entry in localStorage and in the live table.
+    // -------------------------------------------------------------------------
+    function geocodeBulkQueue(queue, index) {
+      if (index >= queue.length) {
+        showToast("Background geocoding complete - " + queue.length + " locations processed.");
+        renderTable();
+        return;
+      }
+
+      var loc = queue[index];
+      if (!loc.address) {
+        // No address to geocode - skip to next
+        geocodeBulkQueue(queue, index + 1);
+        return;
+      }
+
+      var query = loc.address + (loc.city ? ", " + loc.city : "") + ", TN" + (loc.zip ? " " + loc.zip : "");
+      var url   = "https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(query) +
+                  "&format=json&limit=1&countrycodes=us&addressdetails=1";
+
+      fetch(url, { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
+        .then(function(r) { return r.json(); })
+        .then(function(results) {
+          if (results && results[0]) {
+            var lat = parseFloat(results[0].lat);
+            var lng = parseFloat(results[0].lon);
+            loc.lat = lat;
+            loc.lng = lng;
+
+            // Auto-fill county from geocode if blank
+            if (!loc.county && results[0].address && results[0].address.county) {
+              loc.county = results[0].address.county.replace(/ County$/i, "").trim();
+            }
+
+            // Persist updated location to localStorage
+            updateLocationInStorage(loc.id, loc);
+
+            // Now look up districts from the coordinates
+            geocodeBulkDistricts(loc, lat, lng, function() {
+              // Move to next after both geocode + district steps finish
+              setTimeout(function() { geocodeBulkQueue(queue, index + 1); }, 1200);
+            });
+          } else {
+            // Geocode failed for this one - move on
+            setTimeout(function() { geocodeBulkQueue(queue, index + 1); }, 1200);
+          }
+        })
+        .catch(function() {
+          setTimeout(function() { geocodeBulkQueue(queue, index + 1); }, 1200);
+        });
+    }
+
+    // Look up house, senate, congressional districts for a geocoded lat/lng
+    function geocodeBulkDistricts(loc, lat, lng, done) {
+      var geo = lng + "," + lat;
+      Promise.all([
+        fetch("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2/query?geometry=" +
+          encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&where=STATE+%3D+%2747%27&outFields=SLDL&inSR=4326&returnGeometry=false&f=json")
+          .then(function(r) { return r.json(); }),
+        fetch("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/10/query?geometry=" +
+          encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&outFields=DISTRICT&inSR=4326&returnGeometry=false&f=json")
+          .then(function(r) { return r.json(); }),
+        fetch("https://services2.arcgis.com/63Ka7QbNqm4NLbeo/arcgis/rest/services/Redistricting_Address_Lookup/FeatureServer/8/query?geometry=" +
+          encodeURIComponent(geo) + "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&outFields=NEWSENATEDISTRICT&inSR=4326&returnGeometry=false&f=json")
+          .then(function(r) { return r.json(); })
+      ]).then(function(res) {
+        var h = res[0].features && res[0].features.length ? parseInt(res[0].features[0].attributes.SLDL, 10)              : null;
+        var c = res[1].features && res[1].features.length ? parseInt(res[1].features[0].attributes.DISTRICT, 10)          : null;
+        var s = res[2].features && res[2].features.length ? parseInt(res[2].features[0].attributes.NEWSENATEDISTRICT, 10) : null;
+        if (h) loc.state_district            = h;
+        if (c) loc.congressional_district    = c;
+        if (s) loc.state_senate_district     = s;
+        updateLocationInStorage(loc.id, loc);
+        if (done) done();
+      }).catch(function() {
+        if (done) done();
+      });
+    }
+
+    // Update a single location in localStorage by id
+    function updateLocationInStorage(id, updated) {
+      var saved = loadCustom();
+      var idx   = saved.findIndex(function(l) { return l.id === id; });
+      if (idx !== -1) saved[idx] = updated;
+      localStorage.setItem("tn_polling_custom", JSON.stringify(saved));
+      // Also update in-memory array
+      var memIdx = locations.findIndex(function(l) { return l.id === id; });
+      if (memIdx !== -1) locations[memIdx] = updated;
+    }
+
+    // Simple toast notification (reuses or creates a toast element)
+    function showToast(msg) {
+      var toast = document.getElementById("bulk-toast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "bulk-toast";
+        toast.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e3a5f;color:#fff;padding:10px 20px;border-radius:8px;font-size:0.82rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.5);max-width:90vw;text-align:center;transition:opacity 0.4s;";
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = "1";
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(function() { toast.style.opacity = "0"; }, 4000);
     }
 
   </script>
