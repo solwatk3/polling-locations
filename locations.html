@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="css/style.css" />
   <!-- Leaflet CSS - used by the location detail mini-map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- EmailJS - used to send backup confirmation emails -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>emailjs.init({ publicKey: 'dZZyEPJlPeAooJHfJ' });</script>
   <style>
     /* ===== FILTER BAR ===== */
     .filter-bar {
@@ -490,6 +493,47 @@
       .right-panel { width: 100%; }
       .filter-bar { gap: 6px; }
     }
+
+    /* ===== BACKUP BAR ===== */
+    .backup-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 20px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.74rem;
+      color: #64748b;
+      flex-wrap: wrap;
+    }
+    .backup-bar strong { font-weight: 600; color: #374151; }
+    #backup-status { color: #64748b; }
+    #backup-status.backup-overdue { color: #b45309; font-weight: 600; }
+    .backup-bar-actions { display: flex; gap: 6px; margin-left: auto; }
+    .btn-backup {
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 5px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #374151;
+      cursor: pointer;
+    }
+    .btn-backup:hover { background: #f1f5f9; }
+    .btn-backup.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+    .btn-backup.primary:hover { background: #1d4ed8; }
+    .setup-token-link {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .setup-token-link:hover { color: #64748b; }
   </style>
 </head>
 <body class="page-layout">
@@ -505,6 +549,17 @@
       <a href="directory.html" class="top-nav-link">&#128196; Directory</a>
     </nav>
   </header>
+
+  <!-- ===== BACKUP BAR ===== -->
+  <!-- Shows last backup date, and has Export/Import/setup buttons -->
+  <div class="backup-bar">
+    <span id="backup-status">Checking backup...</span>
+    <button class="setup-token-link" onclick="setupRestoreLinkModal()">Set up restore link</button>
+    <div class="backup-bar-actions">
+      <button class="btn-backup" onclick="openImportModal()">&#8593; Import</button>
+      <button class="btn-backup primary" id="btn-backup-export" onclick="exportPollingData()">&#8659; Backup</button>
+    </div>
+  </div>
 
   <div class="page-body">
 
@@ -1860,6 +1915,341 @@
       } else {
         noteEl.innerHTML = "&#128205; " + escHtml(address || "") + " &nbsp;&middot;&nbsp; <span style='opacity:0.6;'>Drag pin to adjust</span>";
         noteEl.style.color = "";
+      }
+    }
+
+    // =========================================================================
+    // BACKUP STATUS
+    // Shows how long it has been since the last backup in the backup bar.
+    // Turns orange if no backup exists or it is more than 14 days old.
+    // =========================================================================
+    function renderBackupStatus() {
+      var el = document.getElementById("backup-status");
+      if (!el) return;
+
+      var last = localStorage.getItem("tn_polling_last_backup");
+      if (!last) {
+        el.textContent = "No backup yet - tap Backup to save your data";
+        el.classList.add("backup-overdue");
+        return;
+      }
+
+      var days = Math.floor((Date.now() - new Date(last).getTime()) / 86400000);
+      el.textContent = days === 0
+        ? "Last backup: today"
+        : "Last backup: " + days + " day" + (days !== 1 ? "s" : "") + " ago";
+      el.classList.toggle("backup-overdue", days > 14);
+    }
+
+    // Call on page load so the status shows immediately
+    renderBackupStatus();
+
+    // =========================================================================
+    // EXPORT (BACKUP)
+    // Collects the three tn_polling_ keys from localStorage, downloads a JSON
+    // file (or uses the Web Share API on mobile), saves to GitHub repo so the
+    // restore link works, and sends a confirmation email via EmailJS.
+    // =========================================================================
+    async function exportPollingData() {
+      var btn = document.getElementById("btn-backup-export");
+      if (btn) { btn.disabled = true; btn.textContent = "Backing up..."; }
+
+      // Collect the keys that hold all custom data
+      var snapshot = {};
+      var keys = ["tn_polling_custom", "tn_polling_deleted", "tn_polling_overrides"];
+      keys.forEach(function(k) {
+        var raw = localStorage.getItem(k);
+        if (raw) {
+          try { snapshot[k] = JSON.parse(raw); }
+          catch(e) { snapshot[k] = raw; }
+        }
+      });
+
+      var dateStr  = new Date().toISOString().split("T")[0];
+      var locCount = (snapshot["tn_polling_custom"] || []).length;
+      var filename = "polling-locations-backup-" + dateStr + "-" + locCount + "locations.json";
+
+      // Record timestamp now
+      localStorage.setItem("tn_polling_last_backup", new Date().toISOString());
+      renderBackupStatus();
+
+      var json = JSON.stringify(snapshot, null, 2);
+      var blob = new Blob([json], { type: "application/json" });
+
+      // Mobile: native share sheet (iOS/Android)
+      var shareFile = new File([blob], filename, { type: "application/json" });
+      var shared = false;
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [shareFile] })) {
+        try {
+          await navigator.share({ title: "Polling Locations Backup " + dateStr, files: [shareFile] });
+          shared = true;
+        } catch(err) {
+          if (err.name !== "AbortError") console.warn("Share sheet failed, falling back to download:", err);
+        }
+      }
+
+      // Desktop: download the file
+      if (!shared) {
+        var url    = URL.createObjectURL(blob);
+        var dlLink = document.createElement("a");
+        dlLink.href     = url;
+        dlLink.download = filename;
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+        URL.revokeObjectURL(url);
+      }
+
+      // Save to GitHub repo so the tap-to-restore link works
+      var restoreUrl   = "";
+      var repoSaveError = "";
+      try {
+        restoreUrl = await saveBackupToRepo(snapshot, dateStr);
+      } catch(err) {
+        repoSaveError = err.message || "unknown error";
+        console.warn("Could not save backup to GitHub:", err);
+      }
+
+      // Build email content
+      var restoreLine = restoreUrl
+        ? "TAP TO RESTORE ON ANY DEVICE:\n" + restoreUrl + "\n\n"
+        : "To restore: open the Locations page, tap Import, and select the .json file.\n\n";
+
+      var subject = "Polling Locations Backup - " + dateStr + " - " + locCount + " locations";
+      var message = "Polling Locations Backup - " + dateStr + "\n"
+        + "Custom locations: " + locCount + "\n\n"
+        + restoreLine
+        + "Backed up: " + new Date().toLocaleString();
+
+      // Send via EmailJS (same service + template as ACC)
+      emailjs.send("service_9sv9w6p", "template_r0o15xz", {
+        to_email: "solwatk3@gmail.com",
+        subject:  subject,
+        message:  message,
+      })
+      .then(function() {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = restoreUrl ? "✓ Backed up!" : "✓ Backed up (no restore link)";
+        }
+        if (repoSaveError) {
+          setTimeout(function() {
+            alert("Backup email sent, but the restore link failed.\n\nError: " + repoSaveError
+              + "\n\nCheck your token in Set Up Restore Link, then try again.");
+          }, 500);
+        }
+        setTimeout(function() {
+          if (btn) { btn.disabled = false; btn.textContent = "虙 Backup"; }
+        }, 4000);
+      })
+      .catch(function(err) {
+        console.error("Backup email failed:", err);
+        if (btn) { btn.disabled = false; btn.textContent = "虙 Backup"; }
+        alert("Backup file downloaded, but the confirmation email failed. Your data is still saved in the file.");
+      });
+    }
+
+    // =========================================================================
+    // SAVE BACKUP TO GITHUB REPO
+    // Writes snapshot to backups/latest.json in the polling-locations repo.
+    // Requires a GitHub token stored in localStorage as tn_polling_gh_token.
+    // Returns the tap-to-restore URL, or throws if the token is missing/invalid.
+    // =========================================================================
+    async function saveBackupToRepo(snapshot, dateStr) {
+      var token = localStorage.getItem("tn_polling_gh_token") || "";
+      if (!token) return null; // no token - silently skip, email will have file instructions
+
+      var owner  = "solwatk3";
+      var repo   = "polling-locations";
+      var path   = "backups/latest.json";
+      var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path;
+      var headers = {
+        "Authorization": "Bearer " + token,
+        "Content-Type":  "application/json",
+        "Accept":        "application/vnd.github.v3+json",
+      };
+
+      // Encode JSON as base64 (required by GitHub Contents API)
+      var content = btoa(unescape(encodeURIComponent(JSON.stringify(snapshot, null, 2))));
+
+      // Check if the file exists already - we need its SHA to update it
+      var sha = null;
+      try {
+        var getRes = await fetch(apiUrl, { headers: headers });
+        if (getRes.ok) {
+          var fileData = await getRes.json();
+          sha = fileData.sha;
+        }
+      } catch(e) { /* network error on GET - proceed without SHA */ }
+
+      var putBody = { message: "Polling locations backup " + dateStr, content: content };
+      if (sha) putBody.sha = sha;
+
+      var putRes = await fetch(apiUrl, {
+        method:  "PUT",
+        headers: headers,
+        body:    JSON.stringify(putBody),
+      });
+
+      if (!putRes.ok) {
+        var errData = {};
+        try { errData = await putRes.json(); } catch(e) {}
+        throw new Error("GitHub API " + putRes.status + ": " + (errData.message || "unknown error"));
+      }
+
+      // Always the same short URL - points to latest backup in the repo
+      return "https://solwatk3.github.io/polling-locations/?restore_raw=1";
+    }
+
+    // =========================================================================
+    // IMPORT MODAL
+    // File-picker restore. User selects a .json backup downloaded during export.
+    // =========================================================================
+    function openImportModal() {
+      // Build a simple modal inline (reuse the existing modal system if available,
+      // otherwise fall back to a custom overlay)
+      var existing = document.getElementById("import-modal-overlay");
+      if (existing) { existing.style.display = "flex"; return; }
+
+      var overlay = document.createElement("div");
+      overlay.id = "import-modal-overlay";
+      overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;";
+
+      overlay.innerHTML =
+        '<div style="background:#fff;border-radius:10px;padding:24px;width:min(420px,90vw);font-family:system-ui,sans-serif;box-shadow:0 8px 40px rgba(0,0,0,0.25);">' +
+          '<h3 style="margin:0 0 12px;font-size:1rem;color:#1e3a5f;">Restore from Backup</h3>' +
+          '<p style="font-size:0.82rem;color:#64748b;margin:0 0 16px;line-height:1.5;">' +
+            'Select a .json backup file to restore your custom locations, deletions, and pin adjustments. ' +
+            'This will overwrite your current data.' +
+          '</p>' +
+          '<input type="file" id="import-file-input" accept=".json,application/json" ' +
+            'style="font-size:0.82rem;width:100%;margin-bottom:16px;" ' +
+            'onchange="importPollingData(event)" />' +
+          '<p style="font-size:0.75rem;color:#94a3b8;margin:0 0 16px;">' +
+            'Don\'t have the file? Tap Backup on another device, then email or AirDrop the .json to this device.' +
+          '</p>' +
+          '<div style="text-align:right;">' +
+            '<button onclick="document.getElementById(\'import-modal-overlay\').style.display=\'none\';" ' +
+              'style="font-size:0.82rem;padding:7px 16px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;">' +
+              'Cancel' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+
+      overlay.addEventListener("click", function(e) {
+        if (e.target === overlay) overlay.style.display = "none";
+      });
+
+      document.body.appendChild(overlay);
+    }
+
+    // =========================================================================
+    // IMPORT - reads the selected .json file and restores to localStorage
+    // =========================================================================
+    function importPollingData(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var snapshot;
+        try { snapshot = JSON.parse(e.target.result); }
+        catch(err) { alert("Could not read backup file - it may be corrupted."); return; }
+
+        var locCount = Array.isArray(snapshot["tn_polling_custom"]) ? snapshot["tn_polling_custom"].length : "?";
+
+        if (!confirm("Restore " + locCount + " custom locations from this backup?\n\nThis will overwrite your current data.")) return;
+
+        // Write each key back to localStorage
+        var keys = ["tn_polling_custom", "tn_polling_deleted", "tn_polling_overrides"];
+        keys.forEach(function(k) {
+          if (snapshot[k] !== undefined) {
+            localStorage.setItem(k, JSON.stringify(snapshot[k]));
+          }
+        });
+
+        // Close modal and reload so the table reflects the restored data
+        var overlay = document.getElementById("import-modal-overlay");
+        if (overlay) overlay.style.display = "none";
+        alert("Restored " + locCount + " locations. The page will now reload.");
+        window.location.reload();
+      };
+      reader.readAsText(file);
+    }
+
+    // =========================================================================
+    // SETUP RESTORE LINK MODAL
+    // Lets Sol paste a GitHub personal access token so the backup button can
+    // write to the repo and include a tap-to-restore link in the email.
+    // The token needs Contents: Read and write on the polling-locations repo only.
+    // =========================================================================
+    function setupRestoreLinkModal() {
+      var existing = document.getElementById("token-modal-overlay");
+      if (existing) { existing.style.display = "flex"; return; }
+
+      var currentToken = localStorage.getItem("tn_polling_gh_token") || "";
+
+      var overlay = document.createElement("div");
+      overlay.id = "token-modal-overlay";
+      overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;";
+
+      overlay.innerHTML =
+        '<div style="background:#fff;border-radius:10px;padding:24px;width:min(480px,90vw);font-family:system-ui,sans-serif;box-shadow:0 8px 40px rgba(0,0,0,0.25);">' +
+          '<h3 style="margin:0 0 10px;font-size:1rem;color:#1e3a5f;">Set Up Restore Link</h3>' +
+          '<p style="font-size:0.81rem;color:#64748b;margin:0 0 14px;line-height:1.5;">' +
+            'Paste a GitHub personal access token with <strong>Contents: Read and write</strong> ' +
+            'permission on the <code>polling-locations</code> repo. ' +
+            'Backup emails will then include a one-tap restore link that works on any device.' +
+          '</p>' +
+          '<input type="password" id="token-input" value="' + (currentToken ? "****stored****" : "") + '" ' +
+            'placeholder="github_pat_..." ' +
+            'style="width:100%;font-size:0.82rem;padding:8px 10px;border:1px solid #cbd5e1;border-radius:6px;margin-bottom:10px;font-family:monospace;" ' +
+            'onfocus="if(this.value===\'****stored****\')this.value=\'\';" />' +
+          '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;">' +
+            (currentToken ? '<button onclick="removeToken()" style="font-size:0.8rem;padding:6px 12px;border:1px solid #fca5a5;border-radius:6px;background:#fff;color:#dc2626;cursor:pointer;">Remove token</button>' : '') +
+            '<button onclick="testAndSaveToken()" style="font-size:0.8rem;padding:6px 12px;border:1px solid #2563eb;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer;">Test &amp; Save</button>' +
+            '<button onclick="document.getElementById(\'token-modal-overlay\').style.display=\'none\';" style="font-size:0.8rem;padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>' +
+          '</div>' +
+        '</div>';
+
+      overlay.addEventListener("click", function(e) {
+        if (e.target === overlay) overlay.style.display = "none";
+      });
+
+      document.body.appendChild(overlay);
+    }
+
+    function removeToken() {
+      if (!confirm("Remove the stored GitHub token? Future backups won't include a restore link.")) return;
+      localStorage.removeItem("tn_polling_gh_token");
+      var overlay = document.getElementById("token-modal-overlay");
+      if (overlay) overlay.remove();
+      alert("Token removed.");
+    }
+
+    async function testAndSaveToken() {
+      var input = document.getElementById("token-input");
+      var token = (input ? input.value : "").trim();
+      if (!token || token === "****stored****") { alert("Paste a token first."); return; }
+
+      var res;
+      try {
+        res = await fetch(
+          "https://api.github.com/repos/solwatk3/polling-locations/contents/",
+          { headers: { "Authorization": "Bearer " + token, "Accept": "application/vnd.github.v3+json" } }
+        );
+      } catch(e) { alert("Network error while testing: " + e.message); return; }
+
+      if (res.ok) {
+        localStorage.setItem("tn_polling_gh_token", token);
+        var overlay = document.getElementById("token-modal-overlay");
+        if (overlay) overlay.remove();
+        alert("Token saved! Your next backup will include a tap-to-restore link.");
+      } else {
+        var data = {};
+        try { data = await res.json(); } catch(e) {}
+        alert("Connection failed (" + res.status + "): " + (data.message || "check the token and its permissions.")
+          + "\n\nMake sure:\n- Token has Contents: Read and write\n- Repository is set to polling-locations only");
       }
     }
 

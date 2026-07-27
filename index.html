@@ -763,6 +763,45 @@
     document.getElementById("close-sidebar").addEventListener("click", closeSidebar);
     document.getElementById("sidebar-overlay").addEventListener("click", closeSidebar);
 
+    // =========================================================================
+    // TAP-TO-RESTORE
+    // When the backup email restore link is tapped, it opens this page with
+    // ?restore_raw=1 in the URL. We fetch the latest backup from the repo and
+    // write it back into localStorage so all custom data is restored.
+    // =========================================================================
+    (async function checkRestoreParam() {
+      var params = new URLSearchParams(window.location.search);
+      if (!params.get("restore_raw")) return;
+
+      // Clean the URL immediately so a refresh doesn't re-trigger
+      history.replaceState(null, "", window.location.pathname);
+
+      var rawUrl = "https://raw.githubusercontent.com/solwatk3/polling-locations/main/backups/latest.json";
+      var snapshot;
+      try {
+        var res = await fetch(rawUrl);
+        if (!res.ok) throw new Error("fetch failed: " + res.status);
+        snapshot = await res.json();
+      } catch(e) {
+        alert("Could not load the backup file.\n\nMake sure you have exported at least once with the restore link set up.");
+        return;
+      }
+
+      var locCount = Array.isArray(snapshot["tn_polling_custom"]) ? snapshot["tn_polling_custom"].length : "?";
+      if (!confirm("Restore " + locCount + " custom locations from your latest backup?\n\nThis will overwrite any data currently in this browser.")) return;
+
+      // Write each key back to localStorage
+      var keys = ["tn_polling_custom", "tn_polling_deleted", "tn_polling_overrides"];
+      keys.forEach(function(k) {
+        if (snapshot[k] !== undefined) {
+          localStorage.setItem(k, JSON.stringify(snapshot[k]));
+        }
+      });
+
+      alert("Restored " + locCount + " locations. The page will reload.");
+      window.location.reload();
+    })();
+
   </script>
 </body>
 </html>
