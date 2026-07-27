@@ -2255,25 +2255,34 @@
       })
       .then(function(results) {
         if (!results || !results.length) {
-          showStatus("geocode-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
-          // Highlight the coordinate inputs and scroll to them so the user can see where to type
-          var latInput = document.getElementById("f-lat");
-          var lngInput = document.getElementById("f-lng");
-          latInput.style.borderColor = "#f59e0b";
-          lngInput.style.borderColor = "#f59e0b";
-          setTimeout(function() {
-            latInput.scrollIntoView({ behavior: "smooth", block: "center" });
-            latInput.focus();
-          }, 200);
-          // Clear the highlight once the user starts typing
-          function clearHighlight() {
-            latInput.style.borderColor = "";
-            lngInput.style.borderColor = "";
-            latInput.removeEventListener("input", clearHighlight);
-            lngInput.removeEventListener("input", clearHighlight);
+          // If the location already has coordinates (e.g. pin exists on the map),
+          // still run district detection from those coords even though address lookup failed.
+          var fallbackLat = parseFloat(document.getElementById("f-lat").value);
+          var fallbackLng = parseFloat(document.getElementById("f-lng").value);
+          if (!isNaN(fallbackLat) && !isNaN(fallbackLng)) {
+            showStatus("geocode-status", "Address not in map data - detecting districts from existing pin", "#f59e0b", "rgba(120,53,15,0.3)");
+            lookupDistricts(fallbackLat, fallbackLng);
+          } else {
+            showStatus("geocode-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+            // Highlight the coordinate inputs and scroll to them so the user can see where to type
+            var latInput = document.getElementById("f-lat");
+            var lngInput = document.getElementById("f-lng");
+            latInput.style.borderColor = "#f59e0b";
+            lngInput.style.borderColor = "#f59e0b";
+            setTimeout(function() {
+              latInput.scrollIntoView({ behavior: "smooth", block: "center" });
+              latInput.focus();
+            }, 200);
+            // Clear the highlight once the user starts typing
+            function clearHighlight() {
+              latInput.style.borderColor = "";
+              lngInput.style.borderColor = "";
+              latInput.removeEventListener("input", clearHighlight);
+              lngInput.removeEventListener("input", clearHighlight);
+            }
+            latInput.addEventListener("input", clearHighlight);
+            lngInput.addEventListener("input", clearHighlight);
           }
-          latInput.addEventListener("input", clearHighlight);
-          lngInput.addEventListener("input", clearHighlight);
           return;
         }
         var isCityOnly = !!results[0]._cityOnly;

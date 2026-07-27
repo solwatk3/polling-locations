@@ -1634,7 +1634,16 @@
       .then(function(r) { return r.json(); })
       .then(function(results) {
         if (!results || !results.length) {
-          showStatus("ep-geocode-status", "Not found - check address or enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          // If the location already has coordinates, still run district detection
+          // from those coords even though the address lookup failed.
+          var fallbackLat = parseFloat(document.getElementById("ep-lat").value);
+          var fallbackLng = parseFloat(document.getElementById("ep-lng").value);
+          if (!isNaN(fallbackLat) && !isNaN(fallbackLng)) {
+            showStatus("ep-geocode-status", "Address not in map data - detecting districts from existing pin", "#f59e0b", "rgba(120,53,15,0.3)");
+            epLookupDistricts(fallbackLat, fallbackLng);
+          } else {
+            showStatus("ep-geocode-status", "Not found - check address or enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+          }
           return;
         }
         var gLat = parseFloat(results[0].lat);
