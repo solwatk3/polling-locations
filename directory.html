@@ -473,6 +473,98 @@
       display: none;
     }
     @media (max-width: 640px) { .right-panel { width: 100%; } }
+
+    /* ===== TYPE RADIO HIGHLIGHT COLORS (edit panel) ===== */
+    .type-radio.sel-early    { border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.1); }
+    .type-radio.sel-election { border-color: var(--warning); color: var(--warning); background: rgba(245,158,11,0.1); }
+    .type-radio.sel-both     { border-color: #818cf8; color: #818cf8; background: rgba(129,140,248,0.1); }
+
+    /* ===== SCHEDULE BUILDER (edit panel) ===== */
+    .schedule-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto auto auto;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .f-sched-days {
+      font-size: 0.74rem;
+      padding: 5px 7px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      width: 100%;
+      font-style: italic;
+    }
+    /* Period label dropdown - hidden by default, shown when type is Both */
+    .f-sched-label {
+      display: none;
+      font-size: 0.72rem;
+      padding: 5px 5px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+      max-width: 130px;
+    }
+    .period-col-header { display: none; }
+    .show-period .f-sched-label    { display: block; }
+    .show-period .period-col-header { display: block; }
+    .schedule-row input[type="text"] {
+      font-size: 0.78rem;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+      width: 100%;
+    }
+    .schedule-row select {
+      font-size: 0.76rem;
+      padding: 5px 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--input-bg, var(--primary));
+      color: var(--text);
+    }
+    .schedule-row .sched-sep {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .btn-remove-row {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.72rem;
+      padding: 3px 7px;
+      line-height: 1;
+    }
+    .btn-remove-row:hover { border-color: #f87171; color: #f87171; }
+    .btn-add-schedule {
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: none;
+      border: 1px dashed var(--accent);
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+      margin-top: 2px;
+      width: 100%;
+    }
+    .btn-add-schedule:hover { background: rgba(139,92,246,0.08); }
+    .schedule-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto auto auto;
+      gap: 6px;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+      padding: 0 1px;
+    }
   </style>
 </head>
 <body class="page-layout">
@@ -630,9 +722,9 @@
         <input type="text" id="ep-address" placeholder="404 E Cherry St" />
         <div id="ep-geocode-status" class="inline-status"></div>
       </div>
-      <div class="fp-group">
-        <label>City</label>
-        <input type="text" id="ep-city" placeholder="Brownsville" />
+      <div class="fp-grid-2">
+        <div class="fp-group"><label>City</label><input type="text" id="ep-city" placeholder="Brownsville" /></div>
+        <div class="fp-group"><label>Zip</label><input type="text" id="ep-zip" placeholder="38012" maxlength="10" /></div>
       </div>
       <div class="fp-group">
         <label>County</label>
@@ -683,6 +775,10 @@
             <input type="radio" name="ep-loc-type" value="election_day" checked />
             &#11044; Election Day
           </label>
+          <label class="type-radio" id="ep-radio-both">
+            <input type="radio" name="ep-loc-type" value="both" />
+            &#11044; Both
+          </label>
         </div>
       </div>
       <div class="fp-group">
@@ -694,11 +790,37 @@
         </div>
         <div id="ep-district-status" class="inline-status"></div>
       </div>
-      <div class="fp-group">
+      <!-- Voting Hours - full schedule builder -->
+      <div class="fp-group" id="ep-sched-section">
         <label>Voting Hours</label>
-        <div class="fp-grid-2">
-          <div class="fp-group"><label>Opens</label><select id="ep-hours-open"></select></div>
-          <div class="fp-group"><label>Closes</label><select id="ep-hours-close"></select></div>
+        <div class="schedule-header">
+          <span class="period-col-header">Period</span>
+          <span style="color:var(--text-muted);font-style:italic;">Days (auto-filled)</span>
+          <span>Opens</span>
+          <span></span>
+          <span>Closes</span>
+          <span></span>
+        </div>
+        <!-- Quick-fill: paste raw schedule text and auto-parse into rows -->
+        <div style="margin-bottom:10px;padding:8px 10px;background:rgba(139,92,246,0.07);border:1px dashed var(--border);border-radius:var(--radius);">
+          <div style="font-size:0.7rem;font-weight:700;color:var(--accent);margin-bottom:5px;">&#128203; Paste schedule text to auto-fill</div>
+          <textarea id="ep-sched-paste-input"
+            placeholder="Paste either format:&#10;&#10;Single-line: Fri - July 17,24,31 (8am-5:30pm); Sat - July 18 (8am-4:30pm)&#10;&#10;Multi-line:&#10;Monday thru Friday (11:00 am - 7:00 pm)&#10;Saturday, July 18th &amp; 25th (10:00 am - 4:00 pm)"
+            style="width:100%;height:56px;font-size:0.75rem;padding:6px 8px;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);resize:vertical;font-family:inherit;"></textarea>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:5px;">
+            <button type="button" onclick="epParseSchedulePaste()"
+              style="font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
+              Parse &amp; fill
+            </button>
+            <span id="ep-sched-paste-msg" style="font-size:0.72rem;color:var(--success);"></span>
+          </div>
+        </div>
+        <div id="ep-schedule-rows">
+          <!-- Rows injected by JS -->
+        </div>
+        <button type="button" class="btn-add-schedule" onclick="epAddScheduleRow()">+ Add another day / time</button>
+        <div style="font-size:0.68rem;color:var(--text-muted);margin-top:4px;">
+          Add one row per time block. Use the Period label when a location has both early voting and election day hours.
         </div>
       </div>
       <div class="fp-group">
@@ -1188,47 +1310,13 @@
     // =========================================================================
     var editingId = null;
 
-    // Build time dropdown options (6am - 9pm in 30-min steps)
-    (function buildTimeOptions() {
-      var opens  = document.getElementById("ep-hours-open");
-      var closes = document.getElementById("ep-hours-close");
-      for (var h = 6; h <= 21; h++) {
-        for (var m = 0; m < 60; m += 30) {
-          var period = h < 12 ? "am" : "pm";
-          var hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
-          var label  = hour12 + ":" + (m === 0 ? "00" : "30") + period;
-          var optO = document.createElement("option"); optO.value = label; optO.textContent = label; opens.appendChild(optO);
-          var optC = document.createElement("option"); optC.value = label; optC.textContent = label; closes.appendChild(optC);
-        }
-      }
-      opens.value  = "8:00am";
-      closes.value = "7:00pm";
-    })();
-
-    function getHoursString() {
-      return document.getElementById("ep-hours-open").value + " - " + document.getElementById("ep-hours-close").value;
-    }
-
-    function setHoursFromString(str) {
-      if (!str) return;
-      var parts = str.split(/\s*-\s*/);
-      if (parts.length !== 2) return;
-      function norm(t) {
-        t = t.trim().toLowerCase().replace(/\s/g, "");
-        if (!t.includes(":")) t = t.replace(/(am|pm)/, ":00$1");
-        return t;
-      }
-      var opens  = document.getElementById("ep-hours-open");
-      var closes = document.getElementById("ep-hours-close");
-      var ov = norm(parts[0]); var cv = norm(parts[1]);
-      if (Array.from(opens.options).some(function(o) { return o.value === ov; }))   opens.value  = ov;
-      if (Array.from(closes.options).some(function(o) { return o.value === cv; }))  closes.value = cv;
-    }
-
     function updateTypeStyles() {
       var val = document.querySelector('input[name="ep-loc-type"]:checked').value;
       document.getElementById("ep-radio-early").className    = "type-radio" + (val === "early"        ? " sel-early"    : "");
       document.getElementById("ep-radio-election").className = "type-radio" + (val === "election_day" ? " sel-election" : "");
+      document.getElementById("ep-radio-both").className     = "type-radio" + (val === "both"         ? " sel-both"     : "");
+      // Show the Period column in schedule rows only when type is Both
+      document.getElementById("ep-sched-section").classList.toggle("show-period", val === "both");
     }
     document.querySelectorAll('input[name="ep-loc-type"]').forEach(function(r) {
       r.addEventListener("change", updateTypeStyles);
@@ -1249,6 +1337,7 @@
       document.getElementById("ep-name").value    = loc.name    || "";
       document.getElementById("ep-address").value = loc.address || "";
       document.getElementById("ep-city").value    = loc.city    || "";
+      document.getElementById("ep-zip").value     = loc.zip     || "";
       document.getElementById("ep-county").value  = loc.county  || "";
       document.getElementById("ep-notes").value   = loc.notes   || "";
       document.getElementById("ep-house").value   = loc.state_district            || "";
@@ -1256,12 +1345,12 @@
       document.getElementById("ep-congress").value= loc.congressional_district    || "";
       document.getElementById("ep-lat").value     = loc.lat || "";
       document.getElementById("ep-lng").value     = loc.lng || "";
-      document.getElementById("ep-hours-open").value  = "8:00am";
-      document.getElementById("ep-hours-close").value = "7:00pm";
-      if (loc.hours) setHoursFromString(loc.hours);
+      // Populate the schedule builder with existing schedule or hours string
+      epSetScheduleData(loc);
       var typeVal = loc.type || "election_day";
       document.querySelector('input[name="ep-loc-type"][value="early"]').checked        = typeVal === "early";
       document.querySelector('input[name="ep-loc-type"][value="election_day"]').checked = typeVal === "election_day";
+      document.querySelector('input[name="ep-loc-type"][value="both"]').checked         = typeVal === "both";
       updateTypeStyles();
       hideStatus("ep-geocode-status");
       hideStatus("ep-district-status");
@@ -1288,17 +1377,20 @@
       if (!name) { alert("Location name is required."); return; }
       var lat = parseFloat(document.getElementById("ep-lat").value);
       var lng = parseFloat(document.getElementById("ep-lng").value);
+      var schedData = epGetScheduleData();
       var updated = {
         id:                     editingId,
         name:                   name,
         address:                document.getElementById("ep-address").value.trim(),
         city:                   document.getElementById("ep-city").value.trim(),
+        zip:                    document.getElementById("ep-zip").value.trim(),
         county:                 document.getElementById("ep-county").value,
         type:                   document.querySelector('input[name="ep-loc-type"]:checked').value,
         state_district:         document.getElementById("ep-house").value    || "?",
         state_senate_district:  document.getElementById("ep-senate").value   || "?",
         congressional_district: document.getElementById("ep-congress").value || "?",
-        hours:                  getHoursString(),
+        hours:                  schedData.hours,
+        schedule:               schedData.schedule,
         notes:                  document.getElementById("ep-notes").value.trim(),
         lat:                    isNaN(lat) ? 35.5  : lat,
         lng:                    isNaN(lng) ? -86.5 : lng
@@ -1334,6 +1426,184 @@
       if (currentDetailId) openEditPanel(currentDetailId);
     });
 
+    // =========================================================================
+    // SCHEDULE BUILDER FUNCTIONS (edit panel)
+    // Mirrors the schedule builder in locations.html.
+    // Uses "ep-" prefixed IDs to match this panel's naming convention.
+    // =========================================================================
+    function epBuildTimeLabels() {
+      var labels = ["Closed"];
+      for (var h = 6; h <= 21; h++) {
+        for (var m = 0; m < 60; m += 30) {
+          var period = h < 12 ? "am" : "pm";
+          var hour12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+          var mins   = m === 0 ? "00" : "30";
+          labels.push(hour12 + ":" + mins + period);
+        }
+      }
+      return labels;
+    }
+    var EP_TIME_LABELS = epBuildTimeLabels();
+
+    function epMakeTimeSelect(cls, defaultVal) {
+      var sel = document.createElement("select");
+      sel.className = cls;
+      EP_TIME_LABELS.forEach(function(t) {
+        var opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        if (t === defaultVal) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      return sel;
+    }
+
+    var epScheduleRowCount = 0;
+
+    // Adds one editable row to the edit-panel schedule builder
+    function epAddScheduleRow(days, open, close, label) {
+      var idx  = epScheduleRowCount++;
+      var row  = document.createElement("div");
+      row.className = "schedule-row";
+      row.id        = "ep-srow-" + idx;
+
+      // Period label dropdown - only visible when type is Both
+      var labelSel = document.createElement("select");
+      labelSel.className = "f-sched-label";
+      [["", "- Period -"], ["Early Voting", "Early Voting"], ["Election Day", "Election Day"]].forEach(function(opt) {
+        var o = document.createElement("option");
+        o.value       = opt[0];
+        o.textContent = opt[1];
+        if ((label || "") === opt[0]) o.selected = true;
+        labelSel.appendChild(o);
+      });
+
+      var daysInput = document.createElement("input");
+      daysInput.type        = "text";
+      daysInput.className   = "f-sched-days";
+      daysInput.placeholder = "auto-filled from paste";
+      daysInput.value       = days || "";
+      daysInput.title       = days || "";
+      daysInput.addEventListener("input", function() { daysInput.title = daysInput.value; });
+
+      var openSel  = epMakeTimeSelect("f-sched-open",  open  || "8:00am");
+      var sep      = document.createElement("span");
+      sep.className   = "sched-sep";
+      sep.textContent = "to";
+      var closeSel = epMakeTimeSelect("f-sched-close", close || "7:00pm");
+
+      var removeBtn = document.createElement("button");
+      removeBtn.type        = "button";
+      removeBtn.className   = "btn-remove-row";
+      removeBtn.textContent = "x";
+      removeBtn.title       = "Remove this row";
+      (function(rowId) {
+        removeBtn.addEventListener("click", function() {
+          var el = document.getElementById("ep-srow-" + rowId);
+          if (el) el.remove();
+        });
+      })(idx);
+
+      row.appendChild(labelSel);
+      row.appendChild(daysInput);
+      row.appendChild(openSel);
+      row.appendChild(sep);
+      row.appendChild(closeSel);
+      row.appendChild(removeBtn);
+
+      document.getElementById("ep-schedule-rows").appendChild(row);
+    }
+
+    // Reads all schedule rows and returns { hours, schedule }
+    function epGetScheduleData() {
+      var rows = document.querySelectorAll("#ep-schedule-rows .schedule-row");
+      var schedule = [];
+      rows.forEach(function(row) {
+        var label = row.querySelector(".f-sched-label").value;
+        var days  = row.querySelector(".f-sched-days").value.trim();
+        var open  = row.querySelector(".f-sched-open").value;
+        var close = row.querySelector(".f-sched-close").value;
+        var entry = { open: open, close: close };
+        if (label) entry.label = label;
+        if (days)  entry.days  = days;
+        schedule.push(entry);
+      });
+      if (!schedule.length) return { hours: "", schedule: [] };
+      var first = schedule[0];
+      var hours = first.open === "Closed" ? "Closed" : first.open + " - " + first.close;
+      return { hours: hours, schedule: schedule };
+    }
+
+    // Populates the schedule builder from a loc object's schedule or hours fields
+    function epSetScheduleData(loc) {
+      document.getElementById("ep-schedule-rows").innerHTML = "";
+      epScheduleRowCount = 0;
+      if (loc && loc.schedule && loc.schedule.length) {
+        loc.schedule.forEach(function(row) {
+          epAddScheduleRow(row.days || "", row.open, row.close, row.label || "");
+        });
+      } else if (loc && loc.hours) {
+        var parts = loc.hours.split(/\s*-\s*/);
+        var open  = parts[0] ? parts[0].trim() : "8:00am";
+        var close = parts[1] ? parts[1].trim() : "7:00pm";
+        epAddScheduleRow("", open, close);
+      } else {
+        epAddScheduleRow("", "8:00am", "7:00pm");
+      }
+    }
+
+    // Paste parser for the edit-panel schedule builder
+    function epNormalizeTime(t) {
+      t = t.trim();
+      var match = t.match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
+      if (!match) return t;
+      var h  = match[1];
+      var m  = match[2] ? match[2] : "00";
+      var ap = match[3].toLowerCase();
+      return h + ":" + m + ap;
+    }
+
+    function epParseSchedulePaste() {
+      var raw = (document.getElementById("ep-sched-paste-input").value || "").trim();
+      if (!raw) return;
+      var segments = raw.split(/\r\n|\r|\n|;/).map(function(s) { return s.trim(); }).filter(Boolean);
+      var parsed = [];
+      var rangeHeader = "";
+      segments.forEach(function(seg) {
+        var hoursMatch = seg.match(/\(([^)]+)\)\s*$/);
+        if (!hoursMatch) { rangeHeader = seg; return; }
+        var hoursStr  = hoursMatch[1].trim();
+        var rawLabel  = seg.replace(/\s*\([^)]+\)\s*$/, "").trim();
+        var dayLabel  = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
+        var timeMatch = hoursStr.match(/^(.+?)\s*-\s*(.+)$/);
+        var open = "", close = "";
+        if (timeMatch) {
+          open  = epNormalizeTime(timeMatch[1]);
+          close = epNormalizeTime(timeMatch[2]);
+        } else {
+          open = epNormalizeTime(hoursStr);
+        }
+        parsed.push({ days: dayLabel, open: open, close: close });
+      });
+      var msg = document.getElementById("ep-sched-paste-msg");
+      if (!parsed.length) {
+        msg.style.color = "var(--danger)";
+        msg.textContent = "Could not parse - check format and try again";
+        return;
+      }
+      document.getElementById("ep-schedule-rows").innerHTML = "";
+      epScheduleRowCount = 0;
+      parsed.forEach(function(row) { epAddScheduleRow(row.days, row.open, row.close); });
+      document.getElementById("ep-sched-paste-input").value = "";
+      msg.style.color = "var(--success)";
+      msg.textContent = parsed.length + " row" + (parsed.length > 1 ? "s" : "") + " added";
+      setTimeout(function() { msg.textContent = ""; }, 3000);
+    }
+
+    // Initialize with one default row so the builder isn't empty on first open
+    epAddScheduleRow("", "8:00am", "7:00pm");
+
+    // =========================================================================
     // Geocoding for the edit panel (simplified - same logic as locations.html)
     var epGeoTimer = null;
     function epScheduleGeocode() {
@@ -1355,11 +1625,17 @@
           showStatus("ep-geocode-status", "Not found - check address or enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
           return;
         }
-        var lat = parseFloat(results[0].lat);
-        var lng = parseFloat(results[0].lon);
-        document.getElementById("ep-lat").value = lat.toFixed(6);
-        document.getElementById("ep-lng").value = lng.toFixed(6);
-        // Auto-fill county from geocode response
+        var gLat = parseFloat(results[0].lat);
+        var gLng = parseFloat(results[0].lon);
+        // Only overwrite coordinates if they are not already set (preserve manually placed pins)
+        var existingLat = parseFloat(document.getElementById("ep-lat").value);
+        var existingLng = parseFloat(document.getElementById("ep-lng").value);
+        var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+        if (!hasExistingCoords) {
+          document.getElementById("ep-lat").value = gLat.toFixed(6);
+          document.getElementById("ep-lng").value = gLng.toFixed(6);
+        }
+        // Auto-fill county from geocode response (only if county not already set)
         var countyDropdown = document.getElementById("ep-county");
         if (!countyDropdown.value && results[0].address && results[0].address.county) {
           var rawCounty = results[0].address.county.replace(/ County$/i, "").trim();
@@ -1368,8 +1644,15 @@
           });
           if (matched) countyDropdown.value = matched.value;
         }
-        epLookupDistricts(lat, lng);
-        showStatus("ep-geocode-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+        // Use existing coords for district detection if present, otherwise use geocoded coords
+        var detectLat = hasExistingCoords ? existingLat : gLat;
+        var detectLng = hasExistingCoords ? existingLng : gLng;
+        epLookupDistricts(detectLat, detectLng);
+        if (hasExistingCoords) {
+          showStatus("ep-geocode-status", "Address found - districts updated (coordinates unchanged)", "#10b981", "rgba(6,78,59,0.3)");
+        } else {
+          showStatus("ep-geocode-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+        }
         setTimeout(function() { hideStatus("ep-geocode-status"); }, 3000);
       })
       .catch(function() {
