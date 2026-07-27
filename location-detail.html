@@ -773,12 +773,33 @@
           badgeLabel +
         '</span>';
 
-      // Address
+      // Address - click to copy full address to clipboard
       var addrEl = document.getElementById("d-address");
-      addrEl.textContent = loc.address
+      var fullAddr = loc.address
         ? loc.address + (loc.city ? ", " + loc.city : "") + (loc.zip ? " " + loc.zip : "") + ", TN"
-        : "Address not on file";
-      if (!loc.address) addrEl.classList.add("muted");
+        : null;
+      if (fullAddr) {
+        addrEl.textContent = fullAddr;
+        addrEl.title = "Click to copy";
+        addrEl.style.cursor = "pointer";
+        addrEl.style.transition = "color 0.15s";
+        addrEl.addEventListener("mouseenter", function() { addrEl.style.color = "var(--accent-light)"; });
+        addrEl.addEventListener("mouseleave", function() { addrEl.style.color = ""; });
+        addrEl.addEventListener("click", function() {
+          navigator.clipboard.writeText(fullAddr).then(function() {
+            var orig = addrEl.textContent;
+            addrEl.textContent = "✓ Copied!";
+            addrEl.style.color = "var(--success)";
+            setTimeout(function() {
+              addrEl.textContent = orig;
+              addrEl.style.color = "";
+            }, 1800);
+          });
+        });
+      } else {
+        addrEl.textContent = "Address not on file";
+        addrEl.classList.add("muted");
+      }
 
       // County
       if (loc.county) {
