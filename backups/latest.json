@@ -5468,29 +5468,6 @@
       "lng": -86.64329051971436
     },
     {
-      "id": "bulk_1785165116248_59",
-      "name": "Hermitage Presbyterian Church",
-      "address": "421 Highland View Dr",
-      "city": "Hermitage",
-      "zip": "37076",
-      "county": "Davidson",
-      "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": " - ",
-      "schedule": [
-        {
-          "days": "",
-          "open": "",
-          "close": ""
-        }
-      ],
-      "notes": "",
-      "lat": 35.5,
-      "lng": -86.5
-    },
-    {
       "id": "bulk_1785165116248_60",
       "name": "Central Pike Church of Christ",
       "address": "4240 Central Pike",
@@ -7464,6 +7441,29 @@
       "notes": "",
       "lat": 36.191788,
       "lng": -86.624652
+    },
+    {
+      "id": "custom-1785170452914-517",
+      "name": "Hermitage Presbyterian Church",
+      "address": "421 Highland View Dr",
+      "city": "Hermitage",
+      "zip": "37076",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "60",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.207766959890314,
+      "lng": -86.60960197448732
     }
   ],
   "tn_polling_deleted": [
