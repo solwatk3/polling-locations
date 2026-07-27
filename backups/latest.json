@@ -66,8 +66,9 @@
     {
       "id": "custom-1785090961005-797",
       "name": "John Wilder Community Center",
-      "address": "122 Tippah St.",
-      "city": "Grand Junction",
+      "address": "122 Tippah St, Grand Junction, TN 38039",
+      "city": "",
+      "zip": "",
       "county": "Hardeman",
       "type": "election_day",
       "state_district": "94",
@@ -75,8 +76,8 @@
       "congressional_district": "9",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.054836,
-      "lng": -89.185644
+      "lat": 35.047866,
+      "lng": -89.186581
     },
     {
       "id": "custom-1785091360430-188",
@@ -91,14 +92,15 @@
       "congressional_district": "9",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.051219,
-      "lng": -89.09094
+      "lat": 35.05135948674818,
+      "lng": -89.09128904342651
     },
     {
       "id": "custom-1785091379571-125",
       "name": "Middleton Community Center",
       "address": "400 S. Main St.",
       "city": "Middleton",
+      "zip": "",
       "county": "Hardeman",
       "type": "election_day",
       "state_district": "94",
@@ -106,8 +108,8 @@
       "congressional_district": "9",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.053904,
-      "lng": -88.892252
+      "lat": 35.055101,
+      "lng": -88.891894
     },
     {
       "id": "custom-1785091396470-741",
@@ -255,8 +257,9 @@
     {
       "id": "custom-1785092374903-511",
       "name": "Antioch Baptist Church",
-      "address": "9327 Tibbs Rd",
+      "address": "9327 Tibbs Rd, Brownsville, TN 38012",
       "city": "Brownsville",
+      "zip": "",
       "county": "Haywood",
       "type": "election_day",
       "state_district": "81",
@@ -264,8 +267,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.641625,
-      "lng": -89.287782
+      "lat": 35.698289,
+      "lng": -89.344285
     },
     {
       "id": "custom-1785092386766-970",
@@ -454,14 +457,15 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.630878,
-      "lng": -88.829539
+      "lat": 35.63114856218951,
+      "lng": -88.82991313934326
     },
     {
       "id": "custom-1785103801117-414",
       "name": "Grace United Methodist Church",
       "address": "142 McClellan Rd.",
       "city": "Jackson, TN",
+      "zip": "",
       "county": "Madison",
       "type": "election_day",
       "state_district": "73",
@@ -469,8 +473,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.70271,
-      "lng": -88.88046
+      "lat": 35.703524,
+      "lng": -88.880193
     },
     {
       "id": "custom-1785103871729-163",
@@ -581,8 +585,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.569566,
-      "lng": -88.807759
+      "lat": 35.56994403452887,
+      "lng": -88.80850911140443
     },
     {
       "id": "custom-1785105252459-69",
@@ -597,8 +601,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.487009,
-      "lng": -88.723394
+      "lat": 35.486824,
+      "lng": -88.723135
     },
     {
       "id": "custom-1785105267473-104",
@@ -613,13 +617,13 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.546244,
-      "lng": -88.824852
+      "lat": 35.545983,
+      "lng": -88.823999
     },
     {
       "id": "custom-1785105283353-173",
       "name": "Medon City Hall",
-      "address": "20 College St., Medon, TN 38356",
+      "address": "25 College St, Medon, TN 38356",
       "city": "",
       "zip": "",
       "county": "Madison",
@@ -629,8 +633,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.459031,
-      "lng": -88.86624
+      "lat": 35.45958633466234,
+      "lng": -88.86602640151979
     },
     {
       "id": "custom-1785105299083-75",
@@ -741,8 +745,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.551198,
-      "lng": -88.775658
+      "lat": 35.55111790047512,
+      "lng": -88.77476692199707
     },
     {
       "id": "custom-1785105593969-737",
@@ -757,8 +761,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.724876,
-      "lng": -88.863477
+      "lat": 35.736903,
+      "lng": -88.872193
     },
     {
       "id": "custom-1785105609177-198",
@@ -773,8 +777,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.724876,
-      "lng": -88.863477
+      "lat": 35.717369,
+      "lng": -88.860723
     },
     {
       "id": "custom-1785105671453-638",
@@ -784,13 +788,13 @@
       "zip": "38343",
       "county": "Gibson",
       "type": "election_day",
-      "state_district": "82",
-      "state_senate_district": "24",
+      "state_district": "73",
+      "state_senate_district": "25",
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.76909,
-      "lng": -88.845383
+      "lat": 35.768869,
+      "lng": -88.845321
     },
     {
       "id": "custom-1785105722656-499",
@@ -805,8 +809,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.765453,
-      "lng": -88.678526
+      "lat": 35.765358,
+      "lng": -88.678484
     },
     {
       "id": "custom-1785105739200-127",
@@ -821,8 +825,8 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.694419,
-      "lng": -88.775122
+      "lat": 35.692033,
+      "lng": -88.775412
     },
     {
       "id": "custom-1785105751457-316",
@@ -837,8 +841,2904 @@
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
       "notes": "",
-      "lat": 35.688893,
-      "lng": -88.841959
+      "lat": 35.689649,
+      "lng": -88.841392
+    },
+    {
+      "id": "custom-1785118520649-757",
+      "name": "West Union Cumberland Presbyterian Church",
+      "address": "3099 West Union Rd",
+      "city": "Millington",
+      "zip": "38053",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.370507,
+      "lng": -89.960257
+    },
+    {
+      "id": "custom-1785118644197-303",
+      "name": "Baker Community Center",
+      "address": "7942 Church St",
+      "city": "Millington",
+      "zip": "38053",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "29",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.342896,
+      "lng": -89.896627
+    },
+    {
+      "id": "custom-1785119004140-947",
+      "name": "Oak Spring Baptist Church",
+      "address": "10250 Godwin Road Arlington 38002",
+      "city": "",
+      "zip": "",
+      "county": "",
+      "type": "early",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.34898,
+      "lng": -89.721055
+    },
+    {
+      "id": "custom-1785119018894-189",
+      "name": "Forestview Church of Christ",
+      "address": "5425 N Watkins Street Memphis 38127",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.274158,
+      "lng": -90.026787
+    },
+    {
+      "id": "custom-1785119046876-265",
+      "name": "St Anne's Episcopal Church",
+      "address": "4063 Sykes Rd",
+      "city": "Millington",
+      "zip": "38053",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.309040535864675,
+      "lng": -89.92759108543397
+    },
+    {
+      "id": "custom-1785119325746-242",
+      "name": "Arlington Safe Room",
+      "address": "11842 Otto Lane Arlington 38002",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.285034,
+      "lng": -89.668144
+    },
+    {
+      "id": "custom-1785119339753-683",
+      "name": "Arlington United Methodist Church",
+      "address": "6145 Quintard St",
+      "city": "Arlington",
+      "zip": "38002",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.29379,
+      "lng": -89.661508
+    },
+    {
+      "id": "custom-1785119533108-368",
+      "name": "Oak Grove Missionary Baptist (Gym)",
+      "address": "7289 US-64, Memphis, TN 38133",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.203646604792155,
+      "lng": -89.819176197052
+    },
+    {
+      "id": "custom-1785119542794-173",
+      "name": "St Luke Lutheran (Fellowship Hall)",
+      "address": "2000 N Germantown Pkwy",
+      "city": "Cordova",
+      "zip": "38016",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "96",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.180067,
+      "lng": -89.792023
+    },
+    {
+      "id": "custom-1785119577670-364",
+      "name": "theRefuge Church",
+      "address": "9817 Huff N Puff Rd",
+      "city": "Lakeland",
+      "zip": "38002",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.225463790401626,
+      "lng": -89.73466515541078
+    },
+    {
+      "id": "custom-1785119584306-97",
+      "name": "Mt. Pisgah Missionary Baptist Church",
+      "address": "1234 Pisgah Rd",
+      "city": "Cordova",
+      "zip": "38016",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.159015,
+      "lng": -89.709181
+    },
+    {
+      "id": "custom-1785119590116-555",
+      "name": "Hope Presbyterian Church",
+      "address": "8500 Walnut Grove Rd # 6",
+      "city": "Cordova",
+      "zip": "38018",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.130701905435345,
+      "lng": -89.77840662002563
+    },
+    {
+      "id": "custom-1785119595490-712",
+      "name": "Compassion Church",
+      "address": "3505 S Houston Levee Rd",
+      "city": "Germantown",
+      "zip": "38139",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.053692,
+      "lng": -89.733143
+    },
+    {
+      "id": "custom-1785119601458-272",
+      "name": "Collierville Bible Church",
+      "address": "806 Wolf River Blvd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.085865,
+      "lng": -89.689445
+    },
+    {
+      "id": "custom-1785119607203-764",
+      "name": "Germantown Presbyterian Church",
+      "address": "2363 S Germantown Rd",
+      "city": "Germantown",
+      "zip": "38138",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.084521,
+      "lng": -89.810409
+    },
+    {
+      "id": "custom-1785119613970-528",
+      "name": "The Farms at Bailey Station",
+      "address": "3300 S Houston Levee Rd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.05827143745167,
+      "lng": -89.7312319278717
+    },
+    {
+      "id": "custom-1785119622241-561",
+      "name": "Collierville Church of Christ",
+      "address": "575 Shelton Rd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.073932,
+      "lng": -89.680794
+    },
+    {
+      "id": "custom-1785119627282-654",
+      "name": "Christ Community Baptist",
+      "address": "850 Peterson Lake Rd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.062967,
+      "lng": -89.667283
+    },
+    {
+      "id": "custom-1785119632825-678",
+      "name": "Central Church",
+      "address": "2005 E Winchester Blvd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.044059,
+      "lng": -89.72812
+    },
+    {
+      "id": "custom-1785119643808-222",
+      "name": "St Mark Missionary Baptist Church",
+      "address": "363 Sycamore Rd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.03513562259761,
+      "lng": -89.67180490493776
+    },
+    {
+      "id": "custom-1785119780619-432",
+      "name": "Collierville First Pentecostal Church",
+      "address": "10545 Collierville Rd",
+      "city": "Collierville",
+      "zip": "38017",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.027167445406256,
+      "lng": -89.71097588539125
+    },
+    {
+      "id": "custom-1785119801787-190",
+      "name": "Bartlett Hills Baptist Church",
+      "address": "4641 Ellendale Rd",
+      "city": "Bartlett",
+      "zip": "38135",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "88",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.25496770181348,
+      "lng": -89.84391689300539
+    },
+    {
+      "id": "custom-1785119812628-306",
+      "name": "Bartlett Woods Church of Christ",
+      "address": "7900 Old Brownsville Rd",
+      "city": "Arlington",
+      "zip": "38002",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.262729,
+      "lng": -89.799082
+    },
+    {
+      "id": "custom-1785119822445-661",
+      "name": "IH Clubhouse",
+      "address": "4523 Canada Rd",
+      "city": "Lakeland",
+      "zip": "38002",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.24889604844711,
+      "lng": -89.74729299545288
+    },
+    {
+      "id": "custom-1785119828993-880",
+      "name": "Singleton Community Ctr",
+      "address": "7266 Third Rd",
+      "city": "Bartlett",
+      "zip": "38135",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.23364,
+      "lng": -89.821386
+    },
+    {
+      "id": "custom-1785119835368-724",
+      "name": "901 Church",
+      "address": "5955 Yale Rd, Bartlett, TN 38134",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "88",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.218022,
+      "lng": -89.864295
+    },
+    {
+      "id": "custom-1785119841145-330",
+      "name": "Bartlett Baptist Church",
+      "address": "3465 Kirby Whitten Pkwy",
+      "city": "Bartlett",
+      "zip": "38135",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.219925,
+      "lng": -89.838003
+    },
+    {
+      "id": "custom-1785119846247-865",
+      "name": "St Philip Episcopal Church",
+      "address": "9380 Davies Plantation Rd",
+      "city": "Bartlett",
+      "zip": "38133",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "95",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.21995088093546,
+      "lng": -89.74708914756776
+    },
+    {
+      "id": "custom-1785119861539-680",
+      "name": "Waypoint Baptist Church",
+      "address": "5586 Stage Rd",
+      "city": "Bartlett",
+      "zip": "38134",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "88",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.206016,
+      "lng": -89.876505
+    },
+    {
+      "id": "custom-1785119909420-919",
+      "name": "Ellendale Church of Christ",
+      "address": "7365 US Highway 70 Bartlett 38133",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "99",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.221704,
+      "lng": -89.817288
+    },
+    {
+      "id": "custom-1785119917912-80",
+      "name": "Second Baptist Church",
+      "address": "4680 Walnut Grove Rd",
+      "city": "Memphis",
+      "zip": "38117",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.13229884644695,
+      "lng": -89.906165599823
+    },
+    {
+      "id": "custom-1785119924514-884",
+      "name": "Shady Grove Presbyterian Church",
+      "address": "5530 Shady Grove Rd",
+      "city": "Memphis",
+      "zip": "38120",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.12358548539092,
+      "lng": -89.87755179405212
+    },
+    {
+      "id": "custom-1785119933963-847",
+      "name": "First Evangelical Church",
+      "address": "735 Ridge Lake Blvd",
+      "city": "Memphis",
+      "zip": "38120",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.112217,
+      "lng": -89.86771
+    },
+    {
+      "id": "custom-1785119947499-122",
+      "name": "Riveroaks Reformed Presbyterian Church",
+      "address": "1665 S Germantown Rd",
+      "city": "Germantown",
+      "zip": "38138",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.103879,
+      "lng": -89.805029
+    },
+    {
+      "id": "custom-1785119958740-373",
+      "name": "McWherter Senior Center",
+      "address": "1355 Estate Dr",
+      "city": "Memphis",
+      "zip": "38119",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.0949380210772,
+      "lng": -89.88609194755556
+    },
+    {
+      "id": "bulk_1785120857000_0",
+      "name": "Balmoral Presbyterian Church",
+      "address": "6413 Quince Rd",
+      "city": "Memphis",
+      "zip": "38119",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.074205,
+      "lng": -89.851059
+    },
+    {
+      "id": "bulk_1785120857000_1",
+      "name": "Emmanuel United Methodist Church",
+      "address": "2404 Kirby Rd",
+      "city": "Memphis",
+      "zip": "38119",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 83,
+      "state_senate_district": 31,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.0834619,
+      "lng": -89.8443887
+    },
+    {
+      "id": "bulk_1785120857000_3",
+      "name": "The Great Hall",
+      "address": "1900 S Germantown Rd",
+      "city": "Germantown",
+      "zip": "38138",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.099067,
+      "lng": -89.805078
+    },
+    {
+      "id": "bulk_1785120857000_4",
+      "name": "Faith Presbyterian Church",
+      "address": "8816 Poplar Pike",
+      "city": "Germantown",
+      "zip": "38138",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 83,
+      "state_senate_district": 31,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.06629805122339,
+      "lng": -89.76832151412964
+    },
+    {
+      "id": "bulk_1785120857000_6",
+      "name": "Whitten Memorial Baptist Church",
+      "address": "6773 Macon Road",
+      "city": "Memphis",
+      "zip": "38134",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 93,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.166258,
+      "lng": -89.837391
+    },
+    {
+      "id": "bulk_1785120857000_7",
+      "name": "Immanuel Lutheran Church",
+      "address": "6325 Raleigh Lagrange Rd",
+      "city": "Memphis",
+      "zip": "38134",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 96,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.179455898682015,
+      "lng": -89.85207080841064
+    },
+    {
+      "id": "bulk_1785120857000_8",
+      "name": "TN Shakespeare Co",
+      "address": "7950 Trinity Rd",
+      "city": "Cordova",
+      "zip": "38018",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 97,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.14289752921474,
+      "lng": -89.7981905937195
+    },
+    {
+      "id": "bulk_1785120857000_10",
+      "name": "Houston Levee Community Ctr",
+      "address": "1801 N Houston Levee Rd, Cordova, TN 38016",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "96",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.173147,
+      "lng": -89.733616
+    },
+    {
+      "id": "bulk_1785120857000_11",
+      "name": "Briarwood Community Church",
+      "address": "1900 N Germantown Pkwy",
+      "city": "Cordova",
+      "zip": "38016",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "96",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.177785,
+      "lng": -89.790282
+    },
+    {
+      "id": "bulk_1785120857000_12",
+      "name": "Cordova Community Ctr",
+      "address": "1017 N Sanga Rd",
+      "city": "Cordova",
+      "zip": "38018",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 96,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.15304745727569,
+      "lng": -89.77199077606203
+    },
+    {
+      "id": "bulk_1785120857000_13",
+      "name": "Bert Ferguson Community Ctr",
+      "address": "8505 Trinity Rd",
+      "city": "Cordova",
+      "zip": "38018",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 97,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.141766,
+      "lng": -89.7791407
+    },
+    {
+      "id": "bulk_1785120857000_14",
+      "name": "Faith Anglican Church",
+      "address": "9555 Walnut Grove Rd",
+      "city": "Cordova",
+      "zip": "38018",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "83",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.128117,
+      "lng": -89.744046
+    },
+    {
+      "id": "bulk_1785121002310_0",
+      "name": "St Stephen Baptist Church (Gym)",
+      "address": "4245 Singleton Pkwy",
+      "city": "Memphis",
+      "zip": "38128",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 88,
+      "state_senate_district": 32,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.241842546857015,
+      "lng": -89.89825844764711
+    },
+    {
+      "id": "bulk_1785121002310_1",
+      "name": "Hope Apostolic Church",
+      "address": "5645 Spring Lake Rd",
+      "city": "Memphis",
+      "zip": "38135",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "88",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.243082,
+      "lng": -89.875465
+    },
+    {
+      "id": "bulk_1785121002310_2",
+      "name": "Frayser Raleigh Senior Center",
+      "address": "3985 Egypt Central Rd",
+      "city": "Memphis",
+      "zip": "38128",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "98",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.24279,
+      "lng": -89.930224
+    },
+    {
+      "id": "bulk_1785121002310_3",
+      "name": "Raleigh Community Center",
+      "address": "3678 Powers Rd",
+      "city": "Memphis",
+      "zip": "38128",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 98,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.2265914,
+      "lng": -89.911025
+    },
+    {
+      "id": "bulk_1785121002310_4",
+      "name": "Springhill Baptist Church",
+      "address": "3815 Hawkins Mill Rd",
+      "city": "Memphis",
+      "zip": "38128",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 98,
+      "state_senate_district": 30,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.22589323821349,
+      "lng": -89.93754744529724
+    },
+    {
+      "id": "bulk_1785121002310_5",
+      "name": "Raleigh United Methodist Church",
+      "address": "3295 Powers Rd",
+      "city": "Memphis",
+      "zip": "38128",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 98,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.21586635357095,
+      "lng": -89.91674423217775
+    },
+    {
+      "id": "bulk_1785121002310_6",
+      "name": "Hollywood Community Ctr",
+      "address": "1560 N Hollywood St",
+      "city": "Memphis",
+      "zip": "38108",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 96,
+      "state_senate_district": 30,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.1789907,
+      "lng": -89.9745767
+    },
+    {
+      "id": "bulk_1785121002310_7",
+      "name": "Sycamore View Church of Christ",
+      "address": "1910 Sycamore View Rd",
+      "city": "Memphis",
+      "zip": "38134",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 96,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.17775465014339,
+      "lng": -89.87046003341676
+    },
+    {
+      "id": "bulk_1785121002310_8",
+      "name": "Sycamore View Church of Christ",
+      "address": "1910 Sycamore View Rd",
+      "city": "Memphis",
+      "zip": "38134",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 96,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.177710803060926,
+      "lng": -89.87062096595766
+    },
+    {
+      "id": "bulk_1785121002310_9",
+      "name": "The Pursuit of God Church",
+      "address": "3759 N Watkins St",
+      "city": "Memphis",
+      "zip": "38127",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 88,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.228215722710026,
+      "lng": -90.00389456748964
+    },
+    {
+      "id": "bulk_1785121002310_12",
+      "name": "Ed Rice Community Center",
+      "address": "2907 N Watkins St",
+      "city": "Memphis",
+      "zip": "38127",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 88,
+      "state_senate_district": 30,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.2056764,
+      "lng": -90.00472
+    },
+    {
+      "id": "bulk_1785121002310_14",
+      "name": "Springdale Baptist Church",
+      "address": "1193 Springdale St",
+      "city": "Memphis",
+      "zip": "38108",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "93",
+      "state_senate_district": "30",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.168985,
+      "lng": -89.984357
+    },
+    {
+      "id": "bulk_1785121002310_15",
+      "name": "St Stephen Methodist Church",
+      "address": "3981 Macon Rd",
+      "city": "Memphis",
+      "zip": "38122",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 93,
+      "state_senate_district": 30,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.1618139,
+      "lng": -89.9280321
+    },
+    {
+      "id": "bulk_1785121002310_16",
+      "name": "Greater Galatin Baptist Church",
+      "address": "2418 Jackson Ave",
+      "city": "Memphis",
+      "zip": "38108",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 93,
+      "state_senate_district": 30,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.15827544821435,
+      "lng": -89.97700810432434
+    },
+    {
+      "id": "bulk_1785121002310_17",
+      "name": "First Baptist Church Broad",
+      "address": "2835 Broad Ave",
+      "city": "Memphis",
+      "zip": "38112",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "93",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.146986,
+      "lng": -89.966657
+    },
+    {
+      "id": "bulk_1785121002310_18",
+      "name": "Trinity United Methodist Church",
+      "address": "1738 Galloway Ave",
+      "city": "Memphis",
+      "zip": "38112",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "88",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.151004,
+      "lng": -90.001757
+    },
+    {
+      "id": "bulk_1785121002310_19",
+      "name": "Grace Missionary Baptist Church",
+      "address": "1203 N Manassas St",
+      "city": "Memphis",
+      "zip": "38107",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 88,
+      "state_senate_district": 30,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.17375569894352,
+      "lng": -90.03203630447389
+    },
+    {
+      "id": "bulk_1785121002310_20",
+      "name": "Word of Life SDA Church",
+      "address": "1215 Floyd Ave",
+      "city": "Memphis",
+      "zip": "38127",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 86,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.223000994775475,
+      "lng": -90.02305626869202
+    },
+    {
+      "id": "bulk_1785121002310_21",
+      "name": "Greenlaw Community Center",
+      "address": "190 Mill Ave",
+      "city": "Memphis",
+      "zip": "38105",
+      "county": "",
+      "type": "election_day",
+      "state_district": "86",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.159002,
+      "lng": -90.04406
+    },
+    {
+      "id": "bulk_1785121002310_22",
+      "name": "Lewis Center",
+      "address": "1188 North Pkwy",
+      "city": "Memphis",
+      "zip": "38105",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_23",
+      "name": "Progressive Missionary Baptist Church",
+      "address": "394 Vance Ave",
+      "city": "Memphis",
+      "zip": "38126",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_24",
+      "name": "Mississippi Blvd. Christian Church",
+      "address": "70 N Bellevue Blvd",
+      "city": "Memphis",
+      "zip": "38104",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_25",
+      "name": "Mississippi Blvd. Christian Church",
+      "address": "70 N Bellevue Blvd",
+      "city": "Memphis",
+      "zip": "38104",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_26",
+      "name": "Mt. Zion AME Church",
+      "address": "42 S Parkway W",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_27",
+      "name": "Mt. Nebo Baptist Church",
+      "address": "555 Vance Ave",
+      "city": "Memphis",
+      "zip": "38126",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_29",
+      "name": "Memphis ROX",
+      "address": "879 E McLemore Ave",
+      "city": "Memphis",
+      "zip": "38106",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_30",
+      "name": "The Oak Grove Missionary Baptist Church",
+      "address": "183 Joubert Ave",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_31",
+      "name": "The Oak Grove Missionary Baptist Church",
+      "address": "183 Joubert Ave",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121002310_32",
+      "name": "Mitchell Road Community Center",
+      "address": "602 W Mitchell Rd",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_0",
+      "name": "Mt Pisgah Baptist Church",
+      "address": "3636 Weaver Rd",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 86,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.05000688919951,
+      "lng": -90.09580850601198
+    },
+    {
+      "id": "bulk_1785121021454_1",
+      "name": "Riverside Baptist Church",
+      "address": "3590 S 3rd St",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "85",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.049963,
+      "lng": -90.061148
+    },
+    {
+      "id": "bulk_1785121021454_2",
+      "name": "Christ United Baptist Church",
+      "address": "929 E Raines Rd",
+      "city": "Memphis",
+      "zip": "38116",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "87",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.034746,
+      "lng": -90.033059
+    },
+    {
+      "id": "bulk_1785121021454_3",
+      "name": "Westwood Community Ctr",
+      "address": "810 Western Park Dr",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 86,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.0307851,
+      "lng": -90.0912392
+    },
+    {
+      "id": "bulk_1785121021454_4",
+      "name": "Whitehaven Community Ctr",
+      "address": "4318 Graceland Dr",
+      "city": "Memphis",
+      "zip": "38116",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 87,
+      "state_senate_district": 29,
+      "congressional_district": 9,
+      "hours": "",
+      "notes": "",
+      "lat": 35.0308399,
+      "lng": -90.014263
+    },
+    {
+      "id": "bulk_1785121021454_5",
+      "name": "St Paul Baptist Church",
+      "address": "2124 E Holmes Rd",
+      "city": "Memphis",
+      "zip": "38116",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 85,
+      "state_senate_district": 29,
+      "congressional_district": 9,
+      "hours": "",
+      "notes": "",
+      "lat": 35.00738860222611,
+      "lng": -89.99258637428285
+    },
+    {
+      "id": "bulk_1785121021454_6",
+      "name": "Lake Shores Community Church",
+      "address": "5049 Coro Rd",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 86,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.012511702579026,
+      "lng": -90.11928319931032
+    },
+    {
+      "id": "bulk_1785121021454_7",
+      "name": "Rising Sun Ministries",
+      "address": "5255 Tulane Rd",
+      "city": "Memphis",
+      "zip": "38109",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 85,
+      "state_senate_district": 29,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.00457647250075,
+      "lng": -90.04422426223756
+    },
+    {
+      "id": "bulk_1785121021454_8",
+      "name": "Holmes Road Church of Christ",
+      "address": "1187 E Holmes Rd",
+      "city": "Memphis",
+      "zip": "38116",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "85",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.005656,
+      "lng": -90.024351
+    },
+    {
+      "id": "bulk_1785121021454_9",
+      "name": "Orange Mound Senior Ctr",
+      "address": "2590 Park Ave",
+      "city": "Memphis",
+      "zip": "38114",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 93,
+      "state_senate_district": 33,
+      "congressional_district": 9,
+      "hours": "",
+      "notes": "",
+      "lat": 35.10868374136716,
+      "lng": -89.9757206439972
+    },
+    {
+      "id": "bulk_1785121021454_10",
+      "name": "Pine Hill Community Ctr",
+      "address": "973 Alice Ave",
+      "city": "Memphis",
+      "zip": "38106",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_11",
+      "name": "Glenview Community Ctr",
+      "address": "1141 S Barksdale St",
+      "city": "Memphis",
+      "zip": "38114",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "93",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.114971,
+      "lng": -90.000902
+    },
+    {
+      "id": "bulk_1785121021454_12",
+      "name": "St John Missionary Baptist Church",
+      "address": "1656 Pendleton St",
+      "city": "Memphis",
+      "zip": "38114",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_13",
+      "name": "Cherry Road Baptist Church",
+      "address": "1421 Cherry Rd",
+      "city": "Memphis",
+      "zip": "38117",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "87",
+      "state_senate_district": "33",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.093638816527076,
+      "lng": -89.91730213165283
+    },
+    {
+      "id": "bulk_1785121021454_14",
+      "name": "Norris Avenue Baptist Church",
+      "address": "1437 Norris Rd",
+      "city": "Memphis",
+      "zip": "38106",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_15",
+      "name": "Orange Mound Senior Ctr",
+      "address": "2590 Park Ave",
+      "city": "Memphis",
+      "zip": "38114",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_16",
+      "name": "Greenwood CME Church",
+      "address": "3311 Kimball Ave",
+      "city": "Memphis",
+      "zip": "38111",
+      "county": "",
+      "type": "election_day",
+      "state_district": "91",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.094435,
+      "lng": -89.952335
+    },
+    {
+      "id": "bulk_1785121021454_17",
+      "name": "Solomon Temple MB Church",
+      "address": "1460 Winchester Rd",
+      "city": "Memphis",
+      "zip": "38116",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_19",
+      "name": "Greater Middle Baptist Church",
+      "address": "4982 Knight Arnold Rd",
+      "city": "Memphis",
+      "zip": "38118",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_20",
+      "name": "Greater Middle Baptist Church",
+      "address": "4982 Knight Arnold Rd",
+      "city": "Memphis",
+      "zip": "38118",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_21",
+      "name": "McFarland Community Center",
+      "address": "4955 Cottonwood Rd",
+      "city": "Memphis",
+      "zip": "38118",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_22",
+      "name": "Breath of Life SDA Church",
+      "address": "5665 Knight Arnold Rd",
+      "city": "Memphis",
+      "zip": "38115",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.060297,
+      "lng": -89.875046
+    },
+    {
+      "id": "bulk_1785121021454_23",
+      "name": "Hickory Hill Community Center",
+      "address": "3910 Ridgeway Rd",
+      "city": "Memphis",
+      "zip": "38115",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_24",
+      "name": "New Beginnings Community Church",
+      "address": "4480 Kirby Pkwy",
+      "city": "Memphis",
+      "zip": "38115",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_25",
+      "name": "Easthaven Church of Christ",
+      "address": "4833 Tchulahoma Rd",
+      "city": "Memphis",
+      "zip": "38118",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.016026,
+      "lng": -89.954668
+    },
+    {
+      "id": "bulk_1785121021454_26",
+      "name": "Soul Winners Baptist Church",
+      "address": "4221 Crump Rd",
+      "city": "Memphis",
+      "zip": "38141",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_27",
+      "name": "City Church Ridgeway",
+      "address": "3150 Ridgeway Rd",
+      "city": "Memphis",
+      "zip": "38115",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "84",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.062696,
+      "lng": -89.85619
+    },
+    {
+      "id": "bulk_1785121021454_28",
+      "name": "South Woods Baptist Church",
+      "address": "3175 S Germantown Rd",
+      "city": "Memphis",
+      "zip": "38119",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_29",
+      "name": "St Marks United Methodist Church",
+      "address": "8255 Winchester Rd",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_30",
+      "name": "Anointed Temple of Praise",
+      "address": "3939 Riverdale Rd",
+      "city": "Memphis",
+      "zip": "38115",
+      "county": "Shelby",
+      "type": "both",
+      "state_district": "85",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "11:00am",
+          "close": "7:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Monday thru Friday"
+        },
+        {
+          "open": "10:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, July 18th & 25th"
+        },
+        {
+          "open": "8:00am",
+          "close": "4:00pm",
+          "label": "Early Voting",
+          "days": "July 17th through August 1st - Saturday, August 1st"
+        }
+      ],
+      "notes": "",
+      "lat": 35.04204016216548,
+      "lng": -89.83184695243835
+    },
+    {
+      "id": "bulk_1785121021454_31",
+      "name": "New Growth In Christ Christian Ctr",
+      "address": "7550 E Shelby Dr",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_32",
+      "name": "Greater Love Baptist Church",
+      "address": "4439 Hacks Cross Rd",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121021454_33",
+      "name": "New Life In Christ Fellowship Church",
+      "address": "6825 E Holmes Rd",
+      "city": "Memphis",
+      "zip": "38141",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_0",
+      "name": "Memphis Public Library E Shelby",
+      "address": "7200 E Shelby Dr",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": 85,
+      "state_senate_district": 33,
+      "congressional_district": 9,
+      "hours": "",
+      "notes": "",
+      "lat": 35.02091183814804,
+      "lng": -89.82289910316469
+    },
+    {
+      "id": "bulk_1785121036910_1",
+      "name": "Grace Church of the Nazarene",
+      "address": "8979 E Shelby Dr",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_2",
+      "name": "New Sardis Baptist Church",
+      "address": "7739 E Holmes Rd",
+      "city": "Memphis",
+      "zip": "38125",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_3",
+      "name": "St Stephen Methodist Church",
+      "address": "3981 Macon Rd",
+      "city": "Memphis",
+      "zip": "38122",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_4",
+      "name": "Gaisman Community Ctr",
+      "address": "4221 Macon Rd",
+      "city": "Memphis",
+      "zip": "38122",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "30",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.161539,
+      "lng": -89.919525
+    },
+    {
+      "id": "bulk_1785121036910_5",
+      "name": "One City Church",
+      "address": "120 N East Yates Rd",
+      "city": "Memphis",
+      "zip": "38120",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_8",
+      "name": "Evangel Church",
+      "address": "262 N Perkins Rd",
+      "city": "Memphis",
+      "zip": "38117",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "97",
+      "state_senate_district": "31",
+      "congressional_district": "8",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.138279,
+      "lng": -89.907739
+    },
+    {
+      "id": "bulk_1785121036910_9",
+      "name": "Christ City Church",
+      "address": "531 S McLean Blvd",
+      "city": "Memphis",
+      "zip": "38104",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "91",
+      "state_senate_district": "29",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.131587,
+      "lng": -90.000926
+    },
+    {
+      "id": "bulk_1785121036910_10",
+      "name": "St. Johns Episcopal Church",
+      "address": "3245 Central Ave",
+      "city": "Memphis",
+      "zip": "38111",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_11",
+      "name": "Davis Community Ctr",
+      "address": "3371 Spottswood Ave",
+      "city": "Memphis",
+      "zip": "38111",
+      "county": "Shelby",
+      "type": "election_day",
+      "state_district": "93",
+      "state_senate_district": "33",
+      "congressional_district": "9",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.112962,
+      "lng": -89.950794
+    },
+    {
+      "id": "bulk_1785121036910_12",
+      "name": "White Station Church of Christ",
+      "address": "1106 Colonial Rd",
+      "city": "Memphis",
+      "zip": "38117",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_13",
+      "name": "White Station Church of Christ",
+      "address": "1106 Colonial Rd",
+      "city": "Memphis",
+      "zip": "38117",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785121036910_14",
+      "name": "Whitten Memorial Baptist",
+      "address": "6773 Macon Rd",
+      "city": "Memphis",
+      "zip": "38134",
+      "county": "",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "custom-1785124528300-865",
+      "name": "Bellevue Library",
+      "address": "720 Baugh Road Nashville ,TN 37221",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.069497,
+      "lng": -86.936881
+    },
+    {
+      "id": "custom-1785126085172-223",
+      "name": "Bordeaux Library",
+      "address": "4000 Clarksville Pike",
+      "city": "Nashville ,TN",
+      "zip": "37218",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "54",
+      "state_senate_district": "19",
+      "congressional_district": "7",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.211111,
+      "lng": -86.8388
+    },
+    {
+      "id": "custom-1785126109340-685",
+      "name": "Casa Azafrán Community Center",
+      "address": "2195 Nolensville Pike",
+      "city": "Nashville ,TN",
+      "zip": "37211",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "55",
+      "state_senate_district": "21",
+      "congressional_district": "6",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.12648,
+      "lng": -86.753505
+    },
+    {
+      "id": "custom-1785126142110-254",
+      "name": "Community Foundation of Middle TN",
+      "address": "3421 Belmont Boulevard Nashville ,TN 37215",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "56",
+      "state_senate_district": "21",
+      "congressional_district": "7",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.115174,
+      "lng": -86.799341
+    },
+    {
+      "id": "custom-1785126199760-727",
+      "name": "Davidson County Election Commission Office",
+      "address": "1281 Murfreesboro Pike",
+      "city": "Nashville ,TN",
+      "zip": "37217",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "52",
+      "state_senate_district": "17",
+      "congressional_district": "4",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.103367,
+      "lng": -86.666638
+    },
+    {
+      "id": "custom-1785126247705-400",
+      "name": "Edmondson Pike Library",
+      "address": "5501 Edmondson Pike",
+      "city": "Nashville ,TN",
+      "zip": "37211",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "59",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.044805,
+      "lng": -86.744641
+    },
+    {
+      "id": "custom-1785126276910-442",
+      "name": "Goodlettsville Library",
+      "address": "205 Rivergate Parkway Goodlettsville ,TN 37072",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "50",
+      "state_senate_district": "20",
+      "congressional_district": "7",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.314157,
+      "lng": -86.71039
+    },
+    {
+      "id": "custom-1785126303892-838",
+      "name": "Hermitage Library",
+      "address": "3700 James Kay Lane Hermitage ,TN 37076",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "60",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.177171,
+      "lng": -86.615553
+    },
+    {
+      "id": "custom-1785126350081-782",
+      "name": "Hillwood High School",
+      "address": "6215 Hickory Valley Road Nashville ,TN 37205",
+      "city": "",
+      "zip": "",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "59",
+      "state_senate_district": "20",
+      "congressional_district": "6",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.123805,
+      "lng": -86.871899
+    },
+    {
+      "id": "custom-1785126371073-247",
+      "name": "Lentz Public Health Center",
+      "address": "2500 Charlotte Ave",
+      "city": "Nashville ,TN",
+      "zip": "37209",
+      "county": "Davidson",
+      "type": "early",
+      "state_district": "58",
+      "state_senate_district": "19",
+      "congressional_district": "6",
+      "hours": "8:00am - 5:30pm",
+      "schedule": [
+        {
+          "days": "Fri - July 17,24,31",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Sat - July 18,25, Aug. 1",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Mon - July 20,27",
+          "open": "8:00am",
+          "close": "5:30pm"
+        },
+        {
+          "days": "Tues - July 21,28",
+          "open": "8:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Wed - July 22,29",
+          "open": "8:00am",
+          "close": "4:30pm"
+        },
+        {
+          "days": "Thurs - July 23,30",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.155339,
+      "lng": -86.812236
+    },
+    {
+      "id": "custom-1785126697804-308",
+      "name": "Abundant Grace Fellowship Church",
+      "address": "1574 East Shelby Drive Memphis, TN 38116",
+      "city": "",
+      "zip": "",
+      "county": "Shelby",
+      "type": "early",
+      "state_district": "87",
+      "state_senate_district": "29",
+      "congressional_district": "9",
+      "hours": "11:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "July 17th thru August 1stMonday thru Friday",
+          "open": "11:00am",
+          "close": "7:00pm"
+        },
+        {
+          "days": "Saturday, July 18th & 25th",
+          "open": "10:00am",
+          "close": "4:00pm"
+        },
+        {
+          "days": "Saturday, August 1st",
+          "open": "8:00am",
+          "close": "4:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.021138,
+      "lng": -90.012767
     }
   ],
   "tn_polling_deleted": [
