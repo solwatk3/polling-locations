@@ -7469,8 +7469,8 @@
         }
       ],
       "notes": "",
-      "lat": 36.1084,
-      "lng": -86.555395
+      "lat": 36.10836617379217,
+      "lng": -86.55544281005861
     },
     {
       "id": "custom-1785167659224-893",
@@ -7973,13 +7973,20 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "15",
+      "state_senate_district": "7",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.968837,
+      "lng": -83.911588
     },
     {
       "id": "bulk_1785176096909_1",
@@ -7994,8 +8001,8 @@
       "congressional_district": 2,
       "hours": "",
       "notes": "",
-      "lat": 35.966628,
-      "lng": -83.939986
+      "lat": 35.96695292718177,
+      "lng": -83.94007444381714
     },
     {
       "id": "bulk_1785176096909_2",
@@ -8005,13 +8012,20 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "15",
+      "state_senate_district": "7",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.956525,
+      "lng": -83.939547
     },
     {
       "id": "bulk_1785176096909_3",
@@ -8026,8 +8040,8 @@
       "congressional_district": 2,
       "hours": "",
       "notes": "",
-      "lat": 35.9564684,
-      "lng": -83.9323692
+      "lat": 35.95645394235466,
+      "lng": -83.93179178237916
     },
     {
       "id": "bulk_1785176096909_4",
@@ -8037,29 +8051,43 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "90",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.976743,
+      "lng": -83.922702
     },
     {
       "id": "bulk_1785176096909_5",
-      "name": "Phyllis Wheatley YWCA",
+      "name": "Phyllis Wheatley Center",
       "address": "1245 Cruze St",
       "city": "Knoxville",
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": 15,
-      "state_senate_district": 6,
-      "congressional_district": 2,
-      "hours": "",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": 35.9769533,
-      "lng": -83.9024367
+      "lat": 35.97710322368635,
+      "lng": -83.90224456787111
     },
     {
       "id": "bulk_1785176096909_6",
@@ -8069,13 +8097,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": 15,
-      "state_senate_district": 6,
-      "congressional_district": 2,
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": 35.995775,
-      "lng": -83.873521
+      "lat": 35.9963322418218,
+      "lng": -83.8733732700348
     },
     {
       "id": "bulk_1785176096909_7",
@@ -8113,8 +8141,8 @@
       "congressional_district": 2,
       "hours": "",
       "notes": "",
-      "lat": 35.9808108,
-      "lng": -83.9115494
+      "lat": 35.97960369515644,
+      "lng": -83.9114499092102
     },
     {
       "id": "bulk_1785176096909_9",
@@ -8129,8 +8157,8 @@
       "congressional_district": 2,
       "hours": "",
       "notes": "",
-      "lat": 36.0017744,
-      "lng": -83.9234426
+      "lat": 36.0012190511118,
+      "lng": -83.92335891723634
     },
     {
       "id": "bulk_1785176096909_10",
@@ -8140,13 +8168,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": 90,
-      "state_senate_district": 5,
-      "congressional_district": 2,
+      "state_district": "90",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": 35.9949209,
-      "lng": -83.929877
+      "lat": 35.99548157622564,
+      "lng": -83.92949581146242
     },
     {
       "id": "bulk_1785176096909_11",
@@ -8161,8 +8189,8 @@
       "congressional_district": 2,
       "hours": "",
       "notes": "",
-      "lat": 35.9998026,
-      "lng": -83.938271
+      "lat": 36.00027296069528,
+      "lng": -83.937885761261
     },
     {
       "id": "bulk_1785176096909_12",
@@ -8172,13 +8200,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": 15,
-      "state_senate_district": 5,
-      "congressional_district": 2,
+      "state_district": "15",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": 35.984402,
-      "lng": -83.9550445
+      "lat": 35.984274502553774,
+      "lng": -83.95557761192323
     },
     {
       "id": "bulk_1785176096909_13",
@@ -8188,29 +8216,36 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.97870943841797,
+      "lng": -83.93870115280153
     },
     {
       "id": "bulk_1785176096909_14",
-      "name": "WestView Elementary",
+      "name": "West View Elementary School",
       "address": "1714 Mingle Ave",
       "city": "Knoxville",
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.96692687683774,
+      "lng": -83.95821690559387
     },
     {
       "id": "bulk_1785176096909_15",
@@ -8220,13 +8255,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "18",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.935243299618044,
+      "lng": -83.96762609481812
     },
     {
       "id": "bulk_1785176096909_16",
@@ -8236,13 +8271,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.93433985346565,
+      "lng": -83.9155697822571
     },
     {
       "id": "bulk_1785176096909_17",
@@ -8252,13 +8287,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.94676133294173,
+      "lng": -83.90165448188783
     },
     {
       "id": "bulk_1785176096909_18",
@@ -8268,13 +8303,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.913327475220726,
+      "lng": -83.88877451419832
     },
     {
       "id": "bulk_1785176096909_19",
@@ -8307,13 +8342,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.98235585862302,
+      "lng": -83.87422084808351
     },
     {
       "id": "bulk_1785176096909_21",
@@ -8323,13 +8358,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.00758967632356,
+      "lng": -83.85114312171937
     },
     {
       "id": "bulk_1785176096909_22",
@@ -8339,13 +8374,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "15",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.01919261227775,
+      "lng": -83.87470364570619
     },
     {
       "id": "bulk_1785176096909_23",
@@ -8355,13 +8390,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.02008641008068,
+      "lng": -83.88762652873994
     },
     {
       "id": "bulk_1785176096909_24",
@@ -8371,13 +8406,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "16",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.04090122101326,
+      "lng": -83.92476439476015
     },
     {
       "id": "bulk_1785176096909_25",
@@ -8387,13 +8422,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "16",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.05152775455996,
+      "lng": -83.90401482582094
     },
     {
       "id": "bulk_1785176096909_26",
@@ -8403,13 +8438,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "16",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.038992630408565,
+      "lng": -83.93644809722902
     },
     {
       "id": "bulk_1785176096909_27",
@@ -8419,13 +8454,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.00959449411937,
+      "lng": -83.95918250083925
     },
     {
       "id": "bulk_1785176096909_28",
@@ -8435,13 +8470,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.006044803589866,
+      "lng": -83.97011518478395
     },
     {
       "id": "bulk_1785176096909_29",
@@ -8451,13 +8486,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "89",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.99951781616247,
+      "lng": -83.98941636085512
     },
     {
       "id": "bulk_1785176096909_31",
@@ -8467,13 +8502,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "89",
+      "state_senate_district": "5",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.99205712038643,
+      "lng": -84.00690436363222
     },
     {
       "id": "bulk_1785176096909_32",
@@ -8483,13 +8518,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.98350184160403,
+      "lng": -83.98231387138368
     },
     {
       "id": "bulk_1785176096909_33",
@@ -8499,13 +8534,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "18",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.986601121292864,
+      "lng": -84.03075456619264
     },
     {
       "id": "bulk_1785176096909_34",
@@ -8515,13 +8550,20 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "18",
+      "state_senate_district": "7",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.9435,
+      "lng": -84.035894
     },
     {
       "id": "bulk_1785176096909_35",
@@ -8531,13 +8573,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.935608149944976,
+      "lng": -84.03654813766481
     },
     {
       "id": "bulk_1785176096909_36",
@@ -8570,13 +8612,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "90",
+      "state_senate_district": "7",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.95181622923424,
+      "lng": -83.98427724838258
     },
     {
       "id": "bulk_1785176096909_38",
@@ -8609,13 +8651,13 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "18",
+      "state_senate_district": "6",
+      "congressional_district": "2",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.947475725795016,
+      "lng": -83.97459447383882
     },
     {
       "id": "bulk_1785176096909_40",
@@ -8625,13 +8667,1427 @@
       "zip": "TN",
       "county": "Knox",
       "type": "election_day",
+      "state_district": "18",
+      "state_senate_district": "6",
+      "congressional_district": "2",
+      "hours": "",
+      "notes": "",
+      "lat": 35.91840623163106,
+      "lng": -84.02997136116029
+    },
+    {
+      "id": "custom-1785177626602-780",
+      "name": "Shepherd Community Center",
+      "address": "2124 Shepherd Rd",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.04414391034419,
+      "lng": -85.1820605993271
+    },
+    {
+      "id": "custom-1785179804492-689",
+      "name": "Bethlehem Center",
+      "address": "200 W 38th St",
+      "city": "Chattanooga",
+      "zip": "37410",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.005736,
+      "lng": -85.312355
+    },
+    {
+      "id": "custom-1785179882429-78",
+      "name": "Tri-Community Fire Department - Station",
+      "address": "3 11115 Park Pl",
+      "city": "Apison",
+      "zip": "37302",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.018173,
+      "lng": -85.027479
+    },
+    {
+      "id": "custom-1785179932263-624",
+      "name": "Avondale Community Center",
+      "address": "1305 Dodson Ave",
+      "city": "Chattanooga",
+      "zip": "37406",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.052456,
+      "lng": -85.261265
+    },
+    {
+      "id": "custom-1785179943553-798",
+      "name": "Birchwood Community Center",
+      "address": "5623 Highway 60, Birchwood TN 37308",
+      "city": "",
+      "zip": "",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.358233,
+      "lng": -84.992086
+    },
+    {
+      "id": "custom-1785179954868-957",
+      "name": "Washington Hills Community Center",
+      "address": "4628 Oakwood Dr",
+      "city": "Chattanooga",
+      "zip": "37416",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.08468427629593,
+      "lng": -85.17656207084656
+    },
+    {
+      "id": "bulk_1785180829243_0",
+      "name": "Brainerd Crossroads (The BX)",
+      "address": "4011 Austin St",
+      "city": "Chattanooga",
+      "zip": "37411",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": 30,
+      "state_senate_district": 10,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.01183508507446,
+      "lng": -85.2420723438263
+    },
+    {
+      "id": "bulk_1785180829243_1",
+      "name": "Alhambra Shrine Temple",
+      "address": "1000 Alhambra Dr",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": 30,
+      "state_senate_district": 10,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.01607,
+      "lng": -85.1867202
+    },
+    {
+      "id": "bulk_1785180829243_2",
+      "name": "Carver Community Center",
+      "address": "600 N Orchard Knob Ave",
+      "city": "Chattanooga",
+      "zip": "37404",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": 28,
+      "state_senate_district": 11,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.044118,
+      "lng": -85.2711504
+    },
+    {
+      "id": "bulk_1785180829243_3",
+      "name": "Chestnut Hall at the Commons",
+      "address": "4950 Swinyar Dr",
+      "city": "Collegedale",
+      "zip": "37363",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.05835926025294,
+      "lng": -85.0705397129059
+    },
+    {
+      "id": "bulk_1785180829243_4",
+      "name": "Concord Baptist Church",
+      "address": "7025 E Brainerd Rd",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.01875916597148,
+      "lng": -85.17232418060303
+    },
+    {
+      "id": "bulk_1785180829243_5",
+      "name": "Olivet Baptist",
+      "address": "740 E Martin Luther King Blvd",
+      "city": "Chattanooga",
+      "zip": "37403",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.04168001612791,
+      "lng": -85.29858112335206
+    },
+    {
+      "id": "bulk_1785180829243_6",
+      "name": "New Hope Baptist Church",
+      "address": "3777 Wilcox Blvd",
+      "city": "Chattanooga",
+      "zip": "37411",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.04417465365292,
+      "lng": -85.2259683609009
+    },
+    {
+      "id": "bulk_1785180829243_7",
+      "name": "Sequoyah Baptist Tabernacle",
+      "address": "8405 Daisy Dallas Rd",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.205507,
+      "lng": -85.166647
+    },
+    {
+      "id": "bulk_1785180829243_8",
+      "name": "Dogwood Manor Community Room",
+      "address": "959 Gateway Ave",
+      "city": "Chattanooga",
+      "zip": "37402",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.04679657612543,
+      "lng": -85.31927704811096
+    },
+    {
+      "id": "bulk_1785180829243_9",
+      "name": "The Gathering",
+      "address": "4445 Hixson Pike",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.11828505955659,
+      "lng": -85.25085926055908
+    },
+    {
+      "id": "bulk_1785180829243_10",
+      "name": "Covenant Presbyterian Church",
+      "address": "8451 E Brainerd Rd",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.003548263437324,
+      "lng": -85.13983726501465
+    },
+    {
+      "id": "bulk_1785180829243_11",
+      "name": "East Chattanooga Community Center",
+      "address": "2409 Dodson Ave",
+      "city": "Chattanooga",
+      "zip": "37406",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.06597313798418,
+      "lng": -85.25418519973756
+    },
+    {
+      "id": "bulk_1785180829243_12",
+      "name": "East Lake Community Center",
+      "address": "3601 Dodds Ave",
+      "city": "Chattanooga",
+      "zip": "37407",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 34.99952318400449,
+      "lng": -85.28290629386902
+    },
+    {
+      "id": "bulk_1785180829243_13",
+      "name": "Greens Lake Church of Christ",
+      "address": "1209 Greens Lake Rd",
+      "city": "East Ridge",
+      "zip": "37412",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 34.99305451933906,
+      "lng": -85.25245785713197
+    },
+    {
+      "id": "bulk_1785180829243_15",
+      "name": "East Ridge Community Center",
+      "address": "1515 Tombras Ave",
+      "city": "East Ridge",
+      "zip": "37412",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 34.99501450841041,
+      "lng": -85.24251222610474
+    },
+    {
+      "id": "bulk_1785180829243_16",
+      "name": "East Ridge United Methodist Church",
+      "address": "1601 Prater Rd",
+      "city": "Chattanooga",
+      "zip": "37412",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 34.988346,
+      "lng": -85.217046
+    },
+    {
+      "id": "bulk_1785180829243_17",
+      "name": "Chris L. Ramsey Sr. Community Center",
+      "address": "1010 N Moore Rd",
+      "city": "Chattanooga",
+      "zip": "37411",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.02514672573678,
+      "lng": -85.21806120872498
+    },
+    {
+      "id": "bulk_1785180829243_18",
+      "name": "New Life SDA Church",
+      "address": "2099 E Main St",
+      "city": "Chattanooga",
+      "zip": "37404",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.02534001412643,
+      "lng": -85.27730584144594
+    },
+    {
+      "id": "bulk_1785180829243_19",
+      "name": "Bachman Community Center",
+      "address": "2815 Anderson Pike",
+      "city": "Signal Mountain",
+      "zip": "37377",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.163352,
+      "lng": -85.322302
+    },
+    {
+      "id": "bulk_1785180829243_20",
+      "name": "Chattanooga Community Church of God",
+      "address": "6528B Old Dayton Pike",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.186714,
+      "lng": -85.252121
+    },
+    {
+      "id": "bulk_1785180829243_21",
+      "name": "Flat Top Volunteer Fire Station",
+      "address": "13331 Jones Gap Rd",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.357722,
+      "lng": -85.196909
+    },
+    {
+      "id": "bulk_1785180829243_22",
+      "name": "Middle Valley Church of God",
+      "address": "1703 Thrasher Pike",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.189136,
+      "lng": -85.189332
+    },
+    {
+      "id": "bulk_1785180829243_23",
+      "name": "Glenwood Community Center",
+      "address": "2610 E 3rd St",
+      "city": "Chattanooga",
+      "zip": "37404",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.03637426615044,
+      "lng": -85.2601718902588
+    },
+    {
+      "id": "bulk_1785180829243_24",
+      "name": "Harrison Ruritan Club",
+      "address": "5709 Tyner Ln",
+      "city": "Harrison",
+      "zip": "37341",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.111211437586064,
+      "lng": -85.14115691184999
+    },
+    {
+      "id": "bulk_1785180829243_25",
+      "name": "Greenwood Baptist Church",
+      "address": "8529 Snow Hill Rd",
+      "city": "Ooltewah",
+      "zip": "37363",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.166281,
+      "lng": -85.059264
+    },
+    {
+      "id": "bulk_1785180829243_26",
+      "name": "Hixson Community Center",
+      "address": "5401 School Drive, Hixson TN 37343",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.145384,
+      "lng": -85.239547
+    },
+    {
+      "id": "bulk_1785180829243_27",
+      "name": "Church of the Highlands",
+      "address": "6621 Hunter Rd",
+      "city": "Harrison",
+      "zip": "37341",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.134983742607346,
+      "lng": -85.11697411537172
+    },
+    {
+      "id": "bulk_1785180829243_28",
+      "name": "Christ United Methodist Church",
+      "address": "8645 E Brainerd Rd",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.00254640627958,
+      "lng": -85.13355016708374
+    },
+    {
+      "id": "bulk_1785180829243_29",
+      "name": "Oakwood Baptist Church (Gym)",
+      "address": "4501 Bonny Oaks Dr",
+      "city": "Chattanooga",
+      "zip": "37416",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.07643118246579,
+      "lng": -85.20342707633972
+    },
+    {
+      "id": "bulk_1785180829243_30",
+      "name": "Northminster Presbyterian Church",
+      "address": "4791 Hal Dr",
+      "city": "Chattanooga",
+      "zip": "37416",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.085843154532675,
+      "lng": -85.18958687782289
+    },
+    {
+      "id": "bulk_1785180829243_31",
+      "name": "Lakesite City Hall",
+      "address": "9201 Rocky Point Rd",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.205826,
+      "lng": -85.124937
+    },
+    {
+      "id": "bulk_1785180829243_32",
+      "name": "Jane Harris Youth Building",
+      "address": "301 N Watauga Ln",
+      "city": "Lookout Mountain",
+      "zip": "37350",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 34.99838065813202,
+      "lng": -85.34933924674989
+    },
+    {
+      "id": "bulk_1785180829243_33",
+      "name": "John A Patten Community Center",
+      "address": "3202 Kellys Ferry Rd",
+      "city": "Chattanooga",
+      "zip": "37419",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.02119299930897,
+      "lng": -85.36954164505005
+    },
+    {
+      "id": "bulk_1785180829243_34",
+      "name": "Lupton Drive Baptist Church",
+      "address": "859 Lupton Dr",
+      "city": "Chattanooga",
+      "zip": "37415",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.105330912228055,
+      "lng": -85.27584671974184
+    },
+    {
+      "id": "bulk_1785180829243_35",
+      "name": "Maple Grove Baptist Church",
+      "address": "9525 Birchwood Pike",
+      "city": "Harrison",
+      "zip": "37341",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.204541,
+      "lng": -85.069501
+    },
+    {
+      "id": "bulk_1785180829243_36",
+      "name": "Middle Valley Baptist Church",
+      "address": "7901 Middle Valley Rd",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.196545,
+      "lng": -85.183954
+    },
+    {
+      "id": "bulk_1785180829243_37",
+      "name": "Missionary Ridge Neighborhood Assoc",
+      "address": "36 Sheridan Ave",
+      "city": "Chattanooga",
+      "zip": "37412",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.189136,
+      "lng": -85.189364
+    },
+    {
+      "id": "bulk_1785180829243_38",
+      "name": "Mtn Creek Church of Christ",
+      "address": "985 Runyan Dr",
+      "city": "Chattanooga",
+      "zip": "37405",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.10778849682232,
+      "lng": -85.32001733779909
+    },
+    {
+      "id": "bulk_1785180829243_39",
+      "name": "Mowbray Volunteer Fire Station",
+      "address": "1705 Mowbray Pike",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.274616,
+      "lng": -85.218403
+    },
+    {
+      "id": "bulk_1785180829243_40",
+      "name": "Olivet Nation",
+      "address": "4872 Jersey Pike",
+      "city": "Chattanooga",
+      "zip": "37416",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.092164018709255,
+      "lng": -85.17965197563171
+    },
+    {
+      "id": "bulk_1785180829243_41",
+      "name": "North Chattanooga Community Center",
+      "address": "406 May St",
+      "city": "Chattanooga",
+      "zip": "37405",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.06673712111347,
+      "lng": -85.31154155731201
+    },
+    {
+      "id": "bulk_1785180829243_42",
+      "name": "Stuart Heights Baptist Church Hixson Campus",
+      "address": "1505 Cloverdale Dr",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.129373,
+      "lng": -85.247162
+    },
+    {
+      "id": "bulk_1785180829243_43",
+      "name": "Knights of Columbus",
+      "address": "313 Sylvan St",
+      "city": "Chattanooga",
+      "zip": "37405",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.073322886039925,
+      "lng": -85.30461072921753
+    },
+    {
+      "id": "bulk_1785180829243_44",
+      "name": "Chattanooga Grace Church of the Nazarene",
+      "address": "6310 Dayton Blvd",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.177509106176885,
+      "lng": -85.24814486503602
+    },
+    {
+      "id": "bulk_1785180829243_45",
+      "name": "Seventh-Day Adventist Fellowship Center",
+      "address": "6233 Ooltewah Georgetown Rd",
+      "city": "Ooltewah",
+      "zip": "37363",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.092758,
+      "lng": -85.056241
+    },
+    {
+      "id": "bulk_1785180829243_46",
+      "name": "Meadowview Baptist Church",
+      "address": "10715 Ooltewah Georgetown Rd",
+      "city": "Georgetown",
+      "zip": "37336",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.23553330514663,
+      "lng": -84.99330282211304
+    },
+    {
+      "id": "bulk_1785180829243_47",
+      "name": "Church of Jesus Christ of Latter-Day Saints",
+      "address": "3067 Ooltewah Ringgold Rd",
+      "city": "Ooltewah",
+      "zip": "37363",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.030716,
+      "lng": -85.082872
+    },
+    {
+      "id": "bulk_1785180829243_48",
+      "name": "Pleasant Grove Baptist Church",
+      "address": "7634 Gann Rd",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.188254,
+      "lng": -85.20064
+    },
+    {
+      "id": "bulk_1785180829243_49",
+      "name": "Union Fork Baptist Church",
+      "address": "350 Lee Pike",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.310217,
+      "lng": -85.130527
+    },
+    {
+      "id": "bulk_1785180829243_50",
+      "name": "Disabled American Veterans Chapter 6",
+      "address": "619 Memorial Dr",
+      "city": "Chattanooga",
+      "zip": "37415",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.08950404806862,
+      "lng": -85.29888153076173
+    },
+    {
+      "id": "bulk_1785180829243_51",
+      "name": "Joe Glasscock Community Center",
+      "address": "3653 Tom Weathers Drive, Red Bank TN 37415",
+      "city": "Red Bank",
+      "zip": "37415",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.121271,
+      "lng": -85.302719
+    },
+    {
+      "id": "bulk_1785180829243_52",
+      "name": "Calvary Baptist Church",
+      "address": "5201 Dayton Blvd",
+      "city": "Chattanooga",
+      "zip": "37415",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.145090792883174,
+      "lng": -85.27556777000427
+    },
+    {
+      "id": "bulk_1785180829243_53",
+      "name": "La Paz Chattanooga",
+      "address": "809 S. Willow St",
+      "city": "Chattanooga",
+      "zip": "37404",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.03017207533782,
+      "lng": -85.27470946311952
+    },
+    {
+      "id": "bulk_1785180829243_54",
+      "name": "Ridgeside Community Pool House",
+      "address": "300 Shepherd Ave",
+      "city": "Chattanooga",
+      "zip": "37411",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "30",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.036201,
+      "lng": -85.2507
+    },
+    {
+      "id": "bulk_1785180829243_55",
+      "name": "Northside Presbyterian Church",
+      "address": "923 Mississippi Ave",
+      "city": "Chattanooga",
+      "zip": "37405",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.069274898799904,
+      "lng": -85.29484748840332
+    },
+    {
+      "id": "bulk_1785180829243_56",
+      "name": "Sale Creek Fire Department",
+      "address": "14828 Dayton Pike",
+      "city": "Sale Creek",
+      "zip": "37373",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.37599029559829,
+      "lng": -85.11123418807983
+    },
+    {
+      "id": "bulk_1785180829243_57",
+      "name": "Highway 58 Volunteer Fire Training Center",
+      "address": "9108 Snow Hill Rd",
+      "city": "Ooltewah",
+      "zip": "37363",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.179029,
+      "lng": -85.044643
+    },
+    {
+      "id": "bulk_1785180829243_58",
+      "name": "Sequoyah Church of God",
+      "address": "2007 Frankie Lane,",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.25186622141354,
+      "lng": -85.11579394340515
+    },
+    {
+      "id": "bulk_1785180829243_59",
+      "name": "Signal Mountain Presbyterian Church",
+      "address": "612 James Blvd",
+      "city": "Signal Mountain",
+      "zip": "37377",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.12352405859006,
+      "lng": -85.35121679306032
+    },
+    {
+      "id": "bulk_1785180829243_60",
+      "name": "Chattanooga First Seventh-Day Adventist Church",
+      "address": "7450 Standifer Gap Rd",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.05136826977594,
+      "lng": -85.14154314994813
+    },
+    {
+      "id": "bulk_1785180829243_61",
+      "name": "Daisy Church of God (Gym)",
+      "address": "9555 Dayton Pike",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.241667296770224,
+      "lng": -85.19359946250916
+    },
+    {
+      "id": "bulk_1785180829243_62",
+      "name": "Stuart Heights Baptist Church Soddy Daisy Campus",
+      "address": "10049 Dayton Pike",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.25511225944617,
+      "lng": -85.18453896045686
+    },
+    {
+      "id": "bulk_1785180829243_63",
+      "name": "Soddy Daisy Community Center",
+      "address": "190 Depot Street,",
+      "city": "Soddy Daisy",
+      "zip": "37379",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.2896015947397,
+      "lng": -85.15815138816835
+    },
+    {
+      "id": "bulk_1785180829243_64",
+      "name": "South Chatt Community Center",
+      "address": "1151 W 40th St",
+      "city": "Chattanooga",
+      "zip": "37409",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.00878584323501,
+      "lng": -85.32289266586305
+    },
+    {
+      "id": "bulk_1785180829243_65",
+      "name": "Rivermont Presbyterian Church",
+      "address": "3319 Hixson Pike",
+      "city": "Chattanooga",
+      "zip": "37415",
+      "county": "Hamilton",
+      "type": "election_day",
       "state_district": "?",
       "state_senate_district": "?",
       "congressional_district": "?",
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 35.10260992856173,
+      "lng": -85.27573943138124
+    },
+    {
+      "id": "bulk_1785180829243_67",
+      "name": "Tyner Community Center (Gym)",
+      "address": "6900 Ty Hi Dr",
+      "city": "Chattanooga",
+      "zip": "37421",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "29",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.05922870088872,
+      "lng": -85.15214323997498
+    },
+    {
+      "id": "bulk_1785180829243_68",
+      "name": "Clear Creek Church of Christ",
+      "address": "5612 Hixson Pike",
+      "city": "Hixson",
+      "zip": "37343",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.14502938230475,
+      "lng": -85.21875858306885
+    },
+    {
+      "id": "bulk_1785180829243_69",
+      "name": "Walden Town Hall",
+      "address": "1836 Taft Hwy",
+      "city": "Signal Mountain",
+      "zip": "37377",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "27",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.15353430618786,
+      "lng": -85.3182739019394
+    },
+    {
+      "id": "bulk_1785180829243_71",
+      "name": "Harrison Center (Old Harrison Elem.)",
+      "address": "5637 Highway 58, Harrison TN 37341",
+      "city": "Harrison",
+      "zip": "37341",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "26",
+      "state_senate_district": "11",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.111237767342416,
+      "lng": -85.14112472534181
+    },
+    {
+      "id": "bulk_1785180829243_72",
+      "name": "New Covenant Fellowship",
+      "address": "1326 N Moore Rd",
+      "city": "Chattanooga",
+      "zip": "37411",
+      "county": "Hamilton",
+      "type": "election_day",
+      "state_district": "28",
+      "state_senate_district": "10",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.0348720789939,
+      "lng": -85.21959543228151
     }
   ],
   "tn_polling_deleted": [
