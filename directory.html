@@ -722,7 +722,7 @@
         <input type="text" id="ep-address" placeholder="404 E Cherry St" />
         <div id="ep-geocode-status" class="inline-status"></div>
         <button type="button"
-          onclick="epGeocode(document.getElementById('ep-address').value.trim())"
+          onclick="epGeocode(document.getElementById('ep-address').value.trim(), true)"
           style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
           &#128204; Re-geocode address
         </button>
@@ -1622,7 +1622,9 @@
       if (!addr) return;
       epGeoTimer = setTimeout(function() { epGeocode(addr); }, 800);
     }
-    function epGeocode(address) {
+    // force=true (Re-geocode button): overrides existing coords and uses fresh position for districts.
+    // force=false/undefined (auto on typing): preserves manually placed pins.
+    function epGeocode(address, force) {
       var city = document.getElementById("ep-city").value.trim();
       showStatus("ep-geocode-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
       var query = address + (city ? ", " + city : "") + ", TN";
@@ -1637,11 +1639,12 @@
         }
         var gLat = parseFloat(results[0].lat);
         var gLng = parseFloat(results[0].lon);
-        // Only overwrite coordinates if they are not already set (preserve manually placed pins)
+        // force=true (button): always update coords and use fresh position for district lookup.
+        // force=false (auto on typing): only update if no coords set, prefer existing for districts.
         var existingLat = parseFloat(document.getElementById("ep-lat").value);
         var existingLng = parseFloat(document.getElementById("ep-lng").value);
         var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
-        if (!hasExistingCoords) {
+        if (!hasExistingCoords || force) {
           document.getElementById("ep-lat").value = gLat.toFixed(6);
           document.getElementById("ep-lng").value = gLng.toFixed(6);
         }
@@ -1654,14 +1657,14 @@
           });
           if (matched) countyDropdown.value = matched.value;
         }
-        // Use existing coords for district detection if present, otherwise use geocoded coords
-        var detectLat = hasExistingCoords ? existingLat : gLat;
-        var detectLng = hasExistingCoords ? existingLng : gLng;
+        // Always use fresh geocoded coords for district lookup when force=true.
+        var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
+        var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
         epLookupDistricts(detectLat, detectLng);
-        if (hasExistingCoords) {
+        if (hasExistingCoords && !force) {
           showStatus("ep-geocode-status", "Address found - districts updated (coordinates unchanged)", "#10b981", "rgba(6,78,59,0.3)");
         } else {
-          showStatus("ep-geocode-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+          showStatus("ep-geocode-status", "Address found - coordinates and districts updated", "#10b981", "rgba(6,78,59,0.3)");
         }
         setTimeout(function() { hideStatus("ep-geocode-status"); }, 3000);
       })

@@ -571,7 +571,7 @@
         <input type="text" id="ep-address" />
         <div id="ep-geo-status" class="inline-status"></div>
         <button type="button"
-          onclick="epGeocode(document.getElementById('ep-address').value.trim())"
+          onclick="epGeocode(document.getElementById('ep-address').value.trim(), true)"
           style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
           &#128204; Re-geocode address
         </button>
@@ -1422,9 +1422,11 @@
     });
 
     // Geocoding for the edit panel.
-    // epGeocode(addr) runs immediately - called by the Re-geocode button and the debounce timer.
+    // epGeocode(addr, force) runs immediately - called by the Re-geocode button and the debounce timer.
+    // force=true (button): overrides existing coords and uses fresh position for district lookup.
+    // force=false/undefined (auto on typing): preserves manually placed pins.
     // epScheduleGeocode() is called on input events - waits 800ms then calls epGeocode().
-    function epGeocode(addr) {
+    function epGeocode(addr, force) {
       if (!addr) return;
       var city = document.getElementById("ep-city").value.trim();
       var zip  = document.getElementById("ep-zip").value.trim();
@@ -1461,12 +1463,12 @@
         }
         var gLat = parseFloat(results[0].lat);
         var gLng = parseFloat(results[0].lon);
-        // Only overwrite the coordinate fields if they are currently empty.
-        // If the user has manually placed a pin, preserve those coordinates.
+        // force=true (Re-geocode button): always update coords and use fresh position for districts.
+        // force=false (auto-geocode on typing): preserve manually placed pins.
         var existingLat = parseFloat(document.getElementById("ep-lat").value);
         var existingLng = parseFloat(document.getElementById("ep-lng").value);
         var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
-        if (!hasExistingCoords) {
+        if (!hasExistingCoords || force) {
           document.getElementById("ep-lat").value = gLat.toFixed(6);
           document.getElementById("ep-lng").value = gLng.toFixed(6);
         }
@@ -1477,9 +1479,10 @@
         }
         epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
         setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
-        // Detect districts - use existing pin coords if set, otherwise use geocoded coords
-        var detectLat = hasExistingCoords ? existingLat : gLat;
-        var detectLng = hasExistingCoords ? existingLng : gLng;
+        // Always use fresh geocoded coords for district lookup when force=true.
+        // When auto-geocoding on typing, prefer existing pin coords if present.
+        var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
+        var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
         epDetectDistricts(detectLat, detectLng);
       })
       .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });

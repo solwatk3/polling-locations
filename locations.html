@@ -980,7 +980,7 @@
         <input type="text" id="f-address" placeholder="e.g. 404 E Cherry St Brownsville 38012" />
         <div id="geocode-status" class="inline-status"></div>
         <button type="button"
-          onclick="geocodeAddress(document.getElementById('f-address').value.trim())"
+          onclick="geocodeAddress(document.getElementById('f-address').value.trim(), true)"
           style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
           &#128204; Re-geocode address
         </button>
@@ -2186,7 +2186,9 @@
       return address.replace(/\s+(suite|ste|apt|unit|#)\s*\S+/gi, "").trim();
     }
 
-    function geocodeAddress(address) {
+    // force=true is set by the Re-geocode button - overrides existing coords and
+    // uses the fresh geocoded position for district lookup instead of the old coords.
+    function geocodeAddress(address, force) {
       var city  = document.getElementById("f-city").value.trim();
       var zip   = document.getElementById("f-zip").value.trim();
 
@@ -2278,13 +2280,13 @@
         var gLat = parseFloat(results[0].lat);
         var gLng = parseFloat(results[0].lon);
 
-        // Only overwrite coordinates if the fields are currently empty.
-        // If the user has manually placed a pin, preserve those coordinates.
+        // force=true (Re-geocode button): always update coords and use fresh position for districts.
+        // force=false (auto-geocode on typing): preserve manually placed pins.
         var existingLat = parseFloat(document.getElementById("f-lat").value);
         var existingLng = parseFloat(document.getElementById("f-lng").value);
         var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
 
-        if (!hasExistingCoords) {
+        if (!hasExistingCoords || force) {
           document.getElementById("f-lat").value = gLat.toFixed(6);
           document.getElementById("f-lng").value = gLng.toFixed(6);
         }
@@ -2301,19 +2303,20 @@
           if (matched) countyDropdown.value = matched.value;
         }
 
-        // For district lookup: use existing pin coords if set, otherwise use geocoded coords
-        var detectLat = hasExistingCoords ? existingLat : gLat;
-        var detectLng = hasExistingCoords ? existingLng : gLng;
+        // Always use the fresh geocoded coords for district lookup when force=true.
+        // When auto-geocoding on typing, prefer existing pin coords if present.
+        var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
+        var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
         lookupDistricts(detectLat, detectLng);
 
         if (isCityOnly) {
           // Let the warning stay visible - user should verify/adjust coordinates
           showStatus("geocode-status", "Street not found - pin placed at city center. Verify coordinates.", "#f59e0b", "rgba(120,53,15,0.3)");
-        } else if (hasExistingCoords) {
+        } else if (hasExistingCoords && !force) {
           showStatus("geocode-status", "Address found - districts updated (coordinates unchanged)", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { hideStatus("geocode-status"); }, 4000);
         } else {
-          showStatus("geocode-status", "Address found - coordinates filled", "#10b981", "rgba(6,78,59,0.3)");
+          showStatus("geocode-status", "Address found - coordinates and districts updated", "#10b981", "rgba(6,78,59,0.3)");
           setTimeout(function() { hideStatus("geocode-status"); }, 4000);
         }
       })
