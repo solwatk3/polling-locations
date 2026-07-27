@@ -550,18 +550,18 @@
     </nav>
   </header>
 
-  <!-- ===== BACKUP BAR ===== -->
-  <!-- Shows last backup date, and has Export/Import/setup buttons -->
-  <div class="backup-bar">
-    <span id="backup-status">Checking backup...</span>
-    <button class="setup-token-link" onclick="setupRestoreLinkModal()">Set up restore link</button>
-    <div class="backup-bar-actions">
-      <button class="btn-backup" onclick="openImportModal()">&#8593; Import</button>
-      <button class="btn-backup primary" id="btn-backup-export" onclick="exportPollingData()">&#8659; Backup</button>
-    </div>
-  </div>
-
   <div class="page-body">
+
+    <!-- ===== BACKUP BAR ===== -->
+    <!-- Shows last backup date, and has Export/Import/setup buttons -->
+    <div class="backup-bar">
+      <span id="backup-status">Checking backup...</span>
+      <button class="setup-token-link" onclick="setupRestoreLinkModal()">Set up restore link</button>
+      <div class="backup-bar-actions">
+        <button class="btn-backup" onclick="openImportModal()">&#8593; Import</button>
+        <button class="btn-backup primary" id="btn-backup-export" onclick="exportPollingData()">&#8659; Backup</button>
+      </div>
+    </div>
 
     <!-- PAGE HEADER -->
     <div class="page-header">
