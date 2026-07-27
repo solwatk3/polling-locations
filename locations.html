@@ -3084,6 +3084,19 @@
           var address = (cols[1] || "").trim();
           var city    = (cols[2] || "").trim();
           var zip     = (cols[3] || "").trim();
+
+          // If city/zip are missing, try to extract them from the address field.
+          // Handles addresses like "4011 Austin St, Chattanooga TN 37411" where
+          // the full address was pasted into a single column.
+          if ((!city || !zip) && address) {
+            var addrParsed = parseFullAddress(address);
+            if (addrParsed) {
+              address = addrParsed.street;
+              if (!city && addrParsed.city) city = addrParsed.city;
+              if (!zip  && addrParsed.zip)  zip  = addrParsed.zip;
+            }
+          }
+
           var reviewReasons = [];
           if (!name)    reviewReasons.push("No name");
           if (!address) reviewReasons.push("No address");

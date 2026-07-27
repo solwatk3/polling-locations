@@ -146,13 +146,23 @@
 - [x] locations.html + location-detail.html + directory.html: Re-geocode button now passes force=true to bypass hasExistingCoords guard - ensures fresh geocoded coordinates are used for both coord fields and district lookup, not stale old coords (2026-07-27)
 - [x] locations.html + location-detail.html + directory.html: geocode "not found" path now checks for existing pin coordinates before giving up - if lat/lng already set, runs district detection from those coords and shows "Address not in map data - detecting districts from existing pin" (2026-07-27)
 
+## Done (Session 18 - 2026-07-27)
+- [x] index.html: floating search bar added (top-right, z-index 500) - searches location names and addresses, flies to matching pin and briefly highlights it (2026-07-27)
+- [x] index.html: district search added to search bar - type "House 80", "Senate 29", or "Congress 5" to activate that layer and zoom to the district boundary (2026-07-27)
+- [x] index.html: markerRegistry pattern added - placePin() registers each marker by location ID so search can fly to any pin by ID (2026-07-27)
+- [x] index.html: pendingDistrictZoom pattern added - if district layer hasn't loaded yet when user searches, zoom fires automatically once the layer finishes loading (2026-07-27)
+- [x] index.html: houseFeatures / senateFeatures / congressFeatures arrays populated after each layer loads - enables zoomToDistrict() to find the right GeoJSON feature (2026-07-27)
+- [x] locations.html + location-detail.html + directory.html: geocoding fixed across all three pages - replaced Census Geocoder (blocked by CORS on GitHub Pages) with Nominatim; added r.ok check before r.json() to prevent crashes on 429 rate-limit responses; debounce increased to 1200ms (2026-07-27)
+- [x] location-detail.html: Detect Districts button added directly to info panel next to "Districts" label - runs ArcGIS point-in-polygon queries from pin coordinates, updates district chips on screen, and saves results to localStorage without opening the edit panel (2026-07-27)
+- [x] Knox County voting locations extracted from PDF (kgis.org) and saved as knox-county-voting-locations.csv - 41 locations ready to import (2026-07-27)
+
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all coordinate fixes and new locations permanent in the repo
-- [ ] Start entering early voting locations - use paste parser to quickly fill in schedule data from county election commission websites
-- [ ] Work through the "House District ?" locations and run Re-geocode on each to clear out unknown districts (districts now detect from existing pin even if address geocode fails)
+- [ ] Import knox-county-voting-locations.csv into the app using bulk import in locations.html (tab-separated format supported)
+- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all locations permanent in the repo
+- [ ] Start entering early voting locations for Knox County and other counties - use paste parser for schedule data from county election commission websites
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
@@ -162,6 +172,7 @@
 | Direct shapefile URL guesses from Comptroller site | 404 - shapefile triggered via JS, no direct URL | 2026-07-26 |
 | Nominatim geocoding for rural TN street addresses | Many rural roads (e.g. Lucy Black Rd, Bolivar) not in OpenStreetMap - city-center fallback implemented instead | 2026-07-26 |
 | Nominatim geocoding for "Hwy 45 Bypass" in Jackson, TN | Highway bypass not mapped under that name in OSM - need to enter coordinates manually from Google Maps | 2026-07-26 |
+| US Census Geocoder (geocoding.geo.census.gov) | Blocked by CORS on GitHub Pages - "No Access-Control-Allow-Origin header" - cannot be used from a browser-side app hosted on a different domain | 2026-07-27 |
 
 ## Notes
 - Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT
@@ -175,3 +186,4 @@
 - ALL_LOCATIONS deduplication: seed entries excluded if ID already exists in tn_polling_custom (custom version wins)
 - Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
 - Paste parser: header lines (no parens) become rangeHeader prepended to all following rows; supports \r\n, \r, \n, and semicolons
+- knox-county-voting-locations.csv: 41 locations extracted from KGIS PDF (April 2026), saved in projects/polling-locations/
