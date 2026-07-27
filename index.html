@@ -393,6 +393,7 @@
     }
     var earlyIcon    = makePinIcon("#10b981", "#065f46");
     var electionIcon = makePinIcon("#f59e0b", "#78350f");
+    var bothIcon     = makePinIcon("#818cf8", "#3730a3"); // indigo - serves both periods
     var customIcon   = makePinIcon("#a855f7", "#6b21a8");
 
     // =========================================================================
@@ -418,8 +419,25 @@
     // BUILD POPUP HTML (view-only - info display, no edit controls)
     // =========================================================================
     function buildPopup(loc, isCustom) {
-      var typeLabel  = loc.type === "early" ? "Early Voting" : "Election Day";
-      var badgeClass = loc.type === "early" ? "early" : "election-day";
+      // Type badge label and class
+      var typeLabel  = loc.type === "both" ? "Early + Election Day"
+                     : loc.type === "early" ? "Early Voting"
+                     : "Election Day";
+      var badgeClass = loc.type === "both" ? "both"
+                     : loc.type === "early" ? "early"
+                     : "election-day";
+
+      // Hours - show schedule rows if available, else plain string
+      var hoursHtml;
+      if (loc.schedule && loc.schedule.length) {
+        hoursHtml = loc.schedule.map(function(row) {
+          var t = row.open === "Closed" ? "Closed" : row.open + " - " + row.close;
+          return row.days ? row.days + ": " + t : t;
+        }).join("<br>");
+      } else {
+        hoursHtml = loc.hours || "Hours not set";
+      }
+
       return '<div class="popup-content">' +
         '<div class="popup-name">' + (loc.name || "Unnamed") +
           (isCustom ? ' <small style="color:var(--accent-light);">(custom)</small>' : '') +
@@ -427,7 +445,7 @@
         '<div class="popup-type-badge ' + badgeClass + '">' + typeLabel + '</div>' +
         '<div class="popup-address">&#128205; ' + (loc.address || "Address not set") +
           (loc.city ? ', ' + loc.city : '') + '</div>' +
-        '<div class="popup-hours">&#128336; ' + (loc.hours || "Hours not set") + '</div>' +
+        '<div class="popup-hours">&#128336; ' + hoursHtml + '</div>' +
         '<div class="popup-districts">' +
           'House ' + (loc.state_district || '?') + ' &bull; ' +
           'Senate ' + (loc.state_senate_district || '?') + ' &bull; ' +
@@ -454,15 +472,25 @@
 
       // Purple = needs correction (flagged explicitly). Otherwise color by type.
       var icon;
-      if (loc.needs_correction)      icon = customIcon;
-      else if (loc.type === "early") icon = earlyIcon;
-      else                           icon = electionIcon;
+      if (loc.needs_correction)       icon = customIcon;
+      else if (loc.type === "both")   icon = bothIcon;
+      else if (loc.type === "early")  icon = earlyIcon;
+      else                            icon = electionIcon;
 
-      var group = loc.type === "early" ? earlyLayer : electionLayer;
+      // "both" pins go on both layers so they appear regardless of which toggle is active
+      var marker = L.marker([lat, lng], { icon: icon, draggable: false })
+        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 });
 
-      L.marker([lat, lng], { icon: icon, draggable: false })
-        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
-        .addTo(group);
+      if (loc.type === "both") {
+        marker.addTo(earlyLayer);
+        // Clone for the election day layer so each layer has its own independent marker object
+        L.marker([lat, lng], { icon: icon, draggable: false })
+          .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+          .addTo(electionLayer);
+      } else {
+        var group = loc.type === "early" ? earlyLayer : electionLayer;
+        marker.addTo(group);
+      }
     }
 
     // Place all base placeholder locations

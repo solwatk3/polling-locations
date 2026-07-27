@@ -411,6 +411,7 @@ body {
 }
 .popup-type-badge.early        { background: #064e3b; color: #6ee7b7; }
 .popup-type-badge.election-day { background: #78350f; color: #fde68a; }
+.popup-type-badge.both         { background: #312e81; color: #c7d2fe; }
 
 .popup-content .popup-address { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
 .popup-content .popup-hours   { font-size: 0.75rem; color: var(--info); margin-bottom: 6px; }
