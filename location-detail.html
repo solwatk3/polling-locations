@@ -1432,69 +1432,86 @@
       var zip  = document.getElementById("ep-zip").value.trim();
       // If address already contains state/zip, don't append city again
       var addrHasLocation = /,\s*(TN|Tennessee)|\b\d{5}\b/.test(addr);
-      var geoQuery = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
+      var query = addrHasLocation ? addr : addr + (city ? ", " + city : "") + (zip ? " " + zip : "") + ", TN";
       epShowStatus("ep-geo-status", "Finding address...", "#60a5fa", "rgba(30,58,95,0.5)");
-      fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(geoQuery) +
-        "&format=json&limit=1&countrycodes=us&addressdetails=1",
-        { headers: { "User-Agent": "TN-Polling-Locations-Map/1.0" } })
-      .then(function(r) { return r.json(); })
-      .then(function(results) {
-        if (!results || !results.length) {
-          // If the location already has coordinates, still run district detection
-          // from those coords even though the address lookup failed.
-          var fallbackLat = parseFloat(document.getElementById("ep-lat").value);
-          var fallbackLng = parseFloat(document.getElementById("ep-lng").value);
-          if (!isNaN(fallbackLat) && !isNaN(fallbackLng)) {
-            epShowStatus("ep-geo-status", "Address not in map data - detecting districts from existing pin", "#f59e0b", "rgba(120,53,15,0.3)");
-            epDetectDistricts(fallbackLat, fallbackLng);
-          } else {
-            epShowStatus("ep-geo-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
-            // Highlight the coordinate inputs and scroll to them so the user can see where to type
-            var latInput = document.getElementById("ep-lat");
-            var lngInput = document.getElementById("ep-lng");
-            latInput.style.borderColor = "#f59e0b";
-            lngInput.style.borderColor = "#f59e0b";
-            setTimeout(function() {
-              latInput.scrollIntoView({ behavior: "smooth", block: "center" });
-              latInput.focus();
-            }, 200);
-            // Clear the highlight once the user starts typing
-            function clearHighlight() {
-              latInput.style.borderColor = "";
-              lngInput.style.borderColor = "";
-              latInput.removeEventListener("input", clearHighlight);
-              lngInput.removeEventListener("input", clearHighlight);
+
+      // Census Geocoder - primary provider (no rate limits, no API key, US addresses only)
+      fetch("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=" +
+        encodeURIComponent(query) + "&benchmark=Public_AR_Current&format=json")
+        .then(function(r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function(data) {
+          var matches = data.result && data.result.addressMatches;
+          if (!matches || !matches.length) {
+            // If the location already has coordinates, still run district detection
+            // from those coords even though the address lookup failed.
+            var fallbackLat = parseFloat(document.getElementById("ep-lat").value);
+            var fallbackLng = parseFloat(document.getElementById("ep-lng").value);
+            if (!isNaN(fallbackLat) && !isNaN(fallbackLng)) {
+              epShowStatus("ep-geo-status", "Address not in map data - detecting districts from existing pin", "#f59e0b", "rgba(120,53,15,0.3)");
+              epDetectDistricts(fallbackLat, fallbackLng);
+            } else {
+              epShowStatus("ep-geo-status", "Not found - scroll down to enter coordinates manually", "#f59e0b", "rgba(120,53,15,0.3)");
+              // Highlight the coordinate inputs and scroll to them so the user can see where to type
+              var latInput = document.getElementById("ep-lat");
+              var lngInput = document.getElementById("ep-lng");
+              latInput.style.borderColor = "#f59e0b";
+              lngInput.style.borderColor = "#f59e0b";
+              setTimeout(function() {
+                latInput.scrollIntoView({ behavior: "smooth", block: "center" });
+                latInput.focus();
+              }, 200);
+              // Clear the highlight once the user starts typing
+              function clearHighlight() {
+                latInput.style.borderColor = "";
+                lngInput.style.borderColor = "";
+                latInput.removeEventListener("input", clearHighlight);
+                lngInput.removeEventListener("input", clearHighlight);
+              }
+              latInput.addEventListener("input", clearHighlight);
+              lngInput.addEventListener("input", clearHighlight);
             }
-            latInput.addEventListener("input", clearHighlight);
-            lngInput.addEventListener("input", clearHighlight);
+            return;
           }
-          return;
-        }
-        var gLat = parseFloat(results[0].lat);
-        var gLng = parseFloat(results[0].lon);
-        // force=true (Re-geocode button): always update coords and use fresh position for districts.
-        // force=false (auto-geocode on typing): preserve manually placed pins.
-        var existingLat = parseFloat(document.getElementById("ep-lat").value);
-        var existingLng = parseFloat(document.getElementById("ep-lng").value);
-        var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
-        if (!hasExistingCoords || force) {
-          document.getElementById("ep-lat").value = gLat.toFixed(6);
-          document.getElementById("ep-lng").value = gLng.toFixed(6);
-        }
-        if (!document.getElementById("ep-county").value && results[0].address && results[0].address.county) {
-          var raw = results[0].address.county.replace(/ County$/i, "").trim();
-          var match = Array.from(document.getElementById("ep-county").options).find(function(o) { return o.value.toLowerCase() === raw.toLowerCase(); });
-          if (match) document.getElementById("ep-county").value = match.value;
-        }
-        epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
-        setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
-        // Always use fresh geocoded coords for district lookup when force=true.
-        // When auto-geocoding on typing, prefer existing pin coords if present.
-        var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
-        var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
-        epDetectDistricts(detectLat, detectLng);
-      })
-      .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
+          // Census returns x=longitude, y=latitude
+          var gLat = matches[0].coordinates.y;
+          var gLng = matches[0].coordinates.x;
+          // force=true (Re-geocode button): always update coords and use fresh position for districts.
+          // force=false (auto-geocode on typing): preserve manually placed pins.
+          var existingLat = parseFloat(document.getElementById("ep-lat").value);
+          var existingLng = parseFloat(document.getElementById("ep-lng").value);
+          var hasExistingCoords = !isNaN(existingLat) && !isNaN(existingLng);
+          if (!hasExistingCoords || force) {
+            document.getElementById("ep-lat").value = gLat.toFixed(6);
+            document.getElementById("ep-lng").value = gLng.toFixed(6);
+          }
+          epShowStatus("ep-geo-status", "Address found", "#10b981", "rgba(6,78,59,0.3)");
+          setTimeout(function() { epHideStatus("ep-geo-status"); }, 3000);
+          // Always use fresh geocoded coords for district lookup when force=true.
+          // When auto-geocoding on typing, prefer existing pin coords if present.
+          var detectLat = (!hasExistingCoords || force) ? gLat : existingLat;
+          var detectLng = (!hasExistingCoords || force) ? gLng : existingLng;
+          epDetectDistricts(detectLat, detectLng);
+
+          // Nominatim reverse geocode for county - best effort, silent on failure.
+          // Giving Nominatim exact coordinates is much more reliable than parsing a street address.
+          var countyEl = document.getElementById("ep-county");
+          if (countyEl && !countyEl.value) {
+            fetch("https://nominatim.openstreetmap.org/reverse?lat=" + gLat + "&lon=" + gLng +
+              "&format=json&addressdetails=1&zoom=10")
+              .then(function(r) { return r.json(); })
+              .then(function(rev) {
+                if (rev && rev.address && rev.address.county) {
+                  var raw = rev.address.county.replace(/ County$/i, "").trim();
+                  var match = Array.from(countyEl.options).find(function(o) {
+                    return o.value.toLowerCase() === raw.toLowerCase();
+                  });
+                  if (match) countyEl.value = match.value;
+                }
+              })
+              .catch(function() {}); // county is best-effort - silent failure is fine
+          }
+        })
+        .catch(function() { epShowStatus("ep-geo-status", "Geocode failed", "#f87171", "rgba(69,10,10,0.3)"); });
     }
     var epGeoTimer = null;
     function epScheduleGeocode() {
