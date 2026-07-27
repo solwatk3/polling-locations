@@ -102,6 +102,7 @@
     .loc-card:hover { box-shadow: 0 4px 16px rgba(155,48,255,0.15); border-color: var(--accent); }
     .loc-card.early-card  { border-left-color: #10b981; }
     .loc-card.eday-card   { border-left-color: var(--warning); }
+    .loc-card.both-card   { border-left-color: #6366f1; }
     .loc-card.custom-card { border-left-color: var(--accent); }
 
     .card-type {
@@ -113,6 +114,7 @@
     }
     .card-type.early    { color: #10b981; }
     .card-type.eday     { color: var(--warning); }
+    .card-type.both     { color: #6366f1; }
     .card-type.custom   { color: var(--accent-light); }
 
     .card-name {
@@ -756,10 +758,11 @@
     // =========================================================================
     function buildCard(loc) {
       var isCustom   = !!customIds[loc.id];
+      var isBoth     = loc.type === "both";
       var isEarly    = loc.type === "early";
-      var cardClass  = isCustom ? "custom-card" : (isEarly ? "early-card" : "eday-card");
-      var typeClass  = isCustom ? "custom" : (isEarly ? "early" : "eday");
-      var typeLabel  = isCustom ? "Custom" : (isEarly ? "Early Voting" : "Election Day");
+      var cardClass  = isCustom ? "custom-card" : (isBoth ? "both-card" : (isEarly ? "early-card" : "eday-card"));
+      var typeClass  = isCustom ? "custom" : (isBoth ? "both" : (isEarly ? "early" : "eday"));
+      var typeLabel  = isCustom ? "Custom" : (isBoth ? "Early + Election Day" : (isEarly ? "Early Voting" : "Election Day"));
 
       var badges = [
         loc.state_district            ? '<span class="dist-badge">H' + loc.state_district + '</span>'            : '',
@@ -772,7 +775,9 @@
         '<div class="card-type ' + typeClass + '">' + typeLabel + '</div>' +
         '<div class="card-name">' + escHtml(loc.name || "Unnamed Location") + '</div>' +
         (loc.address ? '<div class="card-address">&#128205; ' + escHtml(loc.address) + (loc.city ? ', ' + escHtml(loc.city) : '') + '</div>' : '') +
-        (loc.hours ? '<div class="card-hours">&#128336; ' + escHtml(loc.hours) + '</div>' : '') +
+        (loc.hours ? '<div class="card-hours">&#128336; ' + escHtml(loc.hours) +
+          (loc.schedule && loc.schedule.length > 1 ? ' <span style="color:var(--text-muted);font-weight:400;">(+' + (loc.schedule.length - 1) + ' more)</span>' : '') +
+          '</div>' : '') +
         (loc.notes ? '<div class="card-notes">&#9888; ' + escHtml(loc.notes) + '</div>' : '') +
         '<div class="card-meta">' +
           badges +
@@ -960,8 +965,9 @@
     function renderDashboard() {
       var total   = ALL_LOCATIONS.length;
       var custom  = loadCustom().length;
-      var early   = ALL_LOCATIONS.filter(function(l) { return l.type === "early"; }).length;
-      var eday    = ALL_LOCATIONS.filter(function(l) { return l.type !== "early"; }).length;
+      // "both" type counts toward both early and election day totals
+      var early   = ALL_LOCATIONS.filter(function(l) { return l.type === "early" || l.type === "both"; }).length;
+      var eday    = ALL_LOCATIONS.filter(function(l) { return l.type === "election_day" || l.type === "both"; }).length;
 
       // Count unique districts with at least one location
       function districtSet(field) {
@@ -1025,8 +1031,9 @@
       if (!loc) return;
 
       var isCustom  = !!customIds[loc.id];
+      var isBoth    = loc.type === "both";
       var isEarly   = loc.type === "early";
-      var typeLabel = isCustom ? "Custom Location" : (isEarly ? "Early Voting" : "Election Day");
+      var typeLabel = isCustom ? "Custom Location" : (isBoth ? "Early Voting + Election Day" : (isEarly ? "Early Voting" : "Election Day"));
 
       document.getElementById("dm-name").textContent = loc.name || "Unnamed Location";
       document.getElementById("dm-type").textContent = typeLabel;
