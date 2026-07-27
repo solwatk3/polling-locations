@@ -2042,6 +2042,14 @@
       var extractedZip = zipMatch ? zipMatch[1] : null;
       if (zipMatch) raw = raw.slice(0, zipMatch.index).trim();
 
+      // Strip trailing state abbreviation so it doesn't bleed into the city field
+      // when the user pastes a full "Street, City, TN Zip" formatted address.
+      raw = raw.replace(/,?\s+(TN|Tennessee)\s*$/i, "").trim();
+
+      // Normalize commas - treat "Rd, Antioch" the same as "Rd Antioch" so the
+      // street-type detector can match "Rd" instead of the comma-suffixed "Rd,".
+      raw = raw.replace(/,/g, " ").replace(/\s+/g, " ").trim();
+
       var parts = raw.split(/\s+/);
 
       // Find the last word that looks like a street type

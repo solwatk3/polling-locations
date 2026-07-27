@@ -131,6 +131,10 @@
 - [x] locations.html: bulk import duplicate detection added - fingerprint is lowercased name+address; duplicates against existing locations AND within the batch itself are blocked; toast names all skipped locations (2026-07-27)
 - [x] locations.html: bulk import hint text updated to document both accepted formats (2026-07-27)
 
+## Done (Session 16 - 2026-07-27)
+- [x] location-detail.html: delete navigates to next location in group context instead of returning to directory; falls back to previous if at end of list; falls back to directory.html if no context (2026-07-27)
+- [x] locations.html: Set County modal added - lists locations missing county by default, checkbox per row, select-all, show-all toggle, county text input, Apply button updates localStorage and in-memory array instantly (2026-07-27)
+
 ## Done (Session 15 - 2026-07-27)
 - [x] locations.html + location-detail.html + directory.html: time dropdowns now default to blank "-- time --" placeholder instead of pre-filling 8:00am/7:00pm - times only appear when user picks them or paste parser fills them (2026-07-27)
 - [x] locations.html: "Save & Add Another" button added to form footer - saves current location and immediately reopens a blank form for the next entry; save logic extracted into shared saveFormData() function used by both buttons (2026-07-27)
