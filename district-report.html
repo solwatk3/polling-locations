@@ -523,12 +523,8 @@
       /* Hide the map button and modal in print */
       .location-map-btn, .loc-map-overlay { display: none !important; }
 
-      /* Prevent cards from breaking across pages */
+      /* Prevent individual location cards from splitting across pages */
       .location-card  { break-inside: avoid; }
-      .section-block  { break-inside: avoid-page; }
-
-      /* Force a new page before each main section if content is long */
-      .section-block + .section-block { break-before: auto; }
     }
   </style>
 </head>

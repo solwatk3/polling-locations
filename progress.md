@@ -89,6 +89,13 @@
 - [x] location-detail.html: district detection auto-triggers whenever address geocodes (passes lat/lng directly), whenever Google Maps coords are pasted (auto-split fires detection), and on manual lat/lng field change (600ms debounce) - no button click needed (2026-07-26)
 - [x] location-detail.html + directory.html: Prev/Next navigation added - clicking a card from a directory group passes context (e.g. context=house-80) in URL; detail page reads context, filters+sorts that group, shows position label ("3 of 12") and Prev/Next buttons to step through locations without returning to directory (2026-07-26)
 
+## Done (Session 11 - 2026-07-26)
+- [x] location-detail.html: pin drag position now persists on page reload - loadOverrides() reads tn_polling_overrides from localStorage and applies saved lat/lng when building ALL_LOCATIONS; previously overrides were saved but never read back (2026-07-26)
+- [x] location-detail.html + directory.html: fixed duplicate locations caused by mergeWithSeedData() copying seed entries into tn_polling_custom - both pages now deduplicate ALL_LOCATIONS by ID, preferring the custom version; this also fixed Prev/Next nav breaking and wrong position counts (2026-07-26)
+- [x] directory.html: added deleted-ID filter to seed entries (was missing, so deleted seed locations could still appear in the directory) (2026-07-26)
+- [x] location-detail.html: clicking the address field copies the full address to clipboard with a brief "Copied!" confirmation flash (2026-07-26)
+- [x] district-report.html: fixed large blank space between Early Voting and Election Day sections when printing - removed break-inside: avoid-page from .section-block which was forcing the Election Day section to start on a new page (2026-07-26)
+
 ## In Progress
 - Nothing currently
 
@@ -116,3 +123,4 @@
 - Hours are stored as formatted strings like "8:00am - 7:00pm" - dropdowns parse existing values back on edit
 - Google Maps lat/lng can be pasted directly into either coordinate field - "35.694966, -88.856304" auto-splits into both fields
 - Zip code is now stored on every location record and included in geocoding queries
+- ALL_LOCATIONS deduplication: seed entries are excluded if their ID already exists in tn_polling_custom (custom version wins) - prevents duplicates after mergeWithSeedData runs
