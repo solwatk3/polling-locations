@@ -727,10 +727,19 @@
       catch(e) { return []; }
     }
 
-    // Combine seed data with custom - custom can supplement or shadow base entries
-    var ALL_LOCATIONS = POLLING_LOCATIONS.concat(loadCustom());
-    // Mark which are custom
-    var customIds = loadCustom().map(function(l) { return l.id; });
+    // Combine seed data with custom - custom wins over seed when both have the same ID.
+    // mergeWithSeedData() in locations.html copies seed entries into tn_polling_custom,
+    // so without deduplication every seed location would appear twice.
+    var _dirDeleted = (function() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_deleted") || "[]"); } catch(e) { return []; }
+    })();
+    var _dirCustom  = loadCustom();
+    var customIds   = {};
+    _dirCustom.forEach(function(l) { customIds[l.id] = true; });
+    // Seed entries: skip deleted ones and skip any ID already covered by a custom entry
+    var ALL_LOCATIONS = POLLING_LOCATIONS
+      .filter(function(l) { return _dirDeleted.indexOf(l.id) === -1 && !customIds[l.id]; })
+      .concat(_dirCustom);
 
     document.getElementById("total-badge").textContent =
       ALL_LOCATIONS.length + " total locations";
@@ -746,7 +755,7 @@
     // Cards carry data-id so clicks can look up the full location object.
     // =========================================================================
     function buildCard(loc) {
-      var isCustom   = customIds.indexOf(loc.id) !== -1;
+      var isCustom   = !!customIds[loc.id];
       var isEarly    = loc.type === "early";
       var cardClass  = isCustom ? "custom-card" : (isEarly ? "early-card" : "eday-card");
       var typeClass  = isCustom ? "custom" : (isEarly ? "early" : "eday");
@@ -1015,7 +1024,7 @@
       var loc = LOC_MAP[id];
       if (!loc) return;
 
-      var isCustom  = customIds.indexOf(loc.id) !== -1;
+      var isCustom  = !!customIds[loc.id];
       var isEarly   = loc.type === "early";
       var typeLabel = isCustom ? "Custom Location" : (isEarly ? "Early Voting" : "Election Day");
 
@@ -1113,8 +1122,7 @@
       if (idx !== -1) ALL_LOCATIONS.splice(idx, 1);
       delete LOC_MAP[currentDetailId];
 
-      var cidx = customIds.indexOf(currentDetailId);
-      if (cidx !== -1) customIds.splice(cidx, 1);
+      delete customIds[currentDetailId];
 
       document.getElementById("total-badge").textContent = ALL_LOCATIONS.length + " total locations";
 

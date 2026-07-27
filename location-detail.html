@@ -632,10 +632,31 @@
       localStorage.setItem("tn_polling_deleted", JSON.stringify(arr));
     }
 
-    var _deleted = loadDeleted();
+    // loadOverrides: returns object mapping seed location ID -> {lat, lng}
+    // These are pin positions the user has manually repositioned via drag
+    function loadOverrides() {
+      try { return JSON.parse(localStorage.getItem("tn_polling_overrides") || "{}"); } catch(e) { return {}; }
+    }
+
+    var _deleted   = loadDeleted();
+    var _overrides = loadOverrides();
+    // Load custom once so we can deduplicate and avoid calling loadCustom() twice
+    var _custom    = loadCustom();
+    var _customMap = {};
+    _custom.forEach(function(l) { _customMap[l.id] = true; });
+    // Seed entries: skip deleted ones and skip any ID already in custom (custom version wins)
+    // This prevents duplicates caused by mergeWithSeedData() in locations.html copying
+    // seed entries into tn_polling_custom.
     var ALL_LOCATIONS = POLLING_LOCATIONS
-      .filter(function(l) { return _deleted.indexOf(l.id) === -1; })
-      .concat(loadCustom());
+      .filter(function(l) { return _deleted.indexOf(l.id) === -1 && !_customMap[l.id]; })
+      .map(function(l) {
+        // Apply any saved pin position for this seed location so drag changes persist on reload
+        if (_overrides[l.id]) {
+          return Object.assign({}, l, { lat: _overrides[l.id].lat, lng: _overrides[l.id].lng });
+        }
+        return l;
+      })
+      .concat(_custom);
 
     // =========================================================================
     // PREV / NEXT NAVIGATION
