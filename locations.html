@@ -3216,6 +3216,40 @@
       return results;
     }
 
+    // parseMarkdownLinkFormat(text)
+    // Handles clipboard output from Google Sheets when address cells contain
+    // hyperlinks. Sheets encodes them as Markdown: Name[Street](url)\n[City, ST Zip](url)
+    // Entries run together with no blank-line separator so block format won't catch them.
+    // Detected by the presence of a Google Maps URL inside a Markdown link.
+    // -------------------------------------------------------------------------
+    function parseMarkdownLinkFormat(text) {
+      if (text.indexOf("](https://www.google.com/maps") === -1) return null;
+
+      var results = [];
+      // Each entry: (name)(street markdown link)(city/zip markdown link)
+      // Name is everything up to the first [ in that entry.
+      var pattern = /([^\[]+)\[([^\]]+)\]\([^)]+\)\s*\[([^\]]+)\]\([^)]+\)/g;
+      var m;
+      while ((m = pattern.exec(text)) !== null) {
+        var name     = m[1].trim();
+        var street   = m[2].trim();
+        var cityLine = m[3].trim(); // e.g. "Clarksville, TN 37043"
+
+        // Parse "City, ST 12345"
+        var cityMatch = cityLine.match(/^(.+),\s*([A-Z]{2})\s+(\d{5})$/);
+        if (!name || !street || !cityMatch) continue;
+
+        results.push({
+          name:    name,
+          address: street,
+          city:    cityMatch[1].trim(),
+          zip:     cityMatch[3]
+        });
+      }
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3223,6 +3257,10 @@
     // -------------------------------------------------------------------------
     function parseBulkText(text) {
       text = text.trim();
+
+      // --- Markdown-link format detection (Google Sheets hyperlinked cells) ---
+      var markdownResult = parseMarkdownLinkFormat(text);
+      if (markdownResult) return markdownResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
@@ -3239,7 +3277,17 @@
       // If the pasted text looks like spreadsheet rows (tabs between columns),
       // parse each line as: Name [tab] Address [tab] City [tab] Zip.
       // Precinct is left blank since this format doesn't include one.
-      var lines = text.split(/\r?\n/);
+
+      // Pre-process: Google Sheets wraps multi-line cells in double quotes,
+      // e.g. Name\t"280 Dunbar Cave Rd\nClarksville, TN 37043"
+      // Collapse the embedded newline inside quoted cells using a placeholder
+      // so the cell arrives as one column value instead of two broken rows.
+      // \x1F (ASCII unit separator) is safe to use as placeholder here.
+      var tabText = text.replace(/"[^"]*"/g, function(cell) {
+        return cell.replace(/\r?\n/g, "\x1F");
+      });
+
+      var lines = tabText.split(/\r?\n/);
       var tabLines = lines.filter(function(l) { return l.trim() && l.indexOf("\t") !== -1; });
       if (tabLines.length > 0 && tabLines.length >= lines.filter(function(l) { return l.trim(); }).length * 0.8) {
         var results = [];
@@ -3247,6 +3295,14 @@
           line = line.trim();
           if (!line) return;
           var cols = line.split("\t");
+          // Strip surrounding quotes and restore the embedded newline as ", "
+          // so "280 Dunbar Cave Rd\x1FClarksville, TN 37043" becomes a single
+          // parseable address string that parseFullAddress can split.
+          cols = cols.map(function(c) {
+            c = c.trim().replace(/^"|"$/g, "");   // strip surrounding quotes
+            c = c.replace(/\x1F/g, ", ");          // restore collapsed newline
+            return c.trim();
+          });
           var name    = (cols[0] || "").trim();
           var address = (cols[1] || "").trim();
           var city    = (cols[2] || "").trim();
