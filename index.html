@@ -81,6 +81,24 @@
     .leg-dot.amber  { background: #f59e0b; border: 2px solid #78350f; }
 
     /* Floating search box - top-right of map */
+    /* Hover info bar - bottom-left of the map, shows county/district under the cursor */
+    #hover-info {
+      position: absolute;
+      bottom: 28px;
+      left: 14px;
+      z-index: 500;
+      background: rgba(13,0,13,0.88);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+      display: none;
+      max-width: 320px;
+      line-height: 1.5;
+    }
     #map-search {
       position: absolute;
       top: 14px;
@@ -248,6 +266,9 @@
       <input type="text" id="search-input" placeholder="&#128269; Search locations..." autocomplete="off" />
       <div id="search-results"></div>
     </div>
+
+    <!-- Hover info bar - shows county and district of whatever boundary the cursor is over -->
+    <div id="hover-info"></div>
 
     <!-- Floating legend - shows what each layer's line/color means -->
     <div id="map-legend">
@@ -536,6 +557,30 @@
     var markerRegistry = {};
 
     // =========================================================================
+    // HOVER INFO BAR
+    // Tracks what boundary layer the cursor is currently inside and shows a
+    // small label in the bottom-left corner of the map. Each layer type
+    // (county, house, senate, congress) writes to its own slot so multiple
+    // active layers can all show at once. When all slots are empty the bar hides.
+    // =========================================================================
+    var hoverInfoEl = document.getElementById("hover-info");
+    var hoverState  = { county: "", house: "", senate: "", congress: "" };
+
+    function updateHoverInfo() {
+      var parts = [];
+      if (hoverState.county)   parts.push(hoverState.county);
+      if (hoverState.house)    parts.push("House " + hoverState.house);
+      if (hoverState.senate)   parts.push("Senate " + hoverState.senate);
+      if (hoverState.congress) parts.push("Congress " + hoverState.congress);
+      if (parts.length) {
+        hoverInfoEl.innerHTML = parts.join(" &nbsp;&bull;&nbsp; ");
+        hoverInfoEl.style.display = "block";
+      } else {
+        hoverInfoEl.style.display = "none";
+      }
+    }
+
+    // =========================================================================
     // PIN SPOTLIGHT HELPERS
     // Called by district/county boundary mouseover and mouseout handlers.
     // highlightByFilter dims every pin that doesn't match the hovered region.
@@ -662,8 +707,14 @@
                   var stored = loc.county.replace(/\s+County$/i, "").trim().toLowerCase();
                   return stored === boundaryBase;
                 });
+                hoverState.county = countyName;
+                updateHoverInfo();
               });
-              layer.on("mouseout", clearHighlight);
+              layer.on("mouseout", function() {
+                clearHighlight();
+                hoverState.county = "";
+                updateHoverInfo();
+              });
             }
           }).addTo(countyLayer);
           setStatus("status-counties", "loaded", count + " counties loaded");
@@ -694,8 +745,14 @@
                       var stored = loc.county.replace(/\s+County$/i, "").trim().toLowerCase();
                       return stored === boundaryBase;
                     });
+                    hoverState.county = countyName + " County";
+                    updateHoverInfo();
                   });
-                  layer.on("mouseout", clearHighlight);
+                  layer.on("mouseout", function() {
+                    clearHighlight();
+                    hoverState.county = "";
+                    updateHoverInfo();
+                  });
                 }
               }).addTo(countyLayer);
               setStatus("status-counties", "loaded", tn.features.length + " counties (backup)");
@@ -732,6 +789,8 @@
                   var d = String(loc.state_district || "?");
                   return d === "?" ? null : d === String(num);
                 });
+                hoverState.house = String(num);
+                updateHoverInfo();
               });
               // mousemove: re-check county on every move so it updates as you cross county lines
               layer.on("mousemove", function(e) {
@@ -745,6 +804,8 @@
               layer.on("mouseout",  function() {
                 layer.setStyle({ fillOpacity: isD80 ? 0.18 : 0.07, weight: isD80 ? 3 : 2 });
                 clearHighlight();
+                hoverState.house = "";
+                updateHoverInfo();
               });
             }
           }).addTo(houseLayer);
@@ -788,6 +849,8 @@
                   var d = String(loc.congressional_district || "?");
                   return d === "?" ? null : d === String(num);
                 });
+                hoverState.congress = String(num);
+                updateHoverInfo();
               });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
@@ -800,6 +863,8 @@
               layer.on("mouseout",  function() {
                 layer.setStyle({ fillOpacity:0.08, weight:3 });
                 clearHighlight();
+                hoverState.congress = "";
+                updateHoverInfo();
               });
             }
           }).addTo(congressLayer);
@@ -844,6 +909,8 @@
                   var d = String(loc.state_senate_district || "?");
                   return d === "?" ? null : d === String(num);
                 });
+                hoverState.senate = String(num);
+                updateHoverInfo();
               });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
@@ -856,6 +923,8 @@
               layer.on("mouseout",  function() {
                 layer.setStyle({ fillOpacity:0.08, weight:3 });
                 clearHighlight();
+                hoverState.senate = "";
+                updateHoverInfo();
               });
             }
           }).addTo(senateLayer);
