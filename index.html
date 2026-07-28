@@ -636,9 +636,29 @@
       else if (loc.type === "early")  icon = earlyIcon;
       else                            icon = electionIcon;
 
+      // When hovering a pin, update the hover info bar using the pin's own stored
+      // county/district data. Pins sit on top of boundary layers and block their
+      // mouseover events, so we push the info directly from the location object.
+      function pinMouseover() {
+        hoverState.county   = loc.county   ? loc.county + " County" : "";
+        hoverState.house    = loc.state_district         || "";
+        hoverState.senate   = loc.state_senate_district  || "";
+        hoverState.congress = loc.congressional_district || "";
+        updateHoverInfo();
+      }
+      function pinMouseout() {
+        hoverState.county   = "";
+        hoverState.house    = "";
+        hoverState.senate   = "";
+        hoverState.congress = "";
+        updateHoverInfo();
+      }
+
       // "both" pins go on both layers so they appear regardless of which toggle is active
       var marker = L.marker([lat, lng], { icon: icon, draggable: false })
-        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 });
+        .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+        .on("mouseover", pinMouseover)
+        .on("mouseout",  pinMouseout);
 
       // Register all markers for this location.
       // markers[] holds every Leaflet marker object so the spotlight can set opacity
@@ -653,6 +673,8 @@
         // Clone for the election day layer - push into markers[] so spotlight reaches it
         var clone = L.marker([lat, lng], { icon: icon, draggable: false })
           .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+          .on("mouseover", pinMouseover)
+          .on("mouseout",  pinMouseout)
           .addTo(electionLayer);
         allMarkers.push(clone);
       } else {
