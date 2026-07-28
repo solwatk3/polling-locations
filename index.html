@@ -539,6 +539,31 @@
     var markerRegistry = {};
 
     // =========================================================================
+    // PIN SPOTLIGHT HELPERS
+    // Called by district/county boundary mouseover and mouseout handlers.
+    // highlightByFilter dims every pin that doesn't match the hovered region.
+    // clearHighlight restores all pins to full opacity.
+    // matchFn receives the location object and should return true for pins
+    // that belong to the hovered region.
+    // =========================================================================
+    function highlightByFilter(matchFn) {
+      var allLocs = (typeof POLLING_LOCATIONS !== "undefined" ? POLLING_LOCATIONS : [])
+                    .concat(customLocations);
+      Object.keys(markerRegistry).forEach(function(id) {
+        var entry = markerRegistry[id];
+        var loc   = allLocs.find(function(l) { return l.id === id; });
+        var match = loc && matchFn(loc);
+        entry.marker.setOpacity(match ? 1.0 : 0.15);
+      });
+    }
+
+    function clearHighlight() {
+      Object.keys(markerRegistry).forEach(function(id) {
+        markerRegistry[id].marker.setOpacity(1.0);
+      });
+    }
+
+    // =========================================================================
     // PLACE A PIN ON THE MAP (read-only - no dragging on this page)
     // =========================================================================
     function placePin(loc, isCustom) {
@@ -599,7 +624,12 @@
           L.geoJSON(data, {
             style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
             onEachFeature: function(f, layer) {
-              layer.bindTooltip((f.properties.NAME || "County") + " County", { sticky:true, direction:"top" });
+              var countyName = f.properties.NAME || "";
+              layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
+              layer.on("mouseover", function() {
+                highlightByFilter(function(loc) { return loc.county === countyName; });
+              });
+              layer.on("mouseout", clearHighlight);
             }
           }).addTo(countyLayer);
           setStatus("status-counties", "loaded", count + " counties loaded");
@@ -620,8 +650,13 @@
               L.geoJSON(tn, {
                 style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
                 onEachFeature: function(f, layer) {
-                  var fips = String(f.id).padStart(5, "0");
-                  layer.bindTooltip((TN_COUNTY_NAMES[fips] || fips) + " County", { sticky:true, direction:"top" });
+                  var fips       = String(f.id).padStart(5, "0");
+                  var countyName = TN_COUNTY_NAMES[fips] || "";
+                  layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
+                  layer.on("mouseover", function() {
+                    highlightByFilter(function(loc) { return loc.county === countyName; });
+                  });
+                  layer.on("mouseout", clearHighlight);
                 }
               }).addTo(countyLayer);
               setStatus("status-counties", "loaded", tn.features.length + " counties (backup)");
@@ -651,8 +686,11 @@
               var isD80 = num === 80;
               var baseLabel = f.properties.NAME + (isD80 ? " (your focus)" : "");
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              // mouseover: stronger highlight so hovered district stands out
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.3, weight:3 }); });
+              // mouseover: stronger highlight + dim pins outside this district
+              layer.on("mouseover", function() {
+                layer.setStyle({ fillOpacity:0.3, weight:3 });
+                highlightByFilter(function(loc) { return String(loc.state_district) === String(num); });
+              });
               // mousemove: re-check county on every move so it updates as you cross county lines
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
@@ -662,7 +700,10 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity: isD80 ? 0.18 : 0.07, weight: isD80 ? 3 : 2 }); });
+              layer.on("mouseout",  function() {
+                layer.setStyle({ fillOpacity: isD80 ? 0.18 : 0.07, weight: isD80 ? 3 : 2 });
+                clearHighlight();
+              });
             }
           }).addTo(houseLayer);
           setStatus("status-district", "loaded", count + " house districts loaded");
@@ -699,7 +740,10 @@
               var num = parseInt(f.properties.DISTRICT, 10);
               var baseLabel = "US Congressional District " + num;
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.25, weight:3.5 }); });
+              layer.on("mouseover", function() {
+                layer.setStyle({ fillOpacity:0.25, weight:3.5 });
+                highlightByFilter(function(loc) { return String(loc.congressional_district) === String(num); });
+              });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
                 if (document.getElementById("toggle-counties").checked && countyFeatures.length) {
@@ -708,7 +752,10 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.08, weight:3 }); });
+              layer.on("mouseout",  function() {
+                layer.setStyle({ fillOpacity:0.08, weight:3 });
+                clearHighlight();
+              });
             }
           }).addTo(congressLayer);
           congressLoaded = true;
@@ -746,7 +793,10 @@
               var num = parseInt(f.properties.NEWSENATEDISTRICT, 10);
               var baseLabel = "TN Senate District " + num;
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
-              layer.on("mouseover", function() { layer.setStyle({ fillOpacity:0.25, weight:3.5 }); });
+              layer.on("mouseover", function() {
+                layer.setStyle({ fillOpacity:0.25, weight:3.5 });
+                highlightByFilter(function(loc) { return String(loc.state_senate_district) === String(num); });
+              });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
                 if (document.getElementById("toggle-counties").checked && countyFeatures.length) {
@@ -755,7 +805,10 @@
                 }
                 layer.setTooltipContent(label);
               });
-              layer.on("mouseout",  function() { layer.setStyle({ fillOpacity:0.08, weight:3 }); });
+              layer.on("mouseout",  function() {
+                layer.setStyle({ fillOpacity:0.08, weight:3 });
+                clearHighlight();
+              });
             }
           }).addTo(senateLayer);
           senateLoaded = true;
