@@ -457,7 +457,10 @@
   <!-- ===== TOP BAR ===== -->
   <header class="top-bar">
     <div class="top-bar-left">
-      <a href="directory.html" class="btn-back" id="btn-back">&#8592; Directory</a>
+      <!-- Use history.back() so this returns wherever the user actually came from
+           (map, directory, locations table, etc.) instead of always going to directory.html -->
+      <a href="directory.html" class="btn-back" id="btn-back"
+         onclick="event.preventDefault(); history.back();">&#8592; Back</a>
       <!-- Breadcrumb: shows context group above location name when navigating from a group -->
       <div style="display:flex;flex-direction:column;gap:1px;min-width:0;">
         <div id="breadcrumb-context" style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;"></div>

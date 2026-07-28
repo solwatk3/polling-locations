@@ -650,7 +650,11 @@
               layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
                 highlightByFilter(function(loc) {
-                  return loc.county ? loc.county === countyName : null;
+                  if (!loc.county) return null;
+                  // Normalize: geocoder sometimes stores "Tipton County" while the
+                  // boundary data uses just "Tipton" - strip the " County" suffix before comparing
+                  var stored = loc.county.replace(/\s+County$/i, "").trim();
+                  return stored === countyName;
                 });
               });
               layer.on("mouseout", clearHighlight);
@@ -679,7 +683,9 @@
                   layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
                   layer.on("mouseover", function() {
                     highlightByFilter(function(loc) {
-                      return loc.county ? loc.county === countyName : null;
+                      if (!loc.county) return null;
+                      var stored = loc.county.replace(/\s+County$/i, "").trim();
+                      return stored === countyName;
                     });
                   });
                   layer.on("mouseout", clearHighlight);
