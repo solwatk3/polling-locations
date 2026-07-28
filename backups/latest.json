@@ -663,7 +663,7 @@
       "address": "605 Airways Blvd.",
       "city": "Jackson, TN",
       "zip": "38301",
-      "county": "Shelby",
+      "county": "Madison",
       "type": "election_day",
       "state_district": "80",
       "state_senate_district": "25",
@@ -671,6 +671,7 @@
       "hours": "8:00am - 7:00pm",
       "schedule": [
         {
+          "days": "",
           "open": "8:00am",
           "close": "7:00pm"
         }
@@ -735,7 +736,7 @@
       "zip": "38301",
       "county": "Madison",
       "type": "election_day",
-      "state_district": "80",
+      "state_district": "73",
       "state_senate_district": "25",
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
@@ -751,7 +752,7 @@
       "zip": "38301",
       "county": "Madison",
       "type": "election_day",
-      "state_district": "80",
+      "state_district": "73",
       "state_senate_district": "25",
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
@@ -829,7 +830,7 @@
       "address": "3581 Hwy 70 E. Jackson, TN 38305",
       "city": "",
       "zip": "",
-      "county": "Shelby",
+      "county": "Madison",
       "type": "election_day",
       "state_district": "73",
       "state_senate_district": "25",
@@ -837,6 +838,7 @@
       "hours": "8:00am - 7:00pm",
       "schedule": [
         {
+          "days": "",
           "open": "8:00am",
           "close": "7:00pm"
         }
@@ -7476,7 +7478,7 @@
       "address": "1795 Bakers Grove Rd, Hermitage, TN 37076",
       "city": "",
       "zip": "",
-      "county": "Knox",
+      "county": "Davidson",
       "type": "early",
       "state_district": "52",
       "state_senate_district": "17",
@@ -7700,7 +7702,7 @@
       "address": "5434 Bell Forge Ln",
       "city": "E Antioch",
       "zip": "37013",
-      "county": "Loudon",
+      "county": "Davidson",
       "type": "early",
       "state_district": "21",
       "state_senate_district": "5",
@@ -7708,6 +7710,7 @@
       "hours": " - ",
       "schedule": [
         {
+          "days": "",
           "open": "",
           "close": ""
         }
@@ -7789,7 +7792,7 @@
       "address": "815 E Old Hickory Blvd",
       "city": "Madison",
       "zip": "37115",
-      "county": "Madison",
+      "county": "Davidson",
       "type": "election_day",
       "state_district": "51",
       "state_senate_district": "20",
@@ -10148,7 +10151,7 @@
       "address": "5412 Pinewood Rd",
       "city": "Franklin",
       "zip": "37064",
-      "county": "Rutherford",
+      "county": "Williamson",
       "type": "election_day",
       "state_district": "65",
       "state_senate_district": "27",
@@ -10171,7 +10174,7 @@
       "address": "2638 Clayton Arnold Rd",
       "city": "Thompsons Station",
       "zip": "37179",
-      "county": "Rutherford",
+      "county": "Williamson",
       "type": "election_day",
       "state_district": "65",
       "state_senate_district": "27",
@@ -10194,7 +10197,7 @@
       "address": "4907 Bethesda Rd",
       "city": "Thompsons Station",
       "zip": "37179",
-      "county": "Rutherford",
+      "county": "Williamson",
       "type": "election_day",
       "state_district": "92",
       "state_senate_district": "27",
@@ -10233,7 +10236,7 @@
       "address": "4239 Gosey Hill Rd",
       "city": "Franklin",
       "zip": "37064",
-      "county": "Rutherford",
+      "county": "Williamson",
       "type": "election_day",
       "state_district": "63",
       "state_senate_district": "27",
@@ -13646,6 +13649,3637 @@
       "notes": "",
       "lat": 36.291151,
       "lng": -88.70684
+    },
+    {
+      "id": "bulk_1785263173759_0",
+      "name": "St Bethlehem Christian Church",
+      "address": "280 Dunbar Cave Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": 67,
+      "state_senate_district": 22,
+      "congressional_district": 7,
+      "hours": "",
+      "notes": "",
+      "lat": 36.55070701245825,
+      "lng": -87.31738328933717
+    },
+    {
+      "id": "bulk_1785263173759_1",
+      "name": "St Bethlehem Methodist Church",
+      "address": "2201 Old Russellville Pike",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": 68,
+      "state_senate_district": 22,
+      "congressional_district": 7,
+      "hours": "",
+      "notes": "",
+      "lat": 36.565943543687204,
+      "lng": -87.30150461196901
+    },
+    {
+      "id": "bulk_1785263173759_2",
+      "name": "Clarksville High School (Auxiliary Gym)",
+      "address": "151 Richview Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.516681134105845,
+      "lng": -87.2771179676056
+    },
+    {
+      "id": "bulk_1785263173759_3",
+      "name": "Bible Baptist Church",
+      "address": "3102 Prospect Cir",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.52075951175259,
+      "lng": -87.21952557563783
+    },
+    {
+      "id": "bulk_1785263173759_4",
+      "name": "East Montgomery School (Gym in back)",
+      "address": "230 McAdoo Creek Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": 68,
+      "state_senate_district": 22,
+      "congressional_district": 7,
+      "hours": "",
+      "notes": "",
+      "lat": 36.4916113,
+      "lng": -87.2243097
+    },
+    {
+      "id": "bulk_1785263173759_5",
+      "name": "Fredonia Community Center",
+      "address": "4650 Old Ashland City Rd S",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.436927,
+      "lng": -87.218427
+    },
+    {
+      "id": "bulk_1785263173759_6",
+      "name": "Montgomery Central Middle School (Cafeteria)",
+      "address": "3941 Hwy 48",
+      "city": "Cunningham",
+      "zip": "37052",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.401209,
+      "lng": -87.380907
+    },
+    {
+      "id": "bulk_1785263173759_7",
+      "name": "Wilma Rudolph Event Center",
+      "address": "8 Champion's Wy, Clarksville, TN 37040",
+      "city": "",
+      "zip": "",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.50338395793744,
+      "lng": -87.37123131752014
+    },
+    {
+      "id": "bulk_1785263173759_8",
+      "name": "Cumberland Presbyterian (Family Life Center)",
+      "address": "1410 Golf Club Ln",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": 67,
+      "state_senate_district": 22,
+      "congressional_district": 7,
+      "hours": "",
+      "notes": "",
+      "lat": 36.519224756384254,
+      "lng": -87.33563303947449
+    },
+    {
+      "id": "bulk_1785263173759_9",
+      "name": "Cumberland Heights School (Main Lobby)",
+      "address": "2093 Ussery Rd",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.466001,
+      "lng": -87.416444
+    },
+    {
+      "id": "bulk_1785263173759_10",
+      "name": "Bethel Baptist Church(Family Life Center)",
+      "address": "2301 Hwy 13",
+      "city": "Palmyra",
+      "zip": "37142",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.365494,
+      "lng": -87.473012
+    },
+    {
+      "id": "bulk_1785263173759_11",
+      "name": "Liberty School",
+      "address": "849 S Liberty Church Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.549758938949815,
+      "lng": -87.44926214218141
+    },
+    {
+      "id": "bulk_1785263173759_12",
+      "name": "Woodlawn School(Gym in back)",
+      "address": "2250 Woodlawn Rd",
+      "city": "Woodlawn",
+      "zip": "37191",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.54415644900671,
+      "lng": -87.5020694732666
+    },
+    {
+      "id": "bulk_1785263173759_13",
+      "name": "Bethel Methodist Church",
+      "address": "3180 Ft Campbell Blvd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.63410914502367,
+      "lng": -87.43550777435304
+    },
+    {
+      "id": "bulk_1785263173759_14",
+      "name": "Hazelwood School(Gym)",
+      "address": "2623 Tiny Town Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.629296291253645,
+      "lng": -87.36092090606691
+    },
+    {
+      "id": "bulk_1785263173759_15",
+      "name": "St John Baptist Church",
+      "address": "1833 Tiny Town Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.626208,
+      "lng": -87.321903
+    },
+    {
+      "id": "bulk_1785263173759_16",
+      "name": "Minglewood School (Gym in back)",
+      "address": "215 Cunningham Ln",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.57606796998418,
+      "lng": -87.4160134792328
+    },
+    {
+      "id": "bulk_1785263173759_17",
+      "name": "Mosaic Church",
+      "address": "1020 Garrettsburg Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.580418911345106,
+      "lng": -87.44291067123415
+    },
+    {
+      "id": "bulk_1785263173759_18",
+      "name": "Northwest High School (Main Lobby)",
+      "address": "800 Lafayette Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.57399149372363,
+      "lng": -87.43449926376344
+    },
+    {
+      "id": "bulk_1785263173759_19",
+      "name": "West Creek High School",
+      "address": "1210 West Creek Coyote Trl",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.611574822537726,
+      "lng": -87.39017844200136
+    },
+    {
+      "id": "bulk_1785263173759_20",
+      "name": "Clarksville Regional Airport",
+      "address": "200 Airport Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.62181381619245,
+      "lng": -87.4190604686737
+    },
+    {
+      "id": "bulk_1785263173759_21",
+      "name": "Byrns Darden School (Gym)",
+      "address": "405 Peachers Mill Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.55103021667798,
+      "lng": -87.38039910793304
+    },
+    {
+      "id": "bulk_1785263173759_22",
+      "name": "Kenwood High School",
+      "address": "251 E Pine Mountain Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.582081681601544,
+      "lng": -87.37946033477785
+    },
+    {
+      "id": "bulk_1785263173759_23",
+      "name": "St B Early Learning Center (Gym)",
+      "address": "2455 Wilma Rudolph Blvd",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.574792796158235,
+      "lng": -87.30041027069092
+    },
+    {
+      "id": "bulk_1785263173759_24",
+      "name": "First Missionary Baptist Church",
+      "address": "301 Fairview Ln",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.56806332065799,
+      "lng": -87.31314539909364
+    },
+    {
+      "id": "bulk_1785263173759_25",
+      "name": "Excell Baptist Church",
+      "address": "328 Excell Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.49276699802991,
+      "lng": -87.25323557853699
+    },
+    {
+      "id": "bulk_1785263173759_26",
+      "name": "Sango School (Cafeteria)",
+      "address": "3585 Sango Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.50779935665167,
+      "lng": -87.2096335887909
+    },
+    {
+      "id": "bulk_1785263173759_27",
+      "name": "Ringgold School (Cafeteria)",
+      "address": "240 Ringgold Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": "",
+      "notes": "",
+      "lat": 36.59280698138841,
+      "lng": -87.41207599639893
+    },
+    {
+      "id": "bulk_1785263173759_28",
+      "name": "New Providence Methodist Church",
+      "address": "1317 Ft Campbell Blvd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.562867178517415,
+      "lng": -87.39996314048769
+    },
+    {
+      "id": "bulk_1785263173759_29",
+      "name": "Grace Nazarene Church",
+      "address": "3135 Trenton Rd",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.60125695086435,
+      "lng": -87.31406807899477
+    },
+    {
+      "id": "bulk_1785263173759_30",
+      "name": "Glenellen School (Main Lobby)",
+      "address": "825 Needmore Rd",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.58604461656762,
+      "lng": -87.33722090721132
+    },
+    {
+      "id": "bulk_1785263173759_31",
+      "name": "Barkers Mill School (Cafeteria)",
+      "address": "1230 Little Bobcat Ln",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "75",
+      "state_senate_district": "22",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.625355,
+      "lng": -87.385188
+    },
+    {
+      "id": "bulk_1785263173759_32",
+      "name": "Pisgah Elementary",
+      "address": "1770 Hazelwood Rd",
+      "city": "Clarksville",
+      "zip": "37042",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.6134780520739,
+      "lng": -87.35006332397462
+    },
+    {
+      "id": "bulk_1785263173759_33",
+      "name": "Rossview High School",
+      "address": "1237 Rossview Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.55812744059671,
+      "lng": -87.25568175315857
+    },
+    {
+      "id": "bulk_1785263173759_34",
+      "name": "South Guthrie Community Center",
+      "address": "5025 Guthrie Rd",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "23",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.635771,
+      "lng": -87.168446
+    },
+    {
+      "id": "bulk_1785263173759_35",
+      "name": "Northeast High School",
+      "address": "3701 Trenton Rd",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.61805077807485,
+      "lng": -87.31736183166505
+    },
+    {
+      "id": "bulk_1785263173759_36",
+      "name": "Oakland School (Gym)",
+      "address": "1050 Cherry Blossom Ln",
+      "city": "Clarksville",
+      "zip": "37040",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.62076328398687,
+      "lng": -87.28655934333803
+    },
+    {
+      "id": "bulk_1785263173759_37",
+      "name": "Hilldale Methodist Church (Gym in back)",
+      "address": "1751 Madison St",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "68",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.515344621096126,
+      "lng": -87.31772661209108
+    },
+    {
+      "id": "bulk_1785263173759_38",
+      "name": "Barksdale School(Cafeteria)",
+      "address": "1920 Madison St",
+      "city": "Clarksville",
+      "zip": "37043",
+      "county": "Montgomery",
+      "type": "election_day",
+      "state_district": "67",
+      "state_senate_district": "22",
+      "congressional_district": "7",
+      "hours": "",
+      "notes": "",
+      "lat": 36.51281811731747,
+      "lng": -87.30056047439577
+    },
+    {
+      "id": "custom-1785264049463-631",
+      "name": "Foothills Mall (near JC Penneys)",
+      "address": "179 Foothills Mall Dr.",
+      "city": "Maryville",
+      "zip": "37801",
+      "county": "Blount",
+      "type": "early",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.73714230320168,
+      "lng": -83.99302124977113
+    },
+    {
+      "id": "custom-1785264065451-416",
+      "name": "Blount County Public Library",
+      "address": "508 N. Cusick Street Maryville, TN 37804",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "early",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.758667177248505,
+      "lng": -83.97236824035646
+    },
+    {
+      "id": "custom-1785264092406-264",
+      "name": "Everett Recreational Center",
+      "address": "318 S. Everett High Road",
+      "city": "Maryville",
+      "zip": "37804",
+      "county": "Blount",
+      "type": "both",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.76685067447143,
+      "lng": -83.95495533943178
+    },
+    {
+      "id": "custom-1785264108733-634",
+      "name": "Pellissippi State Community College",
+      "address": "2731 W. Lamar Alexander Pkwy",
+      "city": "Friendsville",
+      "zip": "37737",
+      "county": "Blount",
+      "type": "both",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.75530647606227,
+      "lng": -84.07342314720155
+    },
+    {
+      "id": "custom-1785264123253-790",
+      "name": "Providence Baptist Church",
+      "address": "5766 Sevierville Rd, Seymour, TN 37865",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "early",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.848606,
+      "lng": -83.786137
+    },
+    {
+      "id": "custom-1785264139097-554",
+      "name": "Alcoa High School Auxiliary Gym",
+      "address": "1205 Lodge Street Alcoa, TN 37701",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.78961203833111,
+      "lng": -83.98160576820374
+    },
+    {
+      "id": "custom-1785264160088-816",
+      "name": "Big Springs Community Club Building",
+      "address": "802 Kirk Road",
+      "city": "Greenback",
+      "zip": "37742",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.703144,
+      "lng": -84.13244
+    },
+    {
+      "id": "custom-1785264170226-48",
+      "name": "Blount County Board of Education Building",
+      "address": "831 Grandview Drive",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.751362259696215,
+      "lng": -83.93650174140932
+    },
+    {
+      "id": "custom-1785264184169-625",
+      "name": "Carpenters Middle School",
+      "address": "722 Huffstetler Road",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.677282686853005,
+      "lng": -84.02893066406251
+    },
+    {
+      "id": "custom-1785264196750-503",
+      "name": "Chilhowee View Community Club Building",
+      "address": "3229 Wilkinson Pike",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.71451,
+      "lng": -83.921789
+    },
+    {
+      "id": "custom-1785264208557-55",
+      "name": "Eagleton Middle School Cafeteria",
+      "address": "2610 Cinema Drive",
+      "city": "Maryville",
+      "zip": "37804",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.797323,
+      "lng": -83.940883
+    },
+    {
+      "id": "custom-1785264249632-116",
+      "name": "Fairview Elementary School(Blount)",
+      "address": "2130 Old Niles Ferry Road",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.71839908170458,
+      "lng": -84.00406122207643
+    },
+    {
+      "id": "custom-1785264262419-707",
+      "name": "John Sevier Elementary School",
+      "address": "2001 Sequoyah Avenue Maryville, TN 37804",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.76991491635478,
+      "lng": -83.94081473350526
+    },
+    {
+      "id": "custom-1785264270598-715",
+      "name": "Lanier Elementary School",
+      "address": "6006 Lanier Road",
+      "city": "Maryville",
+      "zip": "37801",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.622875,
+      "lng": -84.096902
+    },
+    {
+      "id": "custom-1785264280461-465",
+      "name": "Louisville Town Hall",
+      "address": "3623 Louisville Road",
+      "city": "Louisville",
+      "zip": "37777",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.815377171961984,
+      "lng": -84.06797289848329
+    },
+    {
+      "id": "custom-1785264286677-726",
+      "name": "Martin Luther King Center",
+      "address": "209 East Franklin Street Alcoa, TN 37701",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.78318468055958,
+      "lng": -83.98143142461778
+    },
+    {
+      "id": "custom-1785264293041-205",
+      "name": "Chilhowee Club",
+      "address": "223 Clarion Avenue Maryville, TN 37803",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.750917,
+      "lng": -83.96916
+    },
+    {
+      "id": "custom-1785264299907-865",
+      "name": "Maryville High School",
+      "address": "825 Lawrence Avenue Maryville, TN 37803",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.74852369605302,
+      "lng": -83.97765755653383
+    },
+    {
+      "id": "custom-1785264307266-585",
+      "name": "Maryville Junior High School",
+      "address": "805 Montvale Station Road",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.74192320887141,
+      "lng": -83.97103786468507
+    },
+    {
+      "id": "custom-1785264313699-568",
+      "name": "Maryville Municipal Building",
+      "address": "400 West Broadway Avenue Maryville, TN 37801",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.752044,
+      "lng": -83.974187
+    },
+    {
+      "id": "custom-1785264333250-341",
+      "name": "Immanuel United Methodist Church",
+      "address": "2349 Mentor Road",
+      "city": "Louisville",
+      "zip": "37777",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.823099,
+      "lng": -84.009152
+    },
+    {
+      "id": "custom-1785264340455-900",
+      "name": "Heritage Middle School",
+      "address": "3737 E Lamar Alexander Pkwy",
+      "city": "Maryville",
+      "zip": "37804",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.76065218794874,
+      "lng": -83.86454343795778
+    },
+    {
+      "id": "custom-1785264350776-845",
+      "name": "Middlesettlements Elementary School",
+      "address": "3105 Miser Station Road",
+      "city": "Louisville",
+      "zip": "37777",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.800959820640166,
+      "lng": -84.0353572368622
+    },
+    {
+      "id": "custom-1785264371202-139",
+      "name": "Montvale Elementary School",
+      "address": "3128 Montvale Road",
+      "city": "Maryville",
+      "zip": "37803",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.69311662067565,
+      "lng": -83.96666049957277
+    },
+    {
+      "id": "custom-1785264377473-328",
+      "name": "William Blount High School",
+      "address": "219 County Farm Road",
+      "city": "Maryville",
+      "zip": "37801",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.738323,
+      "lng": -84.034912
+    },
+    {
+      "id": "custom-1785264383749-496",
+      "name": "Oak Street Baptist Church",
+      "address": "218 Oakdale Street Maryville, TN 37801",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.784658,
+      "lng": -83.828303
+    },
+    {
+      "id": "custom-1785264396551-611",
+      "name": "Oak View Community Club",
+      "address": "2680 Ellejoy Road",
+      "city": "Walland",
+      "zip": "37882",
+      "county": "Blount",
+      "type": "early",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.784638,
+      "lng": -83.8283
+    },
+    {
+      "id": "custom-1785264428645-720",
+      "name": "Porter Elementary School",
+      "address": "4520 Wildwood Springs Road",
+      "city": "Maryville",
+      "zip": "37804",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.80437950161731,
+      "lng": -83.86895298957826
+    },
+    {
+      "id": "custom-1785264434917-105",
+      "name": "Prospect Elementary School",
+      "address": "1535 Burnett Station Road",
+      "city": "Seymour",
+      "zip": "37865",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.83952493737252,
+      "lng": -83.80063176155092
+    },
+    {
+      "id": "custom-1785264442301-284",
+      "name": "Rockford Elementary School",
+      "address": "3728 Williams Mill Road",
+      "city": "Rockford",
+      "zip": "37853",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.823972391713795,
+      "lng": -83.94213438034059
+    },
+    {
+      "id": "custom-1785264449285-88",
+      "name": "Townsend Elementary School",
+      "address": "140 Tiger Drive",
+      "city": "Townsend",
+      "zip": "37882",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.67402313823093,
+      "lng": -83.75422954559328
+    },
+    {
+      "id": "custom-1785264458883-826",
+      "name": "Walland Elementary School",
+      "address": "247 E Millers Cove Rd, Walland, TN 37886",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "8",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.730978,
+      "lng": -83.810535
+    },
+    {
+      "id": "custom-1785264466040-675",
+      "name": "William Blount Ninth Grade Academy",
+      "address": "1126 William Blount Drive",
+      "city": "Maryville",
+      "zip": "37801",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.738352796441006,
+      "lng": -84.03491735458375
+    },
+    {
+      "id": "custom-1785265513657-202",
+      "name": "Friendsville Elementary School",
+      "address": "210 East Fourth Avenue Friendsville, TN 37737",
+      "city": "",
+      "zip": "",
+      "county": "Blount",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.761682,
+      "lng": -84.130525
+    },
+    {
+      "id": "custom-1785266976502-214",
+      "name": "Anderson County Fair Association Building",
+      "address": "218 Nave St",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "early",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "open": "10:00am",
+          "close": "6:00pm",
+          "days": "Monday - Friday"
+        }
+      ],
+      "notes": "",
+      "lat": 36.111651227019856,
+      "lng": -84.12144541740419
+    },
+    {
+      "id": "custom-1785267008453-713",
+      "name": "Midtown Community Center (Wildcat Den)",
+      "address": "102 Robertsville Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "both",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "open": "10:00am",
+          "close": "6:00pm",
+          "days": "Monday-Friday"
+        }
+      ],
+      "notes": "",
+      "lat": 36.012739,
+      "lng": -84.265334
+    },
+    {
+      "id": "custom-1785267060508-935",
+      "name": "Anderson Crossing Shopping Center",
+      "address": "3324 Andersonville Hwy.",
+      "city": "Andersonville",
+      "zip": "37705",
+      "county": "Anderson",
+      "type": "early",
+      "state_district": "41",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "days": "Monday-Friday",
+          "open": "10:00am",
+          "close": "6:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.187073,
+      "lng": -84.060228
+    },
+    {
+      "id": "custom-1785267074487-282",
+      "name": "Andersonville Elementary School",
+      "address": "1951 Mountain Road",
+      "city": "Andersonville",
+      "zip": "37705",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "41",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.19720484656526,
+      "lng": -84.0367090702057
+    },
+    {
+      "id": "custom-1785267083219-516",
+      "name": "Briceville Elementary School",
+      "address": "103 Slatestone Road",
+      "city": "Briceville",
+      "zip": "37710",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.177388,
+      "lng": -84.184107
+    },
+    {
+      "id": "custom-1785267093506-291",
+      "name": "Clinton Community Center",
+      "address": "101 S. Hicks Street Clinton, TN 37716",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.10006191745426,
+      "lng": -84.13583278656006
+    },
+    {
+      "id": "custom-1785267104414-757",
+      "name": "Dutch Valley Elementary School",
+      "address": "1044 Old Dutch Valley Road",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.124401,
+      "lng": -84.20254
+    },
+    {
+      "id": "custom-1785267164130-255",
+      "name": "Fairview Elementary School(Anderson)",
+      "address": "6715 Hickory Valley Road",
+      "city": "Heiskell",
+      "zip": "37754",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "41",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.153347,
+      "lng": -84.027402
+    },
+    {
+      "id": "custom-1785267177918-600",
+      "name": "Glenwood Elementary School",
+      "address": "125 Audubon Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.048985,
+      "lng": -84.214049
+    },
+    {
+      "id": "custom-1785267256762-509",
+      "name": "Lake City Middle School",
+      "address": "1132 S Main Street Rocky Top, TN 37769",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.209232,
+      "lng": -84.146509
+    },
+    {
+      "id": "custom-1785267264174-104",
+      "name": "Norris Community Center",
+      "address": "20 Chestnut Drive",
+      "city": "Norris",
+      "zip": "37828",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "41",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.19779359202429,
+      "lng": -84.07507538795473
+    },
+    {
+      "id": "custom-1785267272810-974",
+      "name": "Norwood Middle School",
+      "address": "655 E. Tri-County Blvd",
+      "city": "Oliver Springs",
+      "zip": "37840",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.031211,
+      "lng": -84.324985
+    },
+    {
+      "id": "custom-1785267281249-962",
+      "name": "Oak Ridge Schools Administration",
+      "address": "304 New York Avenue Oak Ridge, TN 37830",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.025893,
+      "lng": -84.250603
+    },
+    {
+      "id": "custom-1785267294691-915",
+      "name": "Scotty Phillips Grocery",
+      "address": "6441 New River Highway",
+      "city": "Briceville",
+      "zip": "37710",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "41",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.194074,
+      "lng": -84.334855
+    },
+    {
+      "id": "custom-1785267307084-170",
+      "name": "South Clinton Elementary School",
+      "address": "242 Hiway Dr",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.077466,
+      "lng": -84.135722
+    },
+    {
+      "id": "custom-1785267332218-313",
+      "name": "Woodland Elementary School(Anderson)",
+      "address": "168 Manhattan Drive",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.011913,
+      "lng": -84.243979
+    },
+    {
+      "id": "custom-1785267347730-516",
+      "name": "Edgemoor Baptist Church",
+      "address": "330 Old Emory Rd",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.030366,
+      "lng": -84.152013
+    },
+    {
+      "id": "custom-1785267362714-665",
+      "name": "Claxton Elementary School",
+      "address": "2218 Clinton Highway",
+      "city": "Powell",
+      "zip": "37849",
+      "county": "Knox",
+      "type": "election_day",
+      "state_district": "16",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.014252,
+      "lng": -84.034514
+    },
+    {
+      "id": "custom-1785267442311-694",
+      "name": "Clinton High School",
+      "address": "425 Dragon Drive",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.094539707898555,
+      "lng": -84.14453387260438
+    },
+    {
+      "id": "custom-1785267451167-60",
+      "name": "Clinton Middle School",
+      "address": "110 N. Hicks Street Clinton, TN 37716",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.101285,
+      "lng": -84.135659
+    },
+    {
+      "id": "custom-1785267462323-976",
+      "name": "Jefferson Middle School",
+      "address": "200 Fairbanks Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.02611711085171,
+      "lng": -84.22730684280396
+    },
+    {
+      "id": "custom-1785267472601-598",
+      "name": "Anderson County High",
+      "address": "130 Maverick Circle Clinton, TN 37716",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.160263,
+      "lng": -84.094705
+    },
+    {
+      "id": "custom-1785267479054-534",
+      "name": "Dickens Building",
+      "address": "728 Emory Valley Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.02023392913173,
+      "lng": -84.2321026325226
+    },
+    {
+      "id": "custom-1785267497836-185",
+      "name": "Rocky Top Community Center",
+      "address": "916 N Main Street Rocky Top, TN 37769",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.223556,
+      "lng": -84.155854
+    },
+    {
+      "id": "custom-1785267510941-421",
+      "name": "Grand Oaks Elementary School",
+      "address": "1033 Oliver Springs Highway",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "early",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.052346,
+      "lng": -84.23954
+    },
+    {
+      "id": "custom-1785267521702-237",
+      "name": "National Guard Armory",
+      "address": "185 JD Yarnell Pkwy",
+      "city": "Clinton",
+      "zip": "37716",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.108416,
+      "lng": -84.111479
+    },
+    {
+      "id": "custom-1785267539610-885",
+      "name": "Robertsville Middle School",
+      "address": "245 Robertsville Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.01198979398762,
+      "lng": -84.27403092384338
+    },
+    {
+      "id": "custom-1785267554684-620",
+      "name": "Linden Elementary School",
+      "address": "700 Robertsville Road",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.000837,
+      "lng": -84.307562
+    },
+    {
+      "id": "custom-1785267567249-383",
+      "name": "Porch Manor",
+      "address": "122 Bluebird Lane",
+      "city": "Heiskell",
+      "zip": "37754",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.133744,
+      "lng": -84.056992
+    },
+    {
+      "id": "custom-1785268369124-993",
+      "name": "Oak Ridge Senior Center",
+      "address": "1405 Oak Ridge Tpke Oak Ridge, TN 37830",
+      "city": "",
+      "zip": "",
+      "county": "Anderson",
+      "type": "election_day",
+      "state_district": "33",
+      "state_senate_district": "5",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.012554,
+      "lng": -84.261133
+    },
+    {
+      "id": "bulk_1785269120771_0",
+      "name": "St Stephen Catholic Community",
+      "address": "14544 Lebanon Rd.",
+      "city": "Old Hickory",
+      "zip": "37138",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "57",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.21822377929145,
+      "lng": -86.56971216201784
+    },
+    {
+      "id": "bulk_1785269120771_1",
+      "name": "Lakeview Elementary School",
+      "address": "6211 Saundersville Rd.",
+      "city": "Mt. Juliet",
+      "zip": "37122",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "57",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.261178,
+      "lng": -86.549222
+    },
+    {
+      "id": "bulk_1785269120771_2",
+      "name": "Charlie Daniels Park",
+      "address": "1075 Charlie Daniels Pkwy",
+      "city": "Mt. Juliet",
+      "zip": "37122",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 57,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.2230549,
+      "lng": -86.5090396
+    },
+    {
+      "id": "bulk_1785269120771_3",
+      "name": "West Elementary School",
+      "address": "9315 Lebanon Rd.",
+      "city": "Mt. Juliet",
+      "zip": "37122",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "57",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.23186,
+      "lng": -86.479877
+    },
+    {
+      "id": "bulk_1785269120771_4",
+      "name": "West Wilson Middle School",
+      "address": "935 N Mt Juliet Rd",
+      "city": "Mt. Juliet",
+      "zip": "37122",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 57,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.1847734,
+      "lng": -86.5101661
+    },
+    {
+      "id": "bulk_1785269120771_5",
+      "name": "Rutland Elementary",
+      "address": "1995 S. Rutland Rd.",
+      "city": "Mt. Juliet",
+      "zip": "37122",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 57,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.167770590745924,
+      "lng": -86.4798903465271
+    },
+    {
+      "id": "bulk_1785269120771_6",
+      "name": "Gladeville Community Center",
+      "address": "95 McCrary Rd.",
+      "city": "Lebanon",
+      "zip": "37090",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.111364,
+      "lng": -86.415097
+    },
+    {
+      "id": "bulk_1785269120771_7",
+      "name": "LaGuardo Baptist Church",
+      "address": "8585 TN-109",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.3040802,
+      "lng": -86.439092
+    },
+    {
+      "id": "bulk_1785269120771_8",
+      "name": "Berea Church of Christ",
+      "address": "50 Berea Church Rd",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.271774,
+      "lng": -86.343193
+    },
+    {
+      "id": "bulk_1785269120771_9",
+      "name": "Maple Hill Church",
+      "address": "102 Maple Hill Rd.",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.223166044446586,
+      "lng": -86.34731411933899
+    },
+    {
+      "id": "bulk_1785269120771_10",
+      "name": "Lebanon High School",
+      "address": "500 Blue Devil Blvd.",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.20580182213249,
+      "lng": -86.3332486152649
+    },
+    {
+      "id": "bulk_1785269120771_11",
+      "name": "First United Methodist Church",
+      "address": "415 W. Main St.",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.20947234782049,
+      "lng": -86.30041837692262
+    },
+    {
+      "id": "bulk_1785269120771_12",
+      "name": "Wilson County Civic League",
+      "address": "321 E Market St, Lebanon, TN 37087",
+      "city": "",
+      "zip": "",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.208857719905545,
+      "lng": -86.28504395484926
+    },
+    {
+      "id": "bulk_1785269120771_13",
+      "name": "Southside Elementary",
+      "address": "1224 Murfreesboro Rd.",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.169831954911096,
+      "lng": -86.30551457405092
+    },
+    {
+      "id": "bulk_1785269120771_14",
+      "name": "Carroll Oakland Elementary School",
+      "address": "4664 Hunters Point Pike",
+      "city": "Lebanon",
+      "zip": "37087",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.27588428834358,
+      "lng": -86.2784779071808
+    },
+    {
+      "id": "bulk_1785269120771_15",
+      "name": "Tuckers Crossroads Elementary School",
+      "address": "5820 Big Springs Rd",
+      "city": "Lebanon",
+      "zip": "37090",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.199871,
+      "lng": -86.174687
+    },
+    {
+      "id": "bulk_1785269120771_16",
+      "name": "Watertown Community Center",
+      "address": "8630 Sparta Pike",
+      "city": "Watertown",
+      "zip": "37184",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": 46,
+      "state_senate_district": 17,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.096988773369596,
+      "lng": -86.13975942134859
+    },
+    {
+      "id": "bulk_1785269120771_17",
+      "name": "Norene Community Center",
+      "address": "11770 Cainsville Rd, Lebanon, TN 37090",
+      "city": "",
+      "zip": "",
+      "county": "Wilson",
+      "type": "election_day",
+      "state_district": "46",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.049163,
+      "lng": -86.239376
+    },
+    {
+      "id": "custom-1785270520551-232",
+      "name": "Westmoreland Middle School",
+      "address": "4128 HAWKINS DR.",
+      "city": "WESTMORELAND",
+      "zip": "37186",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.568612,
+      "lng": -86.256636
+    },
+    {
+      "id": "custom-1785270564403-985",
+      "name": "Corinth Church of Christ",
+      "address": "1220 BUTLER BRIDGE RD.",
+      "city": "PORTLAND",
+      "zip": "37148",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "57",
+      "state_senate_district": "17",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.092133,
+      "lng": -86.501696
+    },
+    {
+      "id": "custom-1785270630382-168",
+      "name": "Portland High School",
+      "address": "600 COLLEGE ST.",
+      "city": "PORTLAND",
+      "zip": "37148",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.582385,
+      "lng": -86.532932
+    },
+    {
+      "id": "custom-1785270649180-595",
+      "name": "Oakmont Elementary School",
+      "address": "3323 HWY 76, COTTONTOWN 37048",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.509217,
+      "lng": -86.573896
+    },
+    {
+      "id": "custom-1785270662011-997",
+      "name": "Cottontown Volunteer Fire Department",
+      "address": "2398 HWY 25, COTTONTOWN 37048",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.454594,
+      "lng": -86.543728
+    },
+    {
+      "id": "custom-1785270677970-875",
+      "name": "Bethpage Elementary School",
+      "address": "420 OLD HIGHWAY 31E, BETHPAGE 37022",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.480479,
+      "lng": -86.313051
+    },
+    {
+      "id": "custom-1785270784016-584",
+      "name": "Highland Seventh-day Adventist Church",
+      "address": "100 HIGHLAND CIRCLE DR",
+      "city": "PORTLAND",
+      "zip": "37148",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.521182,
+      "lng": -86.500801
+    },
+    {
+      "id": "custom-1785270799663-830",
+      "name": "Creekside Fellowship",
+      "address": "101 HARSH LN",
+      "city": "CASTALIAN SPRINGS",
+      "zip": "37031",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.396645,
+      "lng": -86.339641
+    },
+    {
+      "id": "custom-1785270819133-226",
+      "name": "Gallatin Civic Center",
+      "address": "210 ALBERT GALLATIN RD.",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.405625,
+      "lng": -86.438788
+    },
+    {
+      "id": "custom-1785270838266-644",
+      "name": "Guild Elementary School",
+      "address": "1018 S WATER AVE",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.37186751708952,
+      "lng": -86.44166350364686
+    },
+    {
+      "id": "custom-1785270862663-350",
+      "name": "Gallatin High School",
+      "address": "700 DAN HERRON DRIVE",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.378493,
+      "lng": -86.461023
+    },
+    {
+      "id": "custom-1785270884350-102",
+      "name": "Volunteer State Community College",
+      "address": "1480 NASHVILLE PIKE",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.36245940547793,
+      "lng": -86.49720668792726
+    },
+    {
+      "id": "custom-1785270897102-342",
+      "name": "Station Camp Middle School",
+      "address": "281 BIG STATION CAMP BLVD",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.36503,
+      "lng": -86.542
+    },
+    {
+      "id": "custom-1785270908518-694",
+      "name": "Howard Elementary School",
+      "address": "805 LONG HOLLOW PIKE",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.38728606580291,
+      "lng": -86.46465539932252
+    },
+    {
+      "id": "custom-1785270951351-681",
+      "name": "Station Camp High School",
+      "address": "1040 BISON TRAIL",
+      "city": "GALLATIN",
+      "zip": "37066",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.36304690580099,
+      "lng": -86.54776096343996
+    },
+    {
+      "id": "custom-1785270965268-663",
+      "name": "Union Elementary School",
+      "address": "516 CARSON STREET, GALLATIN 37066",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.40076,
+      "lng": -86.455606
+    },
+    {
+      "id": "custom-1785270981758-233",
+      "name": "Beech Elementary School",
+      "address": "3120 LONG HOLLOW PIKE",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.372114,
+      "lng": -86.618877
+    },
+    {
+      "id": "custom-1785270998616-489",
+      "name": "Birdwell's Chapel Church of Christ",
+      "address": "3170 HWY 25, COTTONTOWN 37048",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "44",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.494156,
+      "lng": -86.592126
+    },
+    {
+      "id": "custom-1785271010068-984",
+      "name": "White House Middle School",
+      "address": "2020 HWY 31W, WHITE HOUSE 37188",
+      "city": "",
+      "zip": "",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.432563,
+      "lng": -86.684524
+    },
+    {
+      "id": "custom-1785271049486-439",
+      "name": "Millersville Community Center",
+      "address": "1181 LOUISVILLE HWY",
+      "city": "MILLERSVILLE",
+      "zip": "37072",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.370148397067595,
+      "lng": -86.70948207378389
+    },
+    {
+      "id": "custom-1785271062751-915",
+      "name": "GOODLETTSVILLE CHURCH OF THE NAZARENE",
+      "address": "400 LORETTA DR",
+      "city": "GOODLETTSVILLE",
+      "zip": "37072",
+      "county": "Davidson",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.336115,
+      "lng": -86.705269
+    },
+    {
+      "id": "custom-1785271075502-767",
+      "name": "Merrol Hyde Magnet School",
+      "address": "128 TOWNSHIP DR",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.32293983157276,
+      "lng": -86.6234850883484
+    },
+    {
+      "id": "custom-1785271096677-558",
+      "name": "Gene Brown Elementary School",
+      "address": "174 IMPERIAL BLVD",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.29836934615709,
+      "lng": -86.62849545478822
+    },
+    {
+      "id": "custom-1785271107794-818",
+      "name": "Hawkins Middle School",
+      "address": "487A WALTON FERRY RD",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.281955,
+      "lng": -86.620619
+    },
+    {
+      "id": "custom-1785271118828-467",
+      "name": "Indian Lake Elementary School",
+      "address": "505 INDIAN LAKE RD",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.27306455094139,
+      "lng": -86.58564448356628
+    },
+    {
+      "id": "custom-1785271148960-703",
+      "name": "Jack Anderson Elementary",
+      "address": "250 SHUTES LN",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "35",
+      "state_senate_district": "18",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.327998,
+      "lng": -86.546068
+    },
+    {
+      "id": "custom-1785271163403-118",
+      "name": "George A Whitten Elementary School",
+      "address": "140 SCOTCH ST",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.329414015018735,
+      "lng": -86.60240292549133
+    },
+    {
+      "id": "custom-1785271183113-811",
+      "name": "Hendersonville High School Commando Corner",
+      "address": "123 CHEROKEE ROAD",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.302994,
+      "lng": -86.606552
+    },
+    {
+      "id": "custom-1785271197509-2",
+      "name": "LONG HOLLOW CHURCH",
+      "address": "3031 LONG HOLLOW PIKE",
+      "city": "HENDERSONVILLE",
+      "zip": "37075",
+      "county": "Sumner",
+      "type": "election_day",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.368114,
+      "lng": -86.610996
+    },
+    {
+      "id": "custom-1785272637853-917",
+      "name": "Old Jonesborough Middle School",
+      "address": "308 Forest Dr",
+      "city": "Jonesborough",
+      "zip": "37659",
+      "county": "Washington",
+      "type": "early",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.30126598818706,
+      "lng": -82.45835781097414
+    },
+    {
+      "id": "custom-1785272681091-831",
+      "name": "Johnson City Fire Station #8",
+      "address": "106 Gray Commons Circle",
+      "city": "Gray",
+      "zip": "37615",
+      "county": "Washington",
+      "type": "early",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.39833198630799,
+      "lng": -82.48777627944948
+    },
+    {
+      "id": "custom-1785273382421-515",
+      "name": "Fall Branch Elem",
+      "address": "1061 Hwy 93, Fall Branch 37656",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.411055,
+      "lng": -82.619365
+    },
+    {
+      "id": "custom-1785273391311-397",
+      "name": "Grandview Elem",
+      "address": "2891 Hwy 11-E, Telford 37690",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.260508,
+      "lng": -82.566929
+    },
+    {
+      "id": "custom-1785273413359-965",
+      "name": "West View Elem",
+      "address": "2847 Old State Rte 34, Limestone, TN 37681",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.223602,
+      "lng": -82.591011
+    },
+    {
+      "id": "custom-1785273430550-269",
+      "name": "Historic Jonesborough Visitors Center",
+      "address": "117 Boone St",
+      "city": "Jonesborough",
+      "zip": "37659",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.296711,
+      "lng": -82.471329
+    },
+    {
+      "id": "custom-1785273448318-379",
+      "name": "Jonesborough Middle School",
+      "address": "308 Forest Dr",
+      "city": "Jonesborough",
+      "zip": "37659",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.30115358318916,
+      "lng": -82.45849728584291
+    },
+    {
+      "id": "custom-1785273459841-566",
+      "name": "Lamar Elementary School",
+      "address": "3261 Hwy 81 S, Jonesborough 37659",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.216908,
+      "lng": -82.468734
+    },
+    {
+      "id": "custom-1785273478089-112",
+      "name": "Gray Elementary",
+      "address": "755 Gray Station Rd",
+      "city": "Gray",
+      "zip": "37615",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.41661173761099,
+      "lng": -82.47768044471742
+    },
+    {
+      "id": "custom-1785273492859-831",
+      "name": "Lakeridge Elem",
+      "address": "1001 Lake Ridge Square, Johnson City 37601",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.384752,
+      "lng": -82.385622
+    },
+    {
+      "id": "custom-1785273528467-935",
+      "name": "Towne Acres School",
+      "address": "2310 Larkspur Dr",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.343487,
+      "lng": -82.385368
+    },
+    {
+      "id": "custom-1785273536303-546",
+      "name": "Freedom Hall Center",
+      "address": "1320 Pactolas Rd",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "both",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.324433,
+      "lng": -82.375198
+    },
+    {
+      "id": "custom-1785273546375-633",
+      "name": "Indian Trail School",
+      "address": "307 Car-Mol Dr",
+      "city": "Johnson City",
+      "zip": "37601",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.372342644063316,
+      "lng": -82.40143060684206
+    },
+    {
+      "id": "custom-1785273592226-754",
+      "name": "Carver Recreation",
+      "address": "322 W Watauga Ave",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.317728,
+      "lng": -82.360532
+    },
+    {
+      "id": "custom-1785273603467-107",
+      "name": "Keystone Memorial Park Community Center (MPCC)",
+      "address": "510 Bert St",
+      "city": "Johnson City",
+      "zip": "37601",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.319895,
+      "lng": -82.339791
+    },
+    {
+      "id": "custom-1785273613764-803",
+      "name": "South Side Elem",
+      "address": "1011 Southwest Ave",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.30700707416647,
+      "lng": -82.35598325729372
+    },
+    {
+      "id": "custom-1785273621334-790",
+      "name": "Cherokee Elem",
+      "address": "2100 Cherokee Rd",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.280566,
+      "lng": -82.380841
+    },
+    {
+      "id": "custom-1785273628819-563",
+      "name": "HJ Alternative",
+      "address": "820 W Market St",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.315939,
+      "lng": -82.372363
+    },
+    {
+      "id": "custom-1785273636500-685",
+      "name": "Woodland Elementary School(Washington)",
+      "address": "2303 Indian Ridge Rd",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.320954,
+      "lng": -82.405834
+    },
+    {
+      "id": "custom-1785273646266-480",
+      "name": "Asbury Alternative",
+      "address": "2002 Indian Ridge Rd",
+      "city": "Johnson City",
+      "zip": "37604",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "7",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.32158269155162,
+      "lng": -82.39747166633607
+    },
+    {
+      "id": "custom-1785273653032-106",
+      "name": "Boones Creek Elem",
+      "address": "132 Highland Church Rd",
+      "city": "Gray",
+      "zip": "37615",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "6",
+      "state_senate_district": "3",
+      "congressional_district": "1",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.355863,
+      "lng": -82.445725
+    },
+    {
+      "id": "custom-1785273667227-701",
+      "name": "Sulphur Springs Elementary School",
+      "address": "1518 Gray Station Sulphur Springs Rd, Jonesborough, TN 37659",
+      "city": "",
+      "zip": "",
+      "county": "Washington",
+      "type": "election_day",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.34636189933992,
+      "lng": -82.54117369651796
     }
   ],
   "tn_polling_deleted": [
