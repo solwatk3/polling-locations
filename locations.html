@@ -3405,6 +3405,71 @@
       return results.length ? results : null;
     }
 
+    // parseEllipsisFormat(text)
+    // Handles one-per-line format where a Unicode ellipsis (U+2026) separates
+    // a city label from the venue name and street address:
+    //   "Harriman... Harriman Community Center 631 Clinch St."
+    // City = text before the ellipsis. Venue name and street are run together
+    // after it - split by finding the first house number (digit sequence).
+    // No zip is present in this format so all entries are flagged for review.
+    // Detected by the presence of U+2026 in every non-empty line.
+    // -------------------------------------------------------------------------
+    function parseEllipsisFormat(text) {
+      // Fast check: Unicode ellipsis must be present
+      if (text.indexOf("…") === -1) return null;
+
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+      if (!lines.length) return null;
+
+      // Every non-empty line must contain an ellipsis - prevents false positives
+      // from text that happens to have one ellipsis but is really another format
+      if (!lines.every(function(l) { return l.indexOf("…") !== -1; })) return null;
+
+      var results = [];
+      lines.forEach(function(line, idx) {
+        var parts = line.split("…");
+        var city  = (parts[0] || "").trim();
+        var rest  = (parts[1] || "").trim(); // e.g. "Harriman Community Center 631 Clinch St."
+
+        var name = "", address = "";
+        var reviewReasons = [];
+
+        // Split at the first house number: digits followed by a space and more text
+        // Everything before the house number = venue name
+        // Everything from the house number on = street address
+        var addrMatch = rest.match(/^(.*?)\s+(\d+\s+\S.*)$/);
+        if (addrMatch) {
+          name    = addrMatch[1].trim();
+          address = addrMatch[2].trim();
+        } else {
+          // No house number found - save whole string as name and flag
+          name = rest;
+          reviewReasons.push("Could not find street number");
+        }
+
+        // Zip is never present in this format - always needs review
+        reviewReasons.push("No zip - add after import");
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          line,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          "",
+          type:         "election_day",
+          needsReview:  true,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3412,6 +3477,10 @@
     // -------------------------------------------------------------------------
     function parseBulkText(text) {
       text = text.trim();
+
+      // --- Ellipsis format detection (City... Venue Name Street per line) ---
+      var ellipsisResult = parseEllipsisFormat(text);
+      if (ellipsisResult) return ellipsisResult;
 
       // --- Markdown-link format detection (Google Sheets hyperlinked cells) ---
       var markdownResult = parseMarkdownLinkFormat(text);
