@@ -1346,7 +1346,7 @@
     },
     {
       "id": "custom-1785119643808-222",
-      "name": "St Mark Missionary Baptist Church",
+      "name": "St Mark Missionary Baptist Church(Collierville)",
       "address": "363 Sycamore Rd",
       "city": "Collierville",
       "zip": "38017",
@@ -11146,6 +11146,1047 @@
       "notes": "",
       "lat": 35.816525575020506,
       "lng": -86.42578482627869
+    },
+    {
+      "id": "bulk_1785246279399_0",
+      "name": "Somerville Methodist Church C.A.C.",
+      "address": "205 East St.",
+      "city": "West Somerville",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": 94,
+      "state_senate_district": 26,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.24252601857687,
+      "lng": -89.349102973938
+    },
+    {
+      "id": "bulk_1785246279399_1",
+      "name": "Fire Department(Fayette County)",
+      "address": "905 Mt Moriah Dr, Whiteville, TN 38075",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.330733,
+      "lng": -89.229193
+    },
+    {
+      "id": "bulk_1785246279399_2",
+      "name": "Jefferson Innovative Learning Center",
+      "address": "TN-59, Somerville, TN 38068",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.282051,
+      "lng": -89.360441
+    },
+    {
+      "id": "bulk_1785246279399_3",
+      "name": "Braden Methodist Church",
+      "address": "230 TN-59, Mason, TN 38049",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.379249,
+      "lng": -89.567342
+    },
+    {
+      "id": "bulk_1785246279399_4",
+      "name": "First Baptist Church(Gallaway)",
+      "address": "377 Main St.",
+      "city": "Gallaway",
+      "zip": "38036",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.325603731229656,
+      "lng": -89.61698055267335
+    },
+    {
+      "id": "bulk_1785246279399_5",
+      "name": "Oakland Elementary School",
+      "address": "14925 TN-194, Oakland, TN 38060",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.230652,
+      "lng": -89.516894
+    },
+    {
+      "id": "bulk_1785246279399_6",
+      "name": "Hickory Withe Baptist Church",
+      "address": "17675 TN-196, Eads, TN 38028",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.23271,
+      "lng": -89.588979
+    },
+    {
+      "id": "bulk_1785246279399_7",
+      "name": "Sheriff’s Sub-Station",
+      "address": "11410 TN-196, Collierville, TN 38017",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.14486927593591,
+      "lng": -89.59351122379304
+    },
+    {
+      "id": "bulk_1785246279399_8",
+      "name": "Piperton Baptist Church",
+      "address": "205 E. Old State Line Rd.",
+      "city": "Piperton",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": "",
+      "notes": "",
+      "lat": 35.0446753287663,
+      "lng": -89.61391210556032
+    },
+    {
+      "id": "bulk_1785246279399_9",
+      "name": "Rossville City Hall",
+      "address": "360 Morrison Rd.",
+      "city": "Rossville",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": 94,
+      "state_senate_district": 26,
+      "congressional_district": 9,
+      "hours": "",
+      "notes": "",
+      "lat": 35.04400776126655,
+      "lng": -89.5519208908081
+    },
+    {
+      "id": "bulk_1785246279399_10",
+      "name": "Southwest Elementary School",
+      "address": "8095 TN-194, Williston, TN 38076",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.140033,
+      "lng": -89.48782
+    },
+    {
+      "id": "bulk_1785246279399_11",
+      "name": "Williston City Hall",
+      "address": "15415 TN-193, Somerville, TN 38068",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.158908,
+      "lng": -89.373361
+    },
+    {
+      "id": "bulk_1785246279399_12",
+      "name": "LaGrange-Moscow Elementary School",
+      "address": "15655 TN-57, Moscow, TN 38057",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.05818361455596,
+      "lng": -89.37149405479431
+    },
+    {
+      "id": "bulk_1785246279399_14",
+      "name": "LaGrange Civic Center",
+      "address": "14600 Lagrange Rd, Grand Junction, TN 38039",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.049212,
+      "lng": -89.244241
+    },
+    {
+      "id": "bulk_1785246279399_15",
+      "name": "West Jr. High School",
+      "address": "13100 TN-194, Oakland, TN 38060",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.20386576999699,
+      "lng": -89.51496005058289
+    },
+    {
+      "id": "bulk_1785246279399_16",
+      "name": "Somerville Moose Lodge",
+      "address": "950 Moose Lodge Rd, Somerville, TN 38068",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.26454299272721,
+      "lng": -89.3895024061203
+    },
+    {
+      "id": "bulk_1785246279399_17",
+      "name": "Buckley-Carpenter Elementary School",
+      "address": "12580 S Main St, Somerville, TN 38068",
+      "city": "",
+      "zip": "",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.237503,
+      "lng": -89.348319
+    },
+    {
+      "id": "custom-1785250207769-792",
+      "name": "Fire Department #15",
+      "address": "10225 Jernigan Dr",
+      "city": "Somerville",
+      "zip": "38068",
+      "county": "Fayette",
+      "type": "election_day",
+      "state_district": "94",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.20518951525903,
+      "lng": -89.2124229669571
+    },
+    {
+      "id": "bulk_1785250794848_0",
+      "name": "CANAAN BAPTIST CHURCH",
+      "address": "211 NORTH MAIN ST",
+      "city": "COVINGTON",
+      "zip": "39019",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": 81,
+      "state_senate_district": 32,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.56597756038999,
+      "lng": -89.64651703834534
+    },
+    {
+      "id": "bulk_1785250794848_1",
+      "name": "COVINGTON CHURCH OF CHRIST",
+      "address": "1690 HIGHWAY 51 S",
+      "city": "COVINGTON",
+      "zip": "38019",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.541432,
+      "lng": -89.665862
+    },
+    {
+      "id": "bulk_1785250794848_2",
+      "name": "GARLAND COMMUNITY CENTER",
+      "address": "1598 GARLAND DR",
+      "city": "COVINGTON",
+      "zip": "38019",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.588169,
+      "lng": -89.752493
+    },
+    {
+      "id": "bulk_1785250794848_3",
+      "name": "GATEWAY BAPTIST CHURCH - TANNER FAMILY LIFE CENTER",
+      "address": "1915 ROSEMARK RD",
+      "city": "ATOKA",
+      "zip": "38004",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.407213,
+      "lng": -89.767497
+    },
+    {
+      "id": "bulk_1785250794848_4",
+      "name": "MUNFORD BAPTIST CHURCH FAMILY LIFE CENTER",
+      "address": "1253 MUNFORD AVE",
+      "city": "MUNFORD",
+      "zip": "38058",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": 81,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.44667793760602,
+      "lng": -89.81090426445007
+    },
+    {
+      "id": "bulk_1785250794848_5",
+      "name": "POPLAR GROVE UNITED METHODIST",
+      "address": "228 QUITO DRUMMONDS RD",
+      "city": "DRUMMONDS",
+      "zip": "38023",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": 81,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.45898334800683,
+      "lng": -89.90931987762453
+    },
+    {
+      "id": "bulk_1785250794848_6",
+      "name": "GREENLEAF COMMUNITY CHURCH",
+      "address": "9703 HWY 59 S",
+      "city": "MASON",
+      "zip": "38049",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.442347,
+      "lng": -89.557061
+    },
+    {
+      "id": "bulk_1785250794848_7",
+      "name": "St Mark Missionary Baptist Church(Drummonds)",
+      "address": "3220 WILKINSVILLE RD",
+      "city": "DRUMMONDS",
+      "zip": "38023",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.407315,
+      "lng": -89.895423
+    },
+    {
+      "id": "bulk_1785250794848_8",
+      "name": "BRIGHTON BAPTIST CHURCH",
+      "address": "132 EAST WOODLAWN AV",
+      "city": "BRIGHTON",
+      "zip": "38011",
+      "county": "Tipton",
+      "type": "election_day",
+      "state_district": "81",
+      "state_senate_district": "32",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 35.48896116514928,
+      "lng": -89.72965478897096
+    },
+    {
+      "id": "custom-1785251940828-39",
+      "name": "Election Commission Office(Lauderdale)",
+      "address": "217 N. Main St",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "early",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": "8:30am - 4:30pm",
+      "schedule": [
+        {
+          "open": "8:30am",
+          "close": "4:30pm",
+          "days": "July 17th – August 1st - Mon, Tue, Wed, Fri"
+        },
+        {
+          "open": "8:30am",
+          "close": "7:00pm",
+          "days": "July 17th – August 1st - Thurs"
+        },
+        {
+          "open": "8:30am",
+          "close": "12:00pm",
+          "days": "July 17th – August 1st - Saturday"
+        }
+      ],
+      "notes": "",
+      "lat": 35.74968830304653,
+      "lng": -89.52827185392381
+    },
+    {
+      "id": "custom-1785252073085-102",
+      "name": "Halls Community Center",
+      "address": "201 N. College St",
+      "city": "Halls",
+      "zip": "38040",
+      "county": "Lauderdale",
+      "type": "early",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": "8:30am - 4:30pm",
+      "schedule": [
+        {
+          "open": "8:30am",
+          "close": "4:30pm",
+          "days": "July 20th – 25th - Mon, Tue, Wed, Fri"
+        },
+        {
+          "open": "8:30am",
+          "close": "7:00pm",
+          "days": "July 20th – 25th - Thurs"
+        },
+        {
+          "open": "8:30am",
+          "close": "12:00pm",
+          "days": "July 20th – 25th - Saturday"
+        }
+      ],
+      "notes": "",
+      "lat": 35.876367426977374,
+      "lng": -89.39928710460663
+    },
+    {
+      "id": "bulk_1785252168594_0",
+      "name": "Assembly of God Activity Building",
+      "address": "620 Graves Ave",
+      "city": "Henning",
+      "zip": "38041",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.679313300908234,
+      "lng": -89.58150029182436
+    },
+    {
+      "id": "bulk_1785252168594_1",
+      "name": "Abundant Life Church Activity Building",
+      "address": "2131 Hwy 51 S",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.725524,
+      "lng": -89.563298
+    },
+    {
+      "id": "bulk_1785252168594_2",
+      "name": "First Baptist Church Activity Building",
+      "address": "107 Lafayette Ave",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.74775744066201,
+      "lng": -89.52863931655885
+    },
+    {
+      "id": "bulk_1785252168594_3",
+      "name": "First Assembly of God Activity Building",
+      "address": "233 Church St",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.74489697895218,
+      "lng": -89.54032301902772
+    },
+    {
+      "id": "bulk_1785252168594_4",
+      "name": "First United Methodist Church Activity Bld.",
+      "address": "145 S Main St",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 32,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 35.74430920011659,
+      "lng": -89.52925086021423
+    },
+    {
+      "id": "bulk_1785252168594_5",
+      "name": "Olive Branch Baptist Church Activity Bld.",
+      "address": "4769 Lightfoot Luckett Rd",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.73590566520656,
+      "lng": -89.66905832290651
+    },
+    {
+      "id": "bulk_1785252168594_6",
+      "name": "Grace Baptist Church Church Activity Bld.",
+      "address": "3819 Edith Nankipoo Rd",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": 35.80034199997925,
+      "lng": -89.53688979148865
+    },
+    {
+      "id": "bulk_1785252168594_7",
+      "name": "Macedonia Church Activity Building",
+      "address": "6950 Edith Nankipoo Rd",
+      "city": "Ripley",
+      "zip": "38063",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": 35.84495195383877,
+      "lng": -89.52985167503358
+    },
+    {
+      "id": "bulk_1785252168594_8",
+      "name": "Gates Baptist Church Activity Building",
+      "address": "64 4th St",
+      "city": "Gates",
+      "zip": "38037",
+      "county": "Lauderdale",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": 35.838435575620686,
+      "lng": -89.40772265195848
+    },
+    {
+      "id": "bulk_1785252618662_0",
+      "name": "Friendship Baptist Church",
+      "address": "445 Main St",
+      "city": "Friendship",
+      "zip": "38034",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 25,
+      "congressional_district": 8,
+      "hours": "",
+      "notes": "",
+      "lat": 35.90730987817858,
+      "lng": -89.2468571662903
+    },
+    {
+      "id": "bulk_1785252618662_1",
+      "name": "Lebanon United Methodist Church",
+      "address": "5653 Chestnut Bluff Rd, Friendship, TN 38034",
+      "city": "",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.844542,
+      "lng": -89.305808
+    },
+    {
+      "id": "bulk_1785252618662_2",
+      "name": "Maury City Baptist Church",
+      "address": "374 N Broadway St",
+      "city": "Maury City",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.81657342478745,
+      "lng": -89.22513127326967
+    },
+    {
+      "id": "bulk_1785252618662_3",
+      "name": "Crockett Mills Community Center",
+      "address": "93 Community Center Ln, Alamo, TN 38001",
+      "city": "",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.868834,
+      "lng": -89.165329
+    },
+    {
+      "id": "bulk_1785252618662_4",
+      "name": "Alamo First Christian Church",
+      "address": "1550 Hwy 88 S, Alamo",
+      "city": "Alamo",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.76386,
+      "lng": -89.112156
+    },
+    {
+      "id": "bulk_1785252618662_5",
+      "name": "Mt. Olive Assembly of God",
+      "address": "3623 Alamo Gadsden Rd, Gadsden, TN 38337",
+      "city": "",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.78941404691716,
+      "lng": -89.0550121665001
+    },
+    {
+      "id": "bulk_1785252618662_6",
+      "name": "Crockett County Community Church Activity Building",
+      "address": "80 N Johnson St",
+      "city": "Alamo",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.786254820488466,
+      "lng": -89.11588221788409
+    },
+    {
+      "id": "bulk_1785252618662_7",
+      "name": "Cross Roads Baptist Church",
+      "address": "1808 Love Rd, Bells, TN 38006",
+      "city": "",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.742349,
+      "lng": -89.131481
+    },
+    {
+      "id": "bulk_1785252618662_8",
+      "name": "Bells City Hall",
+      "address": "12984 US-79, Bells, TN 38006",
+      "city": "Bells",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.710059,
+      "lng": -89.087441
+    },
+    {
+      "id": "bulk_1785252618662_9",
+      "name": "Midway Baptist Church",
+      "address": "5353 Old Jackson Rd, Bells, TN 38006",
+      "city": "",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.71538,
+      "lng": -88.993274
+    },
+    {
+      "id": "bulk_1785252618662_10",
+      "name": "Gadsden Community Center",
+      "address": "229 High St",
+      "city": "Gadsden",
+      "zip": "",
+      "county": "Crockett",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.78140477192891,
+      "lng": -88.9917039871216
     }
   ],
   "tn_polling_deleted": [
