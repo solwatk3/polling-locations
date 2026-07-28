@@ -1858,6 +1858,9 @@
         var noonH = t.match(/^(\d+)/);
         return (noonH ? noonH[1] : "12") + ":00pm";
       }
+      // Strip periods from "a.m." / "p.m." notation (common in PDF and website copy-paste)
+      // so the match below works: "9:00 a.m." becomes "9:00am"
+      t = t.replace(/([ap])\.m\./gi, "$1m").trim();
       var match = t.match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
       if (!match) return t;
       var h  = match[1];
@@ -1908,8 +1911,10 @@
         // Pattern: DAY_TEXT OPEN_TIME [dash or em-dash] CLOSE_TIME
         // Open time starts at the first digit followed by a time pattern.
         // Close time ends the line and includes am/pm/noon.
+        // Format B regex also accepts "a.m." / "p.m." with periods - normalizeTime
+        // strips the periods, so the captured time strings still produce clean output
         var inlineMatch = seg.match(
-          /^(.*?)\s+(\d+(?::\d+)?\s*(?:am|pm))\s*[–\-]\s*(\d+(?::\d+)?\s*(?:am|pm|noon))$/i
+          /^(.*?)\s+(\d+(?::\d+)?\s*(?:a\.m\.|p\.m\.|am|pm))\s*[–\-]\s*(\d+(?::\d+)?\s*(?:a\.m\.|p\.m\.|am|pm|noon))$/i
         );
         if (inlineMatch) {
           var rawLabel = inlineMatch[1].trim();
