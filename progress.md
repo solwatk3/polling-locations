@@ -123,6 +123,10 @@
 - [x] locations.html: days input shows full text as browser tooltip on hover - truncated field content readable without editing (2026-07-27)
 - [x] locations.html: Re-geocode address button restored below lat/lng fields - calls geocodeAddress() on the current address field value (2026-07-27)
 
+## Done (Session 20 - 2026-07-27)
+- [x] district-report.html: locations sorted A-Z by name within each section (Early Voting and Election Day) (2026-07-27)
+- [x] district-report.html: removed map button, Leaflet modal, and all geocoding code - was non-functional due to Nominatim rate limits and partial address matching (2026-07-27)
+
 ## Done (Session 14 - 2026-07-27)
 - [x] location-detail.html: fixed Prev/Next navigation broken for "House District ?" group - parseInt("?") returned NaN so filter matched nothing; added special case: ctxVal === "?" matches locations where district field is "?" or empty (2026-07-27)
 
