@@ -3221,6 +3221,91 @@
       return results;
     }
 
+    // parsePrecinct4LineFormat(text)
+    // Handles 4-line blocks separated by blank lines where each block is:
+    //   Line 0: precinct/area label (e.g. "Dyllis", "Kingston Ward 2") - DISCARDED
+    //   Line 1: venue name (e.g. "Pine Ridge Baptist Church")
+    //   Line 2: street address (e.g. "151 Edwards Rd.")
+    //   Line 3: "City, ST Zip" (e.g. "Harriman, TN 37748")
+    // Detected when blank-line separators exist, a City/ST line is present,
+    // AND at least 60% of blocks have exactly 4 lines. This prevents it from
+    // shadowing the regular 3-line block format.
+    // -------------------------------------------------------------------------
+    function parsePrecinct4LineFormat(text) {
+      var cleanedLines = text.split(/\r?\n/).map(function(l) { return l.replace(/\t+$/, "").trim(); });
+
+      // Group into blocks separated by blank lines
+      var blockGroups = [];
+      var currentGroup = [];
+      cleanedLines.forEach(function(line) {
+        if (line) { currentGroup.push(line); }
+        else { if (currentGroup.length) { blockGroups.push(currentGroup.slice()); currentGroup = []; } }
+      });
+      if (currentGroup.length) blockGroups.push(currentGroup);
+
+      // Detection: need multiple blocks, a City/ST line, and >=60% of blocks with 4 lines
+      if (blockGroups.length < 2) return null;
+      if (!/,\s*[A-Z]{2}(\s+\d{5})?/.test(text)) return null;
+      var fourLineCount = blockGroups.filter(function(g) { return g.length === 4; }).length;
+      if (fourLineCount / blockGroups.length < 0.6) return null;
+
+      var results = [];
+      blockGroups.forEach(function(glines, idx) {
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        if (glines.length >= 4) {
+          // Standard 4-line: skip line 0 (precinct label), use lines 1-3
+          name    = glines[1].replace(/[*★]/g, "").trim(); // strip star symbols
+          address = glines[2];
+          var cityLine  = (glines[3] || "").trim();
+          var cityMatch = cityLine.match(/^(.+?),?\s*[A-Z]{2}\s+(\d{5})/);
+          if (cityMatch) {
+            city = cityMatch[1].trim();
+            zip  = cityMatch[2].trim();
+          } else {
+            // No zip (e.g. "Ten Mile, TN") - strip state code and flag for review
+            city = cityLine.replace(/,?\s+[A-Z]{2}\s*$/, "").trim() || cityLine;
+            reviewReasons.push("No zip - check city");
+          }
+        } else if (glines.length === 3) {
+          // 3-line fallback: treat as Name / Street / City-Zip (no precinct label)
+          name    = glines[0].replace(/[*★]/g, "").trim();
+          address = glines[1];
+          var cityLine  = (glines[2] || "").trim();
+          var cityMatch = cityLine.match(/^(.+?),?\s*[A-Z]{2}\s+(\d{5})/);
+          if (cityMatch) {
+            city = cityMatch[1].trim();
+            zip  = cityMatch[2].trim();
+          } else {
+            city = cityLine.replace(/,?\s+[A-Z]{2}\s*$/, "").trim() || cityLine;
+            reviewReasons.push("No zip - check city");
+          }
+        } else {
+          name = glines.join(" ");
+          reviewReasons.push("Block too short to parse");
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          glines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseDashFormat(text)
     // Handles one-location-per-line format: "Name - Street, City, ST Zip"
     // The dash separator may have 0 or 1 spaces before it ("Name-" or "Name -").
@@ -3335,6 +3420,10 @@
       // --- Dash format detection (Name - Street, City, ST Zip per line) ---
       var dashResult = parseDashFormat(text);
       if (dashResult) return dashResult;
+
+      // --- Precinct 4-line format (Precinct / Venue / Street / City,ST Zip blocks) ---
+      var precinct4Result = parsePrecinct4LineFormat(text);
+      if (precinct4Result) return precinct4Result;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
