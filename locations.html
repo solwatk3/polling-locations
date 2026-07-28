@@ -3216,6 +3216,71 @@
       return results;
     }
 
+    // parseDashFormat(text)
+    // Handles one-location-per-line format: "Name - Street, City, ST Zip"
+    // The dash separator may have 0 or 1 spaces before it ("Name-" or "Name -").
+    // Parsing works right-to-left: extract zip, strip state, then last comma
+    // gives the city/street boundary. This avoids street-type detection entirely
+    // so it works for routes like "TN-109" that have no recognizable street type.
+    // Detected when every non-empty line matches the full Name-Address pattern.
+    // -------------------------------------------------------------------------
+    function parseDashFormat(text) {
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+      if (lines.length < 2) return null;
+
+      // Every line must look like "Something - Something, ST 12345"
+      var dashPattern = /^.+\s*-\s*.+,\s*[A-Z]{2}\s+\d{5}\s*$/;
+      if (!lines.every(function(l) { return dashPattern.test(l); })) return null;
+
+      var results = [];
+      lines.forEach(function(line, idx) {
+        // Non-greedy name match so the first dash is always the separator
+        var m = line.match(/^(.+?)\s*-\s*(.+)$/);
+        if (!m) return;
+
+        var name     = m[1].trim();
+        var fullAddr = m[2].trim(); // e.g. "14544 Lebanon Rd., Old Hickory, TN 37138"
+
+        // 1. Pull zip from the end
+        var zipM = fullAddr.match(/(\d{5})\s*$/);
+        var zip  = zipM ? zipM[1] : "";
+        var work = zipM ? fullAddr.slice(0, zipM.index).trim() : fullAddr;
+
+        // 2. Strip trailing state abbreviation (and optional preceding comma/space)
+        work = work.replace(/,?\s+[A-Z]{2}\s*$/, "").trim();
+
+        // 3. Last comma = city / street boundary
+        var address = "", city = "";
+        var lastComma = work.lastIndexOf(",");
+        if (lastComma !== -1) {
+          address = work.slice(0, lastComma).trim();
+          city    = work.slice(lastComma + 1).trim();
+        } else {
+          address = work; // no comma fallback - will flag for review
+        }
+
+        var reviewReasons = [];
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          line,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseMarkdownLinkFormat(text)
     // Handles clipboard output from Google Sheets when address cells contain
     // hyperlinks. Sheets encodes them as Markdown: Name[Street](url)\n[City, ST Zip](url)
@@ -3261,6 +3326,10 @@
       // --- Markdown-link format detection (Google Sheets hyperlinked cells) ---
       var markdownResult = parseMarkdownLinkFormat(text);
       if (markdownResult) return markdownResult;
+
+      // --- Dash format detection (Name - Street, City, ST Zip per line) ---
+      var dashResult = parseDashFormat(text);
+      if (dashResult) return dashResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
