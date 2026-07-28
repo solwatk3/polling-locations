@@ -139,6 +139,9 @@
       <a href="index.html" class="top-nav-link active">&#128506; Map</a>
       <a href="locations.html" class="top-nav-link">&#128203; Locations</a>
       <a href="directory.html" class="top-nav-link">&#128196; Directory</a>
+      <form onsubmit="event.preventDefault();var q=this.querySelector('input').value.trim();if(q)window.location='directory.html?view=search&q='+encodeURIComponent(q);" style="display:flex;margin:0;margin-left:4px;">
+        <input type="text" placeholder="&#128269; Search..." style="background:rgba(255,255,255,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:0.78rem;padding:5px 10px;width:148px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'" />
+      </form>
     </nav>
   </header>
 

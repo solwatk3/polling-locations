@@ -458,7 +458,11 @@
   <header class="top-bar">
     <div class="top-bar-left">
       <a href="directory.html" class="btn-back" id="btn-back">&#8592; Directory</a>
-      <div class="top-bar-title" id="page-title">Location Detail</div>
+      <!-- Breadcrumb: shows context group above location name when navigating from a group -->
+      <div style="display:flex;flex-direction:column;gap:1px;min-width:0;">
+        <div id="breadcrumb-context" style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;"></div>
+        <div class="top-bar-title" id="page-title">Location Detail</div>
+      </div>
     </div>
     <!-- Prev/Next nav - only shown when a group context is present in the URL -->
     <div id="loc-nav" style="display:none;align-items:center;gap:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
@@ -470,6 +474,9 @@
       <a href="index.html"     class="top-nav-link">&#128506; Map</a>
       <a href="locations.html" class="top-nav-link">&#128203; Locations</a>
       <a href="directory.html" class="top-nav-link active">&#128196; Directory</a>
+      <form onsubmit="event.preventDefault();var q=this.querySelector('input').value.trim();if(q)window.location='directory.html?view=search&q='+encodeURIComponent(q);" style="display:flex;margin:0;margin-left:4px;">
+        <input type="text" placeholder="&#128269; Search..." style="background:rgba(255,255,255,0.08);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:0.78rem;padding:5px 10px;width:148px;outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'" />
+      </form>
     </nav>
   </header>
 
@@ -742,9 +749,27 @@
       prevBtn.style.opacity = idx === 0 ? "0.35" : "1";
       nextBtn.style.opacity = idx === group.length - 1 ? "0.35" : "1";
 
-      // Also update the back button to return to the correct directory view
+      // Update the back button label to show where the user came from
       var backEl = document.getElementById("btn-back");
-      if (backEl) backEl.href = "directory.html"; // stays as-is (directory remembers its last view)
+      if (backEl) {
+        var backLabel = "Directory";
+        if (ctxType === "county") {
+          backLabel = ctxVal + " County";
+        } else if (ctxType === "house") {
+          backLabel = "House District " + ctxVal;
+        } else if (ctxType === "senate") {
+          backLabel = "Senate District " + ctxVal;
+        } else if (ctxType === "congressional") {
+          backLabel = "Congressional District " + ctxVal;
+        }
+        backEl.innerHTML = "&#8592; " + backLabel;
+        // Populate the breadcrumb strip above the location name
+        var crumbEl = document.getElementById("breadcrumb-context");
+        if (crumbEl) {
+          crumbEl.textContent = backLabel;
+          crumbEl.style.display = "block";
+        }
+      }
 
       // navToNeighbor(dir) - called by the Prev/Next button onclick attributes
       window.navToNeighbor = function(dir) {
