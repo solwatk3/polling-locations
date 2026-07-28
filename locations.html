@@ -1796,22 +1796,35 @@
 
     // =========================================================================
     // SCHEDULE TEXT PARSER
-    // Handles two paste formats:
+    // Handles three paste formats:
     //
     // Single-line (semicolon-separated):
     //   "Fri - July 17,24,31 (8am-5:30pm); Sat - July 18,25 (8am-4:30pm)"
     //
-    // Multi-line (one entry per line, header lines without parens are skipped):
-    //   "July 17th through August 1st"           <- skipped (no parens)
+    // Multi-line with parenthesized times:
+    //   "July 17th through August 1st"           <- range header, prepended to rows below
     //   "Monday thru Friday (11:00 am - 7:00 pm)"
     //   "Saturday, July 18th & 25th (10:00 am - 4:00 pm)"
     //
-    // In both formats, the day label is everything before the parenthesized time.
-    // Times are normalized to match the dropdown format (e.g. "11:00am", "7:00pm").
+    // Multi-line with inline times (em dash or hyphen separator, no parens):
+    //   "July 17th - August 1st"                 <- range header (no am/pm/noon)
+    //   "Mon, Tue, Wed, Fri 8:30 am - 4:30 pm"
+    //   "Thurs 8:30 am - 7:00 pm"
+    //   "Saturday 8:30 am - 12 Noon"
+    //
+    // Range header lines (no am/pm/noon present) are stored and prepended to every
+    // timed row that follows. Times are normalized to match the dropdown options.
     // =========================================================================
     function normalizeTime(t) {
-      // Convert "8am" -> "8:00am", "5:30pm" -> "5:30pm", "7pm" -> "7:00pm"
+      // Convert "8am" -> "8:00am", "5:30pm" -> "5:30pm", "7pm" -> "7:00pm",
+      // "8:30 am" -> "8:30am" (space before am/pm), "12 Noon" -> "12:00pm"
       t = t.trim();
+      // Handle "12 Noon", "12:00 Noon", etc. - any digit(s) followed by optional
+      // colon+minutes then whitespace then "noon" (case-insensitive)
+      if (/noon/i.test(t)) {
+        var noonH = t.match(/^(\d+)/);
+        return (noonH ? noonH[1] : "12") + ":00pm";
+      }
       var match = t.match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
       if (!match) return t;
       var h  = match[1];
@@ -1836,32 +1849,48 @@
       var rangeHeader = "";
 
       segments.forEach(function(seg) {
-        // Time range is always in parentheses at the end: "(8am-5:30pm)"
+        // --- Format A: parenthesized time at end of line ---
+        // e.g. "Monday thru Friday (8am-5:30pm)"
         var hoursMatch = seg.match(/\(([^)]+)\)\s*$/);
-        if (!hoursMatch) {
-          // No time on this line - store as carry-forward date range header
-          rangeHeader = seg;
+        if (hoursMatch) {
+          var hoursStr = hoursMatch[1].trim();
+          var rawLabel = seg.replace(/\s*\([^)]+\)\s*$/, "").trim();
+          var dayLabel = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
+          // Split on the dash/en-dash between open and close times
+          var timeMatch = hoursStr.match(/^(.+?)\s*[–\-]\s*(.+)$/);
+          var open = "", close = "";
+          if (timeMatch) {
+            open  = normalizeTime(timeMatch[1]);
+            close = normalizeTime(timeMatch[2]);
+          } else {
+            open = normalizeTime(hoursStr);
+          }
+          parsed.push({ days: dayLabel, open: open, close: close });
           return;
         }
 
-        var hoursStr = hoursMatch[1].trim(); // "8am-5:30pm"
-        // Day/date label is everything before the parenthesized time
-        var rawLabel = seg.replace(/\s*\([^)]+\)\s*$/, "").trim(); // "Monday thru Friday"
-        // Prepend the range header so date context appears on every row
-        var dayLabel = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
-
-        // Split time range on the dash between open and close
-        // Handles "8am-5:30pm" and "8:00am - 5:30pm"
-        var timeMatch = hoursStr.match(/^(.+?)\s*-\s*(.+)$/);
-        var open = "", close = "";
-        if (timeMatch) {
-          open  = normalizeTime(timeMatch[1]);
-          close = normalizeTime(timeMatch[2]);
-        } else {
-          open = normalizeTime(hoursStr); // single time - unusual but handled
+        // --- Format B: inline time after day label, no parentheses ---
+        // e.g. "Mon, Tue, Wed, Fri 8:30 am – 4:30 pm"
+        //      "Saturday 8:30 am – 12 Noon"
+        // Pattern: DAY_TEXT OPEN_TIME [dash or em-dash] CLOSE_TIME
+        // Open time starts at the first digit followed by a time pattern.
+        // Close time ends the line and includes am/pm/noon.
+        var inlineMatch = seg.match(
+          /^(.*?)\s+(\d+(?::\d+)?\s*(?:am|pm))\s*[–\-]\s*(\d+(?::\d+)?\s*(?:am|pm|noon))$/i
+        );
+        if (inlineMatch) {
+          var rawLabel = inlineMatch[1].trim();
+          var dayLabel = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
+          parsed.push({
+            days:  dayLabel,
+            open:  normalizeTime(inlineMatch[2]),
+            close: normalizeTime(inlineMatch[3])
+          });
+          return;
         }
 
-        parsed.push({ days: dayLabel, open: open, close: close });
+        // --- No time found: treat as a range header (e.g. "July 17th – August 1st") ---
+        rangeHeader = seg;
       });
 
       var msg = document.getElementById("sched-paste-msg");
