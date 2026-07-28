@@ -649,12 +649,14 @@
               var countyName = f.properties.NAME || "";
               layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
+                // Normalize both sides: strip " County" suffix and lowercase before comparing.
+                // Census NAME field returns "Tipton County"; loc.county may store "Tipton" or
+                // "Tipton County" depending on how it was set. This handles all combinations.
+                var boundaryBase = countyName.replace(/\s+County$/i, "").trim().toLowerCase();
                 highlightByFilter(function(loc) {
                   if (!loc.county) return null;
-                  // Normalize: geocoder sometimes stores "Tipton County" while the
-                  // boundary data uses just "Tipton" - strip the " County" suffix before comparing
-                  var stored = loc.county.replace(/\s+County$/i, "").trim();
-                  return stored === countyName;
+                  var stored = loc.county.replace(/\s+County$/i, "").trim().toLowerCase();
+                  return stored === boundaryBase;
                 });
               });
               layer.on("mouseout", clearHighlight);
@@ -682,10 +684,11 @@
                   var countyName = TN_COUNTY_NAMES[fips] || "";
                   layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
                   layer.on("mouseover", function() {
+                    var boundaryBase = countyName.replace(/\s+County$/i, "").trim().toLowerCase();
                     highlightByFilter(function(loc) {
                       if (!loc.county) return null;
-                      var stored = loc.county.replace(/\s+County$/i, "").trim();
-                      return stored === countyName;
+                      var stored = loc.county.replace(/\s+County$/i, "").trim().toLowerCase();
+                      return stored === boundaryBase;
                     });
                   });
                   layer.on("mouseout", clearHighlight);
