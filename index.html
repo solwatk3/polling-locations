@@ -552,14 +552,19 @@
       Object.keys(markerRegistry).forEach(function(id) {
         var entry = markerRegistry[id];
         var loc   = allLocs.find(function(l) { return l.id === id; });
-        var match = loc && matchFn(loc);
-        entry.marker.setOpacity(match ? 1.0 : 0.15);
+        // matchFn returns: true = confirmed in region, false = confirmed outside,
+        // null = district/county unknown (not yet detected). Unknown pins sit at
+        // 0.55 opacity - visible but not spotlit - so newly imported data isn't
+        // penalised for not having districts detected yet.
+        var result  = loc ? matchFn(loc) : false;
+        var opacity = result === true ? 1.0 : result === null ? 0.55 : 0.15;
+        entry.markers.forEach(function(m) { m.setOpacity(opacity); });
       });
     }
 
     function clearHighlight() {
       Object.keys(markerRegistry).forEach(function(id) {
-        markerRegistry[id].marker.setOpacity(1.0);
+        markerRegistry[id].markers.forEach(function(m) { m.setOpacity(1.0); });
       });
     }
 
@@ -587,15 +592,21 @@
       var marker = L.marker([lat, lng], { icon: icon, draggable: false })
         .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 });
 
-      // Register primary marker so search can fly to it and open its popup
-      markerRegistry[loc.id] = { marker: marker, lat: lat, lng: lng };
+      // Register all markers for this location.
+      // markers[] holds every Leaflet marker object so the spotlight can set opacity
+      // on all of them. "both" type locations get a primary on earlyLayer and a clone
+      // on electionLayer - both need to be tracked or the clone stays at full opacity.
+      // marker (singular) is kept for search, which needs to open a popup.
+      var allMarkers = [marker];
+      markerRegistry[loc.id] = { marker: marker, markers: allMarkers, lat: lat, lng: lng };
 
       if (loc.type === "both") {
         marker.addTo(earlyLayer);
-        // Clone for the election day layer so each layer has its own independent marker object
-        L.marker([lat, lng], { icon: icon, draggable: false })
+        // Clone for the election day layer - push into markers[] so spotlight reaches it
+        var clone = L.marker([lat, lng], { icon: icon, draggable: false })
           .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
           .addTo(electionLayer);
+        allMarkers.push(clone);
       } else {
         var group = loc.type === "early" ? earlyLayer : electionLayer;
         marker.addTo(group);
@@ -638,7 +649,9 @@
               var countyName = f.properties.NAME || "";
               layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
-                highlightByFilter(function(loc) { return loc.county === countyName; });
+                highlightByFilter(function(loc) {
+                  return loc.county ? loc.county === countyName : null;
+                });
               });
               layer.on("mouseout", clearHighlight);
             }
@@ -665,7 +678,9 @@
                   var countyName = TN_COUNTY_NAMES[fips] || "";
                   layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
                   layer.on("mouseover", function() {
-                    highlightByFilter(function(loc) { return loc.county === countyName; });
+                    highlightByFilter(function(loc) {
+                      return loc.county ? loc.county === countyName : null;
+                    });
                   });
                   layer.on("mouseout", clearHighlight);
                 }
@@ -700,7 +715,10 @@
               // mouseover: stronger highlight + dim pins outside this district
               layer.on("mouseover", function() {
                 layer.setStyle({ fillOpacity:0.3, weight:3 });
-                highlightByFilter(function(loc) { return String(loc.state_district) === String(num); });
+                highlightByFilter(function(loc) {
+                  var d = String(loc.state_district || "?");
+                  return d === "?" ? null : d === String(num);
+                });
               });
               // mousemove: re-check county on every move so it updates as you cross county lines
               layer.on("mousemove", function(e) {
@@ -753,7 +771,10 @@
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
                 layer.setStyle({ fillOpacity:0.25, weight:3.5 });
-                highlightByFilter(function(loc) { return String(loc.congressional_district) === String(num); });
+                highlightByFilter(function(loc) {
+                  var d = String(loc.congressional_district || "?");
+                  return d === "?" ? null : d === String(num);
+                });
               });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
@@ -806,7 +827,10 @@
               layer.bindTooltip(baseLabel, { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
                 layer.setStyle({ fillOpacity:0.25, weight:3.5 });
-                highlightByFilter(function(loc) { return String(loc.state_senate_district) === String(num); });
+                highlightByFilter(function(loc) {
+                  var d = String(loc.state_senate_district || "?");
+                  return d === "?" ? null : d === String(num);
+                });
               });
               layer.on("mousemove", function(e) {
                 var label = baseLabel;
