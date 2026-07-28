@@ -602,10 +602,21 @@
       }
     }
 
-    // Place all base placeholder locations
-    POLLING_LOCATIONS.filter(function(l) { return _deleted.indexOf(l.id) === -1; }).forEach(function(loc) { placePin(loc, false); });
+    // Build a set of IDs already in customLocations so we don't place seed data twice.
+    // locations.html's mergeWithSeedData() copies seed entries into localStorage, which
+    // means POLLING_LOCATIONS and customLocations can contain the same IDs. Placing both
+    // without deduplication creates ghost markers that are invisible to markerRegistry
+    // and therefore can't be controlled by the spotlight highlight. Custom version wins
+    // (it may have corrected coordinates), seed entry is skipped.
+    var customIds = {};
+    customLocations.forEach(function(l) { customIds[l.id] = true; });
 
-    // Place all user-added custom locations
+    // Place seed locations that are not already covered by a custom entry
+    POLLING_LOCATIONS.filter(function(l) {
+      return _deleted.indexOf(l.id) === -1 && !customIds[l.id];
+    }).forEach(function(loc) { placePin(loc, false); });
+
+    // Place all custom locations (includes edited seed entries)
     customLocations.forEach(function(loc) { placePin(loc, true); });
 
     // =========================================================================
