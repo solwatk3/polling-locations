@@ -131,6 +131,13 @@
 - [x] locations.html: bulk import duplicate detection added - fingerprint is lowercased name+address; duplicates against existing locations AND within the batch itself are blocked; toast names all skipped locations (2026-07-27)
 - [x] locations.html: bulk import hint text updated to document both accepted formats (2026-07-27)
 
+## Done (Session 19 - 2026-07-27)
+- [x] locations.html: bulk import tab-separated path now falls back to parseFullAddress() when city/zip columns are empty - handles addresses like "4011 Austin St, Chattanooga TN 37411" pasted as a single column; extracts street, city, and zip automatically (2026-07-27)
+- [x] locations.html: STREET_TYPES expanded - added trail, lane, pk, road, drive, highway, parkway so full-word street names parse correctly alongside abbreviations (2026-07-27)
+- [x] locations.html: new zip-then-vote-number split strategy added in parseBulkText() - splits on "37062 2 Fairview" pattern (5-digit zip then small number then capital word) without false-splitting address house numbers like "7200 Tiger" (2026-07-27)
+- [x] locations.html: new "Voting Center N - Name" split strategy added in parseBulkText() - detects "Voting Center \d -" pattern and splits on it; fires before zip-based and greedy fallbacks (2026-07-27)
+- [x] locations.html: parseRowPaste() now strips "Voting Center N - " prefix before looking for the name/address boundary (2026-07-27)
+
 ## Done (Session 16 - 2026-07-27)
 - [x] location-detail.html: delete navigates to next location in group context instead of returning to directory; falls back to previous if at end of list; falls back to directory.html if no context (2026-07-27)
 - [x] locations.html: Set County modal added - lists locations missing county by default, checkbox per row, select-all, show-all toggle, county text input, Apply button updates localStorage and in-memory array instantly (2026-07-27)

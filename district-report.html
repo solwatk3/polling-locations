@@ -843,8 +843,11 @@
       });
 
       // "both" type locations serve as both early voting and election day sites
-      var earlyLocs    = matching.filter(function(l) { return l.type === "early" || l.type === "both"; });
-      var electionLocs = matching.filter(function(l) { return l.type === "election_day" || l.type === "both"; });
+      // Filter by type, then sort each section A-Z by location name
+      var earlyLocs    = matching.filter(function(l) { return l.type === "early" || l.type === "both"; })
+                                 .sort(function(a, b) { return a.name.localeCompare(b.name); });
+      var electionLocs = matching.filter(function(l) { return l.type === "election_day" || l.type === "both"; })
+                                 .sort(function(a, b) { return a.name.localeCompare(b.name); });
 
       // Get unique counties in this district
       var counties = [];
