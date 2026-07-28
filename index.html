@@ -544,7 +544,13 @@
     // that belong to the hovered region.
     // =========================================================================
     function highlightByFilter(matchFn) {
+      // Custom entries override seed entries - build a deduplicated list where
+      // customLocations wins. This ensures edited county/district data is used
+      // for matching instead of the original (possibly wrong) seed values.
+      var _customIds = {};
+      customLocations.forEach(function(l) { _customIds[l.id] = true; });
       var allLocs = (typeof POLLING_LOCATIONS !== "undefined" ? POLLING_LOCATIONS : [])
+                    .filter(function(l) { return !_customIds[l.id]; })
                     .concat(customLocations);
       Object.keys(markerRegistry).forEach(function(id) {
         var entry = markerRegistry[id];
@@ -643,8 +649,9 @@
           L.geoJSON(data, {
             style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
             onEachFeature: function(f, layer) {
+              // Census NAME field already includes "County" (e.g. "McNairy County") - use as-is
               var countyName = f.properties.NAME || "";
-              layer.bindTooltip(countyName + " County", { sticky:true, direction:"top" });
+              layer.bindTooltip(countyName, { sticky:true, direction:"top" });
               layer.on("mouseover", function() {
                 // Normalize both sides: strip " County" suffix and lowercase before comparing.
                 // Census NAME field returns "Tipton County"; loc.county may store "Tipton" or
