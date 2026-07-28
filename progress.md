@@ -184,6 +184,7 @@
 | Nominatim geocoding for rural TN street addresses | Many rural roads (e.g. Lucy Black Rd, Bolivar) not in OpenStreetMap - city-center fallback implemented instead | 2026-07-26 |
 | Nominatim geocoding for "Hwy 45 Bypass" in Jackson, TN | Highway bypass not mapped under that name in OSM - need to enter coordinates manually from Google Maps | 2026-07-26 |
 | US Census Geocoder (geocoding.geo.census.gov) | Blocked by CORS on GitHub Pages - "No Access-Control-Allow-Origin header" - cannot be used from a browser-side app hosted on a different domain | 2026-07-27 |
+| Combining locations.html and directory.html into a single page | locations.html uses mergeWithSeedData() to build its data array; directory.html reads tn_polling_custom directly. When combined, the two data-loading patterns conflicted and the browsing views (By District, By County) showed 0 locations. Multiple fix attempts failed. Full session reverted via git reset --hard 1f43f22. Do not attempt again without a clear plan for unifying the data loading first. | 2026-07-28 |
 
 ## Notes
 - Congressional district source: TN Comptroller ArcGIS FeatureServer/10 (services2.arcgis.com/63Ka7QbNqm4NLbeo), field DISTRICT

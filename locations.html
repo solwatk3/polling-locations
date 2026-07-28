@@ -1228,8 +1228,10 @@
           <textarea id="bulk-textarea"
             placeholder="04-08 Balmoral Presbyterian Church 6413 Quince Rd Memphis 38119 04-09 Emmanuel United Methodist Church 2404 Kirby Rd Memphis 38119 ..."></textarea>
           <div class="bulk-hint">
-            Works with rows that start with a precinct number like <strong>04-08</strong> or <strong>5</strong>,
-            or tab-separated rows (Name &rarr; Address &rarr; City &rarr; Zip) copied from a spreadsheet.
+            Works with three formats: <strong>Block format</strong> (Name / Address / City, TN Zip, one blank line between entries
+            &mdash; even from a spreadsheet with trailing tabs); <strong>Precinct format</strong> (rows starting with
+            a number like <strong>04-08</strong> or <strong>5</strong>); or <strong>tab-separated</strong>
+            (Name &rarr; Address &rarr; City &rarr; Zip) copied from a spreadsheet.
             Each location needs a name, street address, city, and zip. The app will flag anything it can't fully parse.
           </div>
         </div>
@@ -3067,6 +3069,91 @@
     });
 
     // -------------------------------------------------------------------------
+    // parseBlockFormat(text)
+    // Handles "Name / Address / City, ST Zip" blocks separated by blank lines.
+    // Some blocks have a 2-line name (e.g. church name + hall/center subtitle).
+    // Returns an array of result objects, or null if the text is not this format.
+    // -------------------------------------------------------------------------
+    function parseBlockFormat(text) {
+      // Strip trailing tabs from each line so blank lines look truly blank
+      // (spreadsheet copy-paste often adds trailing tabs)
+      var cleanedLines = text.split(/\r?\n/).map(function(l) { return l.replace(/\t+$/, "").trim(); });
+
+      // Group consecutive non-blank lines into blocks separated by blank lines
+      var blockGroups = [];
+      var currentGroup = [];
+      cleanedLines.forEach(function(line) {
+        if (line) {
+          currentGroup.push(line);
+        } else {
+          if (currentGroup.length) {
+            blockGroups.push(currentGroup.slice());
+            currentGroup = [];
+          }
+        }
+      });
+      if (currentGroup.length) blockGroups.push(currentGroup);
+
+      // Must have multiple groups (blank-line gaps) and at least one "CITY, ST 12345" line
+      var hasBlankSeparators = blockGroups.length > 1;
+      var hasCityStateLine   = /,\s*[A-Z]{2}\s+\d{5}/.test(text);
+      if (!hasBlankSeparators || !hasCityStateLine) return null;
+
+      var results = [];
+      blockGroups.forEach(function(glines, idx) {
+        // Find the street address line: first line starting with a house number
+        var addrIdx = -1;
+        for (var i = 0; i < glines.length; i++) {
+          if (/^\d+\s+/.test(glines[i])) { addrIdx = i; break; }
+        }
+
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        if (addrIdx === -1) {
+          // No house number - treat whole block as the name and flag for review
+          name = glines.join(" - ");
+          reviewReasons.push("No address found");
+        } else {
+          // Lines before the address line = name (subtitle joined with " - ")
+          name    = glines.slice(0, addrIdx).join(" - ");
+          address = glines[addrIdx];
+
+          // Line after the address = "CITY, ST ZIP"
+          var cityLine  = (glines[addrIdx + 1] || "").trim();
+          var cityMatch = cityLine.match(/^(.+?),?\s*[A-Z]{2}\s+(\d{5})/);
+          if (cityMatch) {
+            city = cityMatch[1].trim();
+            zip  = cityMatch[2].trim();
+          } else if (cityLine) {
+            city = cityLine; // save as-is so user can see and fix it
+            reviewReasons.push("Could not parse city/zip");
+          } else {
+            reviewReasons.push("Missing city/zip line");
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          glines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3074,6 +3161,17 @@
     // -------------------------------------------------------------------------
     function parseBulkText(text) {
       text = text.trim();
+
+      // --- Block format detection (runs first, before tab check) ---
+      // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
+      // Blocks are separated by one or more blank lines (even if lines have trailing tabs).
+      // Detected when: (a) multiple groups after splitting on blank lines AND
+      //                (b) at least one line matches "CITY, ST 12345" format.
+      // Must run before the tab check: spreadsheet copy-paste adds trailing tabs to
+      // every line, which would otherwise fool the tab-path into treating this as
+      // tab-delimited columns (Name | empty | empty).
+      var blockResult = parseBlockFormat(text);
+      if (blockResult) return blockResult;
 
       // --- Tab-separated format detection ---
       // If the pasted text looks like spreadsheet rows (tabs between columns),
