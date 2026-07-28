@@ -37,12 +37,19 @@
       "address": "151 Main St.",
       "city": "Whiteville",
       "zip": "",
-      "county": "McNairy",
+      "county": "Hardeman",
       "type": "election_day",
       "state_district": "80",
       "state_senate_district": "26",
       "congressional_district": "9",
       "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
       "lat": 35.326205,
       "lng": -89.149597
@@ -85,12 +92,19 @@
       "address": "5970 Hwy 57",
       "city": "Saulsbury",
       "zip": "",
-      "county": "McNairy",
+      "county": "Hardeman",
       "type": "election_day",
       "state_district": "94",
       "state_senate_district": "26",
       "congressional_district": "9",
       "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
       "lat": 35.05135948674818,
       "lng": -89.09128904342651
@@ -498,12 +512,19 @@
       "address": "2911 US-45 BYP",
       "city": "Jackson",
       "zip": "38305",
-      "county": "Carroll",
+      "county": "Madison",
       "type": "election_day",
       "state_district": "73",
       "state_senate_district": "25",
       "congressional_district": "8",
       "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "days": "",
+          "open": "8:00am",
+          "close": "7:00pm"
+        }
+      ],
       "notes": "",
       "lat": 35.694906,
       "lng": -88.856293
@@ -11902,9 +11923,9 @@
       "zip": "38063",
       "county": "Lauderdale",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
       "hours": "",
       "notes": "",
       "lat": 35.80034199997925,
@@ -11918,9 +11939,9 @@
       "zip": "38063",
       "county": "Lauderdale",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
       "hours": "",
       "notes": "",
       "lat": 35.84495195383877,
@@ -11934,9 +11955,9 @@
       "zip": "38037",
       "county": "Lauderdale",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "82",
+      "state_senate_district": "32",
+      "congressional_district": "5",
       "hours": "",
       "notes": "",
       "lat": 35.838435575620686,
@@ -12187,6 +12208,1444 @@
       "notes": "",
       "lat": 35.78140477192891,
       "lng": -88.9917039871216
+    },
+    {
+      "id": "custom-1785254287381-875",
+      "name": "Bonicord Fire Department",
+      "address": "Bonicord Rd & Bill Murray Rd",
+      "city": "Friendship",
+      "zip": "38034",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.953633,
+      "lng": -89.320376
+    },
+    {
+      "id": "custom-1785254434035-770",
+      "name": "Fowlkes Fire Department",
+      "address": "645 TN-210, Dyersburg, TN 38024",
+      "city": "",
+      "zip": "",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.975416,
+      "lng": -89.390382
+    },
+    {
+      "id": "custom-1785254531581-16",
+      "name": "Newbern Recreation Center",
+      "address": "614 Oakview Dr",
+      "city": "Newbern",
+      "zip": "38059",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.114909,
+      "lng": -89.278338
+    },
+    {
+      "id": "custom-1785254760273-286",
+      "name": "Tatumville Fire Department",
+      "address": "1030 Tatumville Rd",
+      "city": "Newbern",
+      "zip": "38059",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.043248,
+      "lng": -89.193126
+    },
+    {
+      "id": "custom-1785254855841-994",
+      "name": "Millsfield Fire Department",
+      "address": "5819 Millsfield Hwy",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.139397,
+      "lng": -89.384132
+    },
+    {
+      "id": "custom-1785254912456-560",
+      "name": "Old Elementary School",
+      "address": "78 Sandy Ln",
+      "city": "Bogota",
+      "zip": "38007",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.160829,
+      "lng": -89.440547
+    },
+    {
+      "id": "custom-1785255042930-180",
+      "name": "Lenox Volunteer Fire Department",
+      "address": "255 Boothspoint Rd",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.088301,
+      "lng": -89.500959
+    },
+    {
+      "id": "custom-1785255170880-780",
+      "name": "Trimble Community Center",
+      "address": "40 S Main St",
+      "city": "Trimble",
+      "zip": "38259",
+      "county": "Dyer",
+      "type": "early",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.202983,
+      "lng": -89.192257
+    },
+    {
+      "id": "custom-1785255203314-817",
+      "name": "Dyersburg/Dyer County Headstart",
+      "address": "1400 Hornbrook St",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.032184,
+      "lng": -89.406114
+    },
+    {
+      "id": "custom-1785255294928-335",
+      "name": "First United Methodist Church",
+      "address": "100 McGaughey St",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.034884,
+      "lng": -89.389314
+    },
+    {
+      "id": "custom-1785255338962-899",
+      "name": "County Complex Everett Ave",
+      "address": "151 Everett Ave",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.028711,
+      "lng": -89.361033
+    },
+    {
+      "id": "custom-1785255367958-642",
+      "name": "Dyersburg Activity Center",
+      "address": "1101 Shelby Dr",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.043655,
+      "lng": -89.372781
+    },
+    {
+      "id": "custom-1785255404818-901",
+      "name": "Dyer County Fairgrounds",
+      "address": "296 James H Rice Rd",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.066206,
+      "lng": -89.365775
+    },
+    {
+      "id": "custom-1785255487276-947",
+      "name": "First Baptist Church(Dyersburg)",
+      "address": "220 Masonic St",
+      "city": "Dyersburg",
+      "zip": "38024",
+      "county": "Dyer",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.034135,
+      "lng": -89.386966
+    },
+    {
+      "id": "custom-1785256664086-17",
+      "name": "County Election Commission",
+      "address": "217 South Court Street Tiptonville 38079",
+      "city": "",
+      "zip": "",
+      "county": "Lake",
+      "type": "early",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": "9:00am - 4:00pm",
+      "schedule": [
+        {
+          "days": "July 17th through August 1st - Monday through Friday",
+          "open": "9:00am",
+          "close": "4:00pm"
+        },
+        {
+          "days": "July 17th through August 1st - Saturday",
+          "open": "9:00am",
+          "close": "12:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 36.377683,
+      "lng": -89.48375
+    },
+    {
+      "id": "custom-1785256690265-950",
+      "name": "Lake County Courthouse",
+      "address": "229 Church Street Tiptonville 38079",
+      "city": "",
+      "zip": "",
+      "county": "Lake",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "8:00am",
+          "close": "7:00pm",
+          "days": "August 6, 2026:"
+        }
+      ],
+      "notes": "",
+      "lat": 36.3780504199079,
+      "lng": -89.48406368494037
+    },
+    {
+      "id": "custom-1785256707758-543",
+      "name": "Tiptonville Senior Citizens",
+      "address": "210 S Court Street Tiptonville 38079",
+      "city": "",
+      "zip": "",
+      "county": "Lake",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "8:00am",
+          "close": "7:00pm",
+          "days": "August 6, 2026:"
+        }
+      ],
+      "notes": "",
+      "lat": 36.376927470241945,
+      "lng": -89.48415756225587
+    },
+    {
+      "id": "custom-1785256733254-797",
+      "name": "Lake County Middle School",
+      "address": "200 College Street Ridgely 38080",
+      "city": "",
+      "zip": "",
+      "county": "Lake",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "25",
+      "congressional_district": "5",
+      "hours": "8:00am - 7:00pm",
+      "schedule": [
+        {
+          "open": "8:00am",
+          "close": "7:00pm",
+          "days": "August 6, 2026:"
+        }
+      ],
+      "notes": "",
+      "lat": 36.265772549243536,
+      "lng": -89.48058485984804
+    },
+    {
+      "id": "custom-1785257059458-315",
+      "name": "Obion County Election Commission",
+      "address": "308 Bill Burnett Circle Union City, TN 38261",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "early",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.42295942621488,
+      "lng": -89.0600734949112
+    },
+    {
+      "id": "bulk_1785257265606_0",
+      "name": "South Fulton City Hall",
+      "address": "700 Milton Counce Rd, South Fulton, TN 38257",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.491481824516256,
+      "lng": -88.87656211853029
+    },
+    {
+      "id": "bulk_1785257265606_1",
+      "name": "Eddie Cox Senior Center",
+      "address": "622 Depot Street",
+      "city": "Union City",
+      "zip": "38261",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.42103208021095,
+      "lng": -89.0566670894623
+    },
+    {
+      "id": "bulk_1785257265606_2",
+      "name": "Woodland Community Center",
+      "address": "201 Cannon Moore Dr, Union City, TN 38261",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.48370132554946,
+      "lng": -89.11452770233156
+    },
+    {
+      "id": "bulk_1785257265606_3",
+      "name": "Kenton Gym",
+      "address": "206 W College St, Kenton, TN 38233",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.2024601089588,
+      "lng": -89.0140950679779
+    },
+    {
+      "id": "bulk_1785257265606_4",
+      "name": "Rives Fire Station",
+      "address": "3456 E Cross St, Rives, TN 38253",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.35597068781398,
+      "lng": -89.04675364494325
+    },
+    {
+      "id": "bulk_1785257265606_5",
+      "name": "Obion County Fair Grounds",
+      "address": "1711 Church Street",
+      "city": "Union City",
+      "zip": "38261",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.42229252242794,
+      "lng": -89.03431892395021
+    },
+    {
+      "id": "bulk_1785257265606_6",
+      "name": "Cloverdale Community Center",
+      "address": "3344 Cloverdale Rd, Obion, TN 38240",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.24265075947372,
+      "lng": -89.32859480381013
+    },
+    {
+      "id": "bulk_1785257265606_7",
+      "name": "Hornbeak City Hall",
+      "address": "204 S Main St, Hornbeak, TN 38232",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.330887,
+      "lng": -89.296314
+    },
+    {
+      "id": "bulk_1785257265606_8",
+      "name": "Samburg Assembly of God",
+      "address": "253 N. Reelfoot Avenue",
+      "city": "Samburg",
+      "zip": "38232",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.382099382631495,
+      "lng": -89.35181200504303
+    },
+    {
+      "id": "bulk_1785257265606_9",
+      "name": "Troy Senior Citizens Center",
+      "address": "128 N College St, Troy, TN 38260",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "77",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.33921934719296,
+      "lng": -89.16518926620485
+    },
+    {
+      "id": "bulk_1785257265606_10",
+      "name": "Obion Community Center",
+      "address": "221 Broadway St, Obion, TN 38240",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.260452331938986,
+      "lng": -89.18953299522401
+    },
+    {
+      "id": "bulk_1785257265606_11",
+      "name": "Obion County Public Library",
+      "address": "1221 E. Reelfoot Avenue",
+      "city": "Union City",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": 82,
+      "state_senate_district": 24,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 36.41285165834118,
+      "lng": -89.04540181159975
+    },
+    {
+      "id": "custom-1785258148206-584",
+      "name": "Medina Municipal Building",
+      "address": "201 US-45E, Medina, TN 38355",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.803844,
+      "lng": -88.783195
+    },
+    {
+      "id": "custom-1785258163470-196",
+      "name": "Sitka Church of Christ",
+      "address": "13 Sitka Road",
+      "city": "Milan",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.873187,
+      "lng": -88.76159
+    },
+    {
+      "id": "custom-1785258170028-20",
+      "name": "Humboldt Church of Christ",
+      "address": "1515 North 30th Avenue Humboldt, TN",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.83178,
+      "lng": -88.898097
+    },
+    {
+      "id": "custom-1785258179493-246",
+      "name": "Bailey Park",
+      "address": "400 N 22nd Ave, Humboldt, TN 38343",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.82262401291596,
+      "lng": -88.9060127735138
+    },
+    {
+      "id": "custom-1785258192278-434",
+      "name": "Stigal Center",
+      "address": "550 N. 6th Ave.",
+      "city": "Humboldt",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.819792,
+      "lng": -88.915895
+    },
+    {
+      "id": "custom-1785258202842-692",
+      "name": "Lane Chapel Church",
+      "address": "1265 Gibson Wells Road",
+      "city": "Humboldt",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.829647,
+      "lng": -88.930726
+    },
+    {
+      "id": "custom-1785258215022-638",
+      "name": "Brazil Methodist Church",
+      "address": "325 Frog Jump-Brazil Rd",
+      "city": "Trenton",
+      "zip": "38382",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.91677,
+      "lng": -89.062436
+    },
+    {
+      "id": "custom-1785258224039-247",
+      "name": "Gibson Baptist Walker Bldg.",
+      "address": "302 US-79, Gibson, TN 38338",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.875322,
+      "lng": -88.846246
+    },
+    {
+      "id": "custom-1785258241138-318",
+      "name": "Good Luck Fire Station",
+      "address": "449 China Grove Rd",
+      "city": "Rutherford",
+      "zip": "38369",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.12382,
+      "lng": -88.907073
+    },
+    {
+      "id": "custom-1785258249815-211",
+      "name": "Fruitland Fire Department",
+      "address": "34 Fruitland Eldad Rd",
+      "city": "Trenton",
+      "zip": "38382",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.894973,
+      "lng": -88.927404
+    },
+    {
+      "id": "custom-1785258264421-314",
+      "name": "Bradford Community Center",
+      "address": "108 W Front St.",
+      "city": "Bradford",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.075407,
+      "lng": -88.810664
+    },
+    {
+      "id": "custom-1785258272218-386",
+      "name": "Rutherford City Hall",
+      "address": "202 East Main Street Rutherford, TN",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.127761,
+      "lng": -88.985471
+    },
+    {
+      "id": "custom-1785258280440-442",
+      "name": "Gibson County Ed Jones Agriplex",
+      "address": "1248-1298 Manufacturers Row, Trenton, TN 38382",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.95144276857972,
+      "lng": -88.94505500793457
+    },
+    {
+      "id": "custom-1785258289220-746",
+      "name": "FUMC Community Life Bldg",
+      "address": "189 N Main St.",
+      "city": "Dyer",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.067911,
+      "lng": -88.994324
+    },
+    {
+      "id": "custom-1785258297816-966",
+      "name": "Union Central Community Center",
+      "address": "38 Union Central Rd, Milan, TN 38358",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.96485,
+      "lng": -88.784007
+    },
+    {
+      "id": "custom-1785258322441-747",
+      "name": "Milan Cumberland Presbyterian Church",
+      "address": "6083 S 1st St, Milan, TN 38358",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.90496,
+      "lng": -88.753418
+    },
+    {
+      "id": "custom-1785258334296-795",
+      "name": "Polk Clark Community Center",
+      "address": "1041 Harris St, Milan, TN 38358",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.913869,
+      "lng": -88.768358
+    },
+    {
+      "id": "custom-1785258340766-848",
+      "name": "Milan First Assembly of God",
+      "address": "2049 North Main Street Milan, TN",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.923676,
+      "lng": -88.762966
+    },
+    {
+      "id": "custom-1785258348916-161",
+      "name": "Milan Senior Citizens Center",
+      "address": "1075 East Van Hook Street Milan, TN",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.91716,
+      "lng": -88.751849
+    },
+    {
+      "id": "custom-1785258357086-117",
+      "name": "Yorkville Community Park",
+      "address": "93-173 Newbern Hwy, Yorkville, TN 38389",
+      "city": "",
+      "zip": "",
+      "county": "Gibson",
+      "type": "election_day",
+      "state_district": "82",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.105378,
+      "lng": -89.138385
+    },
+    {
+      "id": "custom-1785258366039-488",
+      "name": "Kenton Youth Center",
+      "address": "411 West College Street Kenton, TN",
+      "city": "",
+      "zip": "",
+      "county": "Obion",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.201707,
+      "lng": -89.015433
+    },
+    {
+      "id": "custom-1785259112047-799",
+      "name": "Weakley County Election Commission",
+      "address": "135 S Poplar St Ste a",
+      "city": "Dresden",
+      "zip": "38225",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.290756,
+      "lng": -88.708838
+    },
+    {
+      "id": "custom-1785259181660-857",
+      "name": "Martin City Masonic Lodge",
+      "address": "7900 Hwy 45 S, Martin, TN 38237",
+      "city": "",
+      "zip": "",
+      "county": "Weakley",
+      "type": "early",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.299637,
+      "lng": -88.843025
+    },
+    {
+      "id": "custom-1785259196352-470",
+      "name": "Palmersville Fire Station",
+      "address": "6303 TN-89, Palmersville, TN 38241",
+      "city": "",
+      "zip": "",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.403754,
+      "lng": -88.587365
+    },
+    {
+      "id": "custom-1785259205336-13",
+      "name": "Martin Church of Christ",
+      "address": "233 Oxford St",
+      "city": "Martin",
+      "zip": "38237",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.34455579861071,
+      "lng": -88.85648846626283
+    },
+    {
+      "id": "custom-1785259218030-693",
+      "name": "Latham Dukedom Vol. Fire Department",
+      "address": "5337 TN-118, Dresden, TN 38225",
+      "city": "",
+      "zip": "",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.42471,
+      "lng": -88.71258
+    },
+    {
+      "id": "custom-1785259226295-659",
+      "name": "Trinity Presbyterian Church",
+      "address": "145 Hanning Ln",
+      "city": "Martin",
+      "zip": "38237",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.337532,
+      "lng": -88.860939
+    },
+    {
+      "id": "custom-1785259234477-567",
+      "name": "Gleason Community Center",
+      "address": "506 North Cedar St",
+      "city": "Gleason",
+      "zip": "38229",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.220891,
+      "lng": -88.616738
+    },
+    {
+      "id": "custom-1785259240825-404",
+      "name": "Shepherd’s Field Church",
+      "address": "500 Fowler Rd",
+      "city": "Martin",
+      "zip": "38237",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.31798658843707,
+      "lng": -88.85367751121521
+    },
+    {
+      "id": "custom-1785259246908-849",
+      "name": "Greenfield First Baptist Church",
+      "address": "3127 Meridian St",
+      "city": "Greenfield",
+      "zip": "38230",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.17846224594666,
+      "lng": -88.81173312664033
+    },
+    {
+      "id": "custom-1785259253000-901",
+      "name": "Martin First United Methodist Church",
+      "address": "225 Main St",
+      "city": "Martin",
+      "zip": "38237",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.342628,
+      "lng": -88.847958
+    },
+    {
+      "id": "custom-1785259262732-93",
+      "name": "Sharon First Baptist Church",
+      "address": "5516 S Hwy Ave",
+      "city": "Sharon",
+      "zip": "38255",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.23566,
+      "lng": -88.826521
+    },
+    {
+      "id": "custom-1785259271858-241",
+      "name": "Dresden First United Methodist Church",
+      "address": "125 South Church St",
+      "city": "Dresden",
+      "zip": "38225",
+      "county": "Weakley",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.291151,
+      "lng": -88.70684
     }
   ],
   "tn_polling_deleted": [
