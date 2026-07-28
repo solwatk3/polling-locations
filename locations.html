@@ -3406,43 +3406,83 @@
     }
 
     // parseEllipsisFormat(text)
-    // Handles one-per-line format where a Unicode ellipsis (U+2026) separates
-    // a city label from the venue name and street address:
-    //   "Harriman... Harriman Community Center 631 Clinch St."
-    // City = text before the ellipsis. Venue name and street are run together
-    // after it - split by finding the first house number (digit sequence).
+    // Handles "City... Venue Name Street" format where an ellipsis separates
+    // a city label from the venue+address that follows.
+    // Works whether entries are on separate lines OR run together on one line
+    // (when entries share a line, the next city starts right after the street period).
+    // Accepts both Unicode ellipsis U+2026 (from PDFs) and ASCII "..." (typed text).
     // No zip is present in this format so all entries are flagged for review.
-    // Detected by the presence of U+2026 in every non-empty line.
+    //
+    // Detection: after normalizing "..." to the Unicode ellipsis, the text must
+    // contain at least one ellipsis and the first segment (before the first
+    // ellipsis) must look like a city name (no tabs, doesn't start with a digit).
+    //
+    // Parsing strategy: split the full text by ellipsis (ignoring newlines).
+    //   segs[0] = first city name
+    //   segs[i] = venue+address for city i-1, plus city i appended after the
+    //             last "." in the segment (street abbreviations always end with a
+    //             period, and the next city begins immediately after).
+    //   segs[last] = venue+address only (nothing after the trailing period).
     // -------------------------------------------------------------------------
     function parseEllipsisFormat(text) {
-      // Fast check: Unicode ellipsis must be present
-      if (text.indexOf("…") === -1) return null;
+      // Normalize ASCII three-period sequences to Unicode ellipsis so both
+      // PDF-pasted text (U+2026) and hand-typed "..." are handled the same way.
+      var normalized = text.replace(/\.\.\./g, "…");
 
-      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
-      if (!lines.length) return null;
+      // Fast check: need at least one ellipsis after normalization
+      if (normalized.indexOf("…") === -1) return null;
 
-      // Every non-empty line must contain an ellipsis - prevents false positives
-      // from text that happens to have one ellipsis but is really another format
-      if (!lines.every(function(l) { return l.indexOf("…") !== -1; })) return null;
+      // Split the full text on the ellipsis character (newlines are irrelevant).
+      // Collapse any whitespace/newlines inside each segment to single spaces.
+      var segs = normalized.split("…").map(function(s) {
+        return s.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+      });
+      if (segs.length < 2) return null;
+
+      // segs[0] must look like a city name - no tabs, must not start with a digit.
+      // (Tabs mean this is TSV data; leading digits mean something else.)
+      if (/\t/.test(segs[0]) || /^\d/.test(segs[0])) return null;
+
+      // Build [city, venueAndAddress] pairs.
+      // - segs[0] is the first city.
+      // - Each subsequent segment contains: venue+address + (next city if not last).
+      // - The next city is the text AFTER the last "." in an intermediate segment
+      //   (street abbreviations like "St.", "Rd.", "Ave." always end with a period,
+      //   and the following city name starts immediately after it).
+      var cities     = [segs[0]];
+      var venueAddrs = [];
+
+      for (var i = 1; i < segs.length; i++) {
+        var seg = segs[i];
+        var lastDot = seg.lastIndexOf(".");
+        if (i < segs.length - 1 && lastDot !== -1) {
+          // Intermediate segment: split at the last period.
+          // Text up to and including the period = venue+address for this entry.
+          // Text after the period = next city name.
+          venueAddrs.push(seg.substring(0, lastDot + 1).trim());
+          cities.push(seg.substring(lastDot + 1).trim());
+        } else {
+          // Last segment (or no period found): whole thing is venue+address.
+          venueAddrs.push(seg.trim());
+        }
+      }
+
+      if (!venueAddrs.length) return null;
 
       var results = [];
-      lines.forEach(function(line, idx) {
-        var parts = line.split("…");
-        var city  = (parts[0] || "").trim();
-        var rest  = (parts[1] || "").trim(); // e.g. "Harriman Community Center 631 Clinch St."
-
+      for (var j = 0; j < venueAddrs.length; j++) {
+        var city = cities[j] || "";
+        var rest = venueAddrs[j] || "";
         var name = "", address = "";
         var reviewReasons = [];
 
-        // Split at the first house number: digits followed by a space and more text
-        // Everything before the house number = venue name
-        // Everything from the house number on = street address
+        // Split at the first house number: everything before = venue name,
+        // everything from the house number on = street address.
         var addrMatch = rest.match(/^(.*?)\s+(\d+\s+\S.*)$/);
         if (addrMatch) {
           name    = addrMatch[1].trim();
           address = addrMatch[2].trim();
         } else {
-          // No house number found - save whole string as name and flag
           name = rest;
           reviewReasons.push("Could not find street number");
         }
@@ -3455,8 +3495,8 @@
         if (!city)    reviewReasons.push("No city");
 
         results.push({
-          rowIndex:     idx,
-          raw:          line,
+          rowIndex:     j,
+          raw:          city + "... " + rest,
           name:         name,
           address:      address,
           city:         city,
@@ -3465,7 +3505,7 @@
           needsReview:  true,
           reviewReason: reviewReasons.join(", ")
         });
-      });
+      }
 
       return results.length ? results : null;
     }
