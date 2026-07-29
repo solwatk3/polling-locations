@@ -2318,7 +2318,7 @@
     },
     {
       "id": "bulk_1785121002310_18",
-      "name": "Trinity United Methodist Church",
+      "name": "Trinity United Methodist Church(Shelby)",
       "address": "1738 Galloway Ave",
       "city": "Memphis",
       "zip": "38112",
@@ -2330,7 +2330,6 @@
       "hours": "8:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
           "open": "8:00am",
           "close": "7:00pm"
         }
@@ -16819,13 +16818,8 @@
       "state_district": "6",
       "state_senate_district": "3",
       "congressional_district": "1",
-      "hours": " - ",
-      "schedule": [
-        {
-          "open": "",
-          "close": ""
-        }
-      ],
+      "hours": "",
+      "schedule": [],
       "notes": "",
       "lat": 36.39833198630799,
       "lng": -82.48777627944948
@@ -17002,13 +16996,8 @@
       "state_district": "6",
       "state_senate_district": "3",
       "congressional_district": "1",
-      "hours": " - ",
-      "schedule": [
-        {
-          "open": "",
-          "close": ""
-        }
-      ],
+      "hours": "",
+      "schedule": [],
       "notes": "",
       "lat": 36.384752,
       "lng": -82.385622
@@ -17024,14 +17013,8 @@
       "state_district": "6",
       "state_senate_district": "3",
       "congressional_district": "1",
-      "hours": " - ",
-      "schedule": [
-        {
-          "days": "",
-          "open": "",
-          "close": ""
-        }
-      ],
+      "hours": "",
+      "schedule": [],
       "notes": "",
       "lat": 36.343487,
       "lng": -82.385368
@@ -17070,13 +17053,8 @@
       "state_district": "6",
       "state_senate_district": "3",
       "congressional_district": "1",
-      "hours": " - ",
-      "schedule": [
-        {
-          "open": "",
-          "close": ""
-        }
-      ],
+      "hours": "",
+      "schedule": [],
       "notes": "",
       "lat": 36.372342644063316,
       "lng": -82.40143060684206
@@ -17283,10 +17261,10 @@
     },
     {
       "id": "custom-1785279187054-751",
-      "name": "Civic Auditorium",
-      "address": "1550 Fort Henry Dr.",
+      "name": "Kingsport Civic Auditorium",
+      "address": "1550 Fort Henry Dr",
       "city": "Kingsport",
-      "zip": "",
+      "zip": "37664",
       "county": "Sullivan",
       "type": "early",
       "state_district": "2",
@@ -17295,36 +17273,36 @@
       "hours": "9:00am - 4:00pm",
       "schedule": [
         {
+          "days": "July 17",
           "open": "9:00am",
-          "close": "4:00pm",
-          "days": "July 17"
+          "close": "4:00pm"
         },
         {
+          "days": "July 18",
           "open": "9:00am",
-          "close": "12:00pm",
-          "days": "July 18"
+          "close": "12:00pm"
         },
         {
+          "days": "July 20 – 24",
           "open": "9:00am",
-          "close": "4:00pm",
-          "days": "July 20 – 24"
+          "close": "4:00pm"
         },
         {
+          "days": "9:00 a.m. – 4:00 p.m. - August 1",
           "open": "9:00am",
-          "close": "12:00pm",
-          "days": "9:00 a.m. – 4:00 p.m. - August 1"
+          "close": "12:00pm"
         }
       ],
       "notes": "",
-      "lat": 36.538227,
-      "lng": -82.533778
+      "lat": 36.53707,
+      "lng": -82.531625
     },
     {
       "id": "custom-1785279210043-697",
       "name": "Slater Community Center",
-      "address": "325 McDowell Street Bristol, TN",
-      "city": "",
-      "zip": "",
+      "address": "325 McDowell St",
+      "city": "Bristol",
+      "zip": "37620",
       "county": "Sullivan",
       "type": "early",
       "state_district": "1",
@@ -17333,29 +17311,29 @@
       "hours": "9:00am - 4:00pm",
       "schedule": [
         {
+          "days": "July 17",
           "open": "9:00am",
-          "close": "4:00pm",
-          "days": "July 17"
+          "close": "4:00pm"
         },
         {
+          "days": "July 18",
           "open": "9:00am",
-          "close": "12:00pm",
-          "days": "July 18"
+          "close": "12:00pm"
         },
         {
+          "days": "July 20 – 24",
           "open": "9:00am",
-          "close": "4:00pm",
-          "days": "July 20 – 24"
+          "close": "4:00pm"
         },
         {
+          "days": "9:00 a.m. – 4:00 p.m. - August 1",
           "open": "9:00am",
-          "close": "12:00pm",
-          "days": "9:00 a.m. – 4:00 p.m. - August 1"
+          "close": "12:00pm"
         }
       ],
       "notes": "",
-      "lat": 36.593485,
-      "lng": -82.173492
+      "lat": 36.59369422859554,
+      "lng": -82.1729600429535
     },
     {
       "id": "bulk_1785280208420_0",
@@ -17709,9 +17687,9 @@
       "zip": "37771",
       "county": "Roane",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
       "hours": " - ",
       "schedule": [
         {
@@ -18010,9 +17988,9 @@
       "zip": "",
       "county": "Maury",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
       "hours": " - ",
       "schedule": [
         {
@@ -18350,24 +18328,31 @@
       "id": "bulk_1785289574963_3",
       "name": "The River Community Church",
       "address": "1200 Miracle Rd",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38506",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": 42,
-      "state_senate_district": 15,
-      "congressional_district": 6,
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": 36.132458,
-      "lng": -85.524848
+      "lat": 36.134885,
+      "lng": -85.520569
     },
     {
       "id": "bulk_1785289574963_4",
       "name": "Burks Middle School",
-      "address": "300 Crossville St, Monterey, TN 38574",
-      "city": "",
-      "zip": "",
+      "address": "300 Crossville St",
+      "city": "Monterey",
+      "zip": "38574",
       "county": "Putnam",
       "type": "election_day",
       "state_district": "25",
@@ -18388,9 +18373,9 @@
     {
       "id": "bulk_1785289574963_5",
       "name": "Cane Creek Elementary School",
-      "address": "1500 W Jackson St, Cookeville, TN 38501",
-      "city": "",
-      "zip": "",
+      "address": "1500 W Jackson St",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
       "state_district": "42",
@@ -18405,200 +18390,1775 @@
         }
       ],
       "notes": "",
-      "lat": 36.165425,
-      "lng": -85.529312
+      "lat": 36.163673685053574,
+      "lng": -85.53053855895998
     },
     {
       "id": "bulk_1785289574963_6",
       "name": "Capshaw Elementary School",
       "address": "1 Cougar Ln",
-      "city": "",
-      "zip": "",
-      "county": "Fentress",
+      "city": "Cookeville",
+      "zip": "38501",
+      "county": "Putnam",
       "type": "election_day",
-      "state_district": 38,
-      "state_senate_district": 12,
-      "congressional_district": 6,
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": 36.479424,
-      "lng": -84.806415
+      "lat": 36.158194,
+      "lng": -85.494315
     },
     {
       "id": "bulk_1785289574963_7",
-      "name": "Cookeville Community Center",
+      "name": "Cookeville Community Center Building",
       "address": "240 Carlen Dr",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.16008,
+      "lng": -85.48343
     },
     {
       "id": "bulk_1785289574963_8",
       "name": "Cookeville High School",
-      "address": "1 Cavalier Dr./2335 N Washington Ave",
-      "city": "",
-      "zip": "",
+      "address": "1 Cavalier Dr",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.192261,
+      "lng": -85.486472
     },
     {
       "id": "bulk_1785289574963_9",
       "name": "Double Springs Church of Christ",
       "address": "4665 Norton Dr",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.17329631036468,
+      "lng": -85.59871494770051
     },
     {
       "id": "bulk_1785289574963_10",
       "name": "Monterey High School",
       "address": "710 E Commercial Ave",
-      "city": "",
-      "zip": "",
+      "city": "Monterey",
+      "zip": "38574",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "25",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.14253614034006,
+      "lng": -85.25979638099672
     },
     {
       "id": "bulk_1785289574963_11",
       "name": "Northeast Elementary School",
       "address": "575 N Old Kentucky Rd",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.170827,
+      "lng": -85.467919
     },
     {
       "id": "bulk_1785289574963_12",
-      "name": "Hyder-Burks Agricultural Bldg",
+      "name": "Hyder-Burks Agricultural Pavilion",
       "address": "2390 Gainesboro Grade",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.197956,
+      "lng": -85.538325
     },
     {
       "id": "bulk_1785289574963_13",
       "name": "Caney Fork Baptist Church",
-      "address": "2404 Highway 70 East",
-      "city": "",
-      "zip": "",
+      "address": "2404 East, US-70",
+      "city": "Cookeville",
+      "zip": "38506",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.117939,
+      "lng": -85.450109
     },
     {
       "id": "bulk_1785289574963_14",
       "name": "Prescott South Elementary School",
       "address": "115 W Cemetery Rd",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38506",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.11236195924297,
+      "lng": -85.51089406013489
     },
     {
       "id": "bulk_1785289574963_15",
       "name": "Twin Oak Community Center",
-      "address": "5939 Thomas Twin Oak Rd",
-      "city": "",
-      "zip": "",
+      "address": "5939 Thomas Twin Oaks Rd",
+      "city": "Baxter",
+      "zip": "38544",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.075881,
+      "lng": -85.623093
     },
     {
       "id": "bulk_1785289574963_16",
       "name": "Collegeside Church of Christ",
       "address": "252 E 9th St",
-      "city": "",
-      "zip": "",
+      "city": "Cookeville",
+      "zip": "38501",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
-      "hours": "",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.17482923877419,
+      "lng": -85.50027251243593
     },
     {
       "id": "bulk_1785289574963_17",
       "name": "Upperman High School",
       "address": "6950 Nashville Hwy",
-      "city": "",
-      "zip": "",
+      "city": "Baxter",
+      "zip": "38544",
       "county": "Putnam",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.1687839572158,
+      "lng": -85.6360673904419
+    },
+    {
+      "id": "bulk_1785333436053_0",
+      "name": "Shepherd of the Lake Lutheran Church",
+      "address": "143 Chota Ctr",
+      "city": "Loudon",
+      "zip": "37774",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.693033,
+      "lng": -84.2626038
+    },
+    {
+      "id": "bulk_1785333436053_1",
+      "name": "Ft. Loudoun Middle School",
+      "address": "1083 Mulberry St",
+      "city": "Loudon",
+      "zip": "37774",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.723738561954534,
+      "lng": -84.35079574584961
+    },
+    {
+      "id": "bulk_1785333436053_3",
+      "name": "War Memorial Building",
+      "address": "101 N B St",
+      "city": "Lenoir City",
+      "zip": "37771",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.791100221742816,
+      "lng": -84.26716446876527
+    },
+    {
+      "id": "bulk_1785333436053_5",
+      "name": "Glendale Community Center",
+      "address": "791 Glendale Community Rd",
+      "city": "Lenoir City",
+      "zip": "37742",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.731181,
+      "lng": -84.209181
+    },
+    {
+      "id": "bulk_1785333436053_6",
+      "name": "Greenback Public School",
+      "address": "6945 Morganton Rd",
+      "city": "Greenback",
+      "zip": "37742",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.65665115975192,
+      "lng": -84.17874813079834
+    },
+    {
+      "id": "bulk_1785333436053_7",
+      "name": "Piney Ruritan Club Comminity",
+      "address": "2890 Davis Ferry Rd",
+      "city": "Loudon",
+      "zip": "37774",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.711532,
+      "lng": -84.289929
+    },
+    {
+      "id": "bulk_1785333436053_8",
+      "name": "Philadelphia Elementary School",
+      "address": "300 Spring St",
+      "city": "Philadelphia",
+      "zip": "37846",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.680485,
+      "lng": -84.402732
+    },
+    {
+      "id": "bulk_1785333436053_9",
+      "name": "Fenders Community Center",
+      "address": "2540 Oakland Rd",
+      "city": "Philadelphia",
+      "zip": "37874",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.651246,
+      "lng": -84.530962
+    },
+    {
+      "id": "bulk_1785333436053_10",
+      "name": "Eaton's Elementary School",
+      "address": "423 Hickory Creek Rd",
+      "city": "Lenoir City",
+      "zip": "37771",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.840004,
+      "lng": -84.290852
+    },
+    {
+      "id": "bulk_1785333436053_11",
+      "name": "North Middle School",
+      "address": "421 Hickory Creek Rd",
+      "city": "Lenoir City",
+      "zip": "37771",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.839918,
+      "lng": -84.289811
+    },
+    {
+      "id": "bulk_1785333436053_12",
+      "name": "Highland Park School",
+      "address": "4490 David Clinton Dr",
+      "city": "Lenoir City",
+      "zip": "37772",
+      "county": "Loudon",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.810346,
+      "lng": -84.254105
+    },
+    {
+      "id": "bulk_1785333436053_13",
+      "name": "Community Church at Tellico Village",
+      "address": "130 Chota Ctr",
+      "city": "Loudon",
+      "zip": "37774",
+      "county": "Loudon",
+      "type": "both",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "days": "Wednesday, July 22:",
+          "open": "10:00am",
+          "close": "6:00pm",
+          "label": "Early Voting"
+        },
+        {
+          "days": "Thursday, July 23:",
+          "open": "10:00am",
+          "close": "6:00pm",
+          "label": "Early Voting"
+        }
+      ],
+      "notes": "",
+      "lat": 35.691635,
+      "lng": -84.263419
+    },
+    {
+      "id": "custom-1785333874315-399",
+      "name": "Loudon County Office Building",
+      "address": "100 River Rd",
+      "city": "Loudon",
+      "zip": "37774",
+      "county": "Loudon",
+      "type": "early",
+      "state_district": "21",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "days": "Friday, July 17:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, July 18:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        },
+        {
+          "days": "Monday, July 20:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Tuesday, July 21:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Wednesday, July 22:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Thursday, July 23:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Friday, July 24:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, July 25:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        },
+        {
+          "days": "Monday, July 27:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Tuesday, July 28:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Wednesday, July 29:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Thursday, July 30:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Friday, July 31:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, August 1:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.740426,
+      "lng": -84.344015
+    },
+    {
+      "id": "custom-1785333972976-703",
+      "name": "Roane State Community College",
+      "address": "100 W Broadway St #131",
+      "city": "Lenoir City",
+      "zip": "37771",
+      "county": "Loudon",
+      "type": "early",
+      "state_district": "32",
+      "state_senate_district": "5",
+      "congressional_district": "2",
+      "hours": "10:00am - 6:00pm",
+      "schedule": [
+        {
+          "days": "Friday, July 17:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, July 18:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        },
+        {
+          "days": "Monday, July 20:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Tuesday, July 21:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Wednesday, July 22:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Thursday, July 23:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Friday, July 24:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, July 25:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        },
+        {
+          "days": "Monday, July 27:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Tuesday, July 28:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Wednesday, July 29:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Thursday, July 30:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Friday, July 31:",
+          "open": "10:00am",
+          "close": "6:00pm"
+        },
+        {
+          "days": "Saturday, August 1:",
+          "open": "9:00am",
+          "close": "12:00pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.790522,
+      "lng": -84.266264
+    },
+    {
+      "id": "bulk_1785339240765_0",
+      "name": "Dorothy and Noble Harrelson School",
+      "address": "143 Puryear Country Club Rd",
+      "city": "Puryear",
+      "zip": "38251",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.43083,
+      "lng": -88.330519
+    },
+    {
+      "id": "bulk_1785339240765_1",
+      "name": "Cottage Grove Baptist Church",
+      "address": "6860 Church St.",
+      "city": "Cottage Grove",
+      "zip": "38224",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": 76,
+      "state_senate_district": 24,
+      "congressional_district": 5,
       "hours": "",
       "notes": "",
-      "lat": null,
-      "lng": null
+      "lat": 36.37684324836339,
+      "lng": -88.47828626632692
+    },
+    {
+      "id": "bulk_1785339240765_2",
+      "name": "Henry School",
+      "address": "937 Pioneer Rd.",
+      "city": "Henry",
+      "zip": "38231",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": 76,
+      "state_senate_district": 24,
+      "congressional_district": 5,
+      "hours": "",
+      "notes": "",
+      "lat": 36.20497073581193,
+      "lng": -88.41125249862672
+    },
+    {
+      "id": "bulk_1785339240765_3",
+      "name": "New Harmony Baptist Church",
+      "address": "7050 State Hwy 69 S",
+      "city": "Paris",
+      "zip": "38242",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "74",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.259739,
+      "lng": -88.187892
+    },
+    {
+      "id": "bulk_1785339240765_4",
+      "name": "Paris Landing Senior Citizens Center",
+      "address": "15616 US-79",
+      "city": "Buchanan",
+      "zip": "38222",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.357576,
+      "lng": -88.219169
+    },
+    {
+      "id": "bulk_1785339240765_5",
+      "name": "Lakewood School",
+      "address": "6745 US-79",
+      "city": "Buchanan",
+      "zip": "38222",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.361459,
+      "lng": -88.213866
+    },
+    {
+      "id": "bulk_1785339240765_6",
+      "name": "Grove Jr. High School Gym",
+      "address": "215 Grove Blvd",
+      "city": "Paris",
+      "zip": "38242",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.292411,
+      "lng": -88.330951
+    },
+    {
+      "id": "bulk_1785339240765_7",
+      "name": "Tennessee College of Applied Technology Henry/Carroll",
+      "address": "312 S Wilson St",
+      "city": "Paris",
+      "zip": "38242",
+      "county": "Henry",
+      "type": "election_day",
+      "state_district": "74",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.29608654351492,
+      "lng": -88.29656124114992
+    },
+    {
+      "id": "custom-1785339268578-701",
+      "name": "Henry County Election Commission Office",
+      "address": "215 Grove Blvd B",
+      "city": "Paris",
+      "zip": "38242",
+      "county": "Henry",
+      "type": "early",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.292331,
+      "lng": -88.329428
+    },
+    {
+      "id": "bulk_1785342521233_0",
+      "name": "Lavinia Baptist Church",
+      "address": "4200 TN-220",
+      "city": "Lavinia",
+      "zip": "38348",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.849589,
+      "lng": -88.655334
+    },
+    {
+      "id": "bulk_1785342521233_1",
+      "name": "Cedar Grove Fire Dept",
+      "address": "4215 Hwy 70",
+      "city": "Cedar Grove",
+      "zip": "38321",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.82478,
+      "lng": -88.589899
+    },
+    {
+      "id": "bulk_1785342521233_2",
+      "name": "Atwood City Hall",
+      "address": "45 1st St",
+      "city": "Atwood",
+      "zip": "38220",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.973429,
+      "lng": -88.679597
+    },
+    {
+      "id": "bulk_1785342521233_3",
+      "name": "McLemoresville Activity Center (MAC)",
+      "address": "5637 Main St",
+      "city": "McLemoresville",
+      "zip": "38235",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.98735638949121,
+      "lng": -88.57481360435486
+    },
+    {
+      "id": "bulk_1785342521233_4",
+      "name": "Community Center",
+      "address": "135 Front St",
+      "city": "Trezevant",
+      "zip": "38258",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 36.01160793946501,
+      "lng": -88.6236834526062
+    },
+    {
+      "id": "bulk_1785342521233_5",
+      "name": "Bruceton Fire Dept",
+      "address": "30794 Broad St",
+      "city": "Bruceton",
+      "zip": "38317",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.037126,
+      "lng": -88.240991
+    },
+    {
+      "id": "bulk_1785342521233_6",
+      "name": "Carroll County Recycling Center",
+      "address": "21650 Hwy 77",
+      "city": "Huntingdon",
+      "zip": "38344",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 36.08254902226785,
+      "lng": -88.35613846778871
+    },
+    {
+      "id": "bulk_1785342521233_7",
+      "name": "Hollow Rock Fire Department",
+      "address": "29035 Broad St",
+      "city": "Hollow Rock",
+      "zip": "38342",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.03409081076912,
+      "lng": -88.27170252799989
+    },
+    {
+      "id": "bulk_1785342521233_8",
+      "name": "Carroll County Civic Center",
+      "address": "201 Fairgrounds Rd",
+      "city": "Huntingdon",
+      "zip": "38344",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.00936,
+      "lng": -88.382693
+    },
+    {
+      "id": "bulk_1785342521233_9",
+      "name": "Clarksburg City Hall",
+      "address": "65 Clarksburg Rd",
+      "city": "Clarksburg",
+      "zip": "38324",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.871681546834104,
+      "lng": -88.3918333053589
+    },
+    {
+      "id": "bulk_1785342521233_10",
+      "name": "Westport Fire Dept",
+      "address": "7319 Westport Rd #7247",
+      "city": "Westport",
+      "zip": "38387",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.895576,
+      "lng": -88.312906
+    },
+    {
+      "id": "bulk_1785342521233_11",
+      "name": "Huntingdon Police Department",
+      "address": "12740 Lexington St",
+      "city": "Huntingdon",
+      "zip": "38344",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.000077,
+      "lng": -88.427155
+    },
+    {
+      "id": "bulk_1785342521233_12",
+      "name": "McKenzie Senior Citizens Center",
+      "address": "172 S. Main St",
+      "city": "McKenzie",
+      "zip": "38201",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 36.124998050937435,
+      "lng": -88.51714611053468
+    },
+    {
+      "id": "bulk_1785342521233_13",
+      "name": "Church of Christ",
+      "address": "16300 Highland Dr",
+      "city": "McKenzie",
+      "zip": "38201",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 36.13279709241624,
+      "lng": -88.50221157073975
+    },
+    {
+      "id": "bulk_1785342521233_14",
+      "name": "McKenzie City Hall",
+      "address": "2470 Cedar St",
+      "city": "McKenzie",
+      "zip": "38201",
+      "county": "Carroll",
+      "type": "election_day",
+      "state_district": "76",
+      "state_senate_district": "24",
+      "congressional_district": "8",
+      "hours": "",
+      "notes": "",
+      "lat": 36.13319568927498,
+      "lng": -88.51948499679567
+    },
+    {
+      "id": "custom-1785344003462-116",
+      "name": "Henderson Election Commision",
+      "address": "435 W Church St",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "both",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": "9:00am - 4:00pm",
+      "schedule": [
+        {
+          "days": "Monday, Tuesday, Wednesday, Fridays",
+          "open": "9:00am",
+          "close": "4:00pm",
+          "label": "Early Voting"
+        },
+        {
+          "days": "Thursdays",
+          "open": "9:00am",
+          "close": "6:00pm",
+          "label": "Early Voting"
+        },
+        {
+          "days": "Saturdays",
+          "open": "9:00am",
+          "close": "12:00pm",
+          "label": "Early Voting"
+        }
+      ],
+      "notes": "",
+      "lat": 35.65582299815772,
+      "lng": -88.4064030647278
+    },
+    {
+      "id": "bulk_1785345191024_0",
+      "name": "Bargerton- Church of Christ",
+      "address": "6000 Poplar Springs Bargerton Rd",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.731318,
+      "lng": -88.492537
+    },
+    {
+      "id": "bulk_1785345191024_1",
+      "name": "Parkers Crossroads City Park",
+      "address": "21778 TN-22",
+      "city": "Wildersville",
+      "zip": "38388",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.797577,
+      "lng": -88.389225
+    },
+    {
+      "id": "bulk_1785345191024_2",
+      "name": "Chesterfield Fire Station #4",
+      "address": "20065 Hwy 412 E",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.635643,
+      "lng": -88.272995
+    },
+    {
+      "id": "bulk_1785345191024_3",
+      "name": "Tennessee College of Applied Technology",
+      "address": "230 S Broad St",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.64712242371081,
+      "lng": -88.40122103691102
+    },
+    {
+      "id": "bulk_1785345191024_4",
+      "name": "First Baptist Church",
+      "address": "71 Lewis Avenue",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.64723576393873,
+      "lng": -88.39202642440797
+    },
+    {
+      "id": "bulk_1785345191024_5",
+      "name": "Broad Street Church of Christ",
+      "address": "131 Broad St N",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.653643584506305,
+      "lng": -88.39057803153992
+    },
+    {
+      "id": "bulk_1785345191024_6",
+      "name": "Fire Station #10",
+      "address": "16240 Natchez Trace Rd.",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.71439,
+      "lng": -88.33949
+    },
+    {
+      "id": "bulk_1785345191024_7",
+      "name": "Reagan Fire Station # 9",
+      "address": "Lexington, TN 38351",
+      "city": "Reagan",
+      "zip": "38368",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.531854,
+      "lng": -88.352151
+    },
+    {
+      "id": "bulk_1785345191024_8",
+      "name": "Sardis Senior Citizen Center",
+      "address": "34850 Highway 104 S",
+      "city": "Sardis",
+      "zip": "38371",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.442177,
+      "lng": -88.294057
+    },
+    {
+      "id": "bulk_1785345191024_9",
+      "name": "Scotts Hill Church of Christ",
+      "address": "11325 Sardis-Scotts Hill Rd",
+      "city": "Scotts Hill",
+      "zip": "38374",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.51471,
+      "lng": -88.246321
+    },
+    {
+      "id": "bulk_1785345191024_10",
+      "name": "Henderson County Fire Department Station 6",
+      "address": "5380 TN-22 Alt",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.575531,
+      "lng": -88.458395
+    },
+    {
+      "id": "bulk_1785345191024_11",
+      "name": "Westover Fire Station #1",
+      "address": "364 Crucifer Rd",
+      "city": "Lexington",
+      "zip": "38351",
+      "county": "Henderson",
+      "type": "election_day",
+      "state_district": "79",
+      "state_senate_district": "25",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.688216,
+      "lng": -88.537904
+    },
+    {
+      "id": "custom-1785347241452-455",
+      "name": "Early Voting Annex",
+      "address": "126 Crook Ave",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "early",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.440537,
+      "lng": -88.640976
+    },
+    {
+      "id": "bulk_1785347595062_0",
+      "name": "Enville Community Center",
+      "address": "115 Leapwood Rd",
+      "city": "Enville",
+      "zip": "38332",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.383445,
+      "lng": -88.432723
+    },
+    {
+      "id": "bulk_1785347595062_1",
+      "name": "Sweetlips Community Center",
+      "address": "4415 Sweet Lips Rd",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.401288,
+      "lng": -88.522226
+    },
+    {
+      "id": "bulk_1785347595062_2",
+      "name": "Estes Church of Christ",
+      "address": "3505 US-45",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.38593613141016,
+      "lng": -88.64032387733461
+    },
+    {
+      "id": "bulk_1785347595062_3",
+      "name": "Beech Springs Baptist Church",
+      "address": "675 TN-22 Alt",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.46373,
+      "lng": -88.516258
+    },
+    {
+      "id": "bulk_1785347595062_4",
+      "name": "New Friendship Community Center",
+      "address": "705 New Friendship Rd",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": "",
+      "schedule": [],
+      "notes": "",
+      "lat": 35.51870949157477,
+      "lng": -88.60812664031984
+    },
+    {
+      "id": "bulk_1785347595062_5",
+      "name": "Montezuma Community Center",
+      "address": "1455 TN-225",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.394576,
+      "lng": -88.693327
+    },
+    {
+      "id": "bulk_1785347595062_6",
+      "name": "Deanburg Community Center",
+      "address": "385 Deanburg Rd",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.393365,
+      "lng": -88.802347
+    },
+    {
+      "id": "bulk_1785347595062_7",
+      "name": "Trinity United Methodist Church(Henderson)",
+      "address": "1374 W Main St",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.422215,
+      "lng": -88.678882
+    },
+    {
+      "id": "bulk_1785347595062_8",
+      "name": "Christ Community Church of Henderson",
+      "address": "638 White Ave",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.45076829701517,
+      "lng": -88.64157915115358
+    },
+    {
+      "id": "bulk_1785347595062_9",
+      "name": "Henderson City Hall",
+      "address": "121 Crook Avenue, Henderson 38340, TN",
+      "city": "Henderson",
+      "zip": "38340",
+      "county": "Chester",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "8",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.440001,
+      "lng": -88.641415
     }
   ],
   "tn_polling_deleted": [
