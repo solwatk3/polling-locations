@@ -598,7 +598,7 @@
         <input type="text" id="ep-address" />
         <div id="ep-geo-status" class="inline-status"></div>
         <button type="button"
-          onclick="epGeocode(document.getElementById('ep-address').value.trim(), true)"
+          onclick="epReGeocodeAndSplit()"
           style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
           &#128204; Re-geocode address
         </button>
@@ -1486,6 +1486,44 @@
     // force=true (button): overrides existing coords and uses fresh position for district lookup.
     // force=false/undefined (auto on typing): preserves manually placed pins.
     // epScheduleGeocode() is called on input events - waits 800ms then calls epGeocode().
+    // epReGeocodeAndSplit()
+    // Called by the Re-geocode button. If the address field contains a full
+    // address with city and zip embedded (e.g. "300 Main St, Nashville, TN 37201"),
+    // splits it right-to-left (zip -> state -> last comma = city/street boundary)
+    // and fills city/zip into their own fields before geocoding.
+    function epReGeocodeAndSplit() {
+      var addrField = document.getElementById("ep-address");
+      var raw = addrField.value.trim();
+      if (!raw) return;
+
+      // 1. Pull zip from the end (5 digits)
+      var work = raw;
+      var zipM = work.match(/(\d{5})\s*$/);
+      var zip = zipM ? zipM[1] : "";
+      if (zipM) work = work.slice(0, zipM.index).trim();
+
+      // 2. Strip trailing state abbreviation
+      work = work.replace(/,?\s+(TN|Tennessee)\s*$/i, "").trim();
+
+      // 3. Last comma separates city from street - only split if we found a zip
+      var lastComma = work.lastIndexOf(",");
+      if (zip && lastComma !== -1) {
+        var street = work.slice(0, lastComma).trim();
+        var city   = work.slice(lastComma + 1).trim();
+        if (street && city) {
+          addrField.value = street;
+          if (!document.getElementById("ep-city").value.trim()) {
+            document.getElementById("ep-city").value = city;
+          }
+          if (!document.getElementById("ep-zip").value.trim()) {
+            document.getElementById("ep-zip").value = zip;
+          }
+        }
+      }
+
+      epGeocode(addrField.value.trim(), true);
+    }
+
     function epGeocode(addr, force) {
       if (!addr) return;
       var city = document.getElementById("ep-city").value.trim();
