@@ -723,7 +723,7 @@
     <div id="view-search" style="display:none;">
       <div class="selector-row">
         <label>Search:</label>
-        <input type="text" id="search-input" placeholder="Name, address, county, or district number..." autofocus />
+        <input type="text" id="search-input" placeholder="Name, address, county, or district number..." />
       </div>
       <div id="search-cards" class="card-grid"></div>
     </div>
@@ -1126,8 +1126,8 @@
           '</div>';
         }).join("");
 
-        // Wrap in an outer range accordion - show range label, district count, location count
-        html += '<div class="range-group-section">' +
+        // Wrap in an outer range accordion - open by default so districts are visible immediately
+        html += '<div class="range-group-section range-open">' +
           '<div class="range-group-header" onclick="this.parentElement.classList.toggle(\'range-open\')">' +
           '<span class="range-group-arrow">&#9654;</span>' +
           typeLabel + ' Districts ' + range[0] + ' - ' + range[1] +
@@ -1152,6 +1152,17 @@
         renderDistrict();
       });
     });
+
+    // Force By District view on initial load - do not rely on HTML defaults alone
+    (function() {
+      document.getElementById("view-district").style.display  = "";
+      document.getElementById("view-county").style.display    = "none";
+      document.getElementById("view-search").style.display    = "none";
+      document.getElementById("view-dashboard").style.display = "none";
+      document.querySelectorAll(".view-tab").forEach(function(t) { t.classList.remove("active"); });
+      document.querySelector('.view-tab[data-view="district"]').classList.add("active");
+      currentView = "district";
+    })();
 
     renderDistrict(); // initial render
 
