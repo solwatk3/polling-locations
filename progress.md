@@ -246,6 +246,16 @@
 - [x] index.html: fixed districtReport() for county type - strips " County" suffix before URL encoding so report page receives "Madison" not "Madison County" (2026-07-29)
 - [x] index.html: spotlight persistence fix - added spotlightLockUntil timestamp; districtHighlight sets 800ms lock window after triggering; clearSpotlight returns early if lock is active, preventing popup-close + mouse-lands-on-polygon from wiping the spotlight immediately (2026-07-29)
 
+## Done (Session 30 - 2026-07-29)
+- [x] directory.html: By District view now groups districts into collapsible range accordions (House: 1-25, 26-50, 51-75, 76-99 | Senate: 1-11, 12-22, 23-33 | Congressional: flat) - outer accordion per range, inner accordion per district; ranges open by default so districts are immediately visible (2026-07-29)
+- [x] directory.html: By County view now groups counties by first letter with a sticky A-Z jump bar at the top - clicking an active letter opens that section and scrolls to it; inactive letters are dimmed (2026-07-29)
+- [x] css/style.css: added CSS for range group sections (.range-group-section, .range-group-header, .range-group-body, .range-group-arrow) and letter group sections (.letter-jump-bar, .letter-jump-btn, .letter-group-section, .letter-group-header, .letter-group-body, .letter-group-char) (2026-07-29)
+- [x] css/style.css: fixed mobile overflow - added overflow-x: hidden to html/body; added .top-nav-search media query to hide the top nav search bar on screens 640px and under (2026-07-29)
+- [x] directory.html: added top-nav-search class to the top nav search form so CSS can hide it on mobile (2026-07-29)
+- [x] directory.html: removed autofocus from hidden search input - was causing unpredictable browser behavior that could default the page to the Search tab (2026-07-29)
+- [x] directory.html: added explicit initialization block before renderDistrict() - forcibly sets By District as active view, hides all other views, and resets currentView on every page load (2026-07-29)
+- [x] directory.html: fixed .no-results empty state appearing in a narrow 300px grid column - added grid-column: 1 / -1 and width: 100% so the empty state spans the full row inside the card-grid container (2026-07-29)
+
 ## In Progress
 - (nothing active)
 
