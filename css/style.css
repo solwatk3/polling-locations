@@ -931,10 +931,19 @@ body.page-layout {
 /* =============================================================================
    RESPONSIVE
    ============================================================================= */
-@media (max-width: 600px) {
-  .top-bar-sub  { display: none; }
-  .sidebar      { width: 100%; }
-  .top-nav-link { padding: 4px 8px; font-size: 0.72rem; }
-  .page-header  { padding: 14px 14px 10px; }
-  .page-content { padding: 14px; }
+
+/* Prevent horizontal scroll on all pages */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+@media (max-width: 640px) {
+  .top-bar-sub   { display: none; }
+  .sidebar       { width: 100%; }
+  /* Compress nav links to fit on small screens */
+  .top-nav-link  { padding: 4px 7px; font-size: 0.72rem; }
+  /* Hide the inline search field in the top bar - use the Search tab instead */
+  .top-nav-search { display: none; }
+  .page-header   { padding: 14px 14px 10px; flex-wrap: wrap; gap: 4px; }
+  .page-content  { padding: 14px; }
+  /* Stack the total badge below the title on small screens */
+  #total-badge   { font-size: 0.75rem; }
 }
