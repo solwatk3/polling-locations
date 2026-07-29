@@ -957,9 +957,18 @@
         if (activeFilter) { highlightByFilter(activeFilter); }
       }
 
+      // Build the tooltip label from county and district data on this location
+      var tooltipParts = [];
+      if (loc.county)                    tooltipParts.push(loc.county + " County");
+      if (loc.state_senate_district)     tooltipParts.push("Senate " + loc.state_senate_district);
+      if (loc.state_district)            tooltipParts.push("House " + loc.state_district);
+      if (loc.congressional_district)    tooltipParts.push("Congress " + loc.congressional_district);
+      var tooltipLabel = tooltipParts.join(" • "); // bullet-separated, e.g. "Chester County - Senate 26 - House 75"
+
       // "both" pins go on both layers so they appear regardless of which toggle is active
       var marker = L.marker([lat, lng], { icon: icon, draggable: false })
         .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+        .bindTooltip(tooltipLabel, { sticky: true, direction: "top" })
         .on("mouseover", pinMouseover)
         .on("mouseout",  pinMouseout);
 
@@ -976,6 +985,7 @@
         // Clone for the election day layer - push into markers[] so spotlight reaches it
         var clone = L.marker([lat, lng], { icon: icon, draggable: false })
           .bindPopup(buildPopup(loc, isCustom), { maxWidth: 300 })
+          .bindTooltip(tooltipLabel, { sticky: true, direction: "top" })
           .on("mouseover", pinMouseover)
           .on("mouseout",  pinMouseout)
           .addTo(electionLayer);

@@ -947,3 +947,26 @@ html, body { max-width: 100%; overflow-x: hidden; }
   /* Stack the total badge below the title on small screens */
   #total-badge   { font-size: 0.75rem; }
 }
+
+/* =============================================================================
+   PIN HOVER TOOLTIP
+   Overrides Leaflet's default white tooltip to match the dark purple theme.
+   ============================================================================= */
+
+.leaflet-tooltip {
+  background: #1a001a;           /* --primary dark background */
+  color: #ffffff;                /* white text */
+  border: 1px solid #4a2e6a;    /* --border purple */
+  border-radius: 8px;            /* --radius */
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  pointer-events: none;          /* don't block mouse events on the map */
+}
+
+/* The small arrow pointing down toward the pin */
+.leaflet-tooltip-top:before {
+  border-top-color: #4a2e6a;    /* match the border color */
+}
