@@ -956,10 +956,12 @@
           return '<div style="line-height:1.7;">' + label + timeStr + '</div>';
         }).join("");
         document.getElementById("d-hours").innerHTML = hoursHtml;
-      } else if (loc.hours && loc.hours.trim() && loc.hours !== "-") {
+      } else if (loc.hours && /[a-zA-Z0-9]/.test(loc.hours)) {
+        // Only treat hours as valid if it contains at least one letter or digit
         document.getElementById("d-hours").textContent = loc.hours;
       } else {
-        // No hours data - show "No hours listed" in the summary and disable the dropdown
+        // No hours data - clear default text, show "No hours listed" in summary, disable dropdown
+        document.getElementById("d-hours").textContent = "";
         document.getElementById("d-hours-toggle-hint").style.display = "none";
         document.getElementById("d-hours-none").style.display = "inline";
         document.getElementById("d-hours-details").style.pointerEvents = "none";
