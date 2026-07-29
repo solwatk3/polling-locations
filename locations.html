@@ -3851,6 +3851,108 @@
       return results.length ? results : null;
     }
 
+    // parseHenryCountyFormat(text)
+    // Handles Henry County format where all entries run together as continuous text.
+    // Each entry starts with "District N-N" (e.g. "District 1-1") followed by the
+    // venue name, a house number, street address (ending with an abbreviation period),
+    // city, and 5-digit zip - all with no punctuation separators between fields.
+    // Example: "District 1-1 Harrelson School 143 Country Club Rd. Puryear 38251 District 1-2 ..."
+    // Detected by the presence of "District \d+-\d+" in the text.
+    // Parsing strategy:
+    //   1. Flatten newlines to single spaces.
+    //   2. Split on each "District N-N" boundary (lookahead keeps the label with its chunk).
+    //   3. For each chunk, strip the label, then find the first house number.
+    //      - Text before house number = venue name.
+    //      - Extract zip from the end of the remainder.
+    //      - Find the last period in the address+city string - text before it = address,
+    //        text after it = city. (Street abbreviations like Rd. / St. end with a period.)
+    // -------------------------------------------------------------------------
+    function parseHenryCountyFormat(text) {
+      // Detection: must contain "District N-N" precinct label pattern
+      if (!/District\s+\d+-\d+/.test(text)) return null;
+
+      // Flatten newlines so multi-line pastes work the same as single-line
+      var flat = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+
+      // Split on each "District N-N" occurrence (lookahead keeps label with its chunk)
+      var parts = flat.split(/(?=District\s+\d+-\d+)/i);
+
+      var results = [];
+      parts.forEach(function(chunk, idx) {
+        chunk = chunk.trim();
+        if (!chunk) return;
+
+        var reviewReasons = [];
+        var name = "", address = "", city = "", zip = "", precinct = "";
+
+        // Strip the "District N-N" label from the front of the chunk
+        var labelMatch = chunk.match(/^(District\s+\d+-\d+)\s*/i);
+        if (labelMatch) {
+          precinct = labelMatch[1];
+          chunk    = chunk.slice(labelMatch[0].length).trim();
+        }
+
+        // Find the first house number (2+ digits followed by a space and a letter)
+        // .search() returns the character index of the match start
+        var houseIdx = chunk.search(/\b\d+\s+[A-Za-z]/);
+        if (houseIdx === -1) {
+          // No house number found - save what we have and flag for manual review
+          name = chunk;
+          reviewReasons.push("No address found");
+        } else {
+          name        = chunk.slice(0, houseIdx).trim();
+          var addrCity = chunk.slice(houseIdx).trim();
+
+          // Pull the zip from the end
+          var zipMatch = addrCity.match(/(\d{5})\s*$/);
+          if (zipMatch) {
+            zip      = zipMatch[1];
+            addrCity = addrCity.slice(0, zipMatch.index).trim();
+          } else {
+            reviewReasons.push("No zip");
+          }
+
+          // Split address from city at the last period (end of street abbreviation)
+          // e.g. "143 Country Club Rd. Puryear" -> address="143 Country Club Rd.", city="Puryear"
+          var lastDot = addrCity.lastIndexOf(".");
+          if (lastDot !== -1) {
+            address = addrCity.slice(0, lastDot + 1).trim();
+            city    = addrCity.slice(lastDot + 1).trim();
+          } else {
+            // No period - fall back: last space-separated token is the city
+            var spaceIdx = addrCity.lastIndexOf(" ");
+            if (spaceIdx !== -1) {
+              address = addrCity.slice(0, spaceIdx).trim();
+              city    = addrCity.slice(spaceIdx + 1).trim();
+              reviewReasons.push("No street period - check address/city split");
+            } else {
+              address = addrCity;
+              reviewReasons.push("Could not split address from city");
+            }
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          (precinct ? precinct + " " : "") + chunk,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3862,6 +3964,10 @@
       // --- District/precinct format detection (NTH DISTRICT(CDnn) run-together format) ---
       var districtPrecinctResult = parseDistrictPrecinctFormat(text);
       if (districtPrecinctResult) return districtPrecinctResult;
+
+      // --- Henry County format detection (District N-N Name Address City Zip run-together) ---
+      var henryCountyResult = parseHenryCountyFormat(text);
+      if (henryCountyResult) return henryCountyResult;
 
       // --- Ellipsis format detection (City... Venue Name Street per line) ---
       var ellipsisResult = parseEllipsisFormat(text);
