@@ -514,41 +514,73 @@
         hoursHtml = loc.hours || "Hours not set";
       }
 
+      // Build district/county clickable tags
+      var hd = loc.state_district;
+      var sd = loc.state_senate_district;
+      var cd = loc.congressional_district;
+      var co = loc.county;
+      var hTag = (hd && hd !== '?')
+        ? '<span class="district-tag" onclick="showDistrictActions(\'house\',' + parseInt(hd) + ',event)">House ' + hd + '</span>'
+        : '<span class="district-tag-unknown">House ?</span>';
+      var sTag = (sd && sd !== '?')
+        ? '<span class="district-tag" onclick="showDistrictActions(\'senate\',' + parseInt(sd) + ',event)">Senate ' + sd + '</span>'
+        : '<span class="district-tag-unknown">Senate ?</span>';
+      var cTag = (cd && cd !== '?')
+        ? '<span class="district-tag" onclick="showDistrictActions(\'congress\',' + parseInt(cd) + ',event)">Congress ' + cd + '</span>'
+        : '<span class="district-tag-unknown">Congress ?</span>';
+      var coTag = co
+        ? '<span class="district-tag" onclick="showDistrictActions(\'county\',\'' + co.replace(/'/g, "\\'") + '\',event)">' + co + ' County</span>'
+        : '<span class="district-tag-unknown">County unknown</span>';
+
       return '<div class="popup-content">' +
+
+        // Name + custom label
         '<div class="popup-name">' + (loc.name || "Unnamed") +
           (isCustom ? ' <small style="color:var(--accent-light);">(custom)</small>' : '') +
         '</div>' +
+
+        // Type badge (Early Voting / Election Day / both)
         '<div class="popup-type-badge ' + badgeClass + '">' + typeLabel + '</div>' +
-        '<div class="popup-address">&#128205; ' + (loc.address || "Address not set") +
-          (loc.city ? ', ' + loc.city : '') + '</div>' +
-        '<div class="popup-hours">&#128336; ' + hoursHtml + '</div>' +
-        // Build each district/county as a clickable tag if the value is known,
-        // or plain muted text if the district hasn't been detected yet.
-        (function() {
-          var hd = loc.state_district;
-          var sd = loc.state_senate_district;
-          var cd = loc.congressional_district;
-          var co = loc.county;
-          var hTag = (hd && hd !== '?')
-            ? '<span class="district-tag" onclick="showDistrictActions(\'house\',' + parseInt(hd) + ',event)">House ' + hd + '</span>'
-            : '<span class="district-tag-unknown">House ?</span>';
-          var sTag = (sd && sd !== '?')
-            ? '<span class="district-tag" onclick="showDistrictActions(\'senate\',' + parseInt(sd) + ',event)">Senate ' + sd + '</span>'
-            : '<span class="district-tag-unknown">Senate ?</span>';
-          var cTag = (cd && cd !== '?')
-            ? '<span class="district-tag" onclick="showDistrictActions(\'congress\',' + parseInt(cd) + ',event)">Congress ' + cd + '</span>'
-            : '<span class="district-tag-unknown">Congress ?</span>';
-          var coTag = co
-            ? '<span class="district-tag" onclick="showDistrictActions(\'county\',\'' + co.replace(/'/g, "\\'") + '\',event)">' + co + ' County</span>'
-            : '<span class="district-tag-unknown">County unknown</span>';
-          return '<div class="popup-districts">' + hTag + ' &bull; ' + sTag + ' &bull; ' + cTag + ' &bull; ' + coTag + '</div>';
-        })() +
+
+        // 2-column grid: Address | City, Zip | County
+        '<div class="popup-meta-grid">' +
+          '<div class="popup-field">' +
+            '<div class="popup-field-label">Address</div>' +
+            '<div class="popup-field-value">' + (loc.address || '-') + '</div>' +
+          '</div>' +
+          '<div class="popup-field">' +
+            '<div class="popup-field-label">City</div>' +
+            '<div class="popup-field-value">' + (loc.city || '-') + '</div>' +
+          '</div>' +
+          '<div class="popup-field">' +
+            '<div class="popup-field-label">Zip Code</div>' +
+            '<div class="popup-field-value">' + (loc.zip || '-') + '</div>' +
+          '</div>' +
+          '<div class="popup-field">' +
+            '<div class="popup-field-label">County</div>' +
+            '<div class="popup-field-value">' + (co ? co + ' County' : '-') + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Voting Hours - full width
+        '<div class="popup-field">' +
+          '<div class="popup-field-label">Voting Hours</div>' +
+          '<div class="popup-field-value">' + hoursHtml + '</div>' +
+        '</div>' +
+
+        // Districts - clickable tags
+        '<div class="popup-districts">' + hTag + ' &bull; ' + sTag + ' &bull; ' + cTag + '</div>' +
+
+        // Notes (only if present)
         (loc.notes ? '<div class="popup-notes">&#9888; ' + loc.notes + '</div>' : '') +
+
+        // View Full Detail link
         '<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">' +
           '<a href="location-detail.html?id=' + encodeURIComponent(loc.id) + '" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:700;">' +
             '&#8594; View Full Detail' +
           '</a>' +
         '</div>' +
+
       '</div>';
     }
 

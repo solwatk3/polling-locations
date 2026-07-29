@@ -413,13 +413,39 @@ body {
 .popup-type-badge.election-day { background: #78350f; color: #fde68a; }
 .popup-type-badge.both         { background: #312e81; color: #c7d2fe; }
 
-.popup-content .popup-address { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
-.popup-content .popup-hours   { font-size: 0.75rem; color: var(--info); margin-bottom: 6px; }
+/* 2-column grid for address/city/zip/county */
+.popup-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+
+/* Each labeled field (label above value) */
+.popup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+.popup-field-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+.popup-field-value {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+.popup-field-value.muted { color: var(--text-muted); font-style: italic; }
 
 .popup-content .popup-districts {
   border-top: 1px solid var(--border);
   padding-top: 6px;
-  margin-top: 6px;
+  margin-top: 2px;
   font-size: 0.7rem;
   color: #7c6a9a;
   line-height: 1.6;
