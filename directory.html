@@ -216,6 +216,9 @@
       text-align: center;
       padding: 50px 24px;
       color: var(--text-muted);
+      /* Span all grid columns when inside a card-grid so it fills full width */
+      grid-column: 1 / -1;
+      width: 100%;
     }
     .no-results h3 { font-size: 0.95rem; color: var(--text); margin-bottom: 6px; }
     .no-results p  { font-size: 0.8rem; max-width: 360px; margin: 0 auto; line-height: 1.5; }
