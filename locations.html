@@ -3953,6 +3953,92 @@
       return results.length ? results : null;
     }
 
+    // parsePrecinctTabFullAddressFormat(text)
+    // Handles tab-separated format with 3 columns per line:
+    //   Col 0: precinct number (e.g. "1-1")
+    //   Col 1: short label (e.g. "Lavinia") - ignored, name comes from col 2
+    //   Col 2: full address string (e.g. "Lavinia Baptist Church, 4200 Hwy 220, Lavinia 38348")
+    // The full address string is parsed right-to-left: zip from the end, then the
+    // last comma gives the city/street boundary. If there is no second comma
+    // (city is not separated from the street), the entry is flagged for review.
+    // Detected when every non-blank line has exactly 2 tabs and col 0 matches N-N.
+    // -------------------------------------------------------------------------
+    function parsePrecinctTabFullAddressFormat(text) {
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+      if (lines.length < 2) return null;
+
+      // Detection: every line must have exactly 2 tabs and col 0 must be "N-N" format
+      var precinctPattern = /^\d+-\d+$/;
+      var valid = lines.every(function(l) {
+        var cols = l.split("\t");
+        return cols.length === 3 && precinctPattern.test(cols[0].trim());
+      });
+      if (!valid) return null;
+
+      var results = [];
+      lines.forEach(function(line, idx) {
+        var cols     = line.split("\t");
+        var fullAddr = cols[2].trim(); // e.g. "Lavinia Baptist Church, 4200 Hwy 220, Lavinia 38348"
+
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        // Split on the first comma to separate the venue name from the rest
+        var firstComma = fullAddr.indexOf(",");
+        if (firstComma === -1) {
+          // No comma - treat entire string as name and flag
+          name = fullAddr;
+          reviewReasons.push("No address found");
+        } else {
+          name = fullAddr.slice(0, firstComma).trim();
+          var rest = fullAddr.slice(firstComma + 1).trim(); // e.g. "4200 Hwy 220, Lavinia 38348"
+
+          // 1. Pull zip from the end
+          var zipMatch = rest.match(/(\d{5})\s*$/);
+          if (zipMatch) {
+            zip  = zipMatch[1];
+            rest = rest.slice(0, zipMatch.index).trim(); // e.g. "4200 Hwy 220, Lavinia"
+          } else {
+            reviewReasons.push("No zip");
+          }
+
+          // 2. Strip trailing state abbreviation if present (e.g. ", TN" or " TN")
+          rest = rest.replace(/,?\s+[A-Z]{2}\s*$/, "").trim();
+
+          // 3. Last comma = street / city boundary
+          var lastComma = rest.lastIndexOf(",");
+          if (lastComma !== -1) {
+            address = rest.slice(0, lastComma).trim();
+            city    = rest.slice(lastComma + 1).trim();
+          } else {
+            // No second comma - city is not clearly separated from the street.
+            // Save the full string as address and flag for manual review.
+            address = rest;
+            reviewReasons.push("Could not split address from city - check manually");
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          line,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3992,6 +4078,10 @@
       // --- Precinct-tab-label format (digit + tab + ABBR + tab + precinct name header blocks) ---
       var precinctTabResult = parsePrecinctTabLabelFormat(text);
       if (precinctTabResult) return precinctTabResult;
+
+      // --- Precinct-tab-fulladdress format (N-N TAB short-label TAB "Venue, Addr, City Zip") ---
+      var precinctTabFullAddrResult = parsePrecinctTabFullAddressFormat(text);
+      if (precinctTabFullAddrResult) return precinctTabFullAddrResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
