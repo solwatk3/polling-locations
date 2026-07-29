@@ -442,6 +442,23 @@ body {
 }
 .popup-field-value.muted { color: var(--text-muted); font-style: italic; }
 
+/* One-click copy button next to the Address label */
+.popup-copy-btn {
+  margin-left: 6px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 4px;
+  border: 1px solid var(--accent-light);
+  border-radius: 3px;
+  transition: background 0.12s, color 0.12s;
+  vertical-align: middle;
+}
+.popup-copy-btn:hover { background: var(--accent-light); color: var(--primary); }
+
 .popup-content .popup-districts {
   border-top: 1px solid var(--border);
   padding-top: 6px;

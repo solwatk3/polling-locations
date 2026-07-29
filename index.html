@@ -545,7 +545,16 @@
         // 2-column grid: Address | City, Zip | County
         '<div class="popup-meta-grid">' +
           '<div class="popup-field">' +
-            '<div class="popup-field-label">Address</div>' +
+            '<div class="popup-field-label">Address' +
+              // Copy button - copies full address to clipboard on click
+              '<span class="popup-copy-btn" onclick="(function(el){' +
+                'var full=\'' + ((loc.address || '') + (loc.city ? ', ' + loc.city : '') + (loc.zip ? ' ' + loc.zip : '')).replace(/'/g, "\\'") + '\';' +
+                'navigator.clipboard.writeText(full).then(function(){' +
+                  'el.textContent=\'Copied!\';' +
+                  'setTimeout(function(){el.textContent=\'Copy\';},1500);' +
+                '});' +
+              '})(this)" title="Copy full address">Copy</span>' +
+            '</div>' +
             '<div class="popup-field-value">' + (loc.address || '-') + '</div>' +
           '</div>' +
           '<div class="popup-field">' +

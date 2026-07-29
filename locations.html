@@ -513,8 +513,48 @@
     .loc-detail-info::-webkit-scrollbar { width: 4px; }
     .loc-detail-info::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
+    /* Type badge at top of modal info panel */
+    .ldm-type-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .ldm-badge-early    { background: #064e3b; color: #6ee7b7; }
+    .ldm-badge-election { background: #78350f; color: #fde68a; }
+    .ldm-badge-both     { background: #312e81; color: #c7d2fe; }
+
+    /* 2-column grid for address / city / zip / county */
+    .ldm-addr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+      margin-bottom: 10px;
+    }
+
+    /* One-click copy button inline with Address label */
+    .ldm-copy-btn {
+      margin-left: 6px;
+      font-size: 0.56rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 1px 4px;
+      border: 1px solid var(--accent-light);
+      border-radius: 3px;
+      transition: background 0.12s, color 0.12s;
+      vertical-align: middle;
+    }
+    .ldm-copy-btn:hover { background: var(--accent-light); color: var(--primary); }
+
     /* Individual field rows inside the info panel */
-    .ld-field { display: flex; flex-direction: column; gap: 3px; }
+    .ld-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
     .ld-label {
       font-size: 0.64rem;
       font-weight: 700;
@@ -1174,26 +1214,51 @@
 
         <!-- Left: info fields -->
         <div class="loc-detail-info">
-          <div class="ld-field">
-            <div class="ld-label">Type</div>
-            <div class="ld-value" id="ldm-type"></div>
+
+          <!-- Type badge -->
+          <div id="ldm-type-badge" class="ldm-type-badge"></div>
+
+          <!-- 2-column grid: Address / City, Zip / County -->
+          <div class="ldm-addr-grid">
+            <div class="ld-field">
+              <div class="ld-label">
+                Address
+                <span class="ldm-copy-btn" id="ldm-copy-btn" onclick="copyDetailAddress()" title="Copy full address">Copy</span>
+              </div>
+              <div class="ld-value" id="ldm-address-street"></div>
+            </div>
+            <div class="ld-field">
+              <div class="ld-label">City</div>
+              <div class="ld-value" id="ldm-city"></div>
+            </div>
+            <div class="ld-field">
+              <div class="ld-label">Zip Code</div>
+              <div class="ld-value" id="ldm-zip"></div>
+            </div>
+            <div class="ld-field">
+              <div class="ld-label">County</div>
+              <div class="ld-value" id="ldm-county-field"></div>
+            </div>
           </div>
-          <div class="ld-field">
-            <div class="ld-label">Address</div>
-            <div class="ld-value" id="ldm-address"></div>
-          </div>
+
+          <!-- Voting Hours -->
           <div class="ld-field">
             <div class="ld-label">Voting Hours</div>
             <div class="ld-value" id="ldm-hours"></div>
           </div>
+
+          <!-- Districts -->
           <div class="ld-field">
             <div class="ld-label">Districts</div>
             <div class="ld-chips" id="ldm-districts"></div>
           </div>
+
+          <!-- Notes (hidden unless populated) -->
           <div class="ld-field" id="ldm-notes-row" style="display:none;">
             <div class="ld-label">Notes</div>
             <div class="ld-value" id="ldm-notes"></div>
           </div>
+
         </div>
 
         <!-- Right: Leaflet mini-map -->
@@ -2652,13 +2717,22 @@
       document.getElementById("ldm-name").textContent   = loc.name || "Unnamed Location";
       document.getElementById("ldm-county").textContent = loc.county ? loc.county + " County" : "";
 
-      var typeLabel = loc.type === "early" ? "Early Voting" : "Election Day";
-      document.getElementById("ldm-type").textContent = typeLabel;
+      // Type badge
+      var typeLabel = loc.type === "early" ? "Early Voting"
+                    : loc.type === "both"  ? "Early + Election Day"
+                    : "Election Day";
+      var badgeClass = loc.type === "early" ? "ldm-badge-early"
+                     : loc.type === "both"  ? "ldm-badge-both"
+                     : "ldm-badge-election";
+      var badgeEl = document.getElementById("ldm-type-badge");
+      badgeEl.textContent  = typeLabel;
+      badgeEl.className    = "ldm-type-badge " + badgeClass;
 
-      document.getElementById("ldm-address").textContent =
-        loc.address
-          ? loc.address + (loc.city ? ", " + loc.city : "")
-          : "Address not on file";
+      // Address fields (split into separate cells)
+      document.getElementById("ldm-address-street").textContent = loc.address || "-";
+      document.getElementById("ldm-city").textContent           = loc.city    || "-";
+      document.getElementById("ldm-zip").textContent            = loc.zip     || "-";
+      document.getElementById("ldm-county-field").textContent   = loc.county  ? loc.county + " County" : "-";
 
       document.getElementById("ldm-hours").textContent = loc.hours || "Hours not on file";
 
@@ -2724,6 +2798,24 @@
         detailMapInstance = null;
       }
       currentDetailLocId = null;
+    }
+
+    // -------------------------------------------------------------------------
+    // copyDetailAddress() - copies the full address to clipboard from the modal
+    // -------------------------------------------------------------------------
+    function copyDetailAddress() {
+      var street = document.getElementById("ldm-address-street").textContent || "";
+      var city   = document.getElementById("ldm-city").textContent           || "";
+      var zip    = document.getElementById("ldm-zip").textContent            || "";
+      // Build "Street, City ZIP" - skip dashes that mean "not set"
+      var parts  = [street, city, zip].filter(function(p) { return p && p !== "-"; });
+      var full   = parts.join(", ");
+      if (!full) return;
+      var btn = document.getElementById("ldm-copy-btn");
+      navigator.clipboard.writeText(full).then(function() {
+        btn.textContent = "Copied!";
+        setTimeout(function() { btn.textContent = "Copy"; }, 1500);
+      });
     }
 
     // Escape key closes the detail modal
