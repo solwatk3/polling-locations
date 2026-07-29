@@ -956,7 +956,7 @@
           return '<div style="line-height:1.7;">' + label + timeStr + '</div>';
         }).join("");
         document.getElementById("d-hours").innerHTML = hoursHtml;
-      } else if (loc.hours) {
+      } else if (loc.hours && loc.hours.trim() && loc.hours !== "-") {
         document.getElementById("d-hours").textContent = loc.hours;
       } else {
         // No hours data - show "No hours listed" in the summary and disable the dropdown
