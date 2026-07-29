@@ -1943,7 +1943,50 @@
           return;
         }
 
-        // --- No time found: treat as a range header (e.g. "July 17th – August 1st") ---
+        // --- Format C: "DayList-HH:MM-HH:MM" with no am/pm, optional label prefix, "&" separators ---
+        // e.g. "Monday, Tuesday, Wednesday, & Fridays-9:00-4:00"
+        //      "Extended Hours: Thursdays-9:00-6:00 & Saturdays-9:00-12:00"
+        // Times are bare HH:MM with no am/pm. A leading label like "Extended Hours:" is stripped.
+        // Multiple entries on one line are split on "&" only when followed by a letter.
+        // Detected when the segment has a letter directly followed by "-HH:MM-HH:MM".
+        if (/[A-Za-z]-\d{1,2}:\d{2}-\d{1,2}:\d{2}/.test(seg)) {
+          // Strip optional label prefix ending with a colon (e.g. "Extended Hours: ").
+          // Only strips if the prefix contains no digits, so time colons are not affected.
+          var segBody = seg.replace(/^[A-Za-z][^:\d]*:\s*/, "").trim();
+
+          // Split on "&" only when the next character is a letter (start of a day name).
+          // Keeps "&" that is inside a day list together; splits "&" between timed entries.
+          var subParts = segBody.split(/\s*&\s*(?=[A-Za-z])/);
+
+          // pendingDays holds day-list text split off without a time.
+          // Prepended to the next subPart that contains a time.
+          var pendingDays = "";
+
+          subParts.forEach(function(part) {
+            part = part.trim();
+            // Match "DayWord(s)-HH:MM-HH:MM" - day list may include commas, spaces, "&"
+            var entryMatch = part.match(/^([\w,&\s]+?)-(\d{1,2}:\d{2})-(\d{1,2}:\d{2})\s*$/);
+            if (entryMatch) {
+              var dayPart = entryMatch[1].trim();
+              var days = pendingDays
+                ? pendingDays.replace(/,?\s*$/, "") + ", " + dayPart
+                : dayPart;
+              var dayLabel = rangeHeader ? rangeHeader + " - " + days : days;
+              parsed.push({
+                days:  dayLabel,
+                open:  normalizeTime(entryMatch[2]),
+                close: normalizeTime(entryMatch[3])
+              });
+              pendingDays = "";
+            } else {
+              // No time in this subpart - accumulate day list for the next timed entry
+              pendingDays += (pendingDays ? " & " : "") + part.replace(/,\s*$/, "").trim();
+            }
+          });
+          return;
+        }
+
+        // --- No time found: treat as a range header (e.g. "July 17th - August 1st") ---
         rangeHeader = seg;
       });
 
