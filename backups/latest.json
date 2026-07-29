@@ -15083,9 +15083,9 @@
       "zip": "",
       "county": "Blount",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "20",
+      "state_senate_district": "2",
+      "congressional_district": "2",
       "hours": " - ",
       "schedule": [
         {
@@ -16589,9 +16589,9 @@
       "zip": "37072",
       "county": "Davidson",
       "type": "election_day",
-      "state_district": "?",
-      "state_senate_district": "?",
-      "congressional_district": "?",
+      "state_district": "45",
+      "state_senate_district": "18",
+      "congressional_district": "7",
       "hours": " - ",
       "schedule": [
         {
@@ -17280,6 +17280,1325 @@
       "notes": "",
       "lat": 36.34636189933992,
       "lng": -82.54117369651796
+    },
+    {
+      "id": "custom-1785279187054-751",
+      "name": "Civic Auditorium",
+      "address": "1550 Fort Henry Dr.",
+      "city": "Kingsport",
+      "zip": "",
+      "county": "Sullivan",
+      "type": "early",
+      "state_district": "2",
+      "state_senate_district": "4",
+      "congressional_district": "1",
+      "hours": "9:00am - 4:00pm",
+      "schedule": [
+        {
+          "open": "9:00am",
+          "close": "4:00pm",
+          "days": "July 17"
+        },
+        {
+          "open": "9:00am",
+          "close": "12:00pm",
+          "days": "July 18"
+        },
+        {
+          "open": "9:00am",
+          "close": "4:00pm",
+          "days": "July 20 – 24"
+        },
+        {
+          "open": "9:00am",
+          "close": "12:00pm",
+          "days": "9:00 a.m. – 4:00 p.m. - August 1"
+        }
+      ],
+      "notes": "",
+      "lat": 36.538227,
+      "lng": -82.533778
+    },
+    {
+      "id": "custom-1785279210043-697",
+      "name": "Slater Community Center",
+      "address": "325 McDowell Street Bristol, TN",
+      "city": "",
+      "zip": "",
+      "county": "Sullivan",
+      "type": "early",
+      "state_district": "1",
+      "state_senate_district": "4",
+      "congressional_district": "1",
+      "hours": "9:00am - 4:00pm",
+      "schedule": [
+        {
+          "open": "9:00am",
+          "close": "4:00pm",
+          "days": "July 17"
+        },
+        {
+          "open": "9:00am",
+          "close": "12:00pm",
+          "days": "July 18"
+        },
+        {
+          "open": "9:00am",
+          "close": "4:00pm",
+          "days": "July 20 – 24"
+        },
+        {
+          "open": "9:00am",
+          "close": "12:00pm",
+          "days": "9:00 a.m. – 4:00 p.m. - August 1"
+        }
+      ],
+      "notes": "",
+      "lat": 36.593485,
+      "lng": -82.173492
+    },
+    {
+      "id": "bulk_1785280208420_0",
+      "name": "Pine Ridge Baptist Church",
+      "address": "151 Edwards Rd.",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9309505,
+      "lng": -84.4443823
+    },
+    {
+      "id": "bulk_1785280208420_1",
+      "name": "Emory Heights Church Fellowship Hall",
+      "address": "243 Fred Davis Jr. Rd.",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.92680783804825,
+      "lng": -84.53123331069946
+    },
+    {
+      "id": "bulk_1785280208420_2",
+      "name": "Harriman High School",
+      "address": "920 N. Roane St.",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.93839659325288,
+      "lng": -84.54449415206909
+    },
+    {
+      "id": "bulk_1785280208420_3",
+      "name": "Rescue Squad Bldg.",
+      "address": "2735 Roane State Hwy",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.880143,
+      "lng": -84.562256
+    },
+    {
+      "id": "bulk_1785280208420_4",
+      "name": "Bowers Elementary School",
+      "address": "120 Breazeale St.",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.91592120080006,
+      "lng": -84.56114530563356
+    },
+    {
+      "id": "bulk_1785280208420_5",
+      "name": "New Midway Baptist Church",
+      "address": "240 New Midway Rd.",
+      "city": "Kingston",
+      "zip": "37763",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.840496,
+      "lng": -84.423725
+    },
+    {
+      "id": "bulk_1785280208420_6",
+      "name": "Shiloh Baptist Church",
+      "address": "4242 Decatur Hwy",
+      "city": "Kingston",
+      "zip": "37763",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.771047,
+      "lng": -84.589532
+    },
+    {
+      "id": "bulk_1785280208420_7",
+      "name": "Roane County Courthouse",
+      "address": "200 E. Race St.",
+      "city": "Kingston",
+      "zip": "37763",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": "",
+      "notes": "",
+      "lat": 35.87100341877481,
+      "lng": -84.51486110687256
+    },
+    {
+      "id": "bulk_1785280208420_8",
+      "name": "Kingston Community Ctr.",
+      "address": "201 Patton Ferry Rd.",
+      "city": "Kingston",
+      "zip": "37763",
+      "county": "Roane",
+      "type": "both",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.876584761631385,
+      "lng": -84.52129840850831
+    },
+    {
+      "id": "bulk_1785280208420_9",
+      "name": "Lawnville Church of Christ",
+      "address": "1301 Lawnville Rd.",
+      "city": "Kingston",
+      "zip": "37763",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.87114252243961,
+      "lng": -84.4661843776703
+    },
+    {
+      "id": "bulk_1785280208420_10",
+      "name": "Midway Middle School",
+      "address": "104 Dogtown Rd.",
+      "city": "Ten Mile",
+      "zip": "",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.777286,
+      "lng": -84.555607
+    },
+    {
+      "id": "bulk_1785280208420_11",
+      "name": "Dyllis Springs Elementary School",
+      "address": "120 Ollis Rd.",
+      "city": "Oliver Springs",
+      "zip": "37840",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "41",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.008962,
+      "lng": -84.346656
+    },
+    {
+      "id": "bulk_1785280208420_12",
+      "name": "Paint Rock Baptist Church",
+      "address": "1510 Loudon Hwy.",
+      "city": "Philadelphia",
+      "zip": "37846",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.743407,
+      "lng": -84.513387
+    },
+    {
+      "id": "bulk_1785280208420_13",
+      "name": "Milestone Church",
+      "address": "100 Gum Hollow Rd.",
+      "city": "Oak Ridge",
+      "zip": "37830",
+      "county": "Roane",
+      "type": "both",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.98292451134913,
+      "lng": -84.32851195335388
+    },
+    {
+      "id": "bulk_1785280208420_14",
+      "name": "Asbury Chapel Church",
+      "address": "1717 Eureka Rd.",
+      "city": "Rockwood",
+      "zip": "37854",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.84533243986163,
+      "lng": -84.67100858688356
+    },
+    {
+      "id": "bulk_1785280208420_15",
+      "name": "Rockwood High School Cafeteria",
+      "address": "512 W. Rockwood St.",
+      "city": "Rockwood",
+      "zip": "37854",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.872742197032295,
+      "lng": -84.6890652179718
+    },
+    {
+      "id": "bulk_1785280208420_16",
+      "name": "Rockwood United Methodist Church",
+      "address": "801 N. Kingston Ave.",
+      "city": "Rockwood",
+      "zip": "37854",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.87454179234398,
+      "lng": -84.67297196388245
+    },
+    {
+      "id": "bulk_1785280208420_17",
+      "name": "Luminary United Methodist Church",
+      "address": "3401 River Rd.",
+      "city": "Ten Mile",
+      "zip": "37880",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.746916,
+      "lng": -84.65719
+    },
+    {
+      "id": "bulk_1785280208420_18",
+      "name": "Bradbury United Methodist Church",
+      "address": "3506 Buttermilk Rd. West",
+      "city": "Lenoir City",
+      "zip": "37771",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.870374,
+      "lng": -84.39103
+    },
+    {
+      "id": "bulk_1785280208420_19",
+      "name": "Big Emory Baptist Church",
+      "address": "1607 Webster Rd.",
+      "city": "Harriman",
+      "zip": "37748",
+      "county": "Roane",
+      "type": "election_day",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.9581442,
+      "lng": -84.4831682
+    },
+    {
+      "id": "bulk_1785281446214_0",
+      "name": "Harriman Community Center",
+      "address": "631 Clinch St.",
+      "city": "Harriman",
+      "zip": "",
+      "county": "Roane",
+      "type": "early",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.93191613441815,
+      "lng": -84.54314231872559
+    },
+    {
+      "id": "bulk_1785281446214_1",
+      "name": "Kingston Community Center",
+      "address": "201 Patton Ferry Rd.",
+      "city": "Kingston",
+      "zip": "",
+      "county": "Roane",
+      "type": "early",
+      "state_district": 32,
+      "state_senate_district": 12,
+      "congressional_district": 3,
+      "hours": "",
+      "notes": "",
+      "lat": 35.876628228490645,
+      "lng": -84.5212769508362
+    },
+    {
+      "id": "bulk_1785281446214_2",
+      "name": "Rockwood Community Center",
+      "address": "710 N. Chamberlain Ave.",
+      "city": "Rockwood",
+      "zip": "",
+      "county": "Roane",
+      "type": "early",
+      "state_district": "32",
+      "state_senate_district": "12",
+      "congressional_district": "3",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.876412,
+      "lng": -84.677495
+    },
+    {
+      "id": "bulk_1785286537104_0",
+      "name": "Riverside United Methodist Church",
+      "address": "313 6th Ave, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.624934,
+      "lng": -87.025575
+    },
+    {
+      "id": "bulk_1785286537104_1",
+      "name": "E.A. Cox Middle School",
+      "address": "633 Bear Creek Pike, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.637583831499875,
+      "lng": -86.9709062576294
+    },
+    {
+      "id": "bulk_1785286537104_3",
+      "name": "The Church at West End",
+      "address": "900 W 7th St, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.6168876,
+      "lng": -87.0511482
+    },
+    {
+      "id": "bulk_1785286537104_4",
+      "name": "True Vine Fellowhsip Baptist Church",
+      "address": "1028 Mapleash Ave, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.608969946449456,
+      "lng": -87.02555894851686
+    },
+    {
+      "id": "bulk_1785286537104_5",
+      "name": "St Catherine of Siena Catholic Church",
+      "address": "3019 Cayce Ln, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.594738,
+      "lng": -87.0968659
+    },
+    {
+      "id": "bulk_1785286537104_6",
+      "name": "Pleasant Heights Baptist Church",
+      "address": "2712 Trotwood Ave, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.59840612374837,
+      "lng": -87.08419203758241
+    },
+    {
+      "id": "bulk_1785286537104_7",
+      "name": "Spring Hill High School",
+      "address": "1 Raider Ln, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.716369462731606,
+      "lng": -86.97399616241456
+    },
+    {
+      "id": "bulk_1785286537104_8",
+      "name": "Battle Creek Elementary School",
+      "address": "165 Battle Creek Way",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.70765806465917,
+      "lng": -86.929771900177
+    },
+    {
+      "id": "bulk_1785286537104_9",
+      "name": "Santa Fe School",
+      "address": "2629 Santa Fe Pike, Santa Fe, TN 38482",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.731821139871776,
+      "lng": -87.12917804718019
+    },
+    {
+      "id": "bulk_1785286537104_10",
+      "name": "Spring Hill Middle School",
+      "address": "3501 Cleburne Rd, Spring Hill, TN 37174",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.74249794322768,
+      "lng": -86.97284817695619
+    },
+    {
+      "id": "bulk_1785286537104_11",
+      "name": "Theta Community Center",
+      "address": "2108 Gravel Hill Rd, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.7784,
+      "lng": -87.044498
+    },
+    {
+      "id": "bulk_1785286537104_12",
+      "name": "US Army National Guard Recruiting(Maury)",
+      "address": "844 N James Campbell Blvd, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.628457,
+      "lng": -87.064299
+    },
+    {
+      "id": "bulk_1785286537104_13",
+      "name": "Hampshire Unit School of Applied Science and Natural Resources",
+      "address": "4235 Old State Rd, Hampshire, TN 38461",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.595195701513454,
+      "lng": -87.29041099548341
+    },
+    {
+      "id": "bulk_1785286537104_14",
+      "name": "New Lasea Church of Christ",
+      "address": "1570 Lasea Rd, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.646161,
+      "lng": -86.902704
+    },
+    {
+      "id": "bulk_1785286537104_15",
+      "name": "Marvin Wright Elementary School",
+      "address": "4714 Derryberry Ln N, Spring Hill, TN 37174",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.722353641415324,
+      "lng": -86.88909351825714
+    },
+    {
+      "id": "bulk_1785286537104_16",
+      "name": "Mynders Community Center",
+      "address": "3702 Bigbyville Rd, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.51891470452239,
+      "lng": -87.06336736679077
+    },
+    {
+      "id": "bulk_1785286537104_17",
+      "name": "Maury County Fire Department- Station 3",
+      "address": "2410 Valley Creek Rd, Culleoka, TN 38451",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "64",
+      "state_senate_district": "28",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.475839054396715,
+      "lng": -86.99028253555299
+    },
+    {
+      "id": "bulk_1785286537104_18",
+      "name": "Mt. Pleasant Community Center",
+      "address": "501 Gray Ln, Mt Pleasant, TN 38474",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.54679695381479,
+      "lng": -87.20669388771059
+    },
+    {
+      "id": "bulk_1785286537104_19",
+      "name": "Porter’s Chapel Methodist Church",
+      "address": "7257 Polk Ln, Columbia, TN 38401",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.524066,
+      "lng": -87.155528
+    },
+    {
+      "id": "bulk_1785286537104_20",
+      "name": "Spring Hill Library",
+      "address": "144 Kedron Pkwy, Spring Hill, TN 37174",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.749592,
+      "lng": -86.937864
+    },
+    {
+      "id": "bulk_1785286537104_21",
+      "name": "Winchester Community Center",
+      "address": "563 Maury Hill St, Spring Hill, TN 37174",
+      "city": "",
+      "zip": "",
+      "county": "Maury",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "28",
+      "congressional_district": "5",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.751735,
+      "lng": -86.936359
+    },
+    {
+      "id": "custom-1785288830646-97",
+      "name": "Algood Middle School",
+      "address": "540 Dry Valley Rd",
+      "city": "Cookeville",
+      "zip": "38506",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.175937778487146,
+      "lng": -85.45313000679018
+    },
+    {
+      "id": "custom-1785288866154-467",
+      "name": "Bangham Community Center",
+      "address": "5795 Hilham Rd",
+      "city": "Cookeville",
+      "zip": "38506",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.244414,
+      "lng": -85.4719
+    },
+    {
+      "id": "bulk_1785289574963_2",
+      "name": "Buffalo Valley Community Center",
+      "address": "2717 Buffalo Valley School Rd",
+      "city": "Buffalo Valley",
+      "zip": "38548",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.141383807156885,
+      "lng": -85.78262329101562
+    },
+    {
+      "id": "bulk_1785289574963_3",
+      "name": "The River Community Church",
+      "address": "1200 Miracle Rd",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": 42,
+      "state_senate_district": 15,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.132458,
+      "lng": -85.524848
+    },
+    {
+      "id": "bulk_1785289574963_4",
+      "name": "Burks Middle School",
+      "address": "300 Crossville St, Monterey, TN 38574",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "25",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.138046,
+      "lng": -85.260814
+    },
+    {
+      "id": "bulk_1785289574963_5",
+      "name": "Cane Creek Elementary School",
+      "address": "1500 W Jackson St, Cookeville, TN 38501",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "42",
+      "state_senate_district": "15",
+      "congressional_district": "6",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 36.165425,
+      "lng": -85.529312
+    },
+    {
+      "id": "bulk_1785289574963_6",
+      "name": "Capshaw Elementary School",
+      "address": "1 Cougar Ln",
+      "city": "",
+      "zip": "",
+      "county": "Fentress",
+      "type": "election_day",
+      "state_district": 38,
+      "state_senate_district": 12,
+      "congressional_district": 6,
+      "hours": "",
+      "notes": "",
+      "lat": 36.479424,
+      "lng": -84.806415
+    },
+    {
+      "id": "bulk_1785289574963_7",
+      "name": "Cookeville Community Center",
+      "address": "240 Carlen Dr",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_8",
+      "name": "Cookeville High School",
+      "address": "1 Cavalier Dr./2335 N Washington Ave",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_9",
+      "name": "Double Springs Church of Christ",
+      "address": "4665 Norton Dr",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_10",
+      "name": "Monterey High School",
+      "address": "710 E Commercial Ave",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_11",
+      "name": "Northeast Elementary School",
+      "address": "575 N Old Kentucky Rd",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_12",
+      "name": "Hyder-Burks Agricultural Bldg",
+      "address": "2390 Gainesboro Grade",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_13",
+      "name": "Caney Fork Baptist Church",
+      "address": "2404 Highway 70 East",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_14",
+      "name": "Prescott South Elementary School",
+      "address": "115 W Cemetery Rd",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_15",
+      "name": "Twin Oak Community Center",
+      "address": "5939 Thomas Twin Oak Rd",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_16",
+      "name": "Collegeside Church of Christ",
+      "address": "252 E 9th St",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785289574963_17",
+      "name": "Upperman High School",
+      "address": "6950 Nashville Hwy",
+      "city": "",
+      "zip": "",
+      "county": "Putnam",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
     }
   ],
   "tn_polling_deleted": [
