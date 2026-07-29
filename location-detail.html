@@ -545,10 +545,15 @@
           </div>
         </div>
 
-        <!-- Voting Hours -->
+        <!-- Voting Hours - collapsible dropdown -->
         <div class="detail-field" id="d-hours-row">
-          <div class="detail-label">Voting Hours</div>
-          <div class="detail-value" id="d-hours">-</div>
+          <details id="d-hours-details" style="width:100%;">
+            <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span class="detail-label" style="margin:0;">Voting Hours</span>
+              <span id="d-hours-toggle-hint" style="font-size:0.72rem;color:var(--accent-light);white-space:nowrap;">Show &#9660;</span>
+            </summary>
+            <div class="detail-value" id="d-hours" style="margin-top:6px;">-</div>
+          </details>
         </div>
 
         <hr class="detail-divider" />
@@ -1913,6 +1918,16 @@
         );
       });
     }
+
+    // Toggle the hint text on the voting hours dropdown
+    (function() {
+      var details = document.getElementById("d-hours-details");
+      var hint    = document.getElementById("d-hours-toggle-hint");
+      if (!details || !hint) return;
+      details.addEventListener("toggle", function() {
+        hint.innerHTML = details.open ? "Hide &#9650;" : "Show &#9660;";
+      });
+    })();
 
   </script>
 
