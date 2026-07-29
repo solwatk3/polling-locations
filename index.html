@@ -522,12 +522,27 @@
         '<div class="popup-address">&#128205; ' + (loc.address || "Address not set") +
           (loc.city ? ', ' + loc.city : '') + '</div>' +
         '<div class="popup-hours">&#128336; ' + hoursHtml + '</div>' +
-        '<div class="popup-districts">' +
-          'House ' + (loc.state_district || '?') + ' &bull; ' +
-          'Senate ' + (loc.state_senate_district || '?') + ' &bull; ' +
-          'Congress ' + (loc.congressional_district || '?') + ' &bull; ' +
-          (loc.county || '') + ' County' +
-        '</div>' +
+        // Build each district/county as a clickable tag if the value is known,
+        // or plain muted text if the district hasn't been detected yet.
+        (function() {
+          var hd = loc.state_district;
+          var sd = loc.state_senate_district;
+          var cd = loc.congressional_district;
+          var co = loc.county;
+          var hTag = (hd && hd !== '?')
+            ? '<span class="district-tag" onclick="showDistrictActions(\'house\',' + parseInt(hd) + ',event)">House ' + hd + '</span>'
+            : '<span class="district-tag-unknown">House ?</span>';
+          var sTag = (sd && sd !== '?')
+            ? '<span class="district-tag" onclick="showDistrictActions(\'senate\',' + parseInt(sd) + ',event)">Senate ' + sd + '</span>'
+            : '<span class="district-tag-unknown">Senate ?</span>';
+          var cTag = (cd && cd !== '?')
+            ? '<span class="district-tag" onclick="showDistrictActions(\'congress\',' + parseInt(cd) + ',event)">Congress ' + cd + '</span>'
+            : '<span class="district-tag-unknown">Congress ?</span>';
+          var coTag = co
+            ? '<span class="district-tag" onclick="showDistrictActions(\'county\',\'' + co.replace(/'/g, "\\'") + '\',event)">' + co + ' County</span>'
+            : '<span class="district-tag-unknown">County unknown</span>';
+          return '<div class="popup-districts">' + hTag + ' &bull; ' + sTag + ' &bull; ' + cTag + ' &bull; ' + coTag + '</div>';
+        })() +
         (loc.notes ? '<div class="popup-notes">&#9888; ' + loc.notes + '</div>' : '') +
         '<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">' +
           '<a href="location-detail.html?id=' + encodeURIComponent(loc.id) + '" style="font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:700;">' +
@@ -535,6 +550,133 @@
           '</a>' +
         '</div>' +
       '</div>';
+    }
+
+    // =========================================================================
+    // DISTRICT TAG ACTION MENU
+    // Shows a floating context menu when a district/county tag in a popup is
+    // clicked. Gives 3 options: highlight pins, zoom to district, open report.
+    // All functions are global so they can be called from inline onclick attrs.
+    // =========================================================================
+
+    // showDistrictActions(type, val, event)
+    // Builds and positions the floating menu near the click point.
+    // type: 'house' | 'senate' | 'congress' | 'county'
+    // val: district number (int) for house/senate/congress, county name string for county
+    function showDistrictActions(type, val, event) {
+      dismissDistrictMenu(); // remove any existing menu first
+      event.stopPropagation(); // prevent map click handler from firing
+
+      // Header label shown at the top of the menu
+      var label = type === 'house'    ? 'House District '         + val
+                : type === 'senate'   ? 'Senate District '        + val
+                : type === 'congress' ? 'Congressional District ' + val
+                : val + ' County';
+
+      // Zoom is only available for house/senate/congress (feature stores exist).
+      // Report is only available for house (district-report.html only covers house).
+      var canZoom   = (type !== 'county');
+      var canReport = (type === 'house');
+
+      // Safely embed val in the button onclick - numbers inline, strings quoted
+      var safeVal = (type === 'county') ? "'" + String(val).replace(/'/g, "\\'") + "'" : val;
+
+      var menu = document.createElement('div');
+      menu.id = 'district-action-menu';
+      // Start hidden so we can measure dims before revealing
+      menu.style.visibility = 'hidden';
+      menu.innerHTML =
+        '<div class="dam-header">' + label + '</div>' +
+        '<button class="dam-btn" onclick="districtHighlight(\'' + type + '\',' + safeVal + ')">&#128161; Highlight on map</button>' +
+        (canZoom   ? '<button class="dam-btn" onclick="districtZoom(\'' + type + '\',' + val + ')">&#128269; Zoom to district</button>' : '') +
+        (canReport ? '<button class="dam-btn" onclick="districtReport(\'' + type + '\',' + val + ')">&#128196; Open district report</button>' : '');
+
+      document.body.appendChild(menu);
+
+      // Position near click, then nudge inward if the menu would go off-screen
+      var x = event.clientX + 10;
+      var y = event.clientY + 10;
+      var mw = menu.offsetWidth;
+      var mh = menu.offsetHeight;
+      if (x + mw > window.innerWidth  - 8) x = event.clientX - mw - 4;
+      if (y + mh > window.innerHeight - 8) y = event.clientY - mh - 4;
+      menu.style.left = x + 'px';
+      menu.style.top  = y + 'px';
+      menu.style.visibility = '';
+
+      // Dismiss when the user clicks anywhere outside the menu.
+      // Delay one tick so this click doesn't immediately trigger the listener.
+      setTimeout(function() {
+        document.addEventListener('click', dismissDistrictMenu, { once: true });
+      }, 0);
+    }
+
+    function dismissDistrictMenu() {
+      var m = document.getElementById('district-action-menu');
+      if (m) m.remove();
+    }
+
+    // districtHighlight(type, val)
+    // Dims all pins that don't belong to the clicked district or county.
+    // Closes the popup so the dimmed map is visible.
+    function districtHighlight(type, val) {
+      dismissDistrictMenu();
+      map.closePopup();
+
+      var filterFn;
+      if (type === 'house') {
+        filterFn = function(loc) {
+          var d = String(loc.state_district || '?');
+          return d === '?' ? null : d === String(val);
+        };
+      } else if (type === 'senate') {
+        filterFn = function(loc) {
+          var d = String(loc.state_senate_district || '?');
+          return d === '?' ? null : d === String(val);
+        };
+      } else if (type === 'congress') {
+        filterFn = function(loc) {
+          var d = String(loc.congressional_district || '?');
+          return d === '?' ? null : d === String(val);
+        };
+      } else {
+        // County - normalize both sides before comparing (strip " County" suffix, lowercase)
+        filterFn = function(loc) {
+          if (!loc.county) return null;
+          var stored = loc.county.replace(/\s+County$/i, '').trim().toLowerCase();
+          var target = String(val).replace(/\s+County$/i, '').trim().toLowerCase();
+          return stored === target;
+        };
+      }
+
+      highlightByFilter(filterFn);
+    }
+
+    // districtZoom(type, num)
+    // Fits the map to the bounds of the given district.
+    // Reuses the existing zoomToDistrict() and pendingDistrictZoom mechanism
+    // so it works even if the layer hasn't finished loading yet.
+    function districtZoom(type, num) {
+      dismissDistrictMenu();
+      map.closePopup();
+
+      var featArr = type === 'house'   ? houseFeatures
+                  : type === 'senate'  ? senateFeatures
+                  : congressFeatures;
+
+      if (featArr.length) {
+        zoomToDistrict(type, num);
+      } else {
+        // Layer still loading - store the pending zoom; zoomToDistrict fires on load
+        pendingDistrictZoom = { type: type, num: num };
+      }
+    }
+
+    // districtReport(type, num)
+    // Opens the district report page in a new tab.
+    function districtReport(type, num) {
+      dismissDistrictMenu();
+      window.open('district-report.html?type=' + type + '&district=' + num, '_blank');
     }
 
     // =========================================================================
