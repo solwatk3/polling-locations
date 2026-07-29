@@ -983,7 +983,7 @@
         <input type="text" id="f-address" placeholder="e.g. 404 E Cherry St Brownsville 38012" />
         <div id="geocode-status" class="inline-status"></div>
         <button type="button"
-          onclick="geocodeAddress(document.getElementById('f-address').value.trim(), true)"
+          onclick="reGeocodeAndSplit()"
           style="margin-top:4px;font-size:0.74rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600;">
           &#128204; Re-geocode address
         </button>
@@ -2270,6 +2270,31 @@
       var address = document.getElementById("f-address").value.trim();
       if (!address) return;
       geocodeTimer = setTimeout(function() { geocodeAddress(address); }, 1200);
+    }
+
+    // reGeocodeAndSplit()
+    // Called by the Re-geocode button. Splits a full address string first
+    // (e.g. "300 Main St, Nashville, TN 37201" -> street / city / zip into
+    // their own fields), then runs the geocode with the clean street address.
+    function reGeocodeAndSplit() {
+      var addrField = document.getElementById("f-address");
+      var raw = addrField.value.trim();
+      if (!raw) return;
+
+      // Split if the address contains an embedded city/zip
+      var split = parseFullAddress(raw);
+      if (split) {
+        addrField.value = split.street;
+        if (!document.getElementById("f-city").value.trim()) {
+          document.getElementById("f-city").value = split.city;
+        }
+        if (split.zip && !document.getElementById("f-zip").value.trim()) {
+          document.getElementById("f-zip").value = split.zip;
+        }
+      }
+
+      // Geocode with the (now clean) street address
+      geocodeAddress(addrField.value.trim(), true);
     }
 
     // force=true is set by the Re-geocode button - overrides existing coords and
