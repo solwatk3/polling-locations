@@ -1324,7 +1324,16 @@
       // Strip periods from "a.m." / "p.m." so "10 A.M." becomes "10am"
       t = t.replace(/([ap])\.m\./gi, "$1m").trim();
       var match = t.match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
-      if (!match) return t;
+      if (!match) {
+        // Bare HH:MM with no am/pm - infer from hour (7-11 -> am, 12 and 1-6 -> pm)
+        var bareMatch = t.match(/^(\d{1,2}):(\d{2})$/);
+        if (bareMatch) {
+          var bh  = parseInt(bareMatch[1], 10);
+          var bap = (bh >= 7 && bh <= 11) ? "am" : "pm";
+          return bh + ":" + bareMatch[2] + bap;
+        }
+        return t;
+      }
       var h  = match[1];
       var m  = match[2] ? match[2] : "00";
       var ap = match[3].toLowerCase();
