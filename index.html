@@ -553,6 +553,60 @@
     }
 
     // =========================================================================
+    // DISTRICT POLYGON SPOTLIGHT
+    // Draws a bright GeoJSON overlay on top of the map for the clicked district
+    // or county so it stands out visually. Uses the same color as the existing
+    // boundary layer for that type. Stored in currentSpotlightLayer so it can
+    // be removed cleanly when the user starts hovering boundaries again.
+    // =========================================================================
+    function spotlightDistrictPolygon(type, val) {
+      clearSpotlight(); // remove any previous spotlight first
+
+      var feature;
+      if (type === 'house') {
+        feature = houseFeatures.filter(function(f) {
+          return parseInt(f.properties.SLDL, 10) === val;
+        })[0];
+      } else if (type === 'senate') {
+        feature = senateFeatures.filter(function(f) {
+          return parseInt(f.properties.NEWSENATEDISTRICT, 10) === val;
+        })[0];
+      } else if (type === 'congress') {
+        feature = congressFeatures.filter(function(f) {
+          return parseInt(f.properties.DISTRICT, 10) === val;
+        })[0];
+      } else if (type === 'county') {
+        // Normalize the county name for matching (strip " County" suffix, lowercase)
+        var targetBase = String(val).replace(/\s+County$/i, '').trim().toLowerCase();
+        feature = (countyFeatures || []).filter(function(f) {
+          // Features are tagged with _countyName in loadCounties; fall back to NAME property
+          var name = (f._countyName || f.properties.NAME || '').replace(/\s+County$/i, '').trim().toLowerCase();
+          return name === targetBase;
+        })[0];
+      }
+
+      if (!feature) return; // layer not loaded yet - pendingDistrictHighlight will retry
+
+      // Match the color of the existing boundary layer for this type
+      var color = type === 'house'    ? '#f59e0b'
+                : type === 'senate'   ? '#f472b6'
+                : type === 'congress' ? '#a855f7'
+                : '#3b82f6'; // county
+
+      // Draw a bright overlay on top - higher fillOpacity and bolder weight than the base layer
+      currentSpotlightLayer = L.geoJSON(feature, {
+        style: {
+          color:       color,
+          weight:      4,
+          fillColor:   color,
+          fillOpacity: 0.35,
+          dashArray:   null // solid outline regardless of the base layer's dashArray
+        },
+        interactive: false // don't intercept mouse events - let base layer handle hover
+      }).addTo(map);
+    }
+
+    // =========================================================================
     // DISTRICT TAG ACTION MENU
     // Shows a floating context menu when a district/county tag in a popup is
     // clicked. Gives 3 options: highlight pins, zoom to district, open report.
@@ -574,9 +628,9 @@
                 : val + ' County';
 
       // Zoom is only available for house/senate/congress (feature stores exist).
-      // Report is only available for house (district-report.html only covers house).
+      // Report is available for all 4 types - district-report.html supports all.
       var canZoom   = (type !== 'county');
-      var canReport = (type === 'house');
+      var canReport = true;
 
       // Safely embed val in the button onclick - numbers inline, strings quoted
       var safeVal = (type === 'county') ? "'" + String(val).replace(/'/g, "\\'") + "'" : val;
@@ -617,12 +671,28 @@
     }
 
     // districtHighlight(type, val)
-    // Dims all pins that don't belong to the clicked district or county.
+    // Dims all pins that don't belong to the clicked district or county,
+    // activates the corresponding boundary layer, and draws a spotlight polygon.
     // Closes the popup so the dimmed map is visible.
     function districtHighlight(type, val) {
       dismissDistrictMenu();
       map.closePopup();
 
+      // Activate the boundary layer so the user can see the district shape.
+      // setDistrictLayer handles loading on first use and updates the radio UI.
+      // County uses a separate checkbox toggle rather than the district radio.
+      if (type === 'house' || type === 'senate' || type === 'congress') {
+        setDistrictLayer(type);
+      } else if (type === 'county') {
+        // Ensure the county layer is visible and checkbox is checked to stay in sync
+        if (!map.hasLayer(countyLayer)) {
+          map.addLayer(countyLayer);
+          var cb = document.getElementById('toggle-counties');
+          if (cb) cb.checked = true;
+        }
+      }
+
+      // Build the pin filter function for this type
       var filterFn;
       if (type === 'house') {
         filterFn = function(loc) {
@@ -650,6 +720,20 @@
       }
 
       highlightByFilter(filterFn);
+
+      // Draw the spotlight polygon if the feature data is already in memory.
+      // If the layer is still fetching, store a pending request - the loader
+      // will call spotlightDistrictPolygon once the data arrives.
+      var featuresReady = type === 'house'    ? houseFeatures.length > 0
+                        : type === 'senate'   ? senateFeatures.length > 0
+                        : type === 'congress' ? congressFeatures.length > 0
+                        : (countyFeatures && countyFeatures.length > 0);
+
+      if (featuresReady) {
+        spotlightDistrictPolygon(type, val);
+      } else {
+        pendingDistrictHighlight = { type: type, val: val };
+      }
     }
 
     // districtZoom(type, num)
@@ -672,11 +756,17 @@
       }
     }
 
-    // districtReport(type, num)
+    // districtReport(type, val)
     // Opens the district report page in a new tab.
-    function districtReport(type, num) {
+    // district-report.html uses 'congressional' (not 'congress') as the type key,
+    // and counties use ?county=Name instead of ?district=N.
+    function districtReport(type, val) {
       dismissDistrictMenu();
-      window.open('district-report.html?type=' + type + '&district=' + num, '_blank');
+      // Map internal type names to the keys district-report.html expects
+      var reportType = type === 'congress' ? 'congressional' : type;
+      var param = type === 'county' ? 'county=' + encodeURIComponent(val)
+                                    : 'district=' + val;
+      window.open('district-report.html?type=' + reportType + '&' + param, '_blank');
     }
 
     // =========================================================================
@@ -690,6 +780,13 @@
     // Set when a district result is clicked before that layer has finished loading.
     // zoomToDistrict() fires automatically once the load completes.
     var pendingDistrictZoom = null;
+    // Spotlight overlay - single L.geoJSON layer drawn on top of the map to visually
+    // pop the clicked district polygon. Replaced each time a new district is highlighted,
+    // and cleared whenever the user starts hovering boundary layers normally.
+    var currentSpotlightLayer  = null;
+    // Set when districtHighlight fires before the layer data has loaded.
+    // spotlightDistrictPolygon fires automatically when the load completes.
+    var pendingDistrictHighlight = null;
 
     // =========================================================================
     // MARKER REGISTRY
@@ -731,8 +828,20 @@
     // matchFn receives the location object and should return true for pins
     // that belong to the hovered region.
     // =========================================================================
+    // clearSpotlight()
+    // Removes the click-triggered district spotlight overlay from the map.
+    // Called at the start of highlightByFilter and clearHighlight so the spotlight
+    // disappears as soon as the user starts interacting with boundary layers again.
+    function clearSpotlight() {
+      if (currentSpotlightLayer) {
+        map.removeLayer(currentSpotlightLayer);
+        currentSpotlightLayer = null;
+      }
+    }
+
     function highlightByFilter(matchFn) {
       clearTimeout(highlightClearTimer); // cancel any pending deferred clear from previous polygon mouseout
+      clearSpotlight(); // remove click-triggered spotlight when hover interaction resumes
       activeFilter = matchFn; // save so pins can re-apply this filter while hovered
       // Custom entries override seed entries - build a deduplicated list where
       // customLocations wins. This ensures edited county/district data is used
@@ -756,6 +865,7 @@
     }
 
     function clearHighlight() {
+      clearSpotlight(); // remove click-triggered spotlight when highlight is cleared
       Object.keys(markerRegistry).forEach(function(id) {
         markerRegistry[id].markers.forEach(function(m) { m.setOpacity(1.0); });
       });
@@ -877,6 +987,10 @@
           // Tag each feature with a normalized name for cross-layer lookups
           data.features.forEach(function(f) { f._countyName = f.properties.NAME || ""; });
           countyFeatures = data.features;
+          if (pendingDistrictHighlight && pendingDistrictHighlight.type === "county") {
+            spotlightDistrictPolygon("county", pendingDistrictHighlight.val);
+            pendingDistrictHighlight = null;
+          }
           L.geoJSON(data, {
             style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
             onEachFeature: function(f, layer) {
@@ -918,6 +1032,10 @@
                 f._countyName = TN_COUNTY_NAMES[fips] || "";
               });
               countyFeatures = tn.features;
+              if (pendingDistrictHighlight && pendingDistrictHighlight.type === "county") {
+                spotlightDistrictPolygon("county", pendingDistrictHighlight.val);
+                pendingDistrictHighlight = null;
+              }
               L.geoJSON(tn, {
                 style: function() { return { color:"#3b82f6", weight:1.2, fillColor:"#1e3a5f", fillOpacity:0.12 }; },
                 onEachFeature: function(f, layer) {
@@ -1002,6 +1120,10 @@
             zoomToDistrict("house", pendingDistrictZoom.num);
             pendingDistrictZoom = null;
           }
+          if (pendingDistrictHighlight && pendingDistrictHighlight.type === "house") {
+            spotlightDistrictPolygon("house", pendingDistrictHighlight.val);
+            pendingDistrictHighlight = null;
+          }
         })
         .catch(function(err) {
           setStatus("status-district", "error", "Could not load - check connection");
@@ -1062,6 +1184,10 @@
             zoomToDistrict("congress", pendingDistrictZoom.num);
             pendingDistrictZoom = null;
           }
+          if (pendingDistrictHighlight && pendingDistrictHighlight.type === "congress") {
+            spotlightDistrictPolygon("congress", pendingDistrictHighlight.val);
+            pendingDistrictHighlight = null;
+          }
         })
         .catch(function(err) {
           setStatus("status-district", "error", "Could not load - check connection");
@@ -1121,6 +1247,10 @@
           if (pendingDistrictZoom && pendingDistrictZoom.type === "senate") {
             zoomToDistrict("senate", pendingDistrictZoom.num);
             pendingDistrictZoom = null;
+          }
+          if (pendingDistrictHighlight && pendingDistrictHighlight.type === "senate") {
+            spotlightDistrictPolygon("senate", pendingDistrictHighlight.val);
+            pendingDistrictHighlight = null;
           }
         })
         .catch(function(err) {
