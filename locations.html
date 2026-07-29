@@ -4096,6 +4096,111 @@
       return results.length ? results : null;
     }
 
+    // parseWordPrecinctFormat(text)
+    // Handles multi-line blocks where each entry starts with "Precinct N: Name"
+    // followed by one or two address lines. Two sub-formats:
+    //   2-line entry: "Precinct N: Name\nStreet City, TN Zip"  (all on one addr line)
+    //   3-line entry: "Precinct N: Name\nStreet\nCity, TN Zip" (separate city line)
+    // Detected by finding "Precinct [digit]+:" at the start of a line.
+    // -------------------------------------------------------------------------
+    function parseWordPrecinctFormat(text) {
+      // Detection: at least one line starts with "Precinct N:"
+      if (!/^Precinct\s+\d+:/im.test(text)) return null;
+
+      // Group lines into chunks - each chunk starts at a "Precinct N:" header
+      var lines  = text.split(/\r?\n/).map(function(l) { return l.trim(); });
+      var chunks = [];
+      lines.forEach(function(line) {
+        if (/^Precinct\s+\d+:/i.test(line)) {
+          chunks.push([line]); // start a new chunk at each precinct header
+        } else if (chunks.length && line) {
+          chunks[chunks.length - 1].push(line); // append non-blank lines to current chunk
+        }
+      });
+      if (!chunks.length) return null;
+
+      var results = [];
+      chunks.forEach(function(chunkLines, idx) {
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        // Line 0: "Precinct N: Name" - strip the prefix to extract the venue name
+        var headerMatch = chunkLines[0].match(/^Precinct\s+\d+:\s*(.+)$/i);
+        name = headerMatch ? headerMatch[1].trim() : chunkLines[0];
+
+        var addrLines = chunkLines.slice(1);
+
+        if (!addrLines.length) {
+          reviewReasons.push("No address");
+        } else if (addrLines.length === 1 || /^\d/.test(addrLines[addrLines.length - 1])) {
+          // Single combined address line, or last line starts with a digit.
+          // Use parseFullAddress which handles "Street City, TN Zip" on one line.
+          var combined = addrLines[addrLines.length - 1];
+          var parsed   = parseFullAddress(combined);
+          if (parsed && parsed.street) {
+            address = parsed.street;
+            city    = parsed.city || "";
+            zip     = parsed.zip  || "";
+            if (!city) reviewReasons.push("Could not parse city");
+            if (!zip)  reviewReasons.push("Could not parse zip");
+          } else {
+            // parseFullAddress failed (no recognizable street type) - fall back right-to-left
+            var zipM = combined.match(/(\d{5})\s*$/);
+            if (zipM) {
+              zip  = zipM[1];
+              var rest = combined.slice(0, zipM.index).trim();
+              rest = rest.replace(/,?\s+[A-Z]{2}\s*$/, "").trim();
+              var lc = rest.lastIndexOf(",");
+              if (lc !== -1) {
+                address = rest.slice(0, lc).trim();
+                city    = rest.slice(lc + 1).trim();
+              } else {
+                address = rest;
+                reviewReasons.push("Could not split address from city");
+              }
+            } else {
+              address = combined;
+              reviewReasons.push("No zip");
+            }
+          }
+        } else {
+          // Multiple address lines, last line starts with a letter = separate city/zip line.
+          // All lines except the last = street; last line = "City, TN Zip".
+          var cityZipLine = addrLines[addrLines.length - 1];
+          address = addrLines.slice(0, addrLines.length - 1).join(" ");
+
+          var zipM2 = cityZipLine.match(/(\d{5})\s*$/);
+          if (zipM2) {
+            zip = zipM2[1];
+            var cityRest = cityZipLine.slice(0, zipM2.index).trim();
+            city = cityRest.replace(/,?\s+[A-Z]{2}\s*$/, "").trim();
+          } else {
+            city = cityZipLine;
+            reviewReasons.push("No zip");
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          chunkLines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4139,6 +4244,10 @@
       // --- Precinct-tab-fulladdress format (N-N TAB short-label TAB "Venue, Addr, City Zip") ---
       var precinctTabFullAddrResult = parsePrecinctTabFullAddressFormat(text);
       if (precinctTabFullAddrResult) return precinctTabFullAddrResult;
+
+      // --- Word-precinct format ("Precinct N: Name" header + 1-2 address lines) ---
+      var wordPrecinctResult = parseWordPrecinctFormat(text);
+      if (wordPrecinctResult) return wordPrecinctResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
