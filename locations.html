@@ -3627,6 +3627,23 @@
           }
         }
 
+        // If the venue name is short (1-2 words), it is likely just a generic
+        // building type ("Church", "Baptist Church", "School") with no identifying
+        // context. Prepend the precinct name to make it useful ("West End Church").
+        // Skip prepend if:
+        //   (a) the names are identical ("Wright Elementary" + "Wright Elementary"), or
+        //   (b) the precinct name ends with the venue name's first word - avoids
+        //       "Spring Hill Middle" + "Middle School" -> "Spring Hill Middle Middle School"
+        if (name && precName) {
+          var venueParts   = name.split(/\s+/);
+          var precLastWord = precName.split(/\s+/).slice(-1)[0] || "";
+          var identical    = (name.toLowerCase() === precName.toLowerCase());
+          var overlaps     = (precLastWord.toLowerCase() === (venueParts[0] || "").toLowerCase());
+          if (venueParts.length <= 2 && !identical && !overlaps) {
+            name = precName + " " + name;
+          }
+        }
+
         // Zip is never present in this format - always flag for review
         reviewReasons.push("No zip - add after import");
         if (!name)    reviewReasons.push("No name");
@@ -3645,6 +3662,56 @@
           reviewReason: reviewReasons.join(", ")
         });
       }
+
+      return results.length ? results : null;
+    }
+
+    // parseNameCommaAddressFormat(text)
+    // Handles one-per-line "Name, Street Address" format with no city or zip.
+    // Example: "Algood Middle School, 540 Dry Valley Rd"
+    // The first comma on each line separates the venue name from the address.
+    // Venue names in this format do not contain commas.
+    // Detected when every non-blank line has exactly one comma and the text
+    // after it starts with a house number. No city or zip is present in this
+    // format - all entries are flagged for review.
+    // -------------------------------------------------------------------------
+    function parseNameCommaAddressFormat(text) {
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); }).filter(Boolean);
+      if (lines.length < 2) return null;
+
+      // Detection: every line must match "Name, [digit] rest" with no tabs,
+      // no ellipsis, and no trailing state+zip (to avoid colliding with dash format).
+      var nameAddrPattern = /^[^,\t]+,\s*\d+\s+\S/;
+      var stateZipPattern = /,\s*[A-Z]{2}\s+\d{5}\s*$/;
+      if (text.indexOf("\t") !== -1) return null;
+      if (text.indexOf("…") !== -1 || text.indexOf("...") !== -1) return null;
+      if (!lines.every(function(l) {
+        return nameAddrPattern.test(l) && !stateZipPattern.test(l);
+      })) return null;
+
+      var results = [];
+      lines.forEach(function(line, idx) {
+        // Split at the first comma - name is everything before, address is everything after
+        var commaIdx = line.indexOf(",");
+        var name    = line.slice(0, commaIdx).trim();
+        var address = line.slice(commaIdx + 1).trim();
+
+        var reviewReasons = ["No city - add after import", "No zip - add after import"];
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          line,
+          name:         name,
+          address:      address,
+          city:         "",
+          zip:          "",
+          type:         "election_day",
+          needsReview:  true,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
 
       return results.length ? results : null;
     }
@@ -3676,6 +3743,10 @@
       // --- Precinct 4-line format (Precinct / Venue / Street / City,ST Zip blocks) ---
       var precinct4Result = parsePrecinct4LineFormat(text);
       if (precinct4Result) return precinct4Result;
+
+      // --- Name, Address format (one per line, "Venue Name, 123 Street Rd") ---
+      var nameCommaAddrResult = parseNameCommaAddressFormat(text);
+      if (nameCommaAddrResult) return nameCommaAddrResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
