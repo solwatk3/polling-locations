@@ -4201,6 +4201,106 @@
       return results.length ? results : null;
     }
 
+    // parseBulletMarkdownFormat(text)
+    // Handles county election commission lists where each location is a bullet
+    // point with all 4 fields on separate markdown hyperlink lines:
+    //   * [precinct label](url)
+    //   [Venue Name](url)
+    //   [Street Address](url)
+    //   [City, ST Zip](url)
+    // Some entries have an extra blank link line "[ ](url)" - these are skipped.
+    // Detected by lines starting with "* [" combined with a Google Maps URL.
+    // Early voting entries are detected from the precinct label text.
+    // -------------------------------------------------------------------------
+    function parseBulletMarkdownFormat(text) {
+      // Detection: must have bullet markdown lines AND a Google Maps URL
+      if (!/^\* \[/m.test(text)) return null;
+      if (text.indexOf("](https://") === -1) return null;
+
+      // Helper: extract inner text from a markdown link "[text](url)" or "* [text](url)".
+      // Returns trimmed text, or null if the line is not a markdown link.
+      function extractLinkText(line) {
+        var m = line.match(/^\*?\s*\[([^\]]*)\]\(/);
+        return m ? m[1].trim() : null;
+      }
+
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); });
+
+      // Group lines into entries - each entry starts at a "* [" bullet line
+      var entries = [];
+      var current = null;
+      lines.forEach(function(line) {
+        if (/^\* \[/.test(line)) {
+          if (current) entries.push(current);
+          current = [line];
+        } else if (current && line) {
+          current.push(line);
+        }
+      });
+      if (current) entries.push(current);
+      if (!entries.length) return null;
+
+      var results = [];
+      entries.forEach(function(eLines, idx) {
+        var reviewReasons = [];
+        var name = "", address = "", city = "", zip = "";
+        var type = "election_day";
+
+        // Line 0: "* [precinct label](url)" - extract the label to detect type
+        var precinctLabel = extractLinkText(eLines[0]) || "";
+        if (/early\s*vot/i.test(precinctLabel)) {
+          type = "early";
+        }
+
+        // Collect link texts from remaining lines - skip blank/space-only link text
+        // (Some entries have "[ ](url)" filler lines with no real content)
+        var dataLines = [];
+        for (var i = 1; i < eLines.length; i++) {
+          var txt = extractLinkText(eLines[i]);
+          if (txt && txt.length > 0) {
+            dataLines.push(txt);
+          }
+        }
+
+        // dataLines[0] = venue name, [1] = street address, [2] = "City, ST Zip"
+        name    = dataLines[0] || "";
+        address = dataLines[1] || "";
+        var cityLine = dataLines[2] || "";
+
+        if (cityLine) {
+          var cityMatch = cityLine.match(/^(.+),\s*[A-Z]{2}\s+(\d{5})/);
+          if (cityMatch) {
+            city = cityMatch[1].trim();
+            zip  = cityMatch[2].trim();
+          } else {
+            city = cityLine;
+            reviewReasons.push("Could not parse city/zip");
+          }
+        } else {
+          reviewReasons.push("Missing city/zip line");
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          eLines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         type,
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4224,6 +4324,10 @@
       // --- Markdown-link format detection (Google Sheets hyperlinked cells) ---
       var markdownResult = parseMarkdownLinkFormat(text);
       if (markdownResult) return markdownResult;
+
+      // --- Bullet markdown format detection (bullet + markdown links, 4 lines per entry) ---
+      var bulletMarkdownResult = parseBulletMarkdownFormat(text);
+      if (bulletMarkdownResult) return bulletMarkdownResult;
 
       // --- Dash format detection (Name - Street, City, ST Zip per line) ---
       var dashResult = parseDashFormat(text);
