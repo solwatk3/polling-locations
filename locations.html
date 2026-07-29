@@ -4386,6 +4386,117 @@
       return results.length ? results : null;
     }
 
+    // parsePrecinctTwoLineFormat(text)
+    // Handles 2-line blocks separated by blank lines where each entry is:
+    //   Line 0: PRECINCT_NAME N-N  (e.g. "OLIVET 1-1", "MORRIS CHAPEL 5-1")
+    //   Line 1: VENUE_NAME + full address on one line, ending with ", TN ZIP"
+    //            (e.g. "OLIVET CUMBERLAND PRES. CHURCH 6095 HWY 226, SAVANNAH, TN 38372")
+    // Line 0 is the precinct label and is discarded - only used for detection.
+    // Venue name and address are concatenated on line 1 with no separator.
+    // Splitting strategy: extract zip from end, strip state, find last comma for
+    // city, then split name from address at the first 2+ digit house number.
+    // Using 2+ digits avoids false splits on single-digit numbers in names
+    // like "DISTRICT 3 COMMUNITY CENTER".
+    // Detected when: blank-line-separated groups exist, >=60% are 2-line blocks,
+    // line 0 of the first 2-line block ends with N-N, and text contains "TN XXXXX".
+    // -------------------------------------------------------------------------
+    function parsePrecinctTwoLineFormat(text) {
+      var cleanedLines = text.split(/\r?\n/).map(function(l) { return l.replace(/\t+$/, "").trim(); });
+
+      // Group consecutive non-blank lines into blocks separated by blank lines
+      var blockGroups = [];
+      var currentGroup = [];
+      cleanedLines.forEach(function(line) {
+        if (line) { currentGroup.push(line); }
+        else { if (currentGroup.length) { blockGroups.push(currentGroup.slice()); currentGroup = []; } }
+      });
+      if (currentGroup.length) blockGroups.push(currentGroup);
+
+      // Need at least 2 blocks
+      if (blockGroups.length < 2) return null;
+
+      // Detection: at least 60% of blocks must be exactly 2 lines
+      var twoLineCount = blockGroups.filter(function(g) { return g.length === 2; }).length;
+      if (twoLineCount / blockGroups.length < 0.6) return null;
+
+      // Detection: line 0 of the first 2-line block must end with a N-N precinct code
+      var firstTwo = blockGroups.find(function(g) { return g.length === 2; });
+      if (!firstTwo || !/\d+-\d+\s*$/.test(firstTwo[0])) return null;
+
+      // Detection: text must contain a TN state + 5-digit zip pattern
+      if (!/\bTN\.?\s+\d{5}/.test(text)) return null;
+
+      var results = [];
+      blockGroups.forEach(function(glines, idx) {
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        if (glines.length !== 2) {
+          // Unexpected block size - save raw and flag for manual review
+          name = glines.join(" ");
+          reviewReasons.push("Unexpected block length - check manually");
+        } else {
+          // Line 1: "VENUE NAME 123 STREET, CITY, TN ZIP" (all on one line)
+          var line1 = glines[1];
+
+          // Step 1: pull the zip from the end
+          var zipMatch = line1.match(/(\d{5})\s*$/);
+          if (zipMatch) {
+            zip   = zipMatch[1];
+            line1 = line1.slice(0, zipMatch.index).trim();
+          } else {
+            reviewReasons.push("No zip");
+          }
+
+          // Step 2: strip state abbreviation (handles "TN" and "TN." variants)
+          line1 = line1.replace(/,?\s+TN\.?\s*$/, "").trim();
+
+          // Step 3: last comma = city boundary (e.g. "..., SAVANNAH" at the end)
+          //         If no comma remains, there is no city in this entry.
+          var nameAndAddr = "";
+          var lastComma = line1.lastIndexOf(",");
+          if (lastComma !== -1) {
+            city        = line1.slice(lastComma + 1).trim();
+            nameAndAddr = line1.slice(0, lastComma).trim();
+          } else {
+            nameAndAddr = line1; // no comma - city will be missing, flagged below
+          }
+
+          // Step 4: split venue name from street at the first 2+ digit house number.
+          // Using \d{2,} skips single-digit numbers in venue names (e.g. "DISTRICT 3").
+          var addrSplit = nameAndAddr.match(/^(.*?)\s+(\d{2,}\s+\S.*)$/);
+          if (addrSplit) {
+            // Strip any trailing comma left on the venue name (e.g. "TVEC BUILDING,")
+            name    = addrSplit[1].replace(/,\s*$/, "").trim();
+            address = addrSplit[2].trim();
+          } else {
+            // No 2+ digit house number found - save whole line as name and flag
+            name = nameAndAddr;
+            reviewReasons.push("Could not find street number");
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          glines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4437,6 +4548,10 @@
       // --- Word-precinct format ("Precinct N: Name" header + 1-2 address lines) ---
       var wordPrecinctResult = parseWordPrecinctFormat(text);
       if (wordPrecinctResult) return wordPrecinctResult;
+
+      // --- Precinct two-line format (PRECINCT N-N / VENUE NAME + full address) ---
+      var precinctTwoLineResult = parsePrecinctTwoLineFormat(text);
+      if (precinctTwoLineResult) return precinctTwoLineResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
