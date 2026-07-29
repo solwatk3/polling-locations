@@ -198,11 +198,20 @@
 - [x] locations.html: paste handler added to address field - pasting a full address like "300 Crossville St, Monterey, TN 38574" instantly splits into street/city/zip with no button click or blur required; debounced geocoder fires automatically after with the clean street (2026-07-29)
 - [x] location-detail.html: paste handler added to ep-address field - same auto-split behavior using right-to-left inline logic (zip from end, strip state, last comma = city/street); consistent with epReGeocodeAndSplit (2026-07-29)
 
+## Done (Session 25 - 2026-07-29)
+- [x] Maury County (22 locations) - imported and city + zip set via Set County modal (2026-07-29)
+- [x] locations.html: parsePrecinctTabLabelFormat added - handles Loudon County format (digit-tab-ABBR-tab-PrecinctName header + venue name + Street, City blocks, no blank-line separators, no zip); detected by 2+ lines matching the tab-delimited header pattern; all entries flagged for review (2026-07-29)
+- [x] location-detail.html: schedule paste parser (epParseSchedulePaste + epNormalizeTime) added - existed in locations.html and directory.html but was missing from per-location edit page (2026-07-29)
+- [x] directory.html + location-detail.html: epNormalizeTime updated to handle A.M./P.M. with periods and Noon; Format B (inline Day: Time - Time) added to epParseSchedulePaste - both were missing from edit panel parsers (2026-07-29)
+- [x] location-detail.html: Period label column (Early Voting / Election Day) added to schedule builder - was in locations.html and directory.html but missing from per-location page; column only shows when type is Both (2026-07-29)
+- [x] location-detail.html: days input now truncates with ellipsis and shows full text on hover (title attribute) - consistent with locations.html (2026-07-29)
+- [x] polling-time-parser-updater skill updated - now explicitly documents all 3 files that must be kept in sync (locations.html, directory.html, location-detail.html) (2026-07-29)
+
 ## In Progress
-- Nothing currently
+- Loudon County - import in progress
 
 ## Next
-- [ ] Paste the Maury County data into bulk import, review entries, add city + zip via Set County modal
+- [ ] Finish Loudon County import
 - [ ] Paste the 18 Putnam County locations (already transcribed - check session 22 chat history)
 - [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all imported locations permanent
 - [ ] Work through the "House District ?" group - open each from directory, hit "Detect from Coords", save
