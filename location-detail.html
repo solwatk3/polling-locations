@@ -551,6 +551,7 @@
             <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;">
               <span class="detail-label" style="margin:0;">Voting Hours</span>
               <span id="d-hours-toggle-hint" style="font-size:0.72rem;color:var(--accent-light);white-space:nowrap;">Show &#9660;</span>
+              <span id="d-hours-none" style="font-size:0.78rem;color:var(--text-muted);display:none;">No hours listed</span>
             </summary>
             <div class="detail-value" id="d-hours" style="margin-top:6px;">-</div>
           </details>
@@ -958,7 +959,11 @@
       } else if (loc.hours) {
         document.getElementById("d-hours").textContent = loc.hours;
       } else {
-        document.getElementById("d-hours-row").style.display = "none";
+        // No hours data - show "No hours listed" in the summary and disable the dropdown
+        document.getElementById("d-hours-toggle-hint").style.display = "none";
+        document.getElementById("d-hours-none").style.display = "inline";
+        document.getElementById("d-hours-details").style.pointerEvents = "none";
+        document.getElementById("d-hours-details").style.cursor = "default";
       }
 
       // Districts
