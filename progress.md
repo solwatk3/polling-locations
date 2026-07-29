@@ -204,6 +204,14 @@
 - [x] Export to JS run - data/polling-locations.js updated with all imported locations (2026-07-29)
 - [x] "House District ?" group worked through - Detect from Coords run on each, districts saved (2026-07-29)
 
+## Done (Session 27 - 2026-07-29)
+- [x] locations.html: parsePrecinctTabFullAddressFormat added - 3-column tab format (N-N TAB short-label TAB "Venue Name, Street, City Zip"); name from col 3 venue string; address/city split right-to-left at last comma; zip from end; entries with no second comma flagged for review (2026-07-29)
+- [x] locations.html + location-detail.html + directory.html: fixed empty time slot automatically added to new locations and bulk imports - removed else fallback in setScheduleData() that added a blank row when no schedule/hours existed; schedule section now opens empty (2026-07-29)
+- [x] locations.html + location-detail.html + directory.html: Format C added to schedule paste parser - handles "DayList-HH:MM-HH:MM" with no am/pm, optional label prefix (e.g. "Extended Hours:"), multiple entries on one line separated by "&" (2026-07-29)
+- [x] locations.html + location-detail.html + directory.html: normalizeTime/epNormalizeTime now infers am/pm for bare HH:MM times - hours 7-11 get am, hour 12 and hours 1-6 get pm; handles county formats that omit am/pm from voting hours (2026-07-29)
+- [x] locations.html + location-detail.html + directory.html: schedule row layout switched from CSS Grid to flex-wrap:wrap - days field always gets its own full-width row (no truncation) in default mode; "Both" mode overrides to flex-wrap:nowrap (single row, truncation acceptable) (2026-07-29)
+- [x] locations.html: parseWordPrecinctFormat added - handles "Precinct N: Name" header format with 1 or 2 address lines below; 2-line entries use parseFullAddress for combined street+city+zip; 3-line entries parse last line right-to-left for city+zip (2026-07-29)
+
 ## Done (Session 26 - 2026-07-29)
 - [x] location-detail.html: voting hours section made collapsible - wrapped in details/summary, shows Show/Hide toggle, arrow flips on open/close (2026-07-29)
 - [x] location-detail.html: locations with no hours now show "No hours listed" inline in the summary header instead of hiding the row - dropdown is disabled, no content shown (2026-07-29)
@@ -251,5 +259,6 @@
 - Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
 - Paste parser: header lines (no parens) become rangeHeader prepended to all following rows; supports \r\n, \r, \n, and semicolons
 - knox-county-voting-locations.csv: 41 locations extracted from KGIS PDF (April 2026), saved in projects/polling-locations/
-- Bulk importer now handles 7 formats: name-comma-address, district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated
+- Bulk importer now handles 10 formats: name-comma-address, district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated, precinct-tab-full-address (N-N TAB label TAB "Venue, Addr, City Zip"), word-precinct ("Precinct N: Name" + 1-2 address lines)
+- Schedule paste parser handles 3 formats: A (parenthesized times), B (inline am/pm times), C (bare HH:MM-HH:MM with & separators); am/pm inferred for bare times (7-11am, 12+1-6pm)
 - Re-geocode button on locations.html and location-detail.html both split full address strings before geocoding (reGeocodeAndSplit / epReGeocodeAndSplit)

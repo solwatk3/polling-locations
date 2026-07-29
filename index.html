@@ -565,6 +565,7 @@
     // =========================================================================
     var hoverInfoEl = document.getElementById("hover-info");
     var hoverState  = { county: "", house: "", senate: "", congress: "" };
+    var activeFilter = null; // stores the current district/county filter fn so pins can re-apply it on hover
 
     function updateHoverInfo() {
       var parts = [];
@@ -589,6 +590,7 @@
     // that belong to the hovered region.
     // =========================================================================
     function highlightByFilter(matchFn) {
+      activeFilter = matchFn; // save so pins can re-apply this filter while hovered
       // Custom entries override seed entries - build a deduplicated list where
       // customLocations wins. This ensures edited county/district data is used
       // for matching instead of the original (possibly wrong) seed values.
@@ -611,6 +613,7 @@
     }
 
     function clearHighlight() {
+      activeFilter = null; // no district/county is hovered - clear the saved filter
       Object.keys(markerRegistry).forEach(function(id) {
         markerRegistry[id].markers.forEach(function(m) { m.setOpacity(1.0); });
       });
@@ -645,6 +648,9 @@
         hoverState.senate   = loc.state_senate_district  || "";
         hoverState.congress = loc.congressional_district || "";
         updateHoverInfo();
+        // The polygon fired mouseout when the mouse entered this pin, which cleared
+        // the highlight. Re-apply it so the dimming stays while hovering a dot.
+        if (activeFilter) { highlightByFilter(activeFilter); }
       }
       function pinMouseout() {
         hoverState.county   = "";
@@ -652,6 +658,8 @@
         hoverState.senate   = "";
         hoverState.congress = "";
         updateHoverInfo();
+        // Restore dimming while the mouse is still inside the polygon area.
+        if (activeFilter) { highlightByFilter(activeFilter); }
       }
 
       // "both" pins go on both layers so they appear regardless of which toggle is active
