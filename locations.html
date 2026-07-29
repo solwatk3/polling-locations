@@ -3777,6 +3777,80 @@
       return results.length ? results : null;
     }
 
+    // parsePrecinctTabLabelFormat(text)
+    // Handles 3-line blocks with NO blank-line separators where each entry is:
+    //   Line 0: "[district#]\t[ABBR*?]\t[Precinct Name]"  (e.g. "1\tCHO*\tCHOTA")
+    //   Line 1: venue name  (e.g. "Shepherd of the Lake Lutheran Church")
+    //   Line 2: "Street, City"  (e.g. "143 Chota Center, Loudon")
+    // No zip or state code appears in this format - all entries flagged for review.
+    // Detected by finding multiple lines that match the precinct header pattern
+    // (digit + tab + 2-5 uppercase letters + optional asterisk + tab + non-space).
+    // -------------------------------------------------------------------------
+    function parsePrecinctTabLabelFormat(text) {
+      var lines = text.split(/\r?\n/).map(function(l) { return l.trim(); });
+
+      // Detection: need at least 2 header lines matching "digit TAB ABBR[*] TAB text"
+      var headerPattern = /^\d+\t[A-Z]{2,5}\*?\t\S/;
+      var headerLines = lines.filter(function(l) { return headerPattern.test(l); });
+      if (headerLines.length < 2) return null;
+
+      var results = [];
+
+      // Walk through lines and collect 3-line groups starting at each header
+      for (var i = 0; i < lines.length; i++) {
+        if (!headerPattern.test(lines[i])) continue;
+
+        // Line 0: split on tab - parts[2] is the precinct name (not used for venue)
+        var headerParts = lines[i].split("\t");
+        // parts[0] = district number, parts[1] = abbr code, parts[2] = precinct name
+
+        // Line 1: venue name
+        var venueLine = (lines[i + 1] || "").trim();
+
+        // Line 2: "Street Address, City" with no state or zip
+        var addrLine  = (lines[i + 2] || "").trim();
+
+        var name = venueLine;
+        var address = "", city = "";
+        var reviewReasons = [];
+
+        if (addrLine) {
+          // Split at the last comma - everything before is the street, after is the city
+          var lastComma = addrLine.lastIndexOf(",");
+          if (lastComma !== -1) {
+            address = addrLine.slice(0, lastComma).trim();
+            city    = addrLine.slice(lastComma + 1).trim();
+          } else {
+            // No comma - treat the whole line as address and flag
+            address = addrLine;
+            reviewReasons.push("Could not parse city");
+          }
+        } else {
+          reviewReasons.push("No address line found");
+        }
+
+        // Zip is never present in this format
+        reviewReasons.push("No zip - add after import");
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+
+        results.push({
+          rowIndex:     results.length,
+          raw:          lines[i] + "\n" + venueLine + "\n" + addrLine,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          "",
+          type:         "election_day",
+          needsReview:  true,
+          reviewReason: reviewReasons.join(", ")
+        });
+      }
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3808,6 +3882,10 @@
       // --- Name, Address format (one per line, "Venue Name, 123 Street Rd") ---
       var nameCommaAddrResult = parseNameCommaAddressFormat(text);
       if (nameCommaAddrResult) return nameCommaAddrResult;
+
+      // --- Precinct-tab-label format (digit + tab + ABBR + tab + precinct name header blocks) ---
+      var precinctTabResult = parsePrecinctTabLabelFormat(text);
+      if (precinctTabResult) return precinctTabResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
