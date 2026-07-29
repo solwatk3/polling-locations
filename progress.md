@@ -256,13 +256,19 @@
 - [x] directory.html: added explicit initialization block before renderDistrict() - forcibly sets By District as active view, hides all other views, and resets currentView on every page load (2026-07-29)
 - [x] directory.html: fixed .no-results empty state appearing in a narrow 300px grid column - added grid-column: 1 / -1 and width: 100% so the empty state spans the full row inside the card-grid container (2026-07-29)
 
+## Done (Session 30 cont. - 2026-07-29)
+- [x] data/polling-locations.js rebuilt from backup file (933 locations) - previous seed file only had original 20 Hardeman/Haywood entries; now includes all counties imported through Session 29 (2026-07-29)
+
 ## In Progress
 - (nothing active)
 
 ## Next
+- [ ] Commit updated data/polling-locations.js (933 locations) to GitHub
 - [ ] Continue importing remaining counties
-- [ ] Commit updated data/polling-locations.js after next batch of imports
 - [ ] Work through any remaining "House District ?" locations - open from directory, hit Detect from Coords, save
+
+## Self-serve export workflow (no Claude needed)
+Locations -> Export button -> copy JS -> paste into data/polling-locations.js -> git commit/push
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |

@@ -828,7 +828,7 @@
     // active layers can all show at once. When all slots are empty the bar hides.
     // =========================================================================
     var hoverInfoEl = document.getElementById("hover-info");
-    var hoverState  = { county: "", house: "", senate: "", congress: "" };
+    var hoverState  = { name: "", county: "", house: "", senate: "", congress: "" };
     var activeFilter = null; // stores the current district/county filter fn so pins can re-apply it on hover
 
     function updateHoverInfo() {
@@ -838,7 +838,11 @@
       if (hoverState.senate)   parts.push("Senate " + hoverState.senate);
       if (hoverState.congress) parts.push("Congress " + hoverState.congress);
       if (parts.length) {
-        hoverInfoEl.innerHTML = parts.join(" &nbsp;&bull;&nbsp; ");
+        // If hovering a pin, show the location name on its own line above the district row
+        var html = hoverState.name
+          ? "<strong>" + hoverState.name + "</strong><br>" + parts.join(" &nbsp;&bull;&nbsp; ")
+          : parts.join(" &nbsp;&bull;&nbsp; ");
+        hoverInfoEl.innerHTML = html;
         hoverInfoEl.style.display = "block";
       } else {
         hoverInfoEl.style.display = "none";
@@ -939,6 +943,7 @@
       function pinMouseover() {
         // Cancel any pending deferred clear - mouse moved to a pin, not out of the district
         clearTimeout(highlightClearTimer);
+        hoverState.name     = loc.name                   || "";
         hoverState.county   = loc.county   ? loc.county + " County" : "";
         hoverState.house    = loc.state_district         || "";
         hoverState.senate   = loc.state_senate_district  || "";
@@ -948,6 +953,7 @@
         if (activeFilter) { highlightByFilter(activeFilter); }
       }
       function pinMouseout() {
+        hoverState.name     = "";
         hoverState.county   = "";
         hoverState.house    = "";
         hoverState.senate   = "";
