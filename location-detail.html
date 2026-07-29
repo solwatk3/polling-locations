@@ -440,13 +440,14 @@
     .type-radio.sel-both     { border-color: #818cf8; color: #818cf8; background: rgba(129,140,248,0.1); }
     .inline-status { font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; display: none; }
     /* Schedule builder rows inside the edit panel */
-    .schedule-header { display:grid; grid-template-columns:50px 90px 20px 90px 28px; gap:4px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:2px; }
-    .schedule-row    { display:grid; grid-template-columns:50px 90px 20px 90px 28px; gap:4px; align-items:center; margin-bottom:4px; }
-    /* Period label column - hidden by default, visible when type is Both */
+    /* auto columns (period, time selects, sep, remove) eat available space;
+       1fr days column gets whatever is left - naturally very narrow */
+    .schedule-header { display:grid; grid-template-columns:auto 1fr auto auto auto auto; gap:4px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:2px; }
+    .schedule-row    { display:grid; grid-template-columns:auto 1fr auto auto auto auto; gap:4px; align-items:center; margin-bottom:4px; }
+    /* Period label column - hidden by default, visible when type is Both.
+       CSS grid auto-track collapses to 0 when child is display:none. */
     .f-sched-label { display:none; font-size:0.72rem; padding:5px 5px; border:1px solid var(--border); border-radius:5px; background:var(--input-bg,var(--primary)); color:var(--text); max-width:130px; }
     .period-col-header { display:none; }
-    .show-period .schedule-header { grid-template-columns:130px 50px 90px 20px 90px 28px; }
-    .show-period .schedule-row    { grid-template-columns:130px 50px 90px 20px 90px 28px; }
     .show-period .f-sched-label    { display:block; }
     .show-period .period-col-header { display:block; }
     .schedule-row input  { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 6px; }
