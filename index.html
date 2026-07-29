@@ -643,7 +643,7 @@
         '<div class="dam-header">' + label + '</div>' +
         '<button class="dam-btn" onclick="districtHighlight(\'' + type + '\',' + safeVal + ')">&#128161; Highlight on map</button>' +
         (canZoom   ? '<button class="dam-btn" onclick="districtZoom(\'' + type + '\',' + val + ')">&#128269; Zoom to district</button>' : '') +
-        (canReport ? '<button class="dam-btn" onclick="districtReport(\'' + type + '\',' + val + ')">&#128196; Open district report</button>' : '');
+        (canReport ? '<button class="dam-btn" onclick="districtReport(\'' + type + '\',' + safeVal + ')">&#128196; Open district report</button>' : '');
 
       document.body.appendChild(menu);
 
@@ -729,6 +729,10 @@
                         : type === 'congress' ? congressFeatures.length > 0
                         : (countyFeatures && countyFeatures.length > 0);
 
+      // Lock clearSpotlight for 800ms so the popup closing and mouse landing on the
+      // polygon beneath doesn't immediately erase the spotlight the user just requested.
+      spotlightLockUntil = Date.now() + 800;
+
       if (featuresReady) {
         spotlightDistrictPolygon(type, val);
       } else {
@@ -744,9 +748,22 @@
       dismissDistrictMenu();
       map.closePopup();
 
+      // Trigger the layer load (or radio switch) the same way Highlight does.
+      // This ensures the feature store gets populated even if the layer was never opened.
+      if (type === 'house' || type === 'senate' || type === 'congress') {
+        setDistrictLayer(type);
+      } else if (type === 'county') {
+        if (!map.hasLayer(countyLayer)) {
+          map.addLayer(countyLayer);
+          var cb = document.getElementById('toggle-counties');
+          if (cb) cb.checked = true;
+        }
+      }
+
       var featArr = type === 'house'   ? houseFeatures
                   : type === 'senate'  ? senateFeatures
-                  : congressFeatures;
+                  : type === 'congress' ? congressFeatures
+                  : (countyFeatures || []);
 
       if (featArr.length) {
         zoomToDistrict(type, num);
@@ -764,8 +781,11 @@
       dismissDistrictMenu();
       // Map internal type names to the keys district-report.html expects
       var reportType = type === 'congress' ? 'congressional' : type;
-      var param = type === 'county' ? 'county=' + encodeURIComponent(val)
-                                    : 'district=' + val;
+      // For county, strip the " County" suffix if present (loc.county may be "Madison County"
+      // but the report page dropdown expects just "Madison").
+      var param = type === 'county'
+        ? 'county=' + encodeURIComponent(String(val).replace(/\s+County$/i, '').trim())
+        : 'district=' + val;
       window.open('district-report.html?type=' + reportType + '&' + param, '_blank');
     }
 
@@ -787,6 +807,11 @@
     // Set when districtHighlight fires before the layer data has loaded.
     // spotlightDistrictPolygon fires automatically when the load completes.
     var pendingDistrictHighlight = null;
+    // Timestamp used to block clearSpotlight from firing immediately after
+    // districtHighlight runs. When a popup closes, the mouse often lands on
+    // the polygon underneath and triggers a polygon mouseout that would wipe
+    // the spotlight before the user even sees it.
+    var spotlightLockUntil = 0;
 
     // =========================================================================
     // MARKER REGISTRY
@@ -833,6 +858,10 @@
     // Called at the start of highlightByFilter and clearHighlight so the spotlight
     // disappears as soon as the user starts interacting with boundary layers again.
     function clearSpotlight() {
+      // If a spotlight was just triggered (lock window active), don't clear it yet.
+      // This prevents the popup-close mouse-landing-on-polygon sequence from wiping
+      // the spotlight before the user has a chance to see it.
+      if (Date.now() < spotlightLockUntil) return;
       if (currentSpotlightLayer) {
         map.removeLayer(currentSpotlightLayer);
         currentSpotlightLayer = null;
@@ -1426,17 +1455,27 @@
     // to its bounds. Called after a district search result is clicked.
     // =========================================================================
     function zoomToDistrict(type, num) {
-      var features = type === "house" ? houseFeatures
-                   : type === "senate" ? senateFeatures
-                   : congressFeatures;
+      var match;
 
-      // Find the feature whose district number matches
-      var match = features.filter(function(f) {
-        var n = type === "house"   ? parseInt(f.properties.SLDL, 10)
-              : type === "senate"  ? parseInt(f.properties.NEWSENATEDISTRICT, 10)
-              : parseInt(f.properties.DISTRICT, 10);
-        return n === num;
-      })[0];
+      if (type === "county") {
+        // County zoom - match by normalized name (strip " County", lowercase)
+        var targetBase = String(num).replace(/\s+County$/i, "").trim().toLowerCase();
+        match = (countyFeatures || []).filter(function(f) {
+          var name = (f._countyName || f.properties.NAME || "").replace(/\s+County$/i, "").trim().toLowerCase();
+          return name === targetBase;
+        })[0];
+      } else {
+        var features = type === "house"  ? houseFeatures
+                     : type === "senate" ? senateFeatures
+                     : congressFeatures;
+        // Find the feature whose district number matches
+        match = features.filter(function(f) {
+          var n = type === "house"   ? parseInt(f.properties.SLDL, 10)
+                : type === "senate"  ? parseInt(f.properties.NEWSENATEDISTRICT, 10)
+                : parseInt(f.properties.DISTRICT, 10);
+          return n === num;
+        })[0];
+      }
 
       if (!match) return;
       // Create a temporary GeoJSON layer just to read its bounds, then discard it
