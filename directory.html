@@ -1568,6 +1568,13 @@
     // Paste parser for the edit-panel schedule builder
     function epNormalizeTime(t) {
       t = t.trim();
+      // Handle "12 Noon", "12:00 Noon", etc.
+      if (/noon/i.test(t)) {
+        var noonH = t.match(/^(\d+)/);
+        return (noonH ? noonH[1] : "12") + ":00pm";
+      }
+      // Strip periods from "a.m." / "p.m." so "10 A.M." becomes "10am"
+      t = t.replace(/([ap])\.m\./gi, "$1m").trim();
       var match = t.match(/^(\d+)(?::(\d+))?\s*(am|pm)$/i);
       if (!match) return t;
       var h  = match[1];
@@ -1583,20 +1590,45 @@
       var parsed = [];
       var rangeHeader = "";
       segments.forEach(function(seg) {
+        // --- Format A: parenthesized time at end of line ---
+        // e.g. "Monday thru Friday (8am-5:30pm)"
         var hoursMatch = seg.match(/\(([^)]+)\)\s*$/);
-        if (!hoursMatch) { rangeHeader = seg; return; }
-        var hoursStr  = hoursMatch[1].trim();
-        var rawLabel  = seg.replace(/\s*\([^)]+\)\s*$/, "").trim();
-        var dayLabel  = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
-        var timeMatch = hoursStr.match(/^(.+?)\s*-\s*(.+)$/);
-        var open = "", close = "";
-        if (timeMatch) {
-          open  = epNormalizeTime(timeMatch[1]);
-          close = epNormalizeTime(timeMatch[2]);
-        } else {
-          open = epNormalizeTime(hoursStr);
+        if (hoursMatch) {
+          var hoursStr  = hoursMatch[1].trim();
+          var rawLabel  = seg.replace(/\s*\([^)]+\)\s*$/, "").trim();
+          var dayLabel  = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
+          var timeMatch = hoursStr.match(/^(.+?)\s*[–\-]\s*(.+)$/);
+          var open = "", close = "";
+          if (timeMatch) {
+            open  = epNormalizeTime(timeMatch[1]);
+            close = epNormalizeTime(timeMatch[2]);
+          } else {
+            open = epNormalizeTime(hoursStr);
+          }
+          parsed.push({ days: dayLabel, open: open, close: close });
+          return;
         }
-        parsed.push({ days: dayLabel, open: open, close: close });
+
+        // --- Format B: inline time after day label, no parentheses ---
+        // e.g. "Wednesday, July 29: 10 A.M. - 6:00 P.M."
+        //      "Saturday 8:30 am - 12 Noon"
+        // Handles dash and em-dash separators, and a.m./p.m. with periods.
+        var inlineMatch = seg.match(
+          /^(.*?)\s+(\d+(?::\d+)?\s*(?:a\.m\.|p\.m\.|am|pm))\s*[–\-]\s*(\d+(?::\d+)?\s*(?:a\.m\.|p\.m\.|am|pm|noon))$/i
+        );
+        if (inlineMatch) {
+          var rawLabel = inlineMatch[1].trim();
+          var dayLabel = rangeHeader ? rangeHeader + " - " + rawLabel : rawLabel;
+          parsed.push({
+            days:  dayLabel,
+            open:  epNormalizeTime(inlineMatch[2]),
+            close: epNormalizeTime(inlineMatch[3])
+          });
+          return;
+        }
+
+        // --- No time found: treat as a range header ---
+        rangeHeader = seg;
       });
       var msg = document.getElementById("ep-sched-paste-msg");
       if (!parsed.length) {
