@@ -194,6 +194,10 @@
 - [x] location-detail.html: City and Zip added as labeled fields in the info panel - displayed in a 2x2 grid with Address and County; address field shows street only; clipboard copy still uses full address string (2026-07-28)
 - [x] location-detail.html: epReGeocodeAndSplit() added - Re-geocode button on detail page now splits full address right-to-left (zip from end, strip state, last comma = city/street) before geocoding; self-contained since parseFullAddress only exists in locations.html (2026-07-28)
 
+## Done (Session 24 - 2026-07-29)
+- [x] locations.html: paste handler added to address field - pasting a full address like "300 Crossville St, Monterey, TN 38574" instantly splits into street/city/zip with no button click or blur required; debounced geocoder fires automatically after with the clean street (2026-07-29)
+- [x] location-detail.html: paste handler added to ep-address field - same auto-split behavior using right-to-left inline logic (zip from end, strip state, last comma = city/street); consistent with epReGeocodeAndSplit (2026-07-29)
+
 ## In Progress
 - Nothing currently
 
