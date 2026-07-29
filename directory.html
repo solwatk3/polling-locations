@@ -481,8 +481,8 @@
 
     /* ===== SCHEDULE BUILDER (edit panel) ===== */
     .schedule-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto auto auto auto;
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 6px;
       margin-bottom: 6px;
@@ -496,6 +496,8 @@
       color: var(--text-muted);
       width: 100%;
       font-style: italic;
+      flex: 1 1 100%;
+      min-width: 0;
     }
     /* Period label dropdown - hidden by default, shown when type is Both */
     .f-sched-label {
@@ -511,6 +513,8 @@
     .period-col-header { display: none; }
     .show-period .f-sched-label    { display: block; }
     .show-period .period-col-header { display: block; }
+    .show-period .schedule-row { flex-wrap: nowrap; }
+    .show-period .f-sched-days { flex: 1 1 auto; min-width: 80px; }
     .schedule-row input[type="text"] {
       font-size: 0.78rem;
       padding: 5px 8px;

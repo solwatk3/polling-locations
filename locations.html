@@ -238,13 +238,15 @@
 
     /* ----- Schedule builder ----- */
     .schedule-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto auto auto auto;
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 6px;
       margin-bottom: 6px;
     }
-    /* Days label input - read-only looking, filled by parser */
+    /* Days label input - read-only looking, filled by parser.
+       flex: 1 1 100% puts it on its own full-width row so text never truncates
+       in default (not-both) mode. */
     .f-sched-days {
       font-size: 0.74rem;
       padding: 5px 7px;
@@ -254,6 +256,8 @@
       color: var(--text-muted);
       width: 100%;
       font-style: italic;
+      flex: 1 1 100%;
+      min-width: 0;
     }
     /* Period label dropdown inside each schedule row.
        Hidden by default - only shown when location type is Both.
@@ -274,6 +278,9 @@
     /* Show period column when the schedule wrapper has the show-period class */
     .show-period .f-sched-label { display: block; }
     .show-period .period-col-header { display: block; }
+    /* Both mode: keep all controls on one row (days field may truncate - acceptable) */
+    .show-period .schedule-row { flex-wrap: nowrap; }
+    .show-period .f-sched-days { flex: 1 1 auto; min-width: 80px; }
     .schedule-row input[type="text"] {
       font-size: 0.78rem;
       padding: 5px 8px;
