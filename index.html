@@ -590,6 +590,7 @@
     // that belong to the hovered region.
     // =========================================================================
     function highlightByFilter(matchFn) {
+      clearTimeout(highlightClearTimer); // cancel any pending deferred clear from previous polygon mouseout
       activeFilter = matchFn; // save so pins can re-apply this filter while hovered
       // Custom entries override seed entries - build a deduplicated list where
       // customLocations wins. This ensures edited county/district data is used
