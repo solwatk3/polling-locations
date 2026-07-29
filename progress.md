@@ -227,6 +227,25 @@
 - [x] location-detail.html: days input now truncates with ellipsis and shows full text on hover (title attribute) - consistent with locations.html (2026-07-29)
 - [x] polling-time-parser-updater skill updated - now explicitly documents all 3 files that must be kept in sync (locations.html, directory.html, location-detail.html) (2026-07-29)
 
+## Done (Session 28 - 2026-07-29)
+- [x] index.html: fixed hover highlight bug - Leaflet fires polygon mouseout before pin mouseover when cursor crosses into a pin; replaced direct clearHighlight() calls in polygon mouseout with deferClearHighlight() (30ms setTimeout); pinMouseover cancels the timer and re-applies activeFilter so the highlight survives the transition (2026-07-29)
+- [x] index.html: cross-county flicker fix - added clearTimeout(highlightClearTimer) at top of highlightByFilter() so fast mouse movement across county lines never leaves a stale clear timer running (2026-07-29)
+- [x] index.html: district/county tags in popup are now clickable - each tag calls showDistrictActions(type, val, event) which pops a floating action menu near the click (2026-07-29)
+- [x] index.html: floating action menu has Highlight, Zoom (house/senate/congress only), and Report buttons for all 4 district types; edge-adjusted so it never goes off screen (2026-07-29)
+- [x] index.html: Highlight button activates the district boundary layer, dims non-matching pins, and draws a non-interactive spotlight polygon overlay (currentSpotlightLayer) with bright fill + border (2026-07-29)
+- [x] index.html: spotlight clears when user starts hovering boundary polygons again (clearSpotlight called inside highlightByFilter and clearHighlight) (2026-07-29)
+- [x] index.html: pendingDistrictHighlight pattern added - if Highlight is clicked before the layer has loaded, spotlight fires automatically once the fetch completes (2026-07-29)
+- [x] index.html: district-report.html Report button extended to all 4 types (house, senate, congress, county) (2026-07-29)
+- [x] locations.html: parseBulletMarkdownFormat added - handles markdown hyperlink bullet lists (* [Name](url)) from Google Sheets copy-paste; groups lines into entries at each bullet; strips hyperlink for display; auto-sets type from precinct label (2026-07-29)
+- [x] css/style.css: .district-tag, .district-tag:hover, .district-tag-unknown, #district-action-menu, .dam-header, .dam-btn styles added (2026-07-29)
+
+## Done (Session 29 - 2026-07-29)
+- [x] index.html: fixed districtZoom() - now calls setDistrictLayer(type) first to trigger layer fetch, same as districtHighlight; county type handled via countyFeatures array (2026-07-29)
+- [x] index.html: fixed zoomToDistrict() - extended with county support; matches by normalized name (strips " County" suffix, lowercased) against countyFeatures (2026-07-29)
+- [x] index.html: fixed county report button broken JS - onclick was embedding county string val without quotes; switched to safeVal which wraps string types in escaped single quotes (2026-07-29)
+- [x] index.html: fixed districtReport() for county type - strips " County" suffix before URL encoding so report page receives "Madison" not "Madison County" (2026-07-29)
+- [x] index.html: spotlight persistence fix - added spotlightLockUntil timestamp; districtHighlight sets 800ms lock window after triggering; clearSpotlight returns early if lock is active, preventing popup-close + mouse-lands-on-polygon from wiping the spotlight immediately (2026-07-29)
+
 ## In Progress
 - (nothing active)
 

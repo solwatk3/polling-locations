@@ -116,8 +116,18 @@ All three edit pages (locations.html, location-detail.html, directory.html) now 
 - "Save & Add Another" button added to locations.html footer for fast back-to-back data entry
 - saveFormData() extracted as shared function used by both Save and Save & Add Another
 
+### 2026-07-29 (Sessions 28-29)
+- Fixed hover highlight bug: Leaflet polygon mouseout fires before pin mouseover; solved with deferClearHighlight() 30ms timer + cancellation in pinMouseover/highlightByFilter
+- Added clickable district/county tags in popup -> floating action menu (Highlight, Zoom, Report)
+- Highlight button spotlights the district polygon with a non-interactive L.geoJSON overlay (currentSpotlightLayer); pendingDistrictHighlight pattern handles pre-load triggers
+- district-report.html Report button extended to all 4 types
+- parseBulletMarkdownFormat added to locations.html bulk importer
+- Fixed districtZoom: now calls setDistrictLayer(type) to trigger fetch; county zoom supported
+- Fixed county report button: onclick was unquoted string val (broken JS); switched to safeVal
+- Fixed districtReport: strips " County" suffix before URL encoding
+- Added spotlightLockUntil 800ms lock to prevent popup-close from immediately clearing spotlight
+
 ## Start Here Next Session
-1. Commit and push session 6 changes (git commit block generated)
-2. Enter early voting locations using the paste parser - pull schedule data from county election commission sites
-3. Run Export to JS and commit updated data/polling-locations.js to make all location data permanent in the repo
-4. Work through the 46 "House District ?" locations and run district detection on each
+1. Continue importing remaining county data
+2. Run Export to JS and commit updated data/polling-locations.js
+3. Work through remaining "House District ?" locations - Detect from Coords on each

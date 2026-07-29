@@ -371,6 +371,100 @@
       justify-content: flex-end;
     }
 
+    /* ===== RANGE GROUPS (By District outer accordion) ===== */
+    .range-group-section { margin-bottom: 4px; }
+    .range-group-header {
+      padding: 11px 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--primary-light);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      border-radius: var(--radius);
+    }
+    .range-group-header:hover { background: rgba(139,92,246,0.12); }
+    .range-group-arrow {
+      font-size: 0.65rem;
+      color: var(--accent);
+      display: inline-block;
+      transition: transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    .range-group-section.range-open .range-group-arrow { transform: rotate(90deg); }
+    .range-group-body { display: none; padding-left: 14px; border-left: 2px solid var(--border); margin-left: 12px; }
+    .range-group-section.range-open .range-group-body { display: block; }
+
+    /* ===== LETTER JUMP BAR (By County) ===== */
+    .letter-jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .letter-jump-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .letter-jump-btn.active { color: var(--accent); border-color: var(--accent); }
+    .letter-jump-btn.active:hover { background: rgba(139,92,246,0.15); }
+    .letter-jump-btn.inactive { color: var(--text-muted); opacity: 0.35; cursor: default; }
+
+    /* ===== LETTER GROUPS (By County) ===== */
+    .letter-group-section { margin-bottom: 2px; }
+    .letter-group-header {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--primary-light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .letter-group-header:hover { background: rgba(139,92,246,0.10); }
+    .letter-group-arrow {
+      font-size: 0.65rem;
+      color: var(--accent);
+      display: inline-block;
+      transition: transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    .letter-group-section.letter-open .letter-group-arrow { transform: rotate(90deg); }
+    .letter-group-char {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--accent);
+      min-width: 18px;
+    }
+    .letter-group-body { display: none; }
+    .letter-group-section.letter-open .letter-group-body { display: block; }
+
     @media (max-width: 600px) {
       .card-grid { padding: 12px; gap: 10px; }
       .selector-row { padding: 12px; }
@@ -967,7 +1061,8 @@
     var districtType = "house"; // house | senate | congress
 
     // Render ALL districts of the current type that have at least one location,
-    // grouped under section headers in numerical order.
+    // grouped into number ranges (outer accordion) each containing per-district
+    // accordions (inner accordion).
     function renderDistrict() {
       var field = districtType === "house"    ? "state_district"
                 : districtType === "senate"   ? "state_senate_district"
@@ -996,18 +1091,57 @@
         return;
       }
 
-      container.innerHTML = keys.map(function(num) {
-        var locs = groups[num];
-        var count = locs.length;
-        return '<div class="loc-group-section" data-context="' + districtType + '-' + num + '">' +
-          '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
-          '<span class="loc-group-arrow">&#9654;</span>' +
-          typeLabel + ' District ' + num +
-          ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span>' +
-          '<a href="district-report.html?type=' + districtType + '&district=' + encodeURIComponent(num) + '" target="_blank" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:600;white-space:nowrap;" title="Print district report">&#128438; Print Report</a></div>' +
-          '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+      // Define ranges per district type - congressional has so few districts it
+      // doesn't need grouping, so just use a single range covering all 9.
+      var ranges;
+      if (districtType === "house") {
+        ranges = [[1,25],[26,50],[51,75],[76,99]];
+      } else if (districtType === "senate") {
+        ranges = [[1,11],[12,22],[23,33]];
+      } else {
+        ranges = [[1,9]];
+      }
+
+      var html = "";
+      ranges.forEach(function(range) {
+        // Only include keys that fall in this range
+        var rangeKeys = keys.filter(function(k) {
+          return Number(k) >= range[0] && Number(k) <= range[1];
+        });
+        if (!rangeKeys.length) return; // skip ranges with no data
+
+        var totalLocs = rangeKeys.reduce(function(sum, k) { return sum + groups[k].length; }, 0);
+
+        // Build the inner per-district accordion rows
+        var districtRows = rangeKeys.map(function(num) {
+          var locs = groups[num];
+          var count = locs.length;
+          return '<div class="loc-group-section" data-context="' + districtType + '-' + num + '">' +
+            '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+            '<span class="loc-group-arrow">&#9654;</span>' +
+            typeLabel + ' District ' + num +
+            ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span>' +
+            '<a href="district-report.html?type=' + districtType + '&district=' + encodeURIComponent(num) + '" target="_blank" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:600;white-space:nowrap;" title="Print district report">&#128438; Print Report</a></div>' +
+            '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+          '</div>';
+        }).join("");
+
+        // Wrap in an outer range accordion - show range label, district count, location count
+        html += '<div class="range-group-section">' +
+          '<div class="range-group-header" onclick="this.parentElement.classList.toggle(\'range-open\')">' +
+          '<span class="range-group-arrow">&#9654;</span>' +
+          typeLabel + ' Districts ' + range[0] + ' - ' + range[1] +
+          ' <span class="group-count" style="font-weight:400;">' +
+            '- ' + rangeKeys.length + ' district' + (rangeKeys.length !== 1 ? 's' : '') +
+            ', ' + totalLocs + ' location' + (totalLocs !== 1 ? 's' : '') +
+          '</span>' +
+          '</div>' +
+          '<div class="range-group-body">' + districtRows + '</div>' +
         '</div>';
-      }).join("");
+      });
+
+      container.innerHTML = html || '<div class="no-results"><h3>No ' + typeLabel +
+        ' districts have locations yet</h3></div>';
     }
 
     document.querySelectorAll(".type-btn[data-dtype]").forEach(function(btn) {
@@ -1024,7 +1158,8 @@
     // =========================================================================
     // BY COUNTY VIEW
     // =========================================================================
-    // Render ALL counties that have at least one location, grouped alphabetically.
+    // Render counties grouped by first letter with an A-Z jump bar at the top.
+    // Each letter is a collapsible section containing that letter's county accordions.
     function renderCounty() {
       var groups = {};
       ALL_LOCATIONS.forEach(function(loc) {
@@ -1043,18 +1178,71 @@
         return;
       }
 
-      container.innerHTML = keys.map(function(county) {
-        var locs = groups[county];
-        var count = locs.length;
-        return '<div class="loc-group-section" data-context="county-' + encodeURIComponent(county) + '">' +
-          '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
-          '<span class="loc-group-arrow">&#9654;</span>' +
-          escHtml(county) + ' County' +
-          ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span>' +
-          '<a href="district-report.html?type=county&county=' + encodeURIComponent(county) + '" target="_blank" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:600;white-space:nowrap;" title="Print county report">&#128438; Print Report</a></div>' +
-          '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+      // Group counties by first letter
+      var letterGroups = {};
+      keys.forEach(function(county) {
+        var letter = county[0].toUpperCase();
+        if (!letterGroups[letter]) letterGroups[letter] = [];
+        letterGroups[letter].push(county);
+      });
+
+      var activeLetters = Object.keys(letterGroups).sort();
+      var allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+      // A-Z jump bar - active letters are clickable and highlighted, inactive are dimmed
+      var jumpBar = '<div class="letter-jump-bar">' +
+        allLetters.map(function(l) {
+          if (letterGroups[l]) {
+            return '<button class="letter-jump-btn active" onclick="jumpToLetter(\'' + l + '\')">' + l + '</button>';
+          }
+          return '<button class="letter-jump-btn inactive" disabled>' + l + '</button>';
+        }).join("") +
+      '</div>';
+
+      // Build each letter section
+      var sections = activeLetters.map(function(letter) {
+        var counties = letterGroups[letter];
+
+        // Per-county accordion rows inside this letter section
+        var countyRows = counties.map(function(county) {
+          var locs = groups[county];
+          var count = locs.length;
+          return '<div class="loc-group-section" data-context="county-' + encodeURIComponent(county) + '">' +
+            '<div class="loc-group-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+            '<span class="loc-group-arrow">&#9654;</span>' +
+            escHtml(county) + ' County' +
+            ' <span class="group-count">- ' + count + ' location' + (count !== 1 ? 's' : '') + '</span>' +
+            '<a href="district-report.html?type=county&county=' + encodeURIComponent(county) + '" target="_blank" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.72rem;color:var(--accent-light);text-decoration:none;font-weight:600;white-space:nowrap;" title="Print county report">&#128438; Print Report</a></div>' +
+            '<div class="loc-group-cards">' + locs.map(buildCard).join("") + '</div>' +
+          '</div>';
+        }).join("");
+
+        return '<div class="letter-group-section" id="letter-group-' + letter + '">' +
+          '<div class="letter-group-header" onclick="toggleLetterGroup(this.parentElement)">' +
+          '<span class="letter-group-arrow">&#9654;</span>' +
+          '<span class="letter-group-char">' + letter + '</span>' +
+          '<span class="group-count">' + counties.length + ' county' + (counties.length !== 1 ? '/counties' : '') + '</span>' +
+          '</div>' +
+          '<div class="letter-group-body">' + countyRows + '</div>' +
         '</div>';
       }).join("");
+
+      container.innerHTML = jumpBar + sections;
+    }
+
+    // Toggle a letter group section open/closed
+    function toggleLetterGroup(section) {
+      section.classList.toggle('letter-open');
+    }
+
+    // Open the letter section and scroll to it
+    function jumpToLetter(letter) {
+      var el = document.getElementById('letter-group-' + letter);
+      if (!el) return;
+      if (!el.classList.contains('letter-open')) {
+        el.classList.add('letter-open');
+      }
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // =========================================================================
