@@ -1,21 +1,22 @@
 # Session Handoff - Polling Locations
 
-## Last Session: 22 (2026-07-28)
+## Last Session: 23 (2026-07-28)
 
 ### What was done
-- locations.html: added parseDistrictPrecinctFormat() - handles the "1ST DISTRICT(CD01) PrecName (ABBR) Venue, Address" run-together format from county election commission PDFs. Detected by DISTRICT(CDnn) pattern. Strips district headers, uses 4-letter all-caps abbreviations as entry anchors, splits at last street-type word to separate address from next precinct name. Falls back to last-comma split for non-numeric addresses (e.g. "N James Campbell Blvd").
-- locations.html: added short-venue prepend logic - when parsed venue name is 1-2 words (e.g. "Church", "Baptist Church"), the precinct name is prepended ("West End Church", "College Hill Baptist Church"). Skips if names are identical or overlap.
-- Wired new parser in as the first check in parseBulkText() - fires before ellipsis, markdown, dash, and block parsers.
-- All 22 Maury County precinct entries parsed successfully in one paste. All flagged for review - no zip or city in this format.
+- locations.html: added parseNameCommaAddressFormat() - handles one-per-line "Venue Name, Street Address" format with no city or zip (Putnam County data). Detected when every non-blank line matches Name, [digit] Street with no tabs, ellipsis, or trailing state+zip. All entries flagged for review.
+- locations.html: openPanel() now auto-splits full address strings on load - calls parseFullAddress() immediately so "300 Main St, Nashville, TN 37201" is split into street/city/zip fields without any clicking.
+- locations.html: Re-geocode button now calls reGeocodeAndSplit() - splits full address first, fills city/zip, then geocodes with the clean street address.
+- location-detail.html: City and Zip added as labeled fields in the info panel - 2x2 grid with Address and County; address shows street only; clipboard copy still uses full address.
+- location-detail.html: epReGeocodeAndSplit() added - same split-then-geocode behavior for the detail page's Re-geocode button; self-contained right-to-left split (no dependency on parseFullAddress).
 
 ### Status
 - All known bugs resolved
-- Bulk importer now handles 6 formats: district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated
-- Maury County election day locations pasted and ready to be imported + reviewed
-- Putnam County election day locations transcribed from screenshots (18 locations, ready to paste)
+- Bulk importer now handles 7 formats: name-comma-address, district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated
+- Putnam County (18 locations) ready to paste into bulk import
+- Maury County (22 locations) already imported, needs city + zip set via Set County modal
 
 ### Start Here Next Session
 1. Paste the Maury County data into bulk import, review entries, add city + zip via Set County modal
-2. Paste the Putnam County locations (18 entries transcribed this session - check chat history)
-3. Run "Export to JS" from locations.html to make all locations permanent in the repo
+2. Paste the 18 Putnam County locations (transcribed in session 22 chat history)
+3. Run Export to JS from locations.html and commit updated data/polling-locations.js
 4. Work through the "House District ?" group - open each from directory, hit "Detect from Coords", save

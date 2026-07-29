@@ -2420,6 +2420,26 @@
     document.getElementById("f-address").addEventListener("input", scheduleGeocode);
     document.getElementById("f-city").addEventListener("input", scheduleGeocode);
 
+    // Paste handler on address field - auto-splits a full pasted address immediately.
+    // setTimeout 0 lets the pasted text land before we read and process it.
+    // The debounced geocoder then fires 1200ms later with the clean street-only value.
+    document.getElementById("f-address").addEventListener("paste", function() {
+      var field = this;
+      setTimeout(function() {
+        var raw = field.value.trim();
+        var split = parseFullAddress(raw);
+        if (split) {
+          field.value = split.street;
+          if (!document.getElementById("f-city").value.trim()) {
+            document.getElementById("f-city").value = split.city;
+          }
+          if (split.zip && !document.getElementById("f-zip").value.trim()) {
+            document.getElementById("f-zip").value = split.zip;
+          }
+        }
+      }, 0);
+    });
+
     // =========================================================================
     // DISTRICT LOOKUP BY COORDINATE
     // Fires three parallel ArcGIS point-in-polygon queries

@@ -123,10 +123,6 @@
 - [x] locations.html: days input shows full text as browser tooltip on hover - truncated field content readable without editing (2026-07-27)
 - [x] locations.html: Re-geocode address button restored below lat/lng fields - calls geocodeAddress() on the current address field value (2026-07-27)
 
-## Done (Session 20 - 2026-07-27)
-- [x] district-report.html: locations sorted A-Z by name within each section (Early Voting and Election Day) (2026-07-27)
-- [x] district-report.html: removed map button, Leaflet modal, and all geocoding code - was non-functional due to Nominatim rate limits and partial address matching (2026-07-27)
-
 ## Done (Session 14 - 2026-07-27)
 - [x] location-detail.html: fixed Prev/Next navigation broken for "House District ?" group - parseInt("?") returned NaN so filter matched nothing; added special case: ctxVal === "?" matches locations where district field is "?" or empty (2026-07-27)
 
@@ -134,13 +130,6 @@
 - [x] locations.html: bulk import now accepts tab-separated rows (Name/Address/City/Zip) copied from a spreadsheet - no precinct number required; 80%+ tab-line threshold triggers format; falls through to precinct parser otherwise (2026-07-27)
 - [x] locations.html: bulk import duplicate detection added - fingerprint is lowercased name+address; duplicates against existing locations AND within the batch itself are blocked; toast names all skipped locations (2026-07-27)
 - [x] locations.html: bulk import hint text updated to document both accepted formats (2026-07-27)
-
-## Done (Session 19 - 2026-07-27)
-- [x] locations.html: bulk import tab-separated path now falls back to parseFullAddress() when city/zip columns are empty - handles addresses like "4011 Austin St, Chattanooga TN 37411" pasted as a single column; extracts street, city, and zip automatically (2026-07-27)
-- [x] locations.html: STREET_TYPES expanded - added trail, lane, pk, road, drive, highway, parkway so full-word street names parse correctly alongside abbreviations (2026-07-27)
-- [x] locations.html: new zip-then-vote-number split strategy added in parseBulkText() - splits on "37062 2 Fairview" pattern (5-digit zip then small number then capital word) without false-splitting address house numbers like "7200 Tiger" (2026-07-27)
-- [x] locations.html: new "Voting Center N - Name" split strategy added in parseBulkText() - detects "Voting Center \d -" pattern and splits on it; fires before zip-based and greedy fallbacks (2026-07-27)
-- [x] locations.html: parseRowPaste() now strips "Voting Center N - " prefix before looking for the name/address boundary (2026-07-27)
 
 ## Done (Session 16 - 2026-07-27)
 - [x] location-detail.html: delete navigates to next location in group context instead of returning to directory; falls back to previous if at end of list; falls back to directory.html if no context (2026-07-27)
@@ -165,11 +154,18 @@
 - [x] index.html: houseFeatures / senateFeatures / congressFeatures arrays populated after each layer loads - enables zoomToDistrict() to find the right GeoJSON feature (2026-07-27)
 - [x] locations.html + location-detail.html + directory.html: geocoding fixed across all three pages - replaced Census Geocoder (blocked by CORS on GitHub Pages) with Nominatim; added r.ok check before r.json() to prevent crashes on 429 rate-limit responses; debounce increased to 1200ms (2026-07-27)
 - [x] location-detail.html: Detect Districts button added directly to info panel next to "Districts" label - runs ArcGIS point-in-polygon queries from pin coordinates, updates district chips on screen, and saves results to localStorage without opening the edit panel (2026-07-27)
-- [x] Knox County voting locations extracted from PDF (kgis.org) and saved as knox-county-voting-locations.csv - 41 locations ready to import (2026-07-27)
+- [x] knox-county-voting-locations.csv: 41 locations extracted from KGIS PDF (April 2026), saved in projects/polling-locations/ (2026-07-27)
 
-## Done (Session 22 - 2026-07-28)
-- [x] locations.html: parseDistrictPrecinctFormat added - handles run-together county precinct lists in format "1ST DISTRICT(CD01) PrecName (ABBR) Venue, Address 2ND DISTRICT(CD02) ..." with no line breaks; detected by DISTRICT(CDnn) pattern; strips district headers, anchors on 4-letter all-caps abbreviations, splits segments at last street-type word to separate address from next precinct name; falls back to last-comma split for non-numeric addresses (2026-07-28)
-- [x] locations.html: short venue name prepend logic added - if venue fragment is 1-2 words, prepend precinct name ("Church" -> "West End Church"); skips if names are identical or precinct name ends with venue's first word to avoid duplication (2026-07-28)
+## Done (Session 19 - 2026-07-27)
+- [x] locations.html: bulk import tab-separated path now falls back to parseFullAddress() when city/zip columns are empty - handles addresses like "4011 Austin St, Chattanooga TN 37411" pasted as a single column; extracts street, city, and zip automatically (2026-07-27)
+- [x] locations.html: STREET_TYPES expanded - added trail, lane, pk, road, drive, highway, parkway so full-word street names parse correctly alongside abbreviations (2026-07-27)
+- [x] locations.html: new zip-then-vote-number split strategy added in parseBulkText() - splits on "37062 2 Fairview" pattern (5-digit zip then small number then capital word) without false-splitting address house numbers like "7200 Tiger" (2026-07-27)
+- [x] locations.html: new "Voting Center N - Name" split strategy added in parseBulkText() - detects "Voting Center \d -" pattern and splits on it; fires before zip-based and greedy fallbacks (2026-07-27)
+- [x] locations.html: parseRowPaste() now strips "Voting Center N - " prefix before looking for the name/address boundary (2026-07-27)
+
+## Done (Session 20 - 2026-07-27)
+- [x] district-report.html: locations sorted A-Z by name within each section (Early Voting and Election Day) (2026-07-27)
+- [x] district-report.html: removed map button, Leaflet modal, and all geocoding code - was non-functional due to Nominatim rate limits and partial address matching (2026-07-27)
 
 ## Done (Session 21 - 2026-07-28)
 - [x] index.html: fixed highlightByFilter deduplication - seed entries with the same ID as a custom (edited) location now excluded before concat so the corrected county wins on spotlight (2026-07-28)
@@ -184,16 +180,28 @@
 - [x] locations.html: parsePrecinct4LineFormat added - 4-line block format (precinct label / venue name / street / City,ST Zip); detected when 60%+ of blank-line-separated blocks have exactly 4 lines (2026-07-28)
 - [x] locations.html: parseEllipsisFormat added - "City... Venue Name Street" format (city before ellipsis, venue+address after); handles both Unicode ellipsis U+2026 and ASCII "..."; handles entries on one line OR multiple lines (2026-07-28)
 - [x] locations.html: parseEllipsisFormat fixed - source data uses ASCII "..." not Unicode U+2026 so old detection returned null; new version normalizes "..." before detecting, splits full text by ellipsis (not lines), and uses last-period trick to separate address from next city when entries run together on one line (2026-07-28)
-- [x] Created polling-time-parser-updater skill (ClaudeOS/sub-agents/polling-time-parser-updater/SKILL.md) - knows where normalizeTime and parseSchedulePaste live, diagnoses failures, makes surgical edits (2026-07-28)
-- [x] Created polling-bulk-import-updater skill (ClaudeOS/sub-agents/polling-bulk-import-updater/SKILL.md) - knows every existing parser, correct call order, and template for adding new ones (2026-07-28)
+- [x] Created polling-time-parser-updater skill - knows where normalizeTime and parseSchedulePaste live, diagnoses failures, makes surgical edits (2026-07-28)
+- [x] Created polling-bulk-import-updater skill - knows every existing parser, correct call order, and template for adding new ones (2026-07-28)
+
+## Done (Session 22 - 2026-07-28)
+- [x] locations.html: parseDistrictPrecinctFormat added - handles run-together county precinct lists in "1ST DISTRICT(CD01) PrecName (ABBR) Venue, Address" format; detected by DISTRICT(CDnn) pattern; strips district headers, anchors on 4-letter all-caps abbreviations, splits at last street-type word (2026-07-28)
+- [x] locations.html: short venue name prepend logic added - if venue fragment is 1-2 words (e.g. "Church"), prepend precinct name to give full context ("West End Church") (2026-07-28)
+
+## Done (Session 23 - 2026-07-28)
+- [x] locations.html: parseNameCommaAddressFormat added - handles one-per-line "Venue Name, Street Address" format (no city/zip); detected when every line matches Name, [digit] Street with no tabs, ellipsis, or trailing state+zip; all entries flagged for review (2026-07-28)
+- [x] locations.html: openPanel() now auto-splits full address strings on load - calls parseFullAddress() immediately when panel opens so "300 Main St, Nashville, TN 37201" is split into street/city/zip fields without user having to click in/out of the address field (2026-07-28)
+- [x] locations.html: Re-geocode button replaced with reGeocodeAndSplit() - splits full address first, fills city/zip into their fields, then geocodes with the clean street address; one-click fix for locations with city+state+zip embedded in the address field (2026-07-28)
+- [x] location-detail.html: City and Zip added as labeled fields in the info panel - displayed in a 2x2 grid with Address and County; address field shows street only; clipboard copy still uses full address string (2026-07-28)
+- [x] location-detail.html: epReGeocodeAndSplit() added - Re-geocode button on detail page now splits full address right-to-left (zip from end, strip state, last comma = city/street) before geocoding; self-contained since parseFullAddress only exists in locations.html (2026-07-28)
 
 ## In Progress
 - Nothing currently
 
 ## Next
-- [ ] Import knox-county-voting-locations.csv into the app using bulk import in locations.html (tab-separated format supported)
-- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all locations permanent in the repo
-- [ ] Start entering early voting locations for Knox County and other counties - use paste parser for schedule data from county election commission websites
+- [ ] Paste the Maury County data into bulk import, review entries, add city + zip via Set County modal
+- [ ] Paste the 18 Putnam County locations (already transcribed - check session 22 chat history)
+- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all imported locations permanent
+- [ ] Work through the "House District ?" group - open each from directory, hit "Detect from Coords", save
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
@@ -219,3 +227,5 @@
 - Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
 - Paste parser: header lines (no parens) become rangeHeader prepended to all following rows; supports \r\n, \r, \n, and semicolons
 - knox-county-voting-locations.csv: 41 locations extracted from KGIS PDF (April 2026), saved in projects/polling-locations/
+- Bulk importer now handles 7 formats: name-comma-address, district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated
+- Re-geocode button on locations.html and location-detail.html both split full address strings before geocoding (reGeocodeAndSplit / epReGeocodeAndSplit)

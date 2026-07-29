@@ -1619,6 +1619,35 @@
     document.getElementById("ep-address").addEventListener("input", epScheduleGeocode);
     document.getElementById("ep-city").addEventListener("input", epScheduleGeocode);
 
+    // Paste handler on address field - auto-splits a full pasted address immediately.
+    // Uses the same right-to-left logic as epReGeocodeAndSplit (no parseFullAddress here).
+    // The debounced geocoder fires 800ms later with the clean street-only value.
+    document.getElementById("ep-address").addEventListener("paste", function() {
+      var field = this;
+      setTimeout(function() {
+        var raw = field.value.trim();
+        var work = raw;
+        var zipM = work.match(/(\d{5})\s*$/);
+        var zip = zipM ? zipM[1] : "";
+        if (zipM) work = work.slice(0, zipM.index).trim();
+        work = work.replace(/,?\s+(TN|Tennessee)\s*$/i, "").trim();
+        var lastComma = work.lastIndexOf(",");
+        if (zip && lastComma !== -1) {
+          var street = work.slice(0, lastComma).trim();
+          var city   = work.slice(lastComma + 1).trim();
+          if (street && city) {
+            field.value = street;
+            if (!document.getElementById("ep-city").value.trim()) {
+              document.getElementById("ep-city").value = city;
+            }
+            if (!document.getElementById("ep-zip").value.trim()) {
+              document.getElementById("ep-zip").value = zip;
+            }
+          }
+        }
+      }, 0);
+    });
+
     // =========================================================================
     // DETECT DISTRICTS BUTTON - fires from the info panel without opening edit.
     // Reads coords from the in-memory loc object, calls ArcGIS, updates chips,
