@@ -167,6 +167,10 @@
 - [x] location-detail.html: Detect Districts button added directly to info panel next to "Districts" label - runs ArcGIS point-in-polygon queries from pin coordinates, updates district chips on screen, and saves results to localStorage without opening the edit panel (2026-07-27)
 - [x] Knox County voting locations extracted from PDF (kgis.org) and saved as knox-county-voting-locations.csv - 41 locations ready to import (2026-07-27)
 
+## Done (Session 22 - 2026-07-28)
+- [x] locations.html: parseDistrictPrecinctFormat added - handles run-together county precinct lists in format "1ST DISTRICT(CD01) PrecName (ABBR) Venue, Address 2ND DISTRICT(CD02) ..." with no line breaks; detected by DISTRICT(CDnn) pattern; strips district headers, anchors on 4-letter all-caps abbreviations, splits segments at last street-type word to separate address from next precinct name; falls back to last-comma split for non-numeric addresses (2026-07-28)
+- [x] locations.html: short venue name prepend logic added - if venue fragment is 1-2 words, prepend precinct name ("Church" -> "West End Church"); skips if names are identical or precinct name ends with venue's first word to avoid duplication (2026-07-28)
+
 ## Done (Session 21 - 2026-07-28)
 - [x] index.html: fixed highlightByFilter deduplication - seed entries with the same ID as a custom (edited) location now excluded before concat so the corrected county wins on spotlight (2026-07-28)
 - [x] index.html: county tooltip double-"County" bug fixed - Census API NAME already includes "County" so code no longer appends it again; CDN fallback still appends since TN_COUNTY_NAMES stores bare names (2026-07-28)
