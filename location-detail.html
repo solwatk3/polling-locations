@@ -449,7 +449,7 @@
     .show-period .schedule-row    { grid-template-columns:130px 1fr 90px 20px 90px 28px; }
     .show-period .f-sched-label    { display:block; }
     .show-period .period-col-header { display:block; }
-    .schedule-row input  { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 6px; }
+    .schedule-row input  { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .schedule-row select { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 4px; }
     .schedule-row .sched-sep { text-align:center; color:var(--text-muted); font-size:0.72rem; }
     .btn-remove-row   { background:none; border:1px solid var(--border); border-radius:4px; color:var(--text-muted); font-size:0.72rem; cursor:pointer; padding:4px 6px; }
@@ -1250,6 +1250,9 @@
       daysInput.className   = "ep-sched-days";
       daysInput.placeholder = "e.g. Mon-Fri";
       daysInput.value       = days || "";
+      // Show full text on hover so long day labels don't require scrolling
+      daysInput.title = days || "";
+      daysInput.addEventListener("input", function() { daysInput.title = daysInput.value; });
 
       var openSel  = epMakeTimeSelect("ep-sched-open",  open  || "");
       var sep      = document.createElement("span");
