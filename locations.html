@@ -2073,8 +2073,8 @@
       }
     }
 
-    // Initialize with one empty row on page load
-    addScheduleRow("", "", "");
+    // Do not add an empty row on load - hours are optional.
+    // User adds rows via the "+ Add another day / time" button if needed.
 
     // =========================================================================
     // TYPE RADIO STYLING
