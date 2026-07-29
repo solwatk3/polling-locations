@@ -198,6 +198,18 @@
 - [x] locations.html: paste handler added to address field - pasting a full address like "300 Crossville St, Monterey, TN 38574" instantly splits into street/city/zip with no button click or blur required; debounced geocoder fires automatically after with the clean street (2026-07-29)
 - [x] location-detail.html: paste handler added to ep-address field - same auto-split behavior using right-to-left inline logic (zip from end, strip state, last comma = city/street); consistent with epReGeocodeAndSplit (2026-07-29)
 
+## Done (Session 26 cont. - 2026-07-29)
+- [x] Loudon County import completed (2026-07-29)
+- [x] Putnam County - 18 locations imported (2026-07-29)
+- [x] Export to JS run - data/polling-locations.js updated with all imported locations (2026-07-29)
+- [x] "House District ?" group worked through - Detect from Coords run on each, districts saved (2026-07-29)
+
+## Done (Session 26 - 2026-07-29)
+- [x] location-detail.html: voting hours section made collapsible - wrapped in details/summary, shows Show/Hide toggle, arrow flips on open/close (2026-07-29)
+- [x] location-detail.html: locations with no hours now show "No hours listed" inline in the summary header instead of hiding the row - dropdown is disabled, no content shown (2026-07-29)
+- [x] location-detail.html: hours condition tightened - only treats hours as valid if it contains at least one letter or digit; dash-only values like "-" or em dashes fall through to "No hours listed" (2026-07-29)
+- [x] locations.html: removed auto-added empty schedule row on page load - hours are now opt-in; blank rows were being saved with new locations and falsely signaling hours existed (2026-07-29)
+
 ## Done (Session 25 - 2026-07-29)
 - [x] Maury County (22 locations) - imported and city + zip set via Set County modal (2026-07-29)
 - [x] locations.html: parsePrecinctTabLabelFormat added - handles Loudon County format (digit-tab-ABBR-tab-PrecinctName header + venue name + Street, City blocks, no blank-line separators, no zip); detected by 2+ lines matching the tab-delimited header pattern; all entries flagged for review (2026-07-29)
@@ -208,13 +220,12 @@
 - [x] polling-time-parser-updater skill updated - now explicitly documents all 3 files that must be kept in sync (locations.html, directory.html, location-detail.html) (2026-07-29)
 
 ## In Progress
-- Loudon County - import in progress
+- (nothing active)
 
 ## Next
-- [ ] Finish Loudon County import
-- [ ] Paste the 18 Putnam County locations (already transcribed - check session 22 chat history)
-- [ ] Run Export to JS from locations.html and commit updated data/polling-locations.js to make all imported locations permanent
-- [ ] Work through the "House District ?" group - open each from directory, hit "Detect from Coords", save
+- [ ] Continue importing remaining counties
+- [ ] Commit updated data/polling-locations.js after next batch of imports
+- [ ] Work through any remaining "House District ?" locations - open from directory, hit Detect from Coords, save
 
 ## Dead Ends
 | What was tried | Why it didn't work | Date |
