@@ -1648,6 +1648,22 @@
       document.getElementById("f-address").value = loc ? (loc.address || "") : "";
       document.getElementById("f-city").value    = loc ? (loc.city    || "") : "";
       document.getElementById("f-zip").value     = loc ? (loc.zip     || "") : "";
+
+      // Auto-split address if city/zip are embedded in it (e.g. "300 Main St, Monterey, TN 38574").
+      // Runs on every panel open so the user never has to click in/out of the address field manually.
+      var addrRaw = document.getElementById("f-address").value.trim();
+      if (addrRaw) {
+        var splitAddr = parseFullAddress(addrRaw);
+        if (splitAddr) {
+          document.getElementById("f-address").value = splitAddr.street;
+          if (!document.getElementById("f-city").value.trim()) {
+            document.getElementById("f-city").value = splitAddr.city;
+          }
+          if (splitAddr.zip && !document.getElementById("f-zip").value.trim()) {
+            document.getElementById("f-zip").value = splitAddr.zip;
+          }
+        }
+      }
       document.getElementById("f-county").value  = loc ? (loc.county  || "") : "";
       // Load schedule into schedule builder (handles both old string format and new array)
       setScheduleData(loc);

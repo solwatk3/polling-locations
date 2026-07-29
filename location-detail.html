@@ -520,6 +520,18 @@
           <div class="detail-value" id="d-address">-</div>
         </div>
 
+        <!-- City -->
+        <div class="detail-field" id="d-city-row">
+          <div class="detail-label">City</div>
+          <div class="detail-value" id="d-city">-</div>
+        </div>
+
+        <!-- Zip Code -->
+        <div class="detail-field" id="d-zip-row">
+          <div class="detail-label">Zip Code</div>
+          <div class="detail-value" id="d-zip">-</div>
+        </div>
+
         <!-- County -->
         <div class="detail-field" id="d-county-row">
           <div class="detail-label">County</div>
@@ -853,13 +865,14 @@
           ' ' + badgeLabel +
         '</span>';
 
-      // Address - click to copy full address to clipboard
+      // Address - shows street only; click to copy the full address to clipboard
       var addrEl = document.getElementById("d-address");
+      // fullAddr is the complete string used for clipboard copy (street + city + zip + state)
       var fullAddr = loc.address
         ? loc.address + (loc.city ? ", " + loc.city : "") + (loc.zip ? " " + loc.zip : "") + ", TN"
         : null;
       if (fullAddr) {
-        addrEl.textContent = fullAddr;
+        addrEl.textContent = loc.address; // display just the street - city/zip have their own rows
         addrEl.title = "Click to copy";
         addrEl.style.cursor = "pointer";
         addrEl.style.transition = "color 0.15s";
@@ -879,6 +892,20 @@
       } else {
         addrEl.textContent = "Address not on file";
         addrEl.classList.add("muted");
+      }
+
+      // City
+      if (loc.city) {
+        document.getElementById("d-city").textContent = loc.city;
+      } else {
+        document.getElementById("d-city-row").style.display = "none";
+      }
+
+      // Zip Code
+      if (loc.zip) {
+        document.getElementById("d-zip").textContent = loc.zip;
+      } else {
+        document.getElementById("d-zip-row").style.display = "none";
       }
 
       // County
