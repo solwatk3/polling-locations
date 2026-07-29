@@ -3510,6 +3510,145 @@
       return results.length ? results : null;
     }
 
+    // parseDistrictPrecinctFormat(text)
+    // Handles run-together precinct lists from county election sources:
+    //   "1 ST DISTRICT(CD01) PrecName (ABBR) Venue, Address 2 ND DISTRICT(CD02) ..."
+    // All entries are on one continuous line (or multiple lines that get flattened).
+    // Each precinct has a 4-letter uppercase abbreviation in parens (e.g. RIVS, BCRK).
+    // District headers like "2 ND DISTRICT(CD02)" separate districts but carry no
+    // address data - they are stripped before parsing.
+    // No zip codes or cities in this format - all entries flagged for review.
+    // Detected by the unique "NTH DISTRICT(CDnn)" pattern in the text.
+    // -------------------------------------------------------------------------
+    function parseDistrictPrecinctFormat(text) {
+      // Detection: must contain the district/commission district header pattern
+      if (!/\d+\s*(?:ST|ND|RD|TH)\s+DISTRICT\s*\(CD\d+\)/i.test(text)) return null;
+
+      // Flatten to a single line and strip all district headers
+      var flat = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+      flat = flat.replace(/\d+\s*(?:ST|ND|RD|TH)\s+DISTRICT\s*\(CD\d+\)/gi, " ");
+      flat = flat.replace(/\s+/g, " ").trim();
+
+      // Find all 4-letter precinct abbreviations: (XXXX) where all 4 chars are A-Z.
+      // This excludes district codes like (CD01) which contain digits.
+      var abbrRe = /\(([A-Z]{4})\)/g;
+      var tokens = [];
+      var abbrMatch;
+      while ((abbrMatch = abbrRe.exec(flat)) !== null) {
+        tokens.push({ abbr: abbrMatch[1], start: abbrMatch.index, end: abbrMatch.index + abbrMatch[0].length });
+      }
+      if (!tokens.length) return null;
+
+      // Street type pattern used to split "venue+address NEXT_PRECINCT_NAME" segments.
+      // Finding the LAST street type word marks where the address ends and the next
+      // precinct name begins. Full words only - avoids false positives on "St." in
+      // precinct names like "St. Catherine's".
+      var streetTypePat = /\b(Avenue|Ave\.?|Boulevard|Blvd\.?|Circle|Court|Drive|Highway|Hwy\.?|Lane|Parkway|Pike|Place|Road|Route|Street|Trail|Way)\b/g;
+
+      // findLastStreetSplit(str): returns the index immediately after the last
+      // recognized street type word in str, or -1 if none found.
+      function findLastStreetSplit(str) {
+        var lastEnd = -1;
+        streetTypePat.lastIndex = 0;
+        var sm;
+        while ((sm = streetTypePat.exec(str)) !== null) {
+          lastEnd = sm.index + sm[0].length;
+        }
+        return lastEnd;
+      }
+
+      // Build precinct names and venue+addr strings for each token.
+      // Layout in flat text:
+      //   [prec1] (ABBR1) [venue1+addr1] [prec2] (ABBR2) [venue2+addr2] ...
+      // The segment between ABBR_i and ABBR_{i+1} contains:
+      //   [venue+addr of entry i] [precinct name of entry i+1]
+      // Split at the last street type word to separate them.
+      var precNames = [];
+      // Precinct name for token 0: everything before the first abbreviation
+      precNames.push(flat.slice(0, tokens[0].start).trim());
+
+      for (var i = 1; i < tokens.length; i++) {
+        var seg = flat.slice(tokens[i - 1].end, tokens[i].start).trim();
+        var splitIdx = findLastStreetSplit(seg);
+        if (splitIdx !== -1) {
+          tokens[i - 1].venueAddr = seg.slice(0, splitIdx).trim();
+          // Strip any leading comma that bleeds over from a trailing city
+          precNames.push(seg.slice(splitIdx).trim().replace(/^,\s*/, ""));
+        } else {
+          // No street type found - treat whole segment as venue+addr
+          tokens[i - 1].venueAddr = seg;
+          precNames.push("");
+        }
+      }
+      // Last token: everything after its abbreviation to end of text
+      tokens[tokens.length - 1].venueAddr = flat.slice(tokens[tokens.length - 1].end).trim();
+
+      // Parse each token into a location record
+      var results = [];
+      for (var j = 0; j < tokens.length; j++) {
+        var abbr      = tokens[j].abbr;
+        var precName  = (precNames[j] || "").trim();
+        var venueStr  = (tokens[j].venueAddr || "").trim();
+        var name = "", address = "", city = "";
+        var reviewReasons = [];
+
+        if (/^\d/.test(venueStr)) {
+          // Venue string starts with a house number - no separate venue name present.
+          // Use the precinct name (e.g. "Spring Hill Library") as the location name.
+          name    = precName || abbr;
+          address = venueStr;
+        } else {
+          // Try to split "Venue Name, 123 Street" at the first comma before a house number
+          var commaDigitMatch = venueStr.match(/^(.+?),\s*(\d+\s+.+)$/);
+          if (commaDigitMatch) {
+            name = commaDigitMatch[1].trim();
+            var addrRest = commaDigitMatch[2].trim();
+            // Check for trailing city after the street address: "123 Street, City"
+            var cityCheck = addrRest.match(/^(.+?),\s*([A-Za-z][^,\d]+)$/);
+            if (cityCheck) {
+              address = cityCheck[1].trim();
+              city    = cityCheck[2].trim();
+            } else {
+              address = addrRest;
+            }
+          } else {
+            // No house number found (e.g. "National Guard Armory, N James Campbell Blvd").
+            // Fall back to splitting at the last comma.
+            var lastCommaIdx = venueStr.lastIndexOf(",");
+            if (lastCommaIdx !== -1) {
+              name    = venueStr.slice(0, lastCommaIdx).trim();
+              address = venueStr.slice(lastCommaIdx + 1).trim();
+            } else {
+              // No comma either - use precinct name and treat whole string as address
+              name    = precName || abbr;
+              address = venueStr;
+            }
+            if (!address) reviewReasons.push("Could not parse address");
+          }
+        }
+
+        // Zip is never present in this format - always flag for review
+        reviewReasons.push("No zip - add after import");
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city - add after import");
+
+        results.push({
+          rowIndex:     j,
+          raw:          precName + " (" + abbr + ") " + venueStr,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          "",
+          type:         "election_day",
+          needsReview:  true,
+          reviewReason: reviewReasons.join(", ")
+        });
+      }
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -3517,6 +3656,10 @@
     // -------------------------------------------------------------------------
     function parseBulkText(text) {
       text = text.trim();
+
+      // --- District/precinct format detection (NTH DISTRICT(CDnn) run-together format) ---
+      var districtPrecinctResult = parseDistrictPrecinctFormat(text);
+      if (districtPrecinctResult) return districtPrecinctResult;
 
       // --- Ellipsis format detection (City... Venue Name Street per line) ---
       var ellipsisResult = parseEllipsisFormat(text);

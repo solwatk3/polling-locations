@@ -167,6 +167,22 @@
 - [x] location-detail.html: Detect Districts button added directly to info panel next to "Districts" label - runs ArcGIS point-in-polygon queries from pin coordinates, updates district chips on screen, and saves results to localStorage without opening the edit panel (2026-07-27)
 - [x] Knox County voting locations extracted from PDF (kgis.org) and saved as knox-county-voting-locations.csv - 41 locations ready to import (2026-07-27)
 
+## Done (Session 21 - 2026-07-28)
+- [x] index.html: fixed highlightByFilter deduplication - seed entries with the same ID as a custom (edited) location now excluded before concat so the corrected county wins on spotlight (2026-07-28)
+- [x] index.html: county tooltip double-"County" bug fixed - Census API NAME already includes "County" so code no longer appends it again; CDN fallback still appends since TN_COUNTY_NAMES stores bare names (2026-07-28)
+- [x] index.html: hover info bar added (#hover-info div, bottom-left, hidden when empty) - shows County / House / Senate / Congress as you move the mouse over the map (2026-07-28)
+- [x] index.html: hoverState object added with slots for county, house, senate, congress - all boundary layers (county, house, senate, congress) set/clear their slot on mouseover/mouseout and call updateHoverInfo() (2026-07-28)
+- [x] index.html: pinMouseover / pinMouseout added to every marker and clone - hovering a pin reads loc fields to fill all four hoverState slots, so district/county info still shows even when the mouse is over a pin (not a boundary polygon) (2026-07-28)
+- [x] index.html: removed duplicate nav search form (lines 142-144) that silently did nothing on Enter (2026-07-28)
+- [x] locations.html: normalizeTime fixed to strip a.m./p.m. period-dots before the regex match - handles "9:00 a.m. - 4:00 p.m." schedule paste format (2026-07-28)
+- [x] locations.html: parseDashFormat added - "Name - Street, City, ST Zip" one-per-line format with right-to-left address parsing; handles highway routes where parseFullAddress fails (2026-07-28)
+- [x] locations.html: parseMarkdownLinkFormat added - Google Sheets hyperlinked cell format where the address cell contains a Markdown link with a Google Maps URL (2026-07-28)
+- [x] locations.html: parsePrecinct4LineFormat added - 4-line block format (precinct label / venue name / street / City,ST Zip); detected when 60%+ of blank-line-separated blocks have exactly 4 lines (2026-07-28)
+- [x] locations.html: parseEllipsisFormat added - "City... Venue Name Street" format (city before ellipsis, venue+address after); handles both Unicode ellipsis U+2026 and ASCII "..."; handles entries on one line OR multiple lines (2026-07-28)
+- [x] locations.html: parseEllipsisFormat fixed - source data uses ASCII "..." not Unicode U+2026 so old detection returned null; new version normalizes "..." before detecting, splits full text by ellipsis (not lines), and uses last-period trick to separate address from next city when entries run together on one line (2026-07-28)
+- [x] Created polling-time-parser-updater skill (ClaudeOS/sub-agents/polling-time-parser-updater/SKILL.md) - knows where normalizeTime and parseSchedulePaste live, diagnoses failures, makes surgical edits (2026-07-28)
+- [x] Created polling-bulk-import-updater skill (ClaudeOS/sub-agents/polling-bulk-import-updater/SKILL.md) - knows every existing parser, correct call order, and template for adding new ones (2026-07-28)
+
 ## In Progress
 - Nothing currently
 
