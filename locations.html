@@ -536,22 +536,12 @@
       margin-bottom: 10px;
     }
 
-    /* One-click copy button inline with Address label */
-    .ldm-copy-btn {
-      margin-left: 6px;
-      font-size: 0.56rem;
-      font-weight: 700;
-      color: var(--accent-light);
+    /* Clickable address text - cursor and subtle underline hint */
+    .ld-value-copyable {
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 1px 4px;
-      border: 1px solid var(--accent-light);
-      border-radius: 3px;
-      transition: background 0.12s, color 0.12s;
-      vertical-align: middle;
+      transition: color 0.12s;
     }
-    .ldm-copy-btn:hover { background: var(--accent-light); color: var(--primary); }
+    .ld-value-copyable:hover { color: var(--accent-light); }
 
     /* Individual field rows inside the info panel */
     .ld-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
@@ -1221,11 +1211,9 @@
           <!-- 2-column grid: Address / City, Zip / County -->
           <div class="ldm-addr-grid">
             <div class="ld-field">
-              <div class="ld-label">
-                Address
-                <span class="ldm-copy-btn" id="ldm-copy-btn" onclick="copyDetailAddress()" title="Copy full address">Copy</span>
-              </div>
-              <div class="ld-value" id="ldm-address-street"></div>
+              <div class="ld-label">Address</div>
+              <!-- Click the address text to copy the full address to clipboard -->
+              <div class="ld-value ld-value-copyable" id="ldm-address-street" onclick="copyDetailAddress(this)" title="Click to copy full address"></div>
             </div>
             <div class="ld-field">
               <div class="ld-label">City</div>
@@ -2803,7 +2791,7 @@
     // -------------------------------------------------------------------------
     // copyDetailAddress() - copies the full address to clipboard from the modal
     // -------------------------------------------------------------------------
-    function copyDetailAddress() {
+    function copyDetailAddress(el) {
       var street = document.getElementById("ldm-address-street").textContent || "";
       var city   = document.getElementById("ldm-city").textContent           || "";
       var zip    = document.getElementById("ldm-zip").textContent            || "";
@@ -2811,10 +2799,15 @@
       var parts  = [street, city, zip].filter(function(p) { return p && p !== "-"; });
       var full   = parts.join(", ");
       if (!full) return;
-      var btn = document.getElementById("ldm-copy-btn");
       navigator.clipboard.writeText(full).then(function() {
-        btn.textContent = "Copied!";
-        setTimeout(function() { btn.textContent = "Copy"; }, 1500);
+        // Briefly show "Copied!" in place of the address text, then restore
+        var original = el.textContent;
+        el.textContent = "Copied!";
+        el.style.color = "var(--success)";
+        setTimeout(function() {
+          el.textContent = original;
+          el.style.color = "";
+        }, 1400);
       });
     }
 
