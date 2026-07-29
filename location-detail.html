@@ -442,6 +442,13 @@
     /* Schedule builder rows inside the edit panel */
     .schedule-header { display:grid; grid-template-columns:1fr 90px 20px 90px 28px; gap:4px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:2px; }
     .schedule-row    { display:grid; grid-template-columns:1fr 90px 20px 90px 28px; gap:4px; align-items:center; margin-bottom:4px; }
+    /* Period label column - hidden by default, visible when type is Both */
+    .f-sched-label { display:none; font-size:0.72rem; padding:5px 5px; border:1px solid var(--border); border-radius:5px; background:var(--input-bg,var(--primary)); color:var(--text); max-width:130px; }
+    .period-col-header { display:none; }
+    .show-period .schedule-header { grid-template-columns:130px 1fr 90px 20px 90px 28px; }
+    .show-period .schedule-row    { grid-template-columns:130px 1fr 90px 20px 90px 28px; }
+    .show-period .f-sched-label    { display:block; }
+    .show-period .period-col-header { display:block; }
     .schedule-row input  { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 6px; }
     .schedule-row select { background:var(--surface-2); border:1px solid var(--border); border-radius:4px; color:var(--text); font-family:inherit; font-size:0.78rem; padding:5px 4px; }
     .schedule-row .sched-sep { text-align:center; color:var(--text-muted); font-size:0.72rem; }
@@ -634,9 +641,10 @@
         </div>
         <div id="ep-dist-status" class="inline-status"></div>
       </div>
-      <div class="fp-group">
+      <div class="fp-group" id="ep-sched-section">
         <label>Voting Hours</label>
         <div class="schedule-header">
+          <span class="period-col-header">Period</span>
           <span>Day(s) - optional</span><span>Opens</span><span></span><span>Closes</span><span></span>
         </div>
         <!-- Quick-fill: paste raw schedule text and auto-parse into rows -->
@@ -1220,11 +1228,22 @@
 
     var epRowCount = 0;
 
-    function epAddScheduleRow(days, open, close) {
+    function epAddScheduleRow(days, open, close, label) {
       var idx = epRowCount++;
       var row = document.createElement("div");
       row.className = "schedule-row";
       row.id        = "ep-srow-" + idx;
+
+      // Period label dropdown - hidden until type is Both (controlled by CSS .show-period)
+      var labelSel = document.createElement("select");
+      labelSel.className = "f-sched-label";
+      [["", "- Period -"], ["Early Voting", "Early Voting"], ["Election Day", "Election Day"]].forEach(function(opt) {
+        var o = document.createElement("option");
+        o.value       = opt[0];
+        o.textContent = opt[1];
+        if ((label || "") === opt[0]) o.selected = true;
+        labelSel.appendChild(o);
+      });
 
       var daysInput = document.createElement("input");
       daysInput.type        = "text";
@@ -1249,6 +1268,7 @@
         });
       })(idx);
 
+      row.appendChild(labelSel);
       row.appendChild(daysInput);
       row.appendChild(openSel);
       row.appendChild(sep);
@@ -1261,11 +1281,14 @@
       var rows = document.querySelectorAll("#ep-schedule-rows .schedule-row");
       var schedule = [];
       rows.forEach(function(row) {
-        schedule.push({
+        var label = row.querySelector(".f-sched-label").value;
+        var entry = {
           days:  row.querySelector(".ep-sched-days").value.trim(),
           open:  row.querySelector(".ep-sched-open").value,
           close: row.querySelector(".ep-sched-close").value
-        });
+        };
+        if (label) entry.label = label;
+        schedule.push(entry);
       });
       if (!schedule.length) return { hours: "", schedule: [] };
       var first = schedule[0];
@@ -1363,7 +1386,7 @@
       document.getElementById("ep-schedule-rows").innerHTML = "";
       epRowCount = 0;
       if (locObj && locObj.schedule && locObj.schedule.length) {
-        locObj.schedule.forEach(function(row) { epAddScheduleRow(row.days, row.open, row.close); });
+        locObj.schedule.forEach(function(row) { epAddScheduleRow(row.days, row.open, row.close, row.label || ""); });
       } else if (locObj && locObj.hours) {
         var parts = locObj.hours.split(/\s*-\s*/);
         epAddScheduleRow("", parts[0] ? parts[0].trim() : "", parts[1] ? parts[1].trim() : "");
@@ -1380,6 +1403,8 @@
       document.getElementById("ep-radio-early").className    = "type-radio" + (val === "early"        ? " sel-early"    : "");
       document.getElementById("ep-radio-election").className = "type-radio" + (val === "election_day" ? " sel-election" : "");
       document.getElementById("ep-radio-both").className     = "type-radio" + (val === "both"         ? " sel-both"     : "");
+      // Show the Period label column only when type is Both
+      document.getElementById("ep-sched-section").classList.toggle("show-period", val === "both");
     }
     document.querySelectorAll('input[name="ep-type"]').forEach(function(r) { r.addEventListener("change", epUpdateTypeStyles); });
 
