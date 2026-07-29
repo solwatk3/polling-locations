@@ -2067,14 +2067,10 @@
         var open  = parts[0] ? parts[0].trim() : "";
         var close = parts[1] ? parts[1].trim() : "";
         addScheduleRow("", open, close);
-      } else {
-        // Default empty row - no pre-filled times
-        addScheduleRow("", "", "");
       }
+      // If no schedule and no hours exist, leave the rows empty.
+      // User adds rows via the "+ Add another day / time" button.
     }
-
-    // Do not add an empty row on load - hours are optional.
-    // User adds rows via the "+ Add another day / time" button if needed.
 
     // =========================================================================
     // TYPE RADIO STYLING
