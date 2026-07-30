@@ -4586,6 +4586,134 @@
       return results.length ? results : null;
     }
 
+    // parseNumberLabelRunFormat(text)
+    // Handles a run-together format where sequential numbered entries are concatenated
+    // with no blank-line separator. Each entry is:
+    //   [N] [precinct name] [venue name] [house#] [street] [city], ST [zip]
+    // Example:
+    //   "1 Indian Mound Indian Mound Community Church 200 Rorie Hollow Road Indian Mound, TN 37079
+    //    2 Big Rock Big Rock Baptist Church 504 Big Rock Road Big Rock, TN 37023 ..."
+    // Detected when the text (after flattening newlines) starts with a bare digit
+    // then a capitalized word, contains no tabs, and has at least one zip-then-number
+    // transition (\d{5}\s+\d+\s+[A-Z]) indicating run-together entries.
+    // Parsing strategy:
+    //   1. Flatten newlines to single spaces.
+    //   2. Split on each "zip [spaces] (next entry number) [space] [Capital]" boundary,
+    //      preserving the zip inside its chunk.
+    //   3. For each chunk: strip the leading entry number, extract zip from the end,
+    //      strip the trailing state abbreviation, then find the last recognized street-type
+    //      word (everything after it is the city), then find the first house number
+    //      (everything before it is the venue name, everything from it to the street type
+    //      is the street address).
+    // -------------------------------------------------------------------------
+    function parseNumberLabelRunFormat(text) {
+      // Flatten newlines so multi-line pastes work the same as single-line
+      var flat = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+
+      // Detection check 1: must start with a bare number then a capitalized word.
+      // "1st District:" starts with "1st" (no space after digit) so it won't match here.
+      if (!/^\d+\s+[A-Z]/.test(flat)) return null;
+
+      // Detection check 2: must contain at least one zip->next-entry-number transition.
+      // This is the defining feature of a run-together numbered list.
+      if (!/\d{5}\s+\d+\s+[A-Z]/.test(flat)) return null;
+
+      // Detection check 3: skip formats already handled by earlier parsers.
+      // Henry County uses "District N-N"; district-precinct uses "NTH DISTRICT(CDnn)".
+      if (/District\s+\d+-\d+/i.test(flat)) return null;
+      if (/\d+\s*(?:ST|ND|RD|TH)\s+DISTRICT\s*\(CD\d+\)/i.test(flat)) return null;
+
+      // Detection check 4: no tabs - TSV formats have their own parsers
+      if (flat.indexOf("\t") !== -1) return null;
+
+      // Split at each zip->next-number boundary.
+      // Replace "\d{5} [spaces] (lookahead: digit space Capital)" with "\d{5}||SPLIT||"
+      // so the zip stays inside its chunk and spaces before the next number are consumed.
+      var marked = flat.replace(/(\d{5})\s+(?=\d+\s+[A-Z])/g, "$1||SPLIT||");
+      var chunks = marked.split("||SPLIT||");
+
+      // Street-type pattern used to find the last recognized street word.
+      // The LAST match marks where the street address ends and the city begins.
+      var streetTypePat = /\b(Avenue|Ave\.?|Boulevard|Blvd\.?|Circle|Court|Cove|Drive|Highway|Hwy\.?|Lane|Parkway|Pike|Place|Road|Route|Street|Trail|Way)\b/g;
+
+      var results = [];
+      chunks.forEach(function(chunk, idx) {
+        chunk = chunk.trim();
+        if (!chunk) return;
+
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+
+        // Strip the leading entry number (e.g. "1 " or "12 ")
+        var numMatch = chunk.match(/^\d+\s+/);
+        if (numMatch) {
+          chunk = chunk.slice(numMatch[0].length);
+        } else {
+          reviewReasons.push("Could not strip entry number");
+        }
+
+        // Extract zip from the right end
+        var zipM = chunk.match(/(\d{5})\s*$/);
+        if (zipM) {
+          zip   = zipM[1];
+          chunk = chunk.slice(0, zipM.index).trim();
+        } else {
+          reviewReasons.push("No zip");
+        }
+
+        // Strip trailing state abbreviation and any preceding comma+space
+        // e.g. "...Indian Mound, TN" -> "...Indian Mound"
+        var work = chunk.replace(/,?\s*[A-Z]{2}\s*$/, "").trim();
+
+        // Find the LAST street-type word - text after it is the city
+        var lastStreetEnd = -1;
+        streetTypePat.lastIndex = 0;
+        var sm;
+        while ((sm = streetTypePat.exec(work)) !== null) {
+          lastStreetEnd = sm.index + sm[0].length;
+        }
+
+        if (lastStreetEnd === -1) {
+          // No recognized street type - save name and flag for review
+          name = work;
+          reviewReasons.push("Could not find street type - check address/city split");
+        } else {
+          city         = work.slice(lastStreetEnd).trim();
+          var combined = work.slice(0, lastStreetEnd).trim();
+
+          // Find the first house number to split venue name from street address.
+          // Pattern: a digit sequence followed by a space and a letter.
+          var houseIdx = combined.search(/\b\d+\s+[A-Za-z]/);
+          if (houseIdx === -1) {
+            name = combined;
+            reviewReasons.push("No house number found");
+          } else {
+            name    = combined.slice(0, houseIdx).trim();
+            address = combined.slice(houseIdx).trim();
+          }
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          chunk,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         "election_day",
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4601,6 +4729,10 @@
       // --- Henry County format detection (District N-N Name Address City Zip run-together) ---
       var henryCountyResult = parseHenryCountyFormat(text);
       if (henryCountyResult) return henryCountyResult;
+
+      // --- Number-label run-together format (N PrecName VenueName Street City, ST Zip N+1 ...) ---
+      var numberLabelRunResult = parseNumberLabelRunFormat(text);
+      if (numberLabelRunResult) return numberLabelRunResult;
 
       // --- Ellipsis format detection (City... Venue Name Street per line) ---
       var ellipsisResult = parseEllipsisFormat(text);
