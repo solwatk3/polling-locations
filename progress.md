@@ -259,11 +259,16 @@
 ## Done (Session 30 cont. - 2026-07-29)
 - [x] data/polling-locations.js rebuilt from backup file (933 locations) - previous seed file only had original 20 Hardeman/Haywood entries; now includes all counties imported through Session 29 (2026-07-29)
 
+## Done (Session 31 - 2026-07-30)
+- [x] locations.html: parseOrdinalDistrictPrecinctRunFormat bug fixed - comma after "District" made optional (,?) in detection, split, and label-strip so parser fires even when PDF copy omits the comma; without fix the parser returned null and a later handler produced garbage output with district labels as location names (2026-07-30)
+- [x] locations.html: city period bug fixed in parseOrdinalDistrictPrecinctRunFormat - street-type regex (Rd\.?) matched "Rd" not "Rd." due to word-boundary failure after a period; added .replace(/^[.,]+/, '') to strip leading punctuation from city after both highway and street-type path splits (2026-07-30)
+- [x] locations.html: parsePrecCodeTabFormat added - handles Houston County (GA) style tables: CODE(tab)BUILDING(tab)LOCATION(tab)STREET_CITY with no state or zip; detection requires 2+ lines starting with a 2-5 char all-caps code + tab (30%+ of non-empty lines); multi-line cell wrapping (CGTC, HHPC, NHSC style) reconstructed by tracking open column slots and filling continuation lines in order; all 17 test entries parsed correctly (2026-07-30)
+
 ## In Progress
 - (nothing active)
 
 ## Next
-- [ ] Commit updated data/polling-locations.js (933 locations) to GitHub
+- [ ] Commit updated locations.html (parser fixes + new parsePrecCodeTabFormat) to GitHub
 - [ ] Continue importing remaining counties
 - [ ] Work through any remaining "House District ?" locations - open from directory, hit Detect from Coords, save
 
@@ -294,6 +299,6 @@ Locations -> Export button -> copy JS -> paste into data/polling-locations.js ->
 - Backup: GitHub fine-grained token in tn_polling_gh_token localStorage; writes to backups/latest.json in the repo
 - Paste parser: header lines (no parens) become rangeHeader prepended to all following rows; supports \r\n, \r, \n, and semicolons
 - knox-county-voting-locations.csv: 41 locations extracted from KGIS PDF (April 2026), saved in projects/polling-locations/
-- Bulk importer now handles 10 formats: name-comma-address, district/precinct run-together, ellipsis, markdown-link, dash, precinct-4-line, block, tab-separated, precinct-tab-full-address (N-N TAB label TAB "Venue, Addr, City Zip"), word-precinct ("Precinct N: Name" + 1-2 address lines)
+- Bulk importer now handles 14+ formats: name-comma-address, district/precinct run-together (CDnn), Henry County (District N-N run), all-caps DISTRICT N-N, ordinal district/precinct (Cheatham County - "Nth District, Nth Precinct"), number-label run (Stewart County), ellipsis, markdown-link, bullet-markdown, dash, precinct-4-line, block, tab-separated, precinct-tab-label (Loudon County), precinct-tab-full-address, word-precinct, prec-code-tab (Houston County GA - CODE tab BUILDING tab LOCATION tab STREET_CITY)
 - Schedule paste parser handles 3 formats: A (parenthesized times), B (inline am/pm times), C (bare HH:MM-HH:MM with & separators); am/pm inferred for bare times (7-11am, 12+1-6pm)
 - Re-geocode button on locations.html and location-detail.html both split full address strings before geocoding (reGeocodeAndSplit / epReGeocodeAndSplit)
