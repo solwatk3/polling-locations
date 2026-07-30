@@ -4962,6 +4962,109 @@
       return results.length ? results : null;
     }
 
+    // parsePrecCodeTabFormat(text)
+    // Handles tab-separated tables where:
+    //   col 0 = short all-caps precinct code (2-5 letters, e.g. ANNX, BMS)
+    //   col 1 = building name
+    //   col 2 = optional room or area within the building (may be blank)
+    //   col 3 = address as "Street, City" (no state, no zip)
+    // Some cells wrap to continuation lines (no code prefix) in the pasted text.
+    // The parser reconstructs each record by tracking which column slot is still
+    // open and filling continuation lines into it in order.
+    // Detected by: at least 2 lines starting with a 2-5 char all-caps code + tab,
+    // making up at least 30% of all non-empty lines.
+    // -------------------------------------------------------------------------
+    function parsePrecCodeTabFormat(text) {
+      // --- Detection check ---
+      // Count lines starting with a short all-caps code followed by a tab.
+      var rawLines  = text.split(/\r?\n/);
+      var nonEmpty  = rawLines.filter(function(l) { return l.trim(); });
+      var codeLines = nonEmpty.filter(function(l) { return /^[A-Z]{2,5}\t/.test(l); });
+      // Require at least 2 code lines and at least 30% of non-empty lines
+      // (30% threshold accounts for multi-line cells that have no code prefix).
+      if (codeLines.length < 2 || codeLines.length < nonEmpty.length * 0.3) return null;
+
+      // --- Record reconstruction ---
+      // Each record is built as an array of up to 4 column slots.
+      // Continuation lines (no code prefix) fill the remaining open slots.
+      var records  = [];
+      var current  = null; // current record's slots array
+      var nextSlot = 0;    // index of the next slot to fill from continuation lines
+
+      rawLines.forEach(function(line) {
+        if (/^[A-Z]{2,5}\t/.test(line)) {
+          // New record: save any previous record and start fresh from this line
+          if (current) records.push(current);
+          current  = line.split('\t');
+          // If last slot is an empty string the line ended with a tab, meaning
+          // that slot is still open for a continuation line.
+          nextSlot = (current[current.length - 1] === '') ? current.length - 1 : current.length;
+        } else if (current) {
+          // Continuation line: belongs to the current record
+          var trimmed = line.trim();
+          if (!trimmed) {
+            // Blank or whitespace-only line counts as an empty slot
+            // (e.g. a location cell that contains only whitespace).
+            if (nextSlot < 4) { current[nextSlot] = ''; nextSlot++; }
+            return; // skip the tab/no-tab checks below
+          }
+          if (line.indexOf('\t') >= 0) {
+            // Line contains tabs: split and fill multiple slots
+            line.split('\t').forEach(function(p) {
+              if (nextSlot < 4) { current[nextSlot++] = p.trim(); }
+            });
+          } else {
+            // No tab: fill the next open slot with this entire line
+            if (nextSlot < 4) { current[nextSlot++] = trimmed; }
+          }
+        }
+      });
+      if (current) records.push(current); // push the last record
+
+      // --- Parse each reconstructed record ---
+      var results = [];
+      records.forEach(function(slots, idx) {
+        var building = (slots[1] || '').trim();
+        var location = (slots[2] || '').trim();
+        var addrStr  = (slots[3] || '').trim();
+
+        // Combine building and room/area into the displayed name
+        var name = location ? building + ' - ' + location : building;
+
+        // Address column format: "Street Number Street Name, City"
+        // Split on the last comma to separate street from city.
+        var address = '', city = '';
+        var lastComma = addrStr.lastIndexOf(',');
+        if (lastComma >= 0) {
+          address = addrStr.slice(0, lastComma).trim();
+          city    = addrStr.slice(lastComma + 1).trim();
+        } else {
+          address = addrStr; // no comma - whole string is the address
+        }
+
+        // This format never includes zip codes - always flag for review.
+        var reviewReasons = [];
+        if (!name)    reviewReasons.push('No name');
+        if (!address) reviewReasons.push('No address');
+        if (!city)    reviewReasons.push('No city');
+        reviewReasons.push('No zip - add after import');
+
+        results.push({
+          rowIndex:     idx,
+          raw:          slots.join('\t'),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          '',
+          type:         'election_day',
+          needsReview:  true,
+          reviewReason: reviewReasons.join(', ')
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -5033,6 +5136,10 @@
       // --- District-colon format detection ("Nth District: Name" + address line blocks) ---
       var districtColonResult = parseDistrictColonFormat(text);
       if (districtColonResult) return districtColonResult;
+
+      // --- Prec-code tab format (CODE tab BUILDING tab LOCATION tab STREET_CITY, no zip) ---
+      var precCodeTabResult = parsePrecCodeTabFormat(text);
+      if (precCodeTabResult) return precCodeTabResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
