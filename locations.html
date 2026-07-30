@@ -4497,6 +4497,95 @@
       return results.length ? results : null;
     }
 
+    // parseDistrictColonFormat(text)
+    // Handles "Nth District: Venue Name" format where each entry is 2 lines:
+    //   Line 0: "[ordinal] District: Venue Name" (trailing comma is stripped)
+    //   Line 1: "Street, City, ST Zip" (may be indented with spaces)
+    // Also handles "All Early Voting: Venue Name" as an early_voting type entry.
+    // Blocks are separated by blank lines.
+    // Detected by the presence of an ordinal district label ("1st District:",
+    // "2nd District:", etc.) or "All Early Voting:" in the text.
+    // Address parsed right-to-left: extract zip, strip state, last comma = city/street.
+    // -------------------------------------------------------------------------
+    function parseDistrictColonFormat(text) {
+      // Detection: must contain at least one "Nth District:" ordinal label
+      if (!/\d+(?:st|nd|rd|th)\s+District\s*:/i.test(text) && !/All Early Voting\s*:/i.test(text)) return null;
+
+      // Group lines into blocks separated by blank lines
+      var cleanedLines = text.split(/\r?\n/).map(function(l) { return l.trim(); });
+      var blockGroups = [];
+      var currentGroup = [];
+      cleanedLines.forEach(function(line) {
+        if (line) { currentGroup.push(line); }
+        else { if (currentGroup.length) { blockGroups.push(currentGroup.slice()); currentGroup = []; } }
+      });
+      if (currentGroup.length) blockGroups.push(currentGroup);
+      if (!blockGroups.length) return null;
+
+      var results = [];
+      blockGroups.forEach(function(glines, idx) {
+        var name = "", address = "", city = "", zip = "";
+        var reviewReasons = [];
+        // Default to election_day; switch to early_voting if label says so
+        var locType = "election_day";
+
+        // Line 0 must match "[Nth District | All Early Voting]: Venue Name"
+        var labelLine  = glines[0] || "";
+        var labelMatch = labelLine.match(/^(?:\d+(?:st|nd|rd|th)\s+District|All Early Voting)\s*:\s*(.+)/i);
+        if (labelMatch) {
+          name = labelMatch[1].replace(/,\s*$/, "").trim(); // strip trailing comma artifact
+          if (/All Early Voting/i.test(labelLine)) locType = "early_voting";
+        } else {
+          // First line does not match expected label - still try to parse but flag it
+          name = labelLine;
+          reviewReasons.push("Could not parse district label");
+        }
+
+        // Remaining lines joined = full address "Street, City, ST Zip"
+        var addrLine = glines.slice(1).join(" ").trim();
+        if (addrLine) {
+          // 1. Pull zip from the right end
+          var zipM = addrLine.match(/(\d{5})\s*$/);
+          zip = zipM ? zipM[1] : "";
+          var work = zipM ? addrLine.slice(0, zipM.index).trim() : addrLine;
+
+          // 2. Strip trailing state abbreviation (and any preceding comma/space)
+          work = work.replace(/,?\s*[A-Z]{2}\s*$/, "").trim();
+
+          // 3. Last comma = city / street boundary
+          var lastComma = work.lastIndexOf(",");
+          if (lastComma !== -1) {
+            address = work.slice(0, lastComma).trim();
+            city    = work.slice(lastComma + 1).trim();
+          } else {
+            address = work;
+            reviewReasons.push("Could not parse city from address");
+          }
+        } else {
+          reviewReasons.push("No address line found");
+        }
+
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+        if (!zip)     reviewReasons.push("No zip");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          glines.join("\n"),
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          zip,
+          type:         locType,
+          needsReview:  reviewReasons.length > 0,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4552,6 +4641,10 @@
       // --- Precinct two-line format (PRECINCT N-N / VENUE NAME + full address) ---
       var precinctTwoLineResult = parsePrecinctTwoLineFormat(text);
       if (precinctTwoLineResult) return precinctTwoLineResult;
+
+      // --- District-colon format detection ("Nth District: Name" + address line blocks) ---
+      var districtColonResult = parseDistrictColonFormat(text);
+      if (districtColonResult) return districtColonResult;
 
       // --- Block format detection (runs first, before tab check) ---
       // Handles 3 or 4-line blocks: Name / [Optional subtitle] / Street Address / City, ST Zip
