@@ -4714,6 +4714,114 @@
       return results.length ? results : null;
     }
 
+    // parseCapitalDistrictRunFormat(text)
+    // Handles Robertson County-style all-caps run-together format where entries are
+    // separated by "DISTRICT N-N" labels (all uppercase). No zip or state is present.
+    // Each entry is: DISTRICT N-N [VENUE NAME] [HOUSE#] [STREET] [CITY]
+    // Examples:
+    //   "DISTRICT 1-1 EAST ROBERTSON ELEMENTARY 5177 EAST ROBERTSON ROAD CROSS PLAINS"
+    //   "DISTRICT 8-2 H.A.T.S. 4859 HIGHWAY 431 NORTH SPRINGFIELD"
+    //   "DISTRICT 3-2 WHITE HOUSE HERITAGE HIGH SCHOOL 7744 HIGHWAY 76 EAST WHITE HOUSE"
+    // Detected by the presence of uppercase "DISTRICT N-N" (case-sensitive). This
+    // distinguishes from Henry County format which uses mixed-case "District N-N".
+    // Parsing strategy:
+    //   1. Flatten newlines and split on each "DISTRICT N-N" prefix (lookahead keeps
+    //      the label with its chunk).
+    //   2. Strip the label, then find the first house number to split name from address+city.
+    //   3. Address/city split uses two passes:
+    //      a. Highway format: "HIGHWAY/HWY N NORTH|SOUTH|EAST|WEST" - split after directional.
+    //      b. Road format: split after the last recognized street-type word (ROAD, DRIVE, etc.).
+    // No zip or state in this format - all entries flagged for zip review.
+    // -------------------------------------------------------------------------
+    function parseCapitalDistrictRunFormat(text) {
+      // Detection: all-caps "DISTRICT N-N" label (case-sensitive, no i flag)
+      if (!/\bDISTRICT\s+\d+-\d+\b/.test(text)) return null;
+
+      // Flatten newlines and split on each "DISTRICT N-N" label occurrence.
+      // The lookahead keeps the label at the start of each chunk.
+      var flat  = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+      var parts = flat.split(/(?=\bDISTRICT\s+\d+-\d+\b)/);
+
+      // Street-type pattern for non-highway addresses.
+      // The LAST match marks where the street ends and the city begins.
+      // Defined outside the loop and reset via lastIndex inside each iteration.
+      var streetTypePat = /\b(Avenue|Ave\.?|Boulevard|Blvd\.?|Circle|Court|Cove|Drive|Lane|Parkway|Pike|Place|Road|Route|Street|Trail|Way)\b/gi;
+
+      var results = [];
+      parts.forEach(function(chunk, idx) {
+        chunk = chunk.trim();
+        if (!chunk) return;
+
+        var name = "", address = "", city = "";
+        var reviewReasons = [];
+
+        // Strip the leading "DISTRICT N-N" label
+        var labelMatch = chunk.match(/^DISTRICT\s+\d+-\d+\s*/i);
+        if (labelMatch) {
+          chunk = chunk.slice(labelMatch[0].length).trim();
+        }
+
+        // Find the first house number (digit sequence followed by space and letter)
+        var houseIdx = chunk.search(/\b\d+\s+[A-Za-z]/);
+        if (houseIdx === -1) {
+          name = chunk;
+          reviewReasons.push("No address found");
+        } else {
+          name         = chunk.slice(0, houseIdx).trim();
+          var addrCity = chunk.slice(houseIdx).trim();
+
+          // --- Pass 1: check for highway+directional pattern ---
+          // "HIGHWAY N NORTH|SOUTH|EAST|WEST" or "HWY N ..." ends the street address.
+          // Find the LAST such match in case there are multiple highway references.
+          var hwyPat   = /\b(?:HIGHWAY|HWY)\s+\d+\s+(?:NORTH|SOUTH|EAST|WEST)\b/gi;
+          var hwyMatch = null;
+          var hm;
+          while ((hm = hwyPat.exec(addrCity)) !== null) { hwyMatch = hm; }
+
+          if (hwyMatch) {
+            var splitEnd = hwyMatch.index + hwyMatch[0].length;
+            address = addrCity.slice(0, splitEnd).trim();
+            city    = addrCity.slice(splitEnd).trim();
+          } else {
+            // --- Pass 2: split after the last recognized street-type word ---
+            var lastStreetEnd = -1;
+            streetTypePat.lastIndex = 0;
+            var sm;
+            while ((sm = streetTypePat.exec(addrCity)) !== null) {
+              lastStreetEnd = sm.index + sm[0].length;
+            }
+            if (lastStreetEnd !== -1) {
+              address = addrCity.slice(0, lastStreetEnd).trim();
+              city    = addrCity.slice(lastStreetEnd).trim();
+            } else {
+              address = addrCity;
+              reviewReasons.push("Could not split address from city");
+            }
+          }
+        }
+
+        // No zip or state in this format - always flag for zip
+        reviewReasons.push("No zip - add after import");
+        if (!name)    reviewReasons.push("No name");
+        if (!address) reviewReasons.push("No address");
+        if (!city)    reviewReasons.push("No city");
+
+        results.push({
+          rowIndex:     idx,
+          raw:          chunk,
+          name:         name,
+          address:      address,
+          city:         city,
+          zip:          "",
+          type:         "election_day",
+          needsReview:  true,
+          reviewReason: reviewReasons.join(", ")
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4729,6 +4837,10 @@
       // --- Henry County format detection (District N-N Name Address City Zip run-together) ---
       var henryCountyResult = parseHenryCountyFormat(text);
       if (henryCountyResult) return henryCountyResult;
+
+      // --- Capital-district run-together format (DISTRICT N-N all-caps, no zip, city at end) ---
+      var capitalDistrictResult = parseCapitalDistrictRunFormat(text);
+      if (capitalDistrictResult) return capitalDistrictResult;
 
       // --- Number-label run-together format (N PrecName VenueName Street City, ST Zip N+1 ...) ---
       var numberLabelRunResult = parseNumberLabelRunFormat(text);
