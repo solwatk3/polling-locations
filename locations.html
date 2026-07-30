@@ -4822,6 +4822,143 @@
       return results.length ? results : null;
     }
 
+    // parseOrdinalDistrictPrecinctRunFormat(text)
+    // Handles Cheatham County-style run-together format where entries are separated
+    // by ordinal district+precinct labels like "4th District, 1st Precinct (7th Congressional District)".
+    // Early voting sections use "Early Voting Main Location" / "Early Voting Satellite Locations"
+    // and may contain multiple venue+address blocks under a single section header.
+    // Each venue block is: [Venue Name] [House#] [Street] [City], ST [Zip]
+    // Detected by the presence of "Nth District, Nth Precinct" in the text.
+    // Parsing strategy:
+    //   1. Flatten newlines and split on each label (ordinal district/precinct OR "Early Voting").
+    //   2. Strip the label from each chunk and set location type.
+    //   3. Within each chunk, split further on zip-then-capital transitions to extract
+    //      individual venue blocks (needed for sections with multiple locations).
+    //   4. For each venue block: extract zip, strip state, find first house number
+    //      (name before / address+city after), then split address from city using:
+    //      a. Highway pattern: "Highway N [Directional]" or "Highway N" (before city name).
+    //      b. Last recognized street-type word (ROAD, DRIVE, STREET, PIKE, etc.).
+    // -------------------------------------------------------------------------
+    function parseOrdinalDistrictPrecinctRunFormat(text) {
+      // Detection: must contain "Nth District, Nth Precinct" ordinal label
+      if (!/\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct/i.test(text)) return null;
+
+      // Flatten newlines and split on each label boundary
+      var flat     = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+      var sections = flat.split(/(?=\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct|\bEarly Voting\b)/i);
+
+      // Street-type pattern for address/city split (Highway handled separately)
+      var streetTypePat = /\b(Avenue|Blvd\.?|Boulevard|Circle|Court|Cove|Drive|Lane|Parkway|Pike|Place|Rd\.?|Road|Route|St\.?|Street|Trail|Way)\b/gi;
+
+      var results = [];
+
+      sections.forEach(function(section) {
+        section = section.trim();
+        if (!section) return;
+
+        var locType = "election_day";
+
+        // Strip the section label and determine location type.
+        var districtLabelMatch = section.match(/^\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct\s*(?:\([^)]+\))?\s*/i);
+        if (districtLabelMatch) {
+          section = section.slice(districtLabelMatch[0].length).trim();
+        } else if (/^Early Voting/i.test(section)) {
+          locType = "early_voting";
+          // Strip "Early Voting [type word] [Location(s)]" header.
+          // Pattern: one non-whitespace word after "Early Voting", optionally followed by "Location(s)".
+          var evLabelMatch = section.match(/^Early Voting\s+\S+(?:\s+Locations?)?\s*/i);
+          if (evLabelMatch) {
+            section = section.slice(evLabelMatch[0].length).trim();
+          } else {
+            section = section.replace(/^Early Voting\s+/i, "").trim();
+          }
+        }
+
+        // Some sections (e.g. "Satellite Locations") contain multiple venue blocks.
+        // Split on zip-then-capital transitions to separate them.
+        var markedSection = section.replace(/(\d{5})\s+(?=[A-Z])/g, "$1||SPLIT||");
+        var entries       = markedSection.split("||SPLIT||");
+
+        entries.forEach(function(entry) {
+          entry = entry.trim();
+          if (!entry) return;
+
+          var name = "", address = "", city = "", zip = "";
+          var reviewReasons = [];
+
+          // Extract zip from the right end
+          var zipM = entry.match(/(\d{5})\s*$/);
+          if (zipM) {
+            zip   = zipM[1];
+            entry = entry.slice(0, zipM.index).trim();
+          } else {
+            reviewReasons.push("No zip");
+          }
+
+          // Strip trailing state abbreviation (and optional preceding comma+space)
+          var work = entry.replace(/,?\s*[A-Z]{2}\s*$/, "").trim();
+
+          // Find first house number to split venue name from address+city
+          var houseIdx = work.search(/\b\d+\s+[A-Za-z]/);
+          if (houseIdx === -1) {
+            name = work;
+            reviewReasons.push("No address found");
+          } else {
+            name         = work.slice(0, houseIdx).trim();
+            var addrCity = work.slice(houseIdx).trim();
+
+            // --- Pass 1: highway format ---
+            // Try "Highway N Directional" first (greedy), then "Highway N" alone
+            // when followed directly by the city name (capital + lowercase).
+            var hwyPat   = /\bHighway\s+\d+\s+(?:North|South|East|West)\b|\bHighway\s+\d+(?=\s+[A-Z][a-z])/gi;
+            var hwyMatch = null;
+            var hm;
+            while ((hm = hwyPat.exec(addrCity)) !== null) { hwyMatch = hm; }
+
+            if (hwyMatch) {
+              var hwyEnd = hwyMatch.index + hwyMatch[0].length;
+              address = addrCity.slice(0, hwyEnd).trim();
+              city    = addrCity.slice(hwyEnd).trim();
+            } else {
+              // --- Pass 2: last recognized street-type word ---
+              var lastStreetEnd = -1;
+              streetTypePat.lastIndex = 0;
+              var sm;
+              while ((sm = streetTypePat.exec(addrCity)) !== null) {
+                lastStreetEnd = sm.index + sm[0].length;
+              }
+              if (lastStreetEnd !== -1) {
+                address = addrCity.slice(0, lastStreetEnd).trim();
+                city    = addrCity.slice(lastStreetEnd).trim();
+              } else {
+                address = addrCity;
+                reviewReasons.push("Could not split address from city");
+              }
+            }
+          }
+
+          if (!name)    reviewReasons.push("No name");
+          if (!address) reviewReasons.push("No address");
+          if (!city)    reviewReasons.push("No city");
+          if (!zip)     reviewReasons.push("No zip");
+
+          results.push({
+            rowIndex:     results.length,
+            raw:          entry,
+            name:         name,
+            address:      address,
+            city:         city,
+            zip:          zip,
+            type:         locType,
+            needsReview:  reviewReasons.length > 0,
+            reviewReason: reviewReasons.join(", ")
+          });
+        });
+      });
+
+      return results.length ? results : null;
+    }
+
     // parseBulkText(text)
     // Splits a pasted block into individual location chunks using the precinct
     // number as the delimiter, then parses each chunk with parseRowPaste().
@@ -4841,6 +4978,10 @@
       // --- Capital-district run-together format (DISTRICT N-N all-caps, no zip, city at end) ---
       var capitalDistrictResult = parseCapitalDistrictRunFormat(text);
       if (capitalDistrictResult) return capitalDistrictResult;
+
+      // --- Ordinal district/precinct run-together format ("Nth District, Nth Precinct (...)" labels) ---
+      var ordinalDistrictResult = parseOrdinalDistrictPrecinctRunFormat(text);
+      if (ordinalDistrictResult) return ordinalDistrictResult;
 
       // --- Number-label run-together format (N PrecName VenueName Street City, ST Zip N+1 ...) ---
       var numberLabelRunResult = parseNumberLabelRunFormat(text);
