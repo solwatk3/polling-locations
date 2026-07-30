@@ -4841,11 +4841,12 @@
     // -------------------------------------------------------------------------
     function parseOrdinalDistrictPrecinctRunFormat(text) {
       // Detection: must contain "Nth District, Nth Precinct" ordinal label
-      if (!/\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct/i.test(text)) return null;
+      // Comma after "District" is optional - PDF copies sometimes omit it
+      if (!/\d+(?:st|nd|rd|th)\s+District,?\s+\d+(?:st|nd|rd|th)\s+Precinct/i.test(text)) return null;
 
       // Flatten newlines and split on each label boundary
       var flat     = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
-      var sections = flat.split(/(?=\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct|\bEarly Voting\b)/i);
+      var sections = flat.split(/(?=\d+(?:st|nd|rd|th)\s+District,?\s+\d+(?:st|nd|rd|th)\s+Precinct|\bEarly Voting\b)/i);
 
       // Street-type pattern for address/city split (Highway handled separately)
       var streetTypePat = /\b(Avenue|Blvd\.?|Boulevard|Circle|Court|Cove|Drive|Lane|Parkway|Pike|Place|Rd\.?|Road|Route|St\.?|Street|Trail|Way)\b/gi;
@@ -4859,7 +4860,7 @@
         var locType = "election_day";
 
         // Strip the section label and determine location type.
-        var districtLabelMatch = section.match(/^\d+(?:st|nd|rd|th)\s+District,\s+\d+(?:st|nd|rd|th)\s+Precinct\s*(?:\([^)]+\))?\s*/i);
+        var districtLabelMatch = section.match(/^\d+(?:st|nd|rd|th)\s+District,?\s+\d+(?:st|nd|rd|th)\s+Precinct\s*(?:\([^)]+\))?\s*/i);
         if (districtLabelMatch) {
           section = section.slice(districtLabelMatch[0].length).trim();
         } else if (/^Early Voting/i.test(section)) {
@@ -4918,9 +4919,11 @@
             if (hwyMatch) {
               var hwyEnd = hwyMatch.index + hwyMatch[0].length;
               address = addrCity.slice(0, hwyEnd).trim();
-              city    = addrCity.slice(hwyEnd).trim();
+              city    = addrCity.slice(hwyEnd).replace(/^[.,]+/, '').trim();
             } else {
               // --- Pass 2: last recognized street-type word ---
+              // Note: \bRd\.?\b matches "Rd" not "Rd." (word boundary fails after period),
+              // so the period stays at the start of city - strip it with the replace below.
               var lastStreetEnd = -1;
               streetTypePat.lastIndex = 0;
               var sm;
@@ -4929,7 +4932,7 @@
               }
               if (lastStreetEnd !== -1) {
                 address = addrCity.slice(0, lastStreetEnd).trim();
-                city    = addrCity.slice(lastStreetEnd).trim();
+                city    = addrCity.slice(lastStreetEnd).replace(/^[.,]+/, '').trim();
               } else {
                 address = addrCity;
                 reviewReasons.push("Could not split address from city");
