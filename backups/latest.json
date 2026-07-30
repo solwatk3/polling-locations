@@ -1508,9 +1508,9 @@
     {
       "id": "custom-1785119835368-724",
       "name": "901 Church",
-      "address": "5955 Yale Rd, Bartlett, TN 38134",
-      "city": "",
-      "zip": "",
+      "address": "5955 Yale Rd",
+      "city": "Bartlett",
+      "zip": "38134",
       "county": "Shelby",
       "type": "election_day",
       "state_district": "88",
@@ -1519,14 +1519,13 @@
       "hours": "8:00am - 7:00pm",
       "schedule": [
         {
-          "days": "",
           "open": "8:00am",
           "close": "7:00pm"
         }
       ],
       "notes": "",
-      "lat": 35.218022,
-      "lng": -89.864295
+      "lat": 35.218461,
+      "lng": -89.865841
     },
     {
       "id": "custom-1785119841145-330",
@@ -20159,6 +20158,300 @@
       "notes": "",
       "lat": 35.440001,
       "lng": -88.641415
+    },
+    {
+      "id": "custom-1785356684552-979",
+      "name": "McNairy County Election Commission",
+      "address": "530 Mulberry Ave",
+      "city": "Selmer",
+      "zip": "38375",
+      "county": "McNairy",
+      "type": "early",
+      "state_district": "62",
+      "state_senate_district": "14",
+      "congressional_district": "9",
+      "hours": "8:00am - 4:30pm",
+      "schedule": [
+        {
+          "days": "Mon-Fri",
+          "open": "8:00am",
+          "close": "4:30pm"
+        }
+      ],
+      "notes": "",
+      "lat": 35.16315,
+      "lng": -88.583424
+    },
+    {
+      "id": "bulk_1785367083981_0",
+      "name": "OLIVET CUMBERLAND PRES. CHURCH",
+      "address": "6095 HWY 226",
+      "city": "SAVANNAH",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785367083981_1",
+      "name": "NIXON FIRE HALL",
+      "address": "155 Hamburg Loop",
+      "city": "SAVANNAH",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.113595,
+      "lng": -88.258311
+    },
+    {
+      "id": "bulk_1785367083981_2",
+      "name": "DISTRICT 3 COMMUNITY CENTER",
+      "address": "491 Hinton Rd",
+      "city": "Counce",
+      "zip": "38326",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.04134622082185,
+      "lng": -88.2632052898407
+    },
+    {
+      "id": "bulk_1785367083981_3",
+      "name": "CRUMP COMMUNITY CENTER",
+      "address": "3020 US-64",
+      "city": "CRUMP",
+      "zip": "38327",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.221599,
+      "lng": -88.320051
+    },
+    {
+      "id": "bulk_1785367083981_4",
+      "name": "MORRIS CHAPEL COMM. CENTER",
+      "address": "380 N Fork Rd",
+      "city": "Morris Chapel",
+      "zip": "38361",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.32314397856032,
+      "lng": -88.34959387779237
+    },
+    {
+      "id": "bulk_1785367083981_5",
+      "name": "SALTILLO STORM SHELTER",
+      "address": "47680 HWY 69, SUITE C",
+      "city": "SALTILLO",
+      "zip": "38370",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785367083981_6",
+      "name": "Living Waters Foursquare Church",
+      "address": "70 DOGTOWN DRIVE SAVANNAH 38372, TN",
+      "city": "",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.357195,
+      "lng": -88.145968
+    },
+    {
+      "id": "bulk_1785367083981_7",
+      "name": "OLIVE HILL FIRE HALL",
+      "address": "139 School House Ln",
+      "city": "Olivehill",
+      "zip": "38475",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.273483,
+      "lng": -88.029154
+    },
+    {
+      "id": "bulk_1785367083981_8",
+      "name": "Mount Hermon Baptist Church",
+      "address": "1845 Mt Herman Rd",
+      "city": "Savannah",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.251506,
+      "lng": -88.174645
+    },
+    {
+      "id": "bulk_1785367083981_9",
+      "name": "BURNT CHURCH COMMUNITY CENTER",
+      "address": "120 School Dr",
+      "city": "Savannah",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "71",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.187535,
+      "lng": -88.131798
+    },
+    {
+      "id": "bulk_1785367083981_10",
+      "name": "WALNUT GROVE FIRE HALL",
+      "address": "235 MORRIS RD",
+      "city": "SAVANNAH",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "bulk_1785367083981_11",
+      "name": "FAIRGROUND BLDG.",
+      "address": "665 Clifton Rd",
+      "city": "SAVANNAH",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "72",
+      "state_senate_district": "26",
+      "congressional_district": "9",
+      "hours": " - ",
+      "schedule": [
+        {
+          "days": "",
+          "open": "",
+          "close": ""
+        }
+      ],
+      "notes": "",
+      "lat": 35.23644467038658,
+      "lng": -88.23224186897279
+    },
+    {
+      "id": "bulk_1785367083981_12",
+      "name": "TVEC BUILDING",
+      "address": "590 FLORENCE RD",
+      "city": "SAVANNAH",
+      "zip": "38372",
+      "county": "Hardin",
+      "type": "election_day",
+      "state_district": "?",
+      "state_senate_district": "?",
+      "congressional_district": "?",
+      "hours": "",
+      "notes": "",
+      "lat": null,
+      "lng": null
     }
   ],
   "tn_polling_deleted": [
